@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CrudService } from '../services/crud.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -7,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListPage implements OnInit {
   private selectedItem: any;
+  BOOKINGS: Observable<any[]>;
   private icons = [
     'flask',
     'wifi',
@@ -20,7 +23,9 @@ export class ListPage implements OnInit {
     'build'
   ];
   public items: Array<{ title: string; note: string; icon: string }> = [];
-  constructor() {
+  constructor(
+    private crudService: CrudService
+  ) {
     for (let i = 1; i < 11; i++) {
       this.items.push({
         title: 'Item ' + i,
@@ -31,6 +36,7 @@ export class ListPage implements OnInit {
   }
 
   ngOnInit() {
+    this.BOOKINGS = this.crudService.getBookings();
   }
   // add back when alpha.4 is out
   // navigate(item) {

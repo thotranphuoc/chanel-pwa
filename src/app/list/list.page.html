@@ -24,4 +24,7 @@
       You navigated here from <b>{{selectedItem.title }}</b>
     </div>
   -->
+  <ion-item *ngFor="let BOOKING of BOOKINGS | async">
+    {{BOOKING | json}}
+  </ion-item>
 </ion-content>
