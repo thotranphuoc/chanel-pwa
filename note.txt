@@ -1,0 +1,2 @@
+//install angularfire2 firebase
+npm install firebase @angular/fire --save
