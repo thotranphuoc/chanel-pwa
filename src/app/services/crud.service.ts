@@ -1,18 +1,29 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
+import {iUser} from '../interfaces/user.interface';
+import { formatNumber } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CrudService {
-  BOOKINGS: Observable<any[]>;
-  constructor(private afs: AngularFirestore) {
+  USER: Observable<any[]>;
+  constructor(private afs: AngularFirestore,
+    
+    ) {
 
   }
 
-  getBookings() {
-    this.BOOKINGS = this.afs.collection('BOOKINGS').valueChanges();
-    return this.BOOKINGS;
+  getUSER() {
+    this.USER = this.afs.collection('USERS').valueChanges();
+    return this.USER;
   }
+
+  createUSER(user: iUser)
+  {
+    return this.afs.doc('USERS/'+user.U_ID).set(user);
+  }
+
+
 }
