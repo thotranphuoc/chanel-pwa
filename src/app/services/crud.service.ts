@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
 import {iUser} from '../interfaces/user.interface';
 import {iCustomer} from '../interfaces/customer.interface';
+import {iFacialCabin} from '../interfaces/facialcabin.interface';
 import { formatNumber } from '@angular/common';
 
 @Injectable({
@@ -31,6 +32,8 @@ export class CrudService {
 createCustomer(customer: iCustomer)
   {
     console.log(customer);
+    var time_tmp = Number(new Date().getTime());
+    customer.C_ID=time_tmp.toString();
     return this.afs.doc('CUSTOMERS/'+customer.C_ID).set(customer);
   }
 
@@ -39,6 +42,12 @@ createCustomer(customer: iCustomer)
     return this.afs.doc('CUSTOMERS/'+customer.C_ID).update(customer);
   }
 
-
+  createFacialCabin(facialcabin: iFacialCabin)
+  {
+    console.log(facialcabin);
+    var time_tmp = Number(new Date().getTime());
+    facialcabin.F_ID=time_tmp.toString();
+    return this.afs.doc('FACIAL_CABIN/'+facialcabin.F_ID).set(facialcabin);
+  }
 
 }

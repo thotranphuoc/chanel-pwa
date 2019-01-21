@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { iProfile } from '../interfaces/profile.interface';
 import { iUser } from '../interfaces/user.interface';
 import { iCustomer } from '../interfaces/customer.interface';
+import { iFacialCabin } from '../interfaces/facialcabin.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,7 +11,6 @@ export class LocalService {
   constructor() { }
   PROFILE_DEFAULT: iProfile = null;
   
-
   USER_DEFAULT: iUser = {
     U_FNAME: '',
     U_LNAME: '',
@@ -53,6 +53,15 @@ CUSTOMER_DEFAULT: iCustomer = {
   C_ID: '1',
   C_VIPCODE: '',
   C_AVATAR:'',
+}
+
+////////////////////////////////
+FACIALCABIN : iFacialCabin = null;
+FACIALCABIN_DEFAULT: iFacialCabin = {
+  F_LOCATION: '',
+  F_MANAGER: '',
+  F_NAME: '',
+  F_ID: '1',
 }
 
 

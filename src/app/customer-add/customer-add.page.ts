@@ -12,6 +12,7 @@ import { LocalService } from '../services/local.service';
 })
 export class CustomerAddPage implements OnInit {
   CUSTOMER:iCustomer;
+  ALERTADD: string = '';
   constructor(
     private navCtrl: NavController,
     private authService: AuthService,
@@ -37,9 +38,11 @@ export class CustomerAddPage implements OnInit {
     this.crudService.createCustomer(this.CUSTOMER)
       .then((res: any) => {
         console.log(res);
+        this.ALERTADD='Add new customer success';
       })
       .catch((err) => {
         console.log(err);
+        this.ALERTADD='Add new customer fail';
       })
   }
 
