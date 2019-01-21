@@ -8,11 +8,14 @@ import 'firebase/auth';
 import 'firebase/database';
 import { LocalService } from './local.service';
 import { iProfile } from '../interfaces/profile.interface';
+import {iCustomer} from '../interfaces/customer.interface';
+import { from } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   
+  CUSTOMERS: any=[];
 
   constructor(
     private httpClient: HttpClient,
@@ -94,7 +97,7 @@ export class AuthService {
         .then((res) => {
           if (res.exists) {
             let PRO = <iProfile>res.data();
-            this.localService.PROFILE = PRO;
+            this.localService.PROFILE_DEFAULT = PRO;
             resolve({ PROFILE: PRO })
           }else{
             resolve({PROFILE: null})
@@ -146,5 +149,12 @@ export class AuthService {
     return firebase.auth().createUserWithEmailAndPassword(email, passwd);
   }
 
+
+  getCustomer()
+  {
+    return firebase.firestore().collection('CUSTOMERS').get()
+  }
+
   
+    
 }

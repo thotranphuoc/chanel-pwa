@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { iProfile } from '../interfaces/profile.interface';
 import { iUser } from '../interfaces/user.interface';
+import { iCustomer } from '../interfaces/customer.interface';
 @Injectable({
   providedIn: 'root'
 })
 export class LocalService {
 
   constructor() { }
-  PROFILE: iProfile = null;
+  PROFILE_DEFAULT: iProfile = null;
   
 
   USER_DEFAULT: iUser = {
@@ -41,5 +42,18 @@ export class LocalService {
     profile: this.PROFILE_DEFAULT,
     currentUser: null
   }
+
+////////////////////////////////
+CUSTOMER : iCustomer = null;
+CUSTOMER_DEFAULT: iCustomer = {
+  C_FNAME: '',
+  C_LNAME: '',
+  C_EMAIL: '',
+  C_PHONE: '',
+  C_ID: '1',
+  C_VIPCODE: '',
+  C_AVATAR:'',
+}
+
 
 }
