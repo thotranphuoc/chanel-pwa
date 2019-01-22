@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Facial cabin edit</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main">
+    <div class="content">
+        <div class="input_div">
+            <ion-input #fmanager type="text" placeholder="Manager" [(ngModel)]="FACIALCABIN.F_MANAGER"></ion-input>
+            <ion-input #fname type="text" placeholder="Name" [(ngModel)]="FACIALCABIN.F_NAME"></ion-input>
+            <ion-input #flocation type="text" placeholder="Location" [(ngModel)]="FACIALCABIN.F_LOCATION"></ion-input>
+            <div class="button_div">
+                <ion-grid>
+                    <ion-row>
+                      <ion-col>
+                        <button class="btn_edit" (click)="addEdit(fmanager.value, fname.value,flocation.value)">Edit</button>
+                      </ion-col>
+                      <ion-col>
+                        <button class="btn_cancel">Cancel</button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+          </div>  
+          <p class="alertUpdate">{{ALERTUPDATE}}</p> 
+      </div>   
+    </div>
+  </div>
+</ion-content>

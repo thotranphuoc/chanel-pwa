@@ -32,9 +32,23 @@ export class CrudService {
 createCustomer(customer: iCustomer)
   {
     console.log(customer);
-    var time_tmp = Number(new Date().getTime());
-    customer.C_ID=time_tmp.toString();
-    return this.afs.doc('CUSTOMERS/'+customer.C_ID).set(customer);
+    //var time_tmp = Number(new Date().getTime());
+    //customer.C_ID=time_tmp.toString();
+    
+    //return this.afs.doc('CUSTOMERS/'+customer.C_ID).set(customer);
+
+    let CUS = customer
+        return new Promise((resolve, reject) => {
+          this.afs.collection('CUSTOMERS').add(customer)
+                .then((res) => {
+                  CUS.C_ID = res.id;
+                    return res.update({ C_ID: res.id })
+                })
+                .then(() => {
+                    resolve({ MSG: 'create success'})
+                })
+                .catch((err) => reject(err))
+        })
   }
 
   updateCustomer(customer: iCustomer)
@@ -45,9 +59,27 @@ createCustomer(customer: iCustomer)
   createFacialCabin(facialcabin: iFacialCabin)
   {
     console.log(facialcabin);
-    var time_tmp = Number(new Date().getTime());
-    facialcabin.F_ID=time_tmp.toString();
-    return this.afs.doc('FACIAL_CABIN/'+facialcabin.F_ID).set(facialcabin);
+    let FAC = facialcabin
+        return new Promise((resolve, reject) => {
+          this.afs.collection('FACIAL_CABIN').add(facialcabin)
+                .then((res) => {
+                  FAC.F_ID = res.id;
+                    return res.update({ F_ID: res.id })
+                })
+                .then(() => {
+                    resolve({ MSG: 'create success'})
+                })
+                .catch((err) => reject(err))
+        })
+
+
+    //var time_tmp = Number(new Date().getTime());
+    //facialcabin.F_ID=time_tmp.toString();
+    //return this.afs.doc('FACIAL_CABIN/'+facialcabin.F_ID).set(facialcabin);
   }
 
+  updateFacialCabin(facialcabin: iFacialCabin)
+  {
+    return this.afs.doc('FACIAL_CABIN/'+facialcabin.F_ID).update(facialcabin);
+  }
 }

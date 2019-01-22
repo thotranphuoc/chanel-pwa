@@ -34,6 +34,7 @@ export class CustomerAddPage implements OnInit {
         this.CUSTOMER.C_LNAME=lname;
         this.CUSTOMER.C_PHONE=phone;
         this.CUSTOMER.C_AVATAR='#';
+        this.CUSTOMER.C_VIPCODE=vcode;
 
     this.crudService.createCustomer(this.CUSTOMER)
       .then((res: any) => {

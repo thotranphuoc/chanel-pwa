@@ -21,6 +21,10 @@ const routes: Routes = [
   { path: 'customer-list', loadChildren: './customer-list/customer-list.module#CustomerListPageModule' },
   { path: 'customer-edit', loadChildren: './customer-edit/customer-edit.module#CustomerEditPageModule' },
   { path: 'facial-cabin-add', loadChildren: './facial-cabin-add/facial-cabin-add.module#FacialCabinAddPageModule' },
+  { path: 'facial-cabin-list', loadChildren: './facial-cabin-list/facial-cabin-list.module#FacialCabinListPageModule' },
+  { path: 'facial-cabin-edit', loadChildren: './facial-cabin-edit/facial-cabin-edit.module#FacialCabinEditPageModule' },
+  { path: 'customer-booking', loadChildren: './customer-booking/customer-booking.module#CustomerBookingPageModule' },
+  { path: 'appointment-add', loadChildren: './appointment-add/appointment-add.module#AppointmentAddPageModule' },
   
 ];
 
