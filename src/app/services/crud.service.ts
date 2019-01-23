@@ -4,6 +4,7 @@ import { Observable, from } from 'rxjs';
 import {iUser} from '../interfaces/user.interface';
 import {iCustomer} from '../interfaces/customer.interface';
 import {iFacialCabin} from '../interfaces/facialcabin.interface';
+import {iBooking} from '../interfaces/booking.interface';
 import { formatNumber } from '@angular/common';
 
 @Injectable({
@@ -82,4 +83,23 @@ createCustomer(customer: iCustomer)
   {
     return this.afs.doc('FACIAL_CABIN/'+facialcabin.F_ID).update(facialcabin);
   }
+
+
+  createBooking(booking: iBooking)
+  {
+    console.log(booking);
+    let BOOK = booking
+        return new Promise((resolve, reject) => {
+          this.afs.collection('BOOKINGS').add(booking)
+                .then((res) => {
+                  BOOK.B_ID = res.id;
+                    return res.update({ B_ID: res.id })
+                })
+                .then(() => {
+                    resolve({ MSG: 'create success'})
+                })
+                .catch((err) => reject(err))
+        })
+  }
+
 }

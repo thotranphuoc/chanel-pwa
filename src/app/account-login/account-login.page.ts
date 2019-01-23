@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
-
+import {iUser} from '../interfaces/user.interface';
+import { LocalService } from '../services/local.service';
 @Component({
   selector: 'app-account-login',
   templateUrl: './account-login.page.html',
   styleUrls: ['./account-login.page.scss'],
 })
 export class AccountLoginPage implements OnInit {
-
+  USER:iUser;
   isSignedIn = false;
   constructor(
     private navCtrl: NavController,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    private localService: LocalService
+  ) { 
+    this.USER = this.localService.USER_DEFAULT;
+  }
 
   ngOnInit() {
     this.checkIfSigned();
@@ -33,6 +37,7 @@ export class AccountLoginPage implements OnInit {
       .then((res: any) => {
         console.log(res);
         //this.navCtrl.goBack();
+        //this.USER=res;
       })
       .catch((err) => {
         console.log(err);
