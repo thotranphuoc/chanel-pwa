@@ -25,6 +25,7 @@ const routes: Routes = [
   { path: 'facial-cabin-edit', loadChildren: './facial-cabin-edit/facial-cabin-edit.module#FacialCabinEditPageModule' },
   { path: 'customer-booking', loadChildren: './customer-booking/customer-booking.module#CustomerBookingPageModule' },
   { path: 'appointment-add', loadChildren: './appointment-add/appointment-add.module#AppointmentAddPageModule' },
+  { path: 'calendar-view', loadChildren: './calendar-view/calendar-view.module#CalendarViewPageModule' },
   
 ];
 

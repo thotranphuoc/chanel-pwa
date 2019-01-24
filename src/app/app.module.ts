@@ -16,11 +16,17 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment'
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 // firebase setup
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 firebase.initializeApp(environment.firebase);
 
@@ -35,7 +41,15 @@ firebase.initializeApp(environment.firebase);
     AngularFireAuthModule,
     AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebase),
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    CommonModule,
+    FormsModule,
+    NgbModalModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    })
   ],
   providers: [
     StatusBar,
