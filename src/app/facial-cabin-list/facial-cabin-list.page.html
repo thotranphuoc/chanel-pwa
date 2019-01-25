@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Facial Cabin list</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="addNew()">
+          <ion-icon name="add"></ion-icon> New
+        </button>
+    </ion-buttons>
+  </ion-toolbar>  
+</ion-header>
+
+<ion-content>
+  <div class="main">
+    <div class="content">
+        <ion-grid>
+            <ion-row>
+              <ion-col col-1>No.</ion-col>
+              <ion-col col-3>Manager</ion-col>
+              <ion-col col-4>Name</ion-col>
+              <ion-col col-4>Location</ion-col>
+            </ion-row>
+        </ion-grid>
+        
+        <ion-grid *ngFor="let F of FACIALCABINS;let i = index" (click)="go2FacialCabinEdit(F)">
+            <ion-row>
+              <ion-col col-1>{{i+1}}</ion-col>
+              <ion-col col-4>{{F.F_MANAGER}}</ion-col>
+              <ion-col col-4>{{F.F_NAME}}</ion-col>
+              <ion-col col-4>{{F.F_LOCATION}}</ion-col>
+            </ion-row>
+        </ion-grid>
+       
+    </div>
+  </div>
+</ion-content>

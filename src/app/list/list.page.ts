@@ -36,7 +36,7 @@ export class ListPage implements OnInit {
   }
 
   ngOnInit() {
-    this.BOOKINGS = this.crudService.getBookings();
+    //this.BOOKINGS = this.crudService.getBookings();
   }
   // add back when alpha.4 is out
   // navigate(item) {

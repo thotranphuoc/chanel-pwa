@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>customer add</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main">
+    <div class="content">
+        <div class="input_div">
+            <ion-input #fname type="text" placeholder="FirstName"></ion-input>
+            <ion-input #lname type="text" placeholder="LastName"></ion-input>
+            <ion-input #phone type="text" placeholder="Phone"></ion-input>
+            <ion-input #cemail type="email" placeholder="Email"></ion-input>
+            <ion-input #vcode type="text" placeholder="VipCode"></ion-input>
+            <div class="button_div">
+                <ion-grid>
+                    <ion-row>
+                      <ion-col>
+                        <button class="btn_add" (click)="addNew(fname.value, lname.value,phone.value, cemail.value,vcode.value)">Add New</button>
+                      </ion-col>
+                      <ion-col>
+                        <button class="btn_cancle">Cancle</button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+          </div>   
+          <p class="alertAdd">{{ALERTADD}}</p> 
+      </div>   
+    </div>
+  </div>
+</ion-content>

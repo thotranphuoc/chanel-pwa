@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Appointment</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main">
+    <div class="content">
+      <ion-list>
+        <ion-item>
+          <ion-label color="primary" fixed>Name</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="CUSTOMER.C_LNAME"></ion-input>
+        </ion-item>
+      
+        <ion-item>
+          <ion-label color="primary" fixed>VIP Code</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="CUSTOMER.C_VIPCODE"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" fixed>Phone no.</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="CUSTOMER.C_PHONE"></ion-input>
+          
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" fixed>Appointment date</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="BOOKING.B_FDATE"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>Appointment time</ion-label>
+          <ion-select [(ngModel)]="BOOKING.B_FHOUR">
+            <ion-select-option value="10:30">10:30</ion-select-option>
+            <ion-select-option value="12:30">12:30</ion-select-option>
+            <ion-select-option value="15:00">15:00</ion-select-option>
+            <ion-select-option value="17:00">17:00</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary">Chanel Skin Care Customer</ion-label>
+          <ion-toggle [(ngModel)]="FACIAL.F_SKIN"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" >Sublimage Customer</ion-label>
+          <ion-toggle [(ngModel)]="FACIAL.F_SUBLIMAGE"></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="FACIAL.F_SUBLIMAGE">
+          <ion-label stacked></ion-label>
+          <ion-input [(ngModel)]="FACIAL.F_SUBPRODUCT"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Le lift Customer</ion-label>
+          <ion-toggle [(ngModel)]="FACIAL.F_LELIFTCUSTOMER"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Fashion Customer</ion-label>
+          <ion-toggle [(ngModel)]="FACIAL.F_FASHIONCUSTOMER"></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="FACIAL.F_FASHIONCUSTOMER">
+          <ion-label stacked></ion-label>
+          <ion-input [(ngModel)]="FACIAL.F_FASHIONPRODUCT"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>1st time using facial cabin</ion-label>
+          <ion-toggle [(ngModel)]="FACIAL.F_FIRSTTIME"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>Note</ion-label>
+          <ion-input type="text" placeholder="I would like" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
+        </ion-item>
+
+      </ion-list>
+      <div class="btn">
+        <button class="add_new" (click)="AddNewAppointment()">Add</button>  
+      </div>  
+      <p class="alertAdd">{{ALERTADD}}</p> 
+    </div>
+  </div>
+</ion-content>

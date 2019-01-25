@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>account-login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="background: #ff0;">
+  <div class="main">
+    <div class="content">
+
+      <div class="logo">
+        <img src="" />
+      </div>
+
+      <div class="input_div">
+            <ion-input #email type="email" placeholder="Email"></ion-input>
+            <ion-input #pw type="password" placeholder="Password"></ion-input>
+            <div class="button_div">
+                <ion-grid>
+                    <ion-row>
+                      <ion-col>
+                        <button class="btn_login" (click)="login(email.value, pw.value)">Login</button>
+                      </ion-col>
+                      <ion-col>
+                        <button class="btn_register">Register</button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+          </div>   
+      </div>   
+    </div>
+  </div>
+</ion-content>

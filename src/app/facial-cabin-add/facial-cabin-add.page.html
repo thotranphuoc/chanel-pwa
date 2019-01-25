@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Facial cabin add</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main">
+    <div class="content">
+        <div class="input_div">
+            <ion-input #location type="text" placeholder="LOCATION"></ion-input>
+            <ion-input #manager type="text" placeholder="MANAGER"></ion-input>
+            <ion-input #name type="text" placeholder="NAME"></ion-input>
+            <div class="button_div">
+                <ion-grid>
+                    <ion-row>
+                      <ion-col>
+                        <button class="btn_add" (click)="addNew(location.value, manager.value,name.value)">Add New</button>
+                      </ion-col>
+                      <ion-col>
+                        <button class="btn_cancle">Cancle</button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+          </div>   
+          <p class="alertAdd">{{ALERTADD}}</p> 
+      </div>   
+    </div>
+  </div>
+</ion-content>

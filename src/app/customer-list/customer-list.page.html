@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>customer-list</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="addNew()">
+          <ion-icon name="add"></ion-icon> New
+        </button>
+    </ion-buttons>
+  </ion-toolbar>  
+</ion-header>
+
+<ion-content>
+  <div class="main">
+    <div class="content">
+        <ion-grid>
+            <ion-row>
+              <ion-col col-2>No.</ion-col>
+              <ion-col col-5>Name</ion-col>
+              <ion-col col-5>Phone</ion-col>
+            </ion-row>
+        </ion-grid>
+        
+        <ion-grid *ngFor="let C of CUSTOMERS;let i = index" (click)="go2CustomerEdit(C)">
+            <ion-row>
+              <ion-col col-2>{{i+1}}</ion-col>
+              <ion-col col-5>{{C.C_FNAME}} {{C.C_LNAME}}</ion-col>
+              <ion-col col-5>{{C.C_PHONE}}</ion-col>
+            </ion-row>
+        </ion-grid>
+       
+    </div>
+  </div>
+</ion-content>
