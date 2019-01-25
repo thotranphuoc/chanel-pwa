@@ -1,0 +1,16 @@
+.main{
+    background-image: url('https://i.pinimg.com/originals/cc/3c/8b/cc3c8b65c69ce26ff707d2d92e4700b8.jpg');
+    height: 100%;
+    width: 100%;
+}
+
+p{
+    padding: 50px 0;
+    
+}
+
+:host {
+    ion-content {
+      --background: url('https://lorempixel.com/400/200/sports/Dummy-Text/') repeat 100% 100%;
+    }
+}
