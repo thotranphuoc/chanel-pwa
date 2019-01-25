@@ -38,6 +38,7 @@ export class AccountLoginPage implements OnInit {
         console.log(res);
         //this.navCtrl.goBack();
         //this.USER=res;
+        //this.authService.isSigned()=true;
       })
       .catch((err) => {
         console.log(err);
