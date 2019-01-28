@@ -28,6 +28,7 @@ const routes: Routes = [
   { path: 'calendar-view', loadChildren: './calendar-view/calendar-view.module#CalendarViewPageModule' },
   { path: 'account-manager', loadChildren: './account-manager/account-manager.module#AccountManagerPageModule' },
   { path: 'account-information', loadChildren: './account-information/account-information.module#AccountInformationPageModule' },
+  { path: 'reports', loadChildren: './reports/reports.module#ReportsPageModule' },
   
 ];
 
