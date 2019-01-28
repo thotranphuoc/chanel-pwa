@@ -43,10 +43,23 @@ ion-col span{
     padding: 3px 0;
 }
 
+#calendar ion-grid ion-row ion-col{
+    // border: 1px solid black;
+    background: #f9f8f7;
+    margin: 0 2px;
+    padding-bottom: 10px;
+    h4{
+        margin-top: 5px;
+    }
+}
+
+
 @media(max-width: 576px){
     ion-col span{
         border-radius: 5px;
         padding: 2px 3px;
     }
 }
+
+
 
