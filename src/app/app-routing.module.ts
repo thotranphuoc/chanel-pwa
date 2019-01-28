@@ -26,6 +26,8 @@ const routes: Routes = [
   { path: 'customer-booking', loadChildren: './customer-booking/customer-booking.module#CustomerBookingPageModule' },
   { path: 'appointment-add', loadChildren: './appointment-add/appointment-add.module#AppointmentAddPageModule' },
   { path: 'calendar-view', loadChildren: './calendar-view/calendar-view.module#CalendarViewPageModule' },
+  { path: 'account-manager', loadChildren: './account-manager/account-manager.module#AccountManagerPageModule' },
+  { path: 'account-information', loadChildren: './account-information/account-information.module#AccountInformationPageModule' },
   
 ];
 
