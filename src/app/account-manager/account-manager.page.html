@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>account-manager</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+    <ion-list *ngFor="let U of USERS;let i = index">
+        <ion-item-sliding> 
+            <ion-item>
+                <ion-reorder slot="start"></ion-reorder>
+                <ion-grid>
+                    <ion-row>
+                      <ion-col class="cls_img" size="3"><img src="../../assets/imgs/user.jpg" alt="" class="user_img"></ion-col>
+                      <ion-col class="user_information" size="9">
+                        <p class="user_name">{{U.U_LNAME}} {{U.U_FNAME}}</p>
+                        <p class="user_role">{{U.U_ROLE}}</p>
+                      </ion-col>
+                    </ion-row>
+                </ion-grid>
+              </ion-item>
+            
+          <ion-item-options side="end">
+            <ion-item-option (click)="more" color="medium" (click)="showInformation(U)">
+                <ion-icon name="more"></ion-icon><br />
+                <p>More</p>
+            </ion-item-option>
+            <ion-item-option (click)="deleteUser(U)">
+              <ion-icon name="trash"></ion-icon>
+              <p>Delete</p>
+            </ion-item-option>
+            <ion-item-option color="danger" (click)="updateUser(U)">
+              <ion-icon name="create"></ion-icon>
+              <p>Update</p>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+
+
+  
+      </ion-list>
+
+</ion-content>

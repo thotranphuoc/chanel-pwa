@@ -155,6 +155,11 @@ export class AuthService {
     return firebase.firestore().collection('CUSTOMERS').get()
   }
 
+  getUser()
+  {
+    return firebase.firestore().collection('USERS').get()
+  }
+
   getFacialCabin()
   {
     return firebase.firestore().collection('FACIAL_CABIN').get()
