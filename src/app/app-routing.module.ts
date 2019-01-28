@@ -27,6 +27,7 @@ const routes: Routes = [
   { path: 'appointment-add', loadChildren: './appointment-add/appointment-add.module#AppointmentAddPageModule' },
   { path: 'calendar-view', loadChildren: './calendar-view/calendar-view.module#CalendarViewPageModule' },
   { path: 'reports', loadChildren: './reports/reports.module#ReportsPageModule' },
+  { path: 'calendars', loadChildren: './calendars/calendars.module#CalendarsPageModule' },
   
 ];
 

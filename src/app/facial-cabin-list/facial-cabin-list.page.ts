@@ -54,4 +54,8 @@ FACIALCABINS:any=[];
     this.navCtrl.navigateForward('/facial-cabin-edit');
 }
 
+addNew(){
+  
+}
+
 }

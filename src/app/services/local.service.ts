@@ -91,6 +91,7 @@ BOOKING_DEFAULT: iBooking = {
     B_TDATE: '',
     B_THOUR: '',
     B_TIME: '',
+    B_NOTE: ''
 }
 
 

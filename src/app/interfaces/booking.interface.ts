@@ -13,4 +13,5 @@ export interface iBooking{
     B_TDATE: string,
     B_THOUR: string,
     B_TIME:string,
+    B_NOTE: string
 }
