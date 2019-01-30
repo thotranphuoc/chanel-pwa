@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="authService.isSigned">
+    <div>
+      <ion-button expand="full" color="danger" (click)="logout()">Logout</ion-button>
+    </div>
+  </div>
+  <div *ngIf="!authService.isSigned">
+    <div>
+      <ion-input #email type="email" placeholder="Email"></ion-input>
+      <ion-input #pw type="password" placeholder="Password"></ion-input>
+      <ion-button expand="full" (click)="login(email.value, pw.value)">Login</ion-button>
+    </div>
+  </div>
+</ion-content>

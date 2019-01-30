@@ -31,6 +31,7 @@ const routes: Routes = [
   { path: 'reports', loadChildren: './reports/reports.module#ReportsPageModule' },
   { path: 'calendars', loadChildren: './calendars/calendars.module#CalendarsPageModule' },
   { path: 'test', loadChildren: './test/test.module#TestPageModule' },
+  { path: 'account', loadChildren: './account/account.module#AccountPageModule' },
 
 ];
 
