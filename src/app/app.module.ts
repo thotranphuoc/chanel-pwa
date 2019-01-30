@@ -28,6 +28,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerAddPageModule } from './customer-add/customer-add.module';
+import { AppointmentAddPageModule } from './appointment-add/appointment-add.module';
 
 firebase.initializeApp(environment.firebase);
 
@@ -52,7 +53,8 @@ firebase.initializeApp(environment.firebase);
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
-    CustomerAddPageModule
+    CustomerAddPageModule,
+    AppointmentAddPageModule
   ],
   providers: [
     StatusBar,

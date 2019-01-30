@@ -448,9 +448,15 @@
           </ion-col>
         </ion-row>
       </ion-grid>
+      <div style="height: 50px"></div>
     </div>
+
   </div>
 
-
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="addNewAppointment()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>

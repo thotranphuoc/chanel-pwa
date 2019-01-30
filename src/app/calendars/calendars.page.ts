@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CalendarService } from '../services/calendar.service';
 import { ModalController } from '@ionic/angular';
 import { CustomerAddPage } from '../customer-add/customer-add.page';
+import { AppointmentAddPage } from '../appointment-add/appointment-add.page';
 
 @Component({
   selector: 'app-calendars',
@@ -54,6 +55,24 @@ export class CalendarsPage implements OnInit {
     });
 
     return await modal.present();
+  }
+
+  addNewAppointment() {
+    console.log('fab button')
+    this.modalAppointmentAdd();
+  }
+
+  async modalAppointmentAdd() {
+    const modal = await this.modalController.create({
+      component: AppointmentAddPage,
+      componentProps: { value: '123' }
+    });
+
+
+
+    await modal.present();
+    const data = await modal.onDidDismiss();
+    console.log(data);
   }
 
 }

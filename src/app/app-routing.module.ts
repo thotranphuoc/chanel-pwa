@@ -30,11 +30,12 @@ const routes: Routes = [
   { path: 'account-information', loadChildren: './account-information/account-information.module#AccountInformationPageModule' },
   { path: 'reports', loadChildren: './reports/reports.module#ReportsPageModule' },
   { path: 'calendars', loadChildren: './calendars/calendars.module#CalendarsPageModule' },
-  
+  { path: 'test', loadChildren: './test/test.module#TestPageModule' },
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
