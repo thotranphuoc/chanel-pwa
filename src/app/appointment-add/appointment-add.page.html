@@ -7,83 +7,169 @@
 <ion-content>
   <div class="main">
     <div class="content">
-      <ion-item>
-        <ion-label color="primary" fixed>Name:</ion-label>
-        <ion-input type="text" placeholder="" [(ngModel)]="CUSTOMER.C_LNAME"></ion-input>
+      <ion-item lines="none">
+        <ion-label color="primary">New Customer?</ion-label>
+        <ion-toggle [(ngModel)]="BOOKING.B_isNewCustomer" (ionChange)="changeNewCustomer()"></ion-toggle>
       </ion-item>
 
-      <ion-item>
-        <ion-label color="primary" fixed>VIP Code:</ion-label>
-        <ion-input type="text" placeholder="" [(ngModel)]="CUSTOMER.C_VIPCODE"></ion-input>
-      </ion-item>
+      <div *ngIf="BOOKING.B_isNewCustomer" class="new-customer">
+        <ion-item>
+          <ion-label color="primary" fixed>Name:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_NAME"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label color="primary" fixed>Phone:</ion-label>
-        <ion-input type="text" placeholder="" [(ngModel)]="CUSTOMER.C_PHONE"></ion-input>
+        <ion-item *ngIf="!BOOKING.B_isNewCustomer">
+          <ion-label color="primary" fixed>VIP Code:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_VIPCODE"></ion-input>
+        </ion-item>
 
-      </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>Phone:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
 
-      <ion-item>
-        <ion-label color="primary" fixed>Appointment date</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="BOOKING.B_FDATE"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label>Appointment time</ion-label>
-        <ion-select [(ngModel)]="BOOKING.B_FHOUR">
-          <ion-select-option value="10:30">10:30</ion-select-option>
-          <ion-select-option value="12:30">12:30</ion-select-option>
-          <ion-select-option value="15:00">15:00</ion-select-option>
-          <ion-select-option value="17:00">17:00</ion-select-option>
-        </ion-select>
-      </ion-item>
+        </ion-item>
 
-      <ion-item>
-        <ion-label color="primary">Chanel Skin Care Customer</ion-label>
-        <ion-toggle [(ngModel)]="FACIAL.F_SKIN"></ion-toggle>
-      </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>Appointment date</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="BOOKING.B_DATE"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Appointment time</ion-label>
+          <ion-select [(ngModel)]="BOOKING.B_SLOT">
+            <ion-select-option value="10:30">10:30</ion-select-option>
+            <ion-select-option value="12:30">12:30</ion-select-option>
+            <ion-select-option value="15:00">15:00</ion-select-option>
+            <ion-select-option value="17:00">17:00</ion-select-option>
+          </ion-select>
+        </ion-item>
 
-      <ion-item>
-        <ion-label color="primary">Sublimage Customer</ion-label>
-        <ion-toggle [(ngModel)]="FACIAL.F_SUBLIMAGE"></ion-toggle>
-      </ion-item>
-      <ion-item *ngIf="FACIAL.F_SUBLIMAGE">
-        <ion-label stacked></ion-label>
-        <ion-input [(ngModel)]="FACIAL.F_SUBPRODUCT"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label color="primary">Le lift Customer</ion-label>
-        <ion-toggle [(ngModel)]="FACIAL.F_LELIFTCUSTOMER"></ion-toggle>
-      </ion-item>
-      <ion-item>
-        <ion-label color="primary">Fashion Customer</ion-label>
-        <ion-toggle [(ngModel)]="FACIAL.F_FASHIONCUSTOMER"></ion-toggle>
-      </ion-item>
-      <ion-item *ngIf="FACIAL.F_FASHIONCUSTOMER">
-        <ion-label stacked></ion-label>
-        <ion-input [(ngModel)]="FACIAL.F_FASHIONPRODUCT"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label color="primary" fixed>1st time using facial cabin</ion-label>
-        <ion-toggle [(ngModel)]="FACIAL.F_FIRSTTIME"></ion-toggle>
-      </ion-item>
-      <ion-item>
-        <ion-label color="primary" fixed>Note</ion-label>
-        <ion-input type="text" placeholder="I would like" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
-      </ion-item>
-      <!-- <div class="btn">
-        <button class="add_new" (click)="AddNewAppointment()">Add</button>
-      </div> -->
-      <ion-grid text-center>
-        <ion-row>
-          <ion-col>
-            <ion-button color="danger" expand="block" (click)="doCancel()">Cancel</ion-button>
-          </ion-col>
-          <ion-col>
-            <ion-button expand="block" (click)="AddNewAppointment()">Add</ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <p class="alertAdd">{{ALERTADD}}</p>
+        <ion-item>
+          <ion-label color="primary">Chanel Skin Care Use</ion-label>
+          <ion-toggle [(ngModel)]="BOOKING.B_CSCU"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary">Sublimage Customer</ion-label>
+          <ion-toggle [(ngModel)]="BOOKING.B_SUBLIMAGE"></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="BOOKING.B_SUBLIMAGE">
+          <ion-label stacked></ion-label>
+          <ion-input [(ngModel)]="BOOKING.B_SUBLIMAGES"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Le lift Customer</ion-label>
+          <ion-toggle [(ngModel)]="BOOKING.B_LELIFT"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Fashion Customer</ion-label>
+          <ion-toggle [(ngModel)]="BOOKING.B_FASHION"></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="BOOKING.B_FASHION">
+          <ion-label stacked></ion-label>
+          <ion-input [(ngModel)]="BOOKING.B_FASHIONS"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>1st time using facial cabin</ion-label>
+          <ion-toggle [(ngModel)]="BOOKING.B_1stTIME"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>Note</ion-label>
+          <ion-input type="text" placeholder="I would like" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
+        </ion-item>
+        <!-- <div class="btn">
+              <button class="add_new" (click)="addNewAppointment()">Add</button>
+            </div> -->
+        <ion-grid text-center>
+          <ion-row>
+            <ion-col>
+              <ion-button color="danger" expand="block" (click)="doCancel()">Cancel</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button expand="block" (click)="addNewAppointment()">Add</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <p class="alertAdd">{{ALERTADD}}</p>
+      </div>
+      <div *ngIf="!BOOKING.B_isNewCustomer" class="old-customer">
+        <ion-item>
+          <ion-label color="primary" fixed>Name:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_NAME"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" fixed>VIP Code:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_VIPCODE"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" fixed>Phone:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
+
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" fixed>Appointment date</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="BOOKING.B_DATE"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Appointment time</ion-label>
+          <ion-select [(ngModel)]="BOOKING.B_SLOT">
+            <ion-select-option value="10:30">10:30</ion-select-option>
+            <ion-select-option value="12:30">12:30</ion-select-option>
+            <ion-select-option value="15:00">15:00</ion-select-option>
+            <ion-select-option value="17:00">17:00</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary">Chanel Skin Care Use</ion-label>
+          <ion-toggle [(ngModel)]="BOOKING.B_CSCU"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary">Sublimage Customer</ion-label>
+          <ion-toggle [(ngModel)]="BOOKING.B_SUBLIMAGE"></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="BOOKING.B_SUBLIMAGE">
+          <ion-label stacked></ion-label>
+          <ion-input [(ngModel)]="BOOKING.B_SUBLIMAGES"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Le lift Customer</ion-label>
+          <ion-toggle [(ngModel)]="BOOKING.B_LELIFT"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Fashion Customer</ion-label>
+          <ion-toggle [(ngModel)]="BOOKING.B_FASHION"></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="BOOKING.B_FASHION">
+          <ion-label stacked></ion-label>
+          <ion-input [(ngModel)]="BOOKING.B_FASHIONS"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>1st time using facial cabin</ion-label>
+          <ion-toggle [(ngModel)]="BOOKING.B_1stTIME"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>Note</ion-label>
+          <ion-input type="text" placeholder="I would like" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
+        </ion-item>
+        <!-- <div class="btn">
+              <button class="add_new" (click)="addNewAppointment()">Add</button>
+            </div> -->
+        <ion-grid text-center>
+          <ion-row>
+            <ion-col>
+              <ion-button color="danger" expand="block" (click)="doCancel()">Cancel</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button expand="block" (click)="addNewAppointment()">Add</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <p class="alertAdd">{{ALERTADD}}</p>
+      </div>
     </div>
   </div>
 </ion-content>

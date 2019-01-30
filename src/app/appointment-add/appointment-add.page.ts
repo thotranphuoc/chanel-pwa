@@ -5,7 +5,8 @@ import { iFacial } from '../interfaces/ifacial.interface';
 import { iCustomer } from '../interfaces/customer.interface';
 import { iUser } from '../interfaces/user.interface';
 import { CrudService } from '../services/crud.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
+import { iFacialCabin } from '../interfaces/facialcabin.interface';
 @Component({
   selector: 'app-appointment-add',
   templateUrl: './appointment-add.page.html',
@@ -13,48 +14,56 @@ import { ModalController } from '@ionic/angular';
 })
 export class AppointmentAddPage implements OnInit {
   BOOKING: iBooking;
-  FACIAL: iFacial;
+  FACIALCABIN: iFacialCabin;
   CUSTOMER: iCustomer;
   USER: iUser;
   ALERTADD: string = '';
   constructor(
+    private navCtrl: NavController,
     private modalCtrl: ModalController,
     private localService: LocalService,
     private crudService: CrudService,
   ) {
-    this.BOOKING = this.localService.BOOKING_DEFAULT;
-    this.FACIAL = this.localService.IFACIAL_DEFAULT;
-    this.CUSTOMER = this.localService.CUSTOMER_DEFAULT;
-    this.USER = this.localService.USER_DEFAULT;
 
-    this.BOOKING.B_FACIAL = this.FACIAL;
-    this.BOOKING.B_CUSTOMER = this.CUSTOMER;
-    this.BOOKING.B_STAFF = this.USER;
+    // this.FACIALCABIN = this.localService.FACIALCABIN_DEFAULT;
+    // this.CUSTOMER = this.localService.CUSTOMER_DEFAULT;
+    // this.USER = this.localService.USER_DEFAULT;
+
+    // this.BOOKING.B_FACIAL = this.FACIALCABIN;
+    // this.BOOKING.B_CUSTOMER = this.CUSTOMER;
+    // this.BOOKING.B_STAFF = this.USER;
   }
 
   ngOnInit() {
+    this.BOOKING = this.localService.BOOKING_DEFAULT;
+    console.log(this.BOOKING);
   }
-  AddNewAppointment() {
+
+  addNewAppointment() {
+    this.BOOKING.B_CREATED_TIME = new Date().toISOString();
     console.log(this.BOOKING);
 
-    this.BOOKING.B_TIME = new Date().toISOString();
-    this.crudService.createBooking(this.BOOKING)
-      .then((res: any) => {
-        console.log(res);
-        this.ALERTADD = 'Add new Booking success';
-      })
-      .catch((err) => {
-        console.log(err);
-        this.ALERTADD = 'Add new Booking fail';
-      })
+    // this.crudService.createBooking(this.BOOKING)
+    //   .then((res: any) => {
+    //     console.log(res);
+    //     this.ALERTADD = 'Add new Booking success';
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     this.ALERTADD = 'Add new Booking fail';
+    //   })
 
   }
 
   doCancel() {
     this.modalCtrl.getTop().then(res => {
       console.log(res);
-      res.dismiss({ BOOKING: this.BOOKING, isCancel: false });
+      if (typeof (res) !== 'undefined') res.dismiss({ BOOKING: this.BOOKING, isCancel: false });
     }).catch(err => { console.log(err) });
+  }
+
+  changeNewCustomer() {
+    this.BOOKING.B_1stTIME = this.BOOKING.B_isNewCustomer;
   }
 
 

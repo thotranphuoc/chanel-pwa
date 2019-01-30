@@ -68,8 +68,8 @@ export class LocalService {
   }
 
   ///////////////BOOKING/////////////////
-  IFACIAL: iFacial = null;
-  IFACIAL_DEFAULT: iFacial = {
+  FACIAL: iFacial = null;
+  FACIAL_DEFAULT: iFacial = {
     F_SKIN: 'false',
     F_SUBLIMAGE: 'false',
     F_SUBPRODUCT: null,
@@ -91,20 +91,20 @@ export class LocalService {
     B_FACIAL: this.FACIALCABIN_DEFAULT,
     B_FACIAL_ID: '',
     B_FACIAL_NAME: '',
-    B_STAFF: this.USER_DEFAULT,
-    B_STAFF_ID: '',
-    B_STAFF_NAME: '',
+    B_MANAGER: this.USER_DEFAULT,
+    B_MANAGER_ID: '',
+    B_MANAGER_NAME: '',
     B_SLOT: '',
     B_DATE: '',
     B_FHOUR: '',
     B_THOUR: '',
     B_isNewCustomer: false,
-    B_CSCC: false,
+    B_CSCU: false,
     B_SUBLIMAGE: false,
-    B_SUBLIMAGES: [],
+    B_SUBLIMAGES: '',
     B_LELIFT: false,
     B_FASHION: false,
-    B_FASHIONS: [],
+    B_FASHIONS: '',
     B_1stTIME: false,
     B_NOTE: '',
     B_STATUS: '',
@@ -121,7 +121,8 @@ export class LocalService {
     B_BA_SELL_NAME: '',
     B_SVC_BOOK: 0,
     B_SVC_USE: 0,
-    B_SVC_CANCEL: 0
+    B_SVC_CANCEL: 0,
+    B_OTHER: {}
   }
 
 
