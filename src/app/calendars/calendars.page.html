@@ -6,16 +6,18 @@
 
 
 <ion-content>
-  <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
-    <ion-segment-button layout="icon-start" value="overall">
-      <ion-label>Overall</ion-label>
-      <ion-icon name="calendar"></ion-icon>
-    </ion-segment-button>
-    <ion-segment-button layout="icon-start" value="list">
-      <ion-label>List</ion-label>
-      <ion-icon name="list-box"></ion-icon>
-    </ion-segment-button>
-  </ion-segment>
+  <div padding>
+    <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+      <ion-segment-button layout="icon-start" value="overall">
+        <ion-label>Overall</ion-label>
+        <ion-icon name="calendar"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button layout="icon-start" value="list">
+        <ion-label>List</ion-label>
+        <ion-icon name="list-box"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
 
   <div [ngSwitch]="segment" text-center>
     <div *ngSwitchCase="'list'">
@@ -387,7 +389,7 @@
 
     </div>
     <div *ngSwitchCase="'overall'">
-      <ion-grid>
+      <!-- <ion-grid>
         <h1>January 2019</h1>
         <ion-row>
           <ion-col>Sun</ion-col>
@@ -399,9 +401,9 @@
           <ion-col>Sat</ion-col>
         </ion-row>
         <ion-row *ngFor="let WK of WEEKS1">
-          <ion-col *ngFor="let Day of WK">
+          <ion-col *ngFor="let Day of WK" (click)="selectDay(Day)">
             <h4>{{Day?.Date}}</h4>
-            <ion-badge color="secondary">{{Day?.Data.number}}</ion-badge>
+            <ion-badge color="danger">{{Day?.Data.number}}</ion-badge>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -418,13 +420,37 @@
           <ion-col>Sat</ion-col>
         </ion-row>
         <ion-row *ngFor="let WK of WEEKS2">
-          <ion-col *ngFor="let Day of WK">
+          <ion-col *ngFor="let Day of WK" (click)="selectDay(Day)">
             <h4>{{Day?.Date}}</h4>
             <ion-badge color="secondary">{{Day?.Data.number}}</ion-badge>
+          </ion-col>
+        </ion-row>
+      </ion-grid> -->
+      <ion-grid *ngFor="let MONTH of MONTHS">
+        <h1>{{MONTH.MONTH}} {{MONTH.YEAR}}</h1>
+        <ion-row class="row-bottom-line">
+          <ion-col>Sun</ion-col>
+          <ion-col>Mon</ion-col>
+          <ion-col>Tue</ion-col>
+          <ion-col>Wed</ion-col>
+          <ion-col>Thu</ion-col>
+          <ion-col>Fri</ion-col>
+          <ion-col>Sat</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let WK of MONTH.WEEKS" class="row-bottom-line">
+          <ion-col *ngFor="let Day of WK" (click)="selectDay(Day)" style="text-align: center">
+            <h4>{{Day?.Date}}</h4>
+            <div *ngIf="Day?.Data.number>=3 && Day?.Date" class="badge-red">{{Day?.Data.number}}</div>
+            <div *ngIf="Day?.Data.number<3 && Day?.Date" class="badge-green">{{Day?.Data.number}}</div>
+            <!-- <span *ngIf="Day?.Data.number>=3"><ion-badge color='danger'>{{Day?.Data.number}}</ion-badge></span>
+            <span *ngIf="Day?.Data.number<3"><ion-badge color='success'>{{Day?.Data.number}}</ion-badge></span> -->
+            <ion-badge></ion-badge>
           </ion-col>
         </ion-row>
       </ion-grid>
     </div>
   </div>
+
+
 
 </ion-content>

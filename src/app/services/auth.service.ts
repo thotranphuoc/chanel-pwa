@@ -8,20 +8,39 @@ import 'firebase/auth';
 import 'firebase/database';
 import { LocalService } from './local.service';
 import { iProfile } from '../interfaces/profile.interface';
-import {iCustomer} from '../interfaces/customer.interface';
+import { iCustomer } from '../interfaces/customer.interface';
 import { from } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  
-  CUSTOMERS: any=[];
 
+  CUSTOMERS: any = [];
+  public isSigned: boolean = false;
+  FBUSER;
   constructor(
     private httpClient: HttpClient,
-    private localService: LocalService
-  ) { }
+    private localService: LocalService,
+    private afa: AngularFireAuth
+  ) {
+    this.isUserSigned();
+  }
 
+  signInWithAfAuth(email: string, passwd: string) {
+    return this.afa.auth.signInWithEmailAndPassword(email, passwd)
+  }
+
+  signOutWithAfAuth() {
+    return this.afa.auth.signOut();
+  }
+  isUserSigned() {
+    this.afa.authState.subscribe(user => {
+      console.log(user);
+      this.isSigned = user ? true : false;
+      this.FBUSER = user;
+    });
+  }
   accountSignInWithGmail() {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider).then(function (result: any) {
@@ -45,7 +64,7 @@ export class AuthService {
 
   accountLoginWithFacebook() {
     var provider = new firebase.auth.FacebookAuthProvider();
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
       firebase.auth().signInWithPopup(provider).then(function (result: any) {
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         var token = result.credential.accessToken;
@@ -53,7 +72,7 @@ export class AuthService {
         var user = result.user;
         // ...
         console.log(result);
-        resolve({token: token, user: user, result: result })
+        resolve({ token: token, user: user, result: result })
       }).catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -63,7 +82,7 @@ export class AuthService {
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
         // ...
-        reject({errorCode: errorCode, errorMessage: errorMessage,email: email, credential: credential })
+        reject({ errorCode: errorCode, errorMessage: errorMessage, email: email, credential: credential })
       });
     })
   }
@@ -99,8 +118,8 @@ export class AuthService {
             let PRO = <iProfile>res.data();
             this.localService.PROFILE_DEFAULT = PRO;
             resolve({ PROFILE: PRO })
-          }else{
-            resolve({PROFILE: null})
+          } else {
+            resolve({ PROFILE: null })
           }
         })
         .catch((err) => {
@@ -113,10 +132,10 @@ export class AuthService {
     return firebase.auth().currentUser;
   }
 
-  isSigned() {
-    if (firebase.auth().currentUser) return true
-    return false;
-  }
+  // isSigned() {
+  //   if (firebase.auth().currentUser) return true
+  //   return false;
+  // }
 
   accountSignOut() {
     return firebase.auth().signOut();
@@ -135,7 +154,7 @@ export class AuthService {
     return this.profileGet_FB(UID);
   }
 
-  accountLogin(email: string, passwd: string){
+  accountLogin(email: string, passwd: string) {
     return firebase.auth().signInWithEmailAndPassword(email, passwd)
     // .then((user)=>{
     //   console.log(user);
@@ -145,26 +164,23 @@ export class AuthService {
     // })
   }
 
-  accountRegister(email: string, passwd: string){
+  accountRegister(email: string, passwd: string) {
     return firebase.auth().createUserWithEmailAndPassword(email, passwd);
   }
 
 
-  getCustomer()
-  {
+  getCustomer() {
     return firebase.firestore().collection('CUSTOMERS').get()
   }
 
-  getUser()
-  {
+  getUser() {
     return firebase.firestore().collection('USERS').get()
   }
 
-  getFacialCabin()
-  {
+  getFacialCabin() {
     return firebase.firestore().collection('FACIAL_CABIN').get()
   }
 
-  
-    
+
+
 }

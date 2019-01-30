@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarService {
-
+  MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   constructor() { }
 
   getDaysOfMonth(month: number, year: number) {
@@ -12,7 +13,11 @@ export class CalendarService {
   };
 
   getWeekday(year: number, month: number, date: number) {
-    return new Date(year + '-' + month + '-' + date).getDay();
+    console.log(year, month, date);
+    let wkDay = new Date(year, month - 1, date).getDay();
+    // let wkDay = new Date(year + '-' + month + '-' + date).getDay();
+    console.log(wkDay);
+    return wkDay;
   }
 
   getWeeksDaysOfMonth(Year: number, Month: number) {
@@ -31,20 +36,24 @@ export class CalendarService {
         Date: _Date,
         DateId: _DateId,
         Data: {
-          number: Math.floor(Math.random() * 3) + 1
+          number: Math.floor(Math.random() * 4) + 0
         }
       };
     }
     console.log(Days);
-    let M1 = Days.slice(0, 7);
-    let M2 = Days.slice(7, 14);
-    let M3 = Days.slice(14, 21);
-    let M4 = Days.slice(21, 28);
-    let M5 = Days.slice(28, 35);
+    let W1 = Days.slice(0, 7);
+    let W2 = Days.slice(7, 14);
+    let W3 = Days.slice(14, 21);
+    let W4 = Days.slice(21, 28);
+    let W5 = Days.slice(28, 35);
 
-    console.log(M1, M2, M3, M4, M5);
-    WEEKS.push(M1, M2, M3, M4, M5);
+    console.log(W1, W2, W3, W4, W5);
+    WEEKS.push(W1, W2, W3, W4, W5);
     console.log(WEEKS);
-    return WEEKS
+    return {
+      WEEKS: WEEKS,
+      MONTH: this.MONTHS[Month - 1],
+      YEAR: Year
+    }
   }
 }

@@ -27,12 +27,14 @@ import 'firebase/database';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { CustomerAddPageModule } from './customer-add/customer-add.module';
 
 firebase.initializeApp(environment.firebase);
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
+  entryComponents: [
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -49,7 +51,8 @@ firebase.initializeApp(environment.firebase);
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
-    })
+    }),
+    CustomerAddPageModule
   ],
   providers: [
     StatusBar,

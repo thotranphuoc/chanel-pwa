@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarService } from '../services/calendar.service';
+import { ModalController } from '@ionic/angular';
+import { CustomerAddPage } from '../customer-add/customer-add.page';
 
 @Component({
   selector: 'app-calendars',
@@ -7,24 +9,51 @@ import { CalendarService } from '../services/calendar.service';
   styleUrls: ['./calendars.page.scss'],
 })
 export class CalendarsPage implements OnInit {
-  WEEKS1 = [];
-  WEEKS2 = [];
-  segment = 'list';
-  constructor(private calendarService: CalendarService) { }
+  WEEKSinMONTH1: any;
+  WEEKSinMONTH2: any;
+  MONTHS = [];
+  segment = 'overall';
+  constructor(
+    public modalController: ModalController,
+    private calendarService: CalendarService) { }
 
   ngOnInit() {
     this.doCalendar();
   }
 
+
+
   doCalendar() {
-    this.WEEKS1 = this.calendarService.getWeeksDaysOfMonth(2019, 1);
-    this.WEEKS2 = this.calendarService.getWeeksDaysOfMonth(2019, 2);
+    this.WEEKSinMONTH1 = this.calendarService.getWeeksDaysOfMonth(2019, 1);
+    this.WEEKSinMONTH2 = this.calendarService.getWeeksDaysOfMonth(2019, 2);
+    this.MONTHS = [this.WEEKSinMONTH1, this.WEEKSinMONTH2];
+    console.log(this.MONTHS);
   }
 
   segmentChanged(ev: CustomEvent) {
     console.log(ev);
     this.segment = ev.detail.value;
     console.log(this.segment);
+  }
+
+  selectDay(Day: any) {
+    console.log(Day);
+    this.presentModal();
+  }
+
+  getColorOfDay(Day: any) {
+    console.log(Day);
+    if (Day.Data.number >= 2) return "color='danger'";
+    return "color='success'";
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: CustomerAddPage,
+      componentProps: { value: '123' }
+    });
+
+    return await modal.present();
   }
 
 }
