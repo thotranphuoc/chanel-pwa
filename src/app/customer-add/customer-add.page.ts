@@ -36,7 +36,7 @@ export class CustomerAddPage implements OnInit {
         this.CUSTOMER.C_AVATAR='#';
         this.CUSTOMER.C_VIPCODE=vcode;
 
-    this.crudService.createCustomer(this.CUSTOMER)
+    this.crudService.customerCreate(this.CUSTOMER)
       .then((res: any) => {
         console.log(res);
         this.ALERTADD='Add new customer success';

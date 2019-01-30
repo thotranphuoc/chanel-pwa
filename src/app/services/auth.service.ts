@@ -34,6 +34,10 @@ export class AuthService {
   signOutWithAfAuth() {
     return this.afa.auth.signOut();
   }
+
+  accountCreate(email: string, passwd: string) {
+    return this.afa.auth.createUserWithEmailAndPassword(email, passwd)
+  }
   isUserSigned() {
     this.afa.authState.subscribe(user => {
       console.log(user);

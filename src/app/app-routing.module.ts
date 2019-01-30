@@ -32,6 +32,7 @@ const routes: Routes = [
   { path: 'calendars', loadChildren: './calendars/calendars.module#CalendarsPageModule' },
   { path: 'test', loadChildren: './test/test.module#TestPageModule' },
   { path: 'account', loadChildren: './account/account.module#AccountPageModule' },
+  { path: 'user-new-add', loadChildren: './user-new-add/user-new-add.module#UserNewAddPageModule' },
 
 ];
 

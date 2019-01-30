@@ -23,13 +23,13 @@ export class CrudService {
     return this.USER;
   }
 
-  createUSER(user: iUser) {
+  userCreate(user: iUser) {
     return this.afs.doc('USERS/' + user.U_ID).set(user);
   }
 
 
 
-  createCustomer(customer: iCustomer) {
+  customerCreate(customer: iCustomer) {
     console.log(customer);
     //var time_tmp = Number(new Date().getTime());
     //customer.C_ID=time_tmp.toString();
