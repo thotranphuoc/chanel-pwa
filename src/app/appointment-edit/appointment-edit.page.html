@@ -1,98 +1,103 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-title>Update Appointment</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content>
-    <div class="main">
-      <div class="content">
-        <div class="old-customer" *ngIf="BOOKING">
-          <ion-item>
-            <ion-label color="primary" fixed>Name:</ion-label>
-            <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_NAME"></ion-input>
-          </ion-item>
-  
-          <ion-item>
-            <ion-label color="primary" fixed>VIP Code:</ion-label>
-            <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_VIPCODE"></ion-input>
-          </ion-item>
-  
-          <ion-item lines="none">
-            <ion-label color="primary" fixed>Phone:</ion-label>
-            <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
-  
-          </ion-item>
-          <div style="height: 5px"></div>
-          <ion-item>
-            <ion-label color="primary" fixed>Appointment date</ion-label>
-            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="BOOKING.B_DATE"></ion-datetime>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-label color="primary">Appointment time</ion-label>
-            <ion-select [(ngModel)]="BOOKING.B_SLOT">
-              <ion-select-option value="10:30">10:30</ion-select-option>
-              <ion-select-option value="12:30">12:30</ion-select-option>
-              <ion-select-option value="15:30">15:30</ion-select-option>
-              <ion-select-option value="17:00">17:00</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <div style="height: 5px"></div>
-          <ion-item>
-            <ion-label color="primary">Chanel Skin Care Use</ion-label>
-            <ion-toggle [(ngModel)]="BOOKING.B_CSCU"></ion-toggle>
-          </ion-item>
-  
-          <ion-item>
-            <ion-label color="primary">Sublimage Customer</ion-label>
-            <ion-toggle [(ngModel)]="BOOKING.B_SUBLIMAGE"></ion-toggle>
-          </ion-item>
-          <ion-item *ngIf="BOOKING.B_SUBLIMAGE">
-            <ion-label stacked></ion-label>
-            <ion-input [(ngModel)]="BOOKING.B_SUBLIMAGES"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary">Le lift Customer</ion-label>
-            <ion-toggle [(ngModel)]="BOOKING.B_LELIFT"></ion-toggle>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary">Fashion Customer</ion-label>
-            <ion-toggle [(ngModel)]="BOOKING.B_FASHION"></ion-toggle>
-          </ion-item>
-          <ion-item *ngIf="BOOKING.B_FASHION">
-            <ion-label stacked></ion-label>
-            <ion-input [(ngModel)]="BOOKING.B_FASHIONS"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary" fixed>1st time using facial cabin</ion-label>
-            <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-label color="primary" fixed>Note</ion-label>
-            <ion-input type="text" placeholder="I would like" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
-          </ion-item>
-          <ion-item lines="none">
-              <ion-label color="primary">Booking State:</ion-label>
-              <ion-select [(ngModel)]="BOOKING.B_STATUS">
-                <ion-select-option value="AVAILABLE">AVAILABLE</ion-select-option>
-                <ion-select-option value="BOOKED">BOOKED</ion-select-option>
-                <ion-select-option value="COMPLETED">COMPLETED</ion-select-option>
-                <ion-select-option value="CANCELED">CANCELED</ion-select-option>
-                <ion-select-option value="EXPIRED">EXPIRED</ion-select-option>
-              </ion-select>
-            </ion-item>
-          <ion-grid text-center>
-            <ion-row>
-              <ion-col>
-                <ion-button color="danger" expand="block" (click)="doCancel()">CANCEL</ion-button>
-              </ion-col>
-              <ion-col>
-                <ion-button color="secondary" expand="block" (click)="updateBooking()">UPDATE</ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-          <p class="alertAdd">{{ALERTADD}}</p>
-        </div>
+  <ion-toolbar>
+    <ion-title>Update Appointment</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main">
+    <div class="content">
+      <div class="old-customer" *ngIf="BOOKING">
+        <ion-item>
+          <ion-label color="primary" fixed>Name:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_NAME"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" fixed>VIP Code:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_VIPCODE"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label color="primary" fixed>Phone:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
+
+        </ion-item>
+        <div style="height: 5px"></div>
+        <ion-item>
+          <ion-label color="primary" fixed>Appointment date</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="BOOKING.B_DATE"></ion-datetime>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label color="primary">Appointment time</ion-label>
+          <ion-select [(ngModel)]="BOOKING.B_SLOT">
+            <ion-select-option value="10:30">10:30</ion-select-option>
+            <ion-select-option value="12:30">12:30</ion-select-option>
+            <ion-select-option value="15:30">15:30</ion-select-option>
+            <ion-select-option value="17:00">17:00</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div style="height: 5px"></div>
+        <ion-item>
+          <ion-label color="primary">Chanel Skin Care Use</ion-label>
+          <ion-toggle [(ngModel)]="BOOKING.B_CSCU"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary">Sublimage Customer</ion-label>
+          <ion-toggle [(ngModel)]="BOOKING.B_SUBLIMAGE"></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="BOOKING.B_SUBLIMAGE">
+          <ion-label stacked></ion-label>
+          <ion-input [(ngModel)]="BOOKING.B_SUBLIMAGES"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Le lift Customer</ion-label>
+          <ion-toggle [(ngModel)]="BOOKING.B_LELIFT"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Fashion Customer</ion-label>
+          <ion-toggle [(ngModel)]="BOOKING.B_FASHION"></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="BOOKING.B_FASHION">
+          <ion-label stacked></ion-label>
+          <ion-input [(ngModel)]="BOOKING.B_FASHIONS"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>1st time using facial cabin</ion-label>
+          <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label color="primary" fixed>Note</ion-label>
+          <ion-input type="text" placeholder="I would like" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label color="primary">Booking State:</ion-label>
+          <ion-select [(ngModel)]="BOOKING.B_STATUS">
+            <ion-select-option value="AVAILABLE">AVAILABLE</ion-select-option>
+            <ion-select-option value="BOOKED">BOOKED</ion-select-option>
+            <ion-select-option value="COMPLETED">COMPLETED</ion-select-option>
+            <ion-select-option value="CANCELED">CANCELED</ion-select-option>
+            <ion-select-option value="EXPIRED">EXPIRED</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="none" *ngIf="BOOKING.B_STATUS =='COMPLETED'">
+          <ion-label color="primary" fixed>Total:</ion-label>
+          <ion-input type="number" placeholder="Tổng tiền sp BA bán được" [(ngModel)]="BOOKING.B_TOTAL"></ion-input>
+        </ion-item>
+        <!-- <input type="number" placeholder="Tổng tiền sp BA bán được" [(ngModel)]="BOOKING.B_TOTAL | currency :'symbol':'4.2-2'"/> -->
+        <ion-grid text-center>
+          <ion-row>
+            <ion-col>
+              <ion-button color="danger" expand="block" (click)="doCancel()">CANCEL</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button color="secondary" expand="block" (click)="updateBooking()">UPDATE</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <p class="alertAdd">{{ALERTADD}}</p>
       </div>
     </div>
-  </ion-content>
+  </div>
+</ion-content>
