@@ -52,7 +52,7 @@ export class AuthService {
         console.log('user not login');
         this.isAuthenticated = false;
         this.authChange.next(false);
-        this.router.navigateByUrl('/account');
+        // this.router.navigateByUrl('/account');
         this.userChange.next(null);
         this.localService.USER = null;
       }

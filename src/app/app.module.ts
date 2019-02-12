@@ -27,16 +27,16 @@ import 'firebase/database';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AngularFireMessagingModule } from '@angular/fire/messaging';
-import { MessagingService } from './shared/messaging.service';
-import { AsyncPipe } from '../../node_modules/@angular/common';
+import { CustomerAddPageModule } from './customer-add/customer-add.module';
+import { AppointmentAddPageModule } from './appointment-add/appointment-add.module';
+import { AppointmentEditPageModule } from './appointment-edit/appointment-edit.module';
 
 firebase.initializeApp(environment.firebase);
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
+  entryComponents: [
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -54,20 +54,15 @@ firebase.initializeApp(environment.firebase);
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
-    BrowserModule,
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    AngularFireMessagingModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    CustomerAddPageModule,
+    AppointmentAddPageModule,
+    AppointmentEditPageModule
   ],
   providers: [
-    MessagingService, 
-    AsyncPipe,
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
-  
   bootstrap: [AppComponent]
 })
 export class AppModule { }
