@@ -27,6 +27,10 @@ import 'firebase/database';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { MessagingService } from './shared/messaging.service';
+import { AsyncPipe } from '../../node_modules/@angular/common';
 
 firebase.initializeApp(environment.firebase);
 
@@ -49,13 +53,21 @@ firebase.initializeApp(environment.firebase);
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
-    })
+    }),
+    BrowserModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFireMessagingModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [
+    MessagingService, 
+    AsyncPipe,
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }
