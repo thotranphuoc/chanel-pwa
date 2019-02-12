@@ -17,9 +17,6 @@
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
-<<<<<<< HEAD
-        {{ message | async | json }}
-=======
         <div *ngIf="!authService.isAuthenticated">
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages1" end>
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
@@ -41,7 +38,6 @@
             </ion-item>
           </ion-menu-toggle>
         </div>
->>>>>>> acb71b67687a4150839652607218c9da7c070edf
       </ion-content>
     </ion-menu>
     <ion-router-outlet main></ion-router-outlet>
