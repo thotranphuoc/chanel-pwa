@@ -15,8 +15,7 @@ export class LocalService {
   FBUSER: any;
   USER: iUser = null;
   USER_DEFAULT: iUser = {
-    U_FNAME: '',
-    U_LNAME: '',
+    U_NAME: '',
     U_EMAIL: '',
     U_PHONE: '',
     U_DoB: '',
@@ -49,8 +48,7 @@ export class LocalService {
   ////////////////////////////////
   CUSTOMER: iCustomer = null;
   CUSTOMER_DEFAULT: iCustomer = {
-    C_FNAME: '',
-    C_LNAME: '',
+    C_NAME: '',
     C_EMAIL: '',
     C_PHONE: '',
     C_ID: '1',
@@ -105,7 +103,6 @@ export class LocalService {
     B_LELIFT: false,
     B_FASHION: false,
     B_FASHIONS: '',
-    B_1stTIME: false,
     B_NOTE: '',
     B_STATUS: '',
     B_CREATED_TIME: '',

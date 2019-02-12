@@ -26,7 +26,7 @@ export interface iBooking {
     B_LELIFT: boolean,
     B_FASHION: boolean,
     B_FASHIONS: string,
-    B_1stTIME: boolean,
+    // B_1stTIME: boolean,
     B_NOTE: string,
     B_STATUS: string,
     B_CREATED_TIME: string,

@@ -3,27 +3,37 @@
 }
 
 
-.CANCEL{
+.CANCELED{
     background: orange;
     padding: 3px;
-    border-radius: 10px;
+    border-radius: 2px;
     color: white;
 }
-.BOOK{
+.BOOKED{
     background: lightgrey;
     padding: 3px;
     border-radius: 2px;
     color: white;
 }
-.COMPLETE{
+.COMPLETED{
     background: #71BF45;
     padding: 3px;
     border-radius: 2px;
     color: white;
 }
+.EXPIRED{
+    background: gray;
+    border-radius: 2px;
+    border-radius: 2px;
+    color: white;
+}
+
 .AVAILABLE{
-    background: none;
-    border: 1px solid gray;
+    background: red;
+    padding: 3px;
+    // border: 1px solid red;
+    border-radius: 2px;
+    color: white;
 }
 ion-row{
     margin: 5px 0;

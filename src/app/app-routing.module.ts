@@ -33,6 +33,8 @@ const routes: Routes = [
   { path: 'test', loadChildren: './test/test.module#TestPageModule' },
   { path: 'account', loadChildren: './account/account.module#AccountPageModule' },
   { path: 'user-new-add', loadChildren: './user-new-add/user-new-add.module#UserNewAddPageModule' },
+  { path: 'appointment-edit', loadChildren: './appointment-edit/appointment-edit.module#AppointmentEditPageModule' },
+  { path: 'customers', loadChildren: './customers/customers.module#CustomersPageModule' },
 
 ];
 

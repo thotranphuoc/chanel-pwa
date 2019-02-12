@@ -29,6 +29,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerAddPageModule } from './customer-add/customer-add.module';
 import { AppointmentAddPageModule } from './appointment-add/appointment-add.module';
+import { AppointmentEditPageModule } from './appointment-edit/appointment-edit.module';
 
 firebase.initializeApp(environment.firebase);
 
@@ -54,7 +55,8 @@ firebase.initializeApp(environment.firebase);
       useFactory: adapterFactory
     }),
     CustomerAddPageModule,
-    AppointmentAddPageModule
+    AppointmentAddPageModule,
+    AppointmentEditPageModule
   ],
   providers: [
     StatusBar,

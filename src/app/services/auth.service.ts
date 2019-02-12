@@ -9,8 +9,11 @@ import 'firebase/database';
 import { LocalService } from './local.service';
 import { iProfile } from '../interfaces/profile.interface';
 import { iCustomer } from '../interfaces/customer.interface';
-import { from } from 'rxjs';
+import { from, Subscription, Observable, Subject } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { CrudService } from './crud.service';
+import { iUser } from '../interfaces/user.interface';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,12 +22,41 @@ export class AuthService {
   CUSTOMERS: any = [];
   public isSigned: boolean = false;
   FBUSER;
+  currentLoginedUser: Subscription
+
+  authChange = new Subject<boolean>();
+  userChange = new Subject<iUser>();
+  public isAuthenticated: boolean = false;
   constructor(
+    private router: Router,
     private httpClient: HttpClient,
     private localService: LocalService,
-    private afa: AngularFireAuth
+    private afa: AngularFireAuth,
+    private crudService: CrudService
   ) {
-    this.isUserSigned();
+    // this.isUserSigned();
+  }
+
+  initAuthListener() {
+    this.afa.authState.subscribe((user) => {
+      if (user) {
+        console.log('user logged in');
+        this.isAuthenticated = true;
+        this.authChange.next(true);
+        this.crudService.userGet(user.uid).subscribe(user => {
+          let USER = <iUser>user.data();
+          this.localService.USER = USER;
+          this.userChange.next(USER);
+        })
+      } else {
+        console.log('user not login');
+        this.isAuthenticated = false;
+        this.authChange.next(false);
+        this.router.navigateByUrl('/account');
+        this.userChange.next(null);
+        this.localService.USER = null;
+      }
+    })
   }
 
   signInWithAfAuth(email: string, passwd: string) {
@@ -38,12 +70,22 @@ export class AuthService {
   accountCreate(email: string, passwd: string) {
     return this.afa.auth.createUserWithEmailAndPassword(email, passwd)
   }
-  isUserSigned() {
-    this.afa.authState.subscribe(user => {
-      console.log(user);
-      this.isSigned = user ? true : false;
-      this.FBUSER = user;
-    });
+  // isUserSigned() {
+  //   this.afa.authState.subscribe(user => {
+  //     console.log(user);
+  //     this.isSigned = user ? true : false;
+  //     this.FBUSER = user;
+  //     return this.crudService.userGet(user.uid).subscribe(USER=>{
+  //       let loginedUser = <iUser>USER.data();
+  //       this.currentUserLogined(loginedUser);
+  //     })
+  //   });
+  // }
+
+  currentUserLogined(USER) {
+    Observable.create((observer) => {
+      observer.next(USER)
+    })
   }
   accountSignInWithGmail() {
     var provider = new firebase.auth.GoogleAuthProvider();

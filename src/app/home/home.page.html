@@ -10,37 +10,37 @@
 </ion-header>
 
 <ion-content>
-    <div class="main" text-center>
-      <div class="content">
-        <div class="logo">
-          <img src="../../assets/imgs/logo_chanel.png" alt="" class="img_logo"/>
-        </div>
+  <div class="main" text-center>
+    <div class="content">
+      <div class="logo">
+        <img src="../../assets/imgs/logo_chanel.png" alt="" class="img_logo" />
+      </div>
 
-        <div class="controllers">
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <img src="../../assets/imgs/icon-home.png" alt=""/>
-                <p>Calendar</p>
-              </ion-col>
-              <ion-col>
-                <img src="../../assets/imgs/icon-home.png" alt=""/>
-                <p>Cabin</p>
-              </ion-col>
-            </ion-row>
+      <div class="controllers">
+        <ion-grid>
+          <!-- <ion-row>
+            <ion-col [routerLink]="['/calendars']" routerLinkActive="router-link-active">
+              <img src="../../assets/imgs/icon-home.png" alt="" />
+              <p>Calendar</p>
+            </ion-col>
+            <ion-col [routerLink]="['/reports']" routerLinkActive="router-link-active">
+              <img src="../../assets/imgs/icon-home.png" alt="" />
+              <p>Report</p>
+            </ion-col>
+          </ion-row> -->
 
-            <ion-row>
-              <ion-col>
-                <img src="../../assets/imgs/icon-home.png" alt=""/>
-                <p>Report</p>
-              </ion-col>
-              <ion-col>
-                <img src="../../assets/imgs/icon-home.png" alt=""/>
-                <p>Customer</p>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
+          <ion-row>
+            <ion-col [routerLink]="['/calendars']">
+              <ion-icon style="font-size: 75px; " name="calendar"></ion-icon>
+              <h2>Calendars</h2>
+            </ion-col>
+            <ion-col [routerLink]="['/reports']">
+              <ion-icon style="font-size: 75px; " name="stats"></ion-icon>
+              <h2>Reports</h2>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
     </div>
+  </div>
 </ion-content>

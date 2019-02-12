@@ -17,6 +17,27 @@
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
+        <div *ngIf="!authService.isAuthenticated">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages1" end>
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>
+                {{p.title}}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </div>
+
+        <div *ngIf="authService.isAuthenticated">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages2" end>
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>
+                {{p.title}}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </div>
       </ion-content>
     </ion-menu>
     <ion-router-outlet main></ion-router-outlet>

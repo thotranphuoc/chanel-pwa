@@ -5,8 +5,11 @@ import { iFacial } from '../interfaces/ifacial.interface';
 import { iCustomer } from '../interfaces/customer.interface';
 import { iUser } from '../interfaces/user.interface';
 import { CrudService } from '../services/crud.service';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController, NavParams } from '@ionic/angular';
 import { iFacialCabin } from '../interfaces/facialcabin.interface';
+import { iDay } from '../interfaces/day.interface';
+import { iSlot } from '../interfaces/slot.interface';
+import { AppService } from '../services/app.service';
 @Component({
   selector: 'app-appointment-add',
   templateUrl: './appointment-add.page.html',
@@ -17,14 +20,26 @@ export class AppointmentAddPage implements OnInit {
   FACIALCABIN: iFacialCabin;
   CUSTOMER: iCustomer;
   USER: iUser;
-  ALERTADD: string = '';
+  // ALERTADD: string = '';
+  SEARCHED_CUSTOMERS = [];
+  isSearched = false;
+  data: any;
+  Day: iDay;
+  Slot: iSlot;
+  index: number;
   constructor(
     private navCtrl: NavController,
+    private navPar: NavParams,
     private modalCtrl: ModalController,
     private localService: LocalService,
     private crudService: CrudService,
+    private appService: AppService
   ) {
-
+    this.data = this.navPar.data;
+    console.log(this.data);
+    this.Day = this.data.selectedDay;
+    this.Slot = this.data.Slot;
+    this.index = this.data.index;
     // this.FACIALCABIN = this.localService.FACIALCABIN_DEFAULT;
     // this.CUSTOMER = this.localService.CUSTOMER_DEFAULT;
     // this.USER = this.localService.USER_DEFAULT;
@@ -35,38 +50,138 @@ export class AppointmentAddPage implements OnInit {
   }
 
   ngOnInit() {
-    this.BOOKING = this.localService.BOOKING_DEFAULT;
+    this.BOOKING = Object.assign({}, this.localService.BOOKING_DEFAULT);
+    this.BOOKING.B_SLOT = this.Slot.SLOT;
+    this.BOOKING.B_DATE = this.formatDate(this.Day.DateId);
+    this.CUSTOMER = Object.assign({}, this.localService.CUSTOMER_DEFAULT);
     console.log(this.BOOKING);
+  }
+
+
+
+  formatDate(DateId: string) {
+    let year = DateId.substr(0, 4);
+    let month = DateId.substr(4, 2);
+    let date = DateId.substr(6, DateId.length - 6);
+    let finalDate = date.length < 2 ? '0' + date : date;
+    return year + '-' + month + '-' + finalDate;
   }
 
   addNewAppointment() {
     this.BOOKING.B_CREATED_TIME = new Date().toISOString();
+    this.CUSTOMER.C_NAME = this.BOOKING.B_CUSTOMER_NAME;
+    this.CUSTOMER.C_PHONE = this.BOOKING.B_CUSTOMER_PHONE;
+    let currentUser = this.localService.USER;
+
+    // update BA_BOOK info
+    this.BOOKING.B_BA_BOOK_ID = currentUser.U_ID;
+    this.BOOKING.B_BA_BOOK_NAME = currentUser.U_NAME;
+    this.BOOKING.B_BA_BOOK = currentUser;
+    this.BOOKING.B_STATUS = 'BOOKED';
     console.log(this.BOOKING);
+    if (this.BOOKING.B_isNewCustomer) {
+      this.createBookingWithNewCustomer();
+    } else {
+      this.createBookingWithExistingCustomer();
+    }
 
-    // this.crudService.createBooking(this.BOOKING)
-    //   .then((res: any) => {
-    //     console.log(res);
-    //     this.ALERTADD = 'Add new Booking success';
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     this.ALERTADD = 'Add new Booking fail';
-    //   })
 
+  }
+
+  createBookingWithExistingCustomer() {
+    let newBooking: iBooking;
+    this.crudService.bookingCreateWithExistingCustomer(this.BOOKING)
+      .then((res: any) => {
+        newBooking = res.BOOKING;
+        console.log(newBooking);
+        this.resetData();
+        this.doUpdateCalendarsForDay(newBooking);
+      })
+      .then(() => {
+        this.doDismiss(newBooking);
+      })
+      .catch((err) => {
+        console.log(err);
+        // this.ALERTADD = 'Add new Booking fail';
+      })
+  }
+
+  createBookingWithNewCustomer() {
+    let newBooking: iBooking;
+    this.crudService.bookingCreateWithNewCustomer(this.BOOKING, this.CUSTOMER)
+      .then((res: any) => {
+        newBooking = res.BOOKING;
+        console.log(newBooking);
+        this.resetData();
+        this.doUpdateCalendarsForDay(newBooking);
+      })
+      .then(() => {
+        this.doDismiss(newBooking);
+      })
+      .catch((err) => {
+        console.log(err);
+        // this.ALERTADD = 'Add new Booking fail';
+      })
+  }
+
+  doUpdateCalendarsForDay(newBooking: iBooking) {
+    // alert booking success;
+    this.appService.toastWithOptionsShow('Success!');
+    // update CALENDARS/DATE/{}
+    this.Day.Slots[this.index].BOOK_ID = newBooking.B_ID;
+    this.Day.Slots[this.index].STATUS = newBooking.B_STATUS;
+    return this.crudService.dayUpdate(this.Day)
   }
 
   doCancel() {
     this.modalCtrl.getTop().then(res => {
       console.log(res);
-      if (typeof (res) !== 'undefined') res.dismiss({ BOOKING: this.BOOKING, isCancel: false });
+      if (typeof (res) !== 'undefined') res.dismiss({ BOOKING: this.BOOKING, isCancel: true });
     }).catch(err => { console.log(err) });
   }
 
-  changeNewCustomer() {
-    this.BOOKING.B_1stTIME = this.BOOKING.B_isNewCustomer;
+  doDismiss(data: any) {
+    this.modalCtrl.getTop().then(res => {
+      console.log(res);
+      if (typeof (res) !== 'undefined') res.dismiss({ BOOKING: this.BOOKING, isCancel: false, data: data });
+    }).catch(err => { console.log(err) });
   }
 
+  // changeNewCustomer() {
+  //   this.BOOKING.B_1stTIME = this.BOOKING.B_isNewCustomer;
+  // }
 
 
+  searchPhone(phone: string) {
+    this.isSearched = true;
+    console.log(phone);
+    this.SEARCHED_CUSTOMERS = [];
+    let phoneStr = phone.trim();
+    if (phoneStr.length < 1) return;
+    this.crudService.customerGetByPhone(phoneStr)
+      .get().subscribe((qSnap) => {
+        console.log(qSnap);
+        qSnap.forEach(docSnap => {
+          let CUSTOMER = <iCustomer>docSnap.data();
+          console.log(CUSTOMER)
+          this.SEARCHED_CUSTOMERS.push(CUSTOMER);
+        })
+      })
+  }
+
+  selectCustomer(CUSTOMER: iCustomer) {
+    this.CUSTOMER = CUSTOMER;
+    this.isSearched = false;
+    this.BOOKING.B_CUSTOMER = CUSTOMER;
+    this.BOOKING.B_CUSTOMER_ID = CUSTOMER.C_ID;
+    this.BOOKING.B_CUSTOMER_NAME = CUSTOMER.C_NAME;
+    this.BOOKING.B_CUSTOMER_PHONE = CUSTOMER.C_PHONE;
+    this.BOOKING.B_CUSTOMER_VIPCODE = CUSTOMER.C_VIPCODE;
+  }
+
+  resetData() {
+    this.CUSTOMER = this.localService.CUSTOMER_DEFAULT;
+    this.BOOKING = this.localService.BOOKING_DEFAULT;
+  }
 
 }

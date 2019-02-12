@@ -38,4 +38,8 @@ export class UserNewAddPage implements OnInit {
       })
   }
 
+  cancel() {
+
+  }
+
 }

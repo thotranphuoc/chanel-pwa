@@ -1,33 +1,65 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button color="danger"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+    <ion-title>Edit Customer</ion-title>
+  </ion-toolbar>
+</ion-header> -->
 <ion-header>
-    <ion-toolbar>
-      <ion-title>customer edit</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content>
-    <div class="main">
-      <div class="content">
-          <div class="input_div">
-              <ion-input #fname type="text" placeholder="FirstName" [(ngModel)]="CUSTOMER.C_FNAME"></ion-input>
-              <ion-input #lname type="text" placeholder="LastName" [(ngModel)]="CUSTOMER.C_LNAME"></ion-input>
-              <ion-input #phone type="text" placeholder="Phone" [(ngModel)]="CUSTOMER.C_PHONE"></ion-input>
-              <ion-input #cemail type="email" placeholder="Email" [(ngModel)]="CUSTOMER.C_EMAIL"></ion-input>
-              <ion-input #vcode type="text" placeholder="VipCode" [(ngModel)]="CUSTOMER.C_VIPCODE"></ion-input>
-              <div class="button_div">
-                  <ion-grid>
-                      <ion-row>
-                        <ion-col>
-                          <button class="btn_edit" (click)="addEdit(fname.value, lname.value,phone.value, cemail.value,vcode.value)">Edit</button>
-                        </ion-col>
-                        <ion-col>
-                          <button class="btn_cancel">Cancel</button>
-                        </ion-col>
-                      </ion-row>
-                    </ion-grid>
-            </div>  
-            <p class="alertUpdate">{{ALERTUPDATE}}</p> 
-        </div>   
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="main">
+    <div class="content">
+      <!-- <div class="input_div">
+        <ion-input #name type="text" placeholder="Name" [(ngModel)]="CUSTOMER.C_NAME"></ion-input>
+        <ion-input #phone type="text" placeholder="Phone" [(ngModel)]="CUSTOMER.C_PHONE"></ion-input>
+        <ion-input #cemail type="email" placeholder="Email" [(ngModel)]="CUSTOMER.C_EMAIL"></ion-input>
+        <ion-input #vcode type="text" placeholder="VipCode" [(ngModel)]="CUSTOMER.C_VIPCODE"></ion-input>
+        <div class="button_div">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <button class="btn_edit"
+                  (click)="addEdit(name.value,phone.value, cemail.value,vcode.value)">Update</button>
+              </ion-col>
+              <ion-col>
+                <button class="btn_cancel">Cancel</button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <p class="alertUpdate">{{ALERTUPDATE}}</p>
+      </div> -->
+      <div class="input_div">
+        <ion-input type="text" placeholder="Name" [(ngModel)]="CUSTOMER.C_NAME"></ion-input>
+        <ion-input type="text" placeholder="Phone" [(ngModel)]="CUSTOMER.C_PHONE"></ion-input>
+        <ion-input type="email" placeholder="Email" [(ngModel)]="CUSTOMER.C_EMAIL"></ion-input>
+        <ion-input type="text" placeholder="VipCode" [(ngModel)]="CUSTOMER.C_VIPCODE"></ion-input>
+        <div class="button_div">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-button expand="block" color="danger" (click)="doCancel()">Cancel</ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button expand="block" (click)="updateCustomer()">Update</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <p class="alertUpdate">{{ALERTUPDATE}}</p>
       </div>
     </div>
-  </ion-content>
-  
+  </div>
+</ion-content>

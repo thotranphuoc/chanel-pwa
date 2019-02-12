@@ -32,7 +32,7 @@ export class AccountRegisterPage implements OnInit {
         console.log(res);
         this.USER.U_ID = res.user.uid;
         this.USER.U_EMAIL = email;
-        this.USER.U_FNAME = fullname;
+        this.USER.U_NAME = fullname;
 
         return this.crudService.userCreate(this.USER)
         //this.navCtrl.goBack();
