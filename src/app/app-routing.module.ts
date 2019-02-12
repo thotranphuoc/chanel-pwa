@@ -30,11 +30,16 @@ const routes: Routes = [
   { path: 'account-information', loadChildren: './account-information/account-information.module#AccountInformationPageModule' },
   { path: 'reports', loadChildren: './reports/reports.module#ReportsPageModule' },
   { path: 'calendars', loadChildren: './calendars/calendars.module#CalendarsPageModule' },
-  
+  { path: 'test', loadChildren: './test/test.module#TestPageModule' },
+  { path: 'account', loadChildren: './account/account.module#AccountPageModule' },
+  { path: 'user-new-add', loadChildren: './user-new-add/user-new-add.module#UserNewAddPageModule' },
+  { path: 'appointment-edit', loadChildren: './appointment-edit/appointment-edit.module#AppointmentEditPageModule' },
+  { path: 'customers', loadChildren: './customers/customers.module#CustomersPageModule' },
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

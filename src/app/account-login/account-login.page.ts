@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
-import {iUser} from '../interfaces/user.interface';
+import { iUser } from '../interfaces/user.interface';
 import { LocalService } from '../services/local.service';
 @Component({
   selector: 'app-account-login',
@@ -9,26 +9,27 @@ import { LocalService } from '../services/local.service';
   styleUrls: ['./account-login.page.scss'],
 })
 export class AccountLoginPage implements OnInit {
-  USER:iUser;
-  isSignedIn = false;
+  USER: iUser;
+  isSigned = true;
   constructor(
     private navCtrl: NavController,
-    private authService: AuthService,
+    public authService: AuthService,
     private localService: LocalService
-  ) { 
+  ) {
     this.USER = this.localService.USER_DEFAULT;
+    console.log(this.authService.isSigned);
   }
 
   ngOnInit() {
-    this.checkIfSigned();
+    // this.checkIfSigned();
   }
 
-  checkIfSigned() {
-    setTimeout(() => {
-      this.isSignedIn = this.authService.isSigned();
-      console.log(this.isSignedIn);
-    }, 1000);
-  }
+  // checkIfSigned() {
+  //   setTimeout(() => {
+  //     this.isSigned = this.authService.isSigned;;
+  //     console.log(this.isSigned);
+  //   }, 1000);
+  // }
 
   // Login with Firebase
   login(email: string, pw: string) {

@@ -1,395 +1,54 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>Calendars</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
-  <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
-    <ion-segment-button layout="icon-start" value="overall">
-      <ion-label>Overall</ion-label>
-      <ion-icon name="calendar"></ion-icon>
-    </ion-segment-button>
-    <ion-segment-button layout="icon-start" value="list">
-      <ion-label>List</ion-label>
-      <ion-icon name="list-box"></ion-icon>
-    </ion-segment-button>
-  </ion-segment>
+  <div padding>
+    <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+      <ion-segment-button layout="icon-start" value="overall">
+        <ion-label>Overall</ion-label>
+        <ion-icon name="calendar"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button layout="icon-start" value="list">
+        <ion-label>List</ion-label>
+        <ion-icon name="list-box"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
 
   <div [ngSwitch]="segment" text-center>
     <div *ngSwitchCase="'list'">
       <ion-grid text-center>
-        <ion-row>
+        <ion-row *ngFor="let Day of DaysInM1">
           <ion-col>
-            <span class="DATE">2019/01/18</span>
+            <span class="DATE">{{Day.date}}</span>
           </ion-col>
-          <ion-col>
-            <span class="CANCEL">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/01/19</span>
-          </ion-col>
-          <ion-col>
-            <span class="CANCEL">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/01/20</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/01/21</span>
-          </ion-col>
-          <ion-col>
-            <span class="CANCEL">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/01/22</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="CANCEL">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/01/23</span>
-          </ion-col>
-          <ion-col>
-            <span class="CANCEL">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/01/24</span>
-          </ion-col>
-          <ion-col>
-            <span class="CANCEL">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/01/25</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/01/26</span>
-          </ion-col>
-          <ion-col>
-            <span class="CANCEL">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/01/27</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="CANCEL">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="COMPLETE">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row class="active-date">
-          <ion-col>
-            <span class="DATE">2019/01/28</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/01/29</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/01/30</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/01/31</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/02/01</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="BOOK">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/02/02</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">17:00</span>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="DATE">2019/02/03</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">10:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">12:30</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">15:00</span>
-          </ion-col>
-          <ion-col>
-            <span class="AVAILABLE">17:00</span>
+          <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)">
+            <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
           </ion-col>
         </ion-row>
       </ion-grid>
-
-      <!-- <div id="calendar" text-center>
-            <ion-grid>
-              <ion-row>
-                <ion-col>Sun</ion-col>
-                <ion-col>Mon</ion-col>
-                <ion-col>Tue</ion-col>
-                <ion-col>Wed</ion-col>
-                <ion-col>Thu</ion-col>
-                <ion-col>Fri</ion-col>
-                <ion-col>Sat</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col></ion-col>
-                <ion-col></ion-col>
-                <ion-col>
-                  <h4>1</h4>
-                  <ion-icon name="radio-button-on" color="primary"></ion-icon>
-                </ion-col>
-                <ion-col>
-                  <h4>2</h4>
-                  <ion-icon name="radio-button-on" color="secondary"></ion-icon>
-                </ion-col>
-                <ion-col>
-                  <h4>3</h4>
-                  <ion-icon name="radio-button-on" color="secondary"></ion-icon>
-                </ion-col>
-                <ion-col>
-                  <h4>4</h4>
-                  <ion-icon name="radio-button-on" color="secondary"></ion-icon>
-                </ion-col>
-                <ion-col>
-                  <h4>5</h4>
-                  <ion-icon name="radio-button-on" color="danger"></ion-icon>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col>6</ion-col>
-                <ion-col>7</ion-col>
-                <ion-col>8</ion-col>
-                <ion-col>9</ion-col>
-                <ion-col>10</ion-col>
-                <ion-col>11</ion-col>
-                <ion-col>12</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col>13</ion-col>
-                <ion-col>14</ion-col>
-                <ion-col>15</ion-col>
-                <ion-col>16</ion-col>
-                <ion-col>17</ion-col>
-                <ion-col>18</ion-col>
-                <ion-col>19</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col>20</ion-col>
-                <ion-col>21</ion-col>
-                <ion-col>22</ion-col>
-                <ion-col>23</ion-col>
-                <ion-col>24</ion-col>
-                <ion-col>25</ion-col>
-                <ion-col>26</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col>17</ion-col>
-                <ion-col>28</ion-col>
-                <ion-col>29</ion-col>
-                <ion-col>30</ion-col>
-                <ion-col>31</ion-col>
-                <ion-col></ion-col>
-                <ion-col></ion-col>
-              </ion-row>
-            </ion-grid> -->
-
-
+      <ion-grid text-center>
+        <ion-row *ngFor="let Day of DaysInM2">
+          <ion-col>
+            <span class="DATE">{{Day.date}}</span>
+          </ion-col>
+          <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)">
+            <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
     <div *ngSwitchCase="'overall'">
-      <ion-grid>
-        <h1>January 2019</h1>
-        <ion-row>
+      <ion-grid *ngIf="WEEKSinMONTH1">
+        <h1>{{WEEKSinMONTH1.MONTH}} {{WEEKSinMONTH1.YEAR}}</h1>
+        <ion-row class="row-bottom-line">
           <ion-col>Sun</ion-col>
           <ion-col>Mon</ion-col>
           <ion-col>Tue</ion-col>
@@ -398,17 +57,18 @@
           <ion-col>Fri</ion-col>
           <ion-col>Sat</ion-col>
         </ion-row>
-        <ion-row *ngFor="let WK of WEEKS1">
-          <ion-col *ngFor="let Day of WK">
+        <ion-row *ngFor="let WK of WEEKSinMONTH1.WEEKS" class="row-bottom-line">
+          <ion-col *ngFor="let Day of WK" (click)="selectDay(Day)" style="text-align: center">
             <h4>{{Day?.Date}}</h4>
-            <ion-badge color="secondary">{{Day?.Data.number}}</ion-badge>
+            <div *ngIf="Day?.n>=3 && Day?.Date" class="badge-red">{{Day?.n}}</div>
+            <div *ngIf="Day?.n<3 && Day?.Date" class="badge-green">{{Day?.n}}</div>
+            <ion-badge></ion-badge>
           </ion-col>
         </ion-row>
       </ion-grid>
-      <hr>
-      <ion-grid>
-        <h1>February 2019</h1>
-        <ion-row>
+      <ion-grid *ngIf="WEEKSinMONTH2">
+        <h1>{{WEEKSinMONTH2.MONTH}} {{WEEKSinMONTH2.YEAR}}</h1>
+        <ion-row class="row-bottom-line">
           <ion-col>Sun</ion-col>
           <ion-col>Mon</ion-col>
           <ion-col>Tue</ion-col>
@@ -417,14 +77,32 @@
           <ion-col>Fri</ion-col>
           <ion-col>Sat</ion-col>
         </ion-row>
-        <ion-row *ngFor="let WK of WEEKS2">
-          <ion-col *ngFor="let Day of WK">
+        <ion-row *ngFor="let WK of WEEKSinMONTH2.WEEKS" class="row-bottom-line">
+          <ion-col *ngFor="let Day of WK" (click)="selectDay(Day)" style="text-align: center">
             <h4>{{Day?.Date}}</h4>
-            <ion-badge color="secondary">{{Day?.Data.number}}</ion-badge>
+            <div *ngIf="Day?.n>=3 && Day?.Date" class="badge-red">{{Day?.n}}</div>
+            <div *ngIf="Day?.n<3 && Day?.Date" class="badge-green">{{Day?.n}}</div>
+            <ion-badge></ion-badge>
           </ion-col>
         </ion-row>
       </ion-grid>
+      <div *ngIf="selectedDay">
+        <h2>{{selectedDay.DateId}}</h2>
+        <ion-grid>
+          <ion-row *ngFor="let slot of selectedDay.Slots; let i = index" (click)="selectSlot(selectedDay,slot, i)">
+            <ion-col size="4" [ngClass]="slot.STATUS">{{slot.SLOT}}</ion-col>
+            <ion-col>{{slot.STATUS}}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <div style="height: 50px"></div>
     </div>
+
   </div>
 
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="addNewAppointment()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

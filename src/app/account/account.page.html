@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="authService.isAuthenticated && USER">
+    <ion-item>
+      <ion-label color="primary">Name:</ion-label>
+      <ion-input [(ngModel)]="USER.U_NAME" name="U_NAME"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Email:</ion-label>
+      <ion-input [(ngModel)]="USER.U_EMAIL" name="U_EMAIL"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Date of birth:</ion-label>
+      <ion-input [(ngModel)]="USER.U_DoB" name="U_DoB" type='date'></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Gender</ion-label>
+      <ion-select [(ngModel)]="USER.U_GENDER" name="U_GENDER">
+        <ion-select-option value="Male">Male</ion-select-option>
+        <ion-select-option value="Female">Female</ion-select-option>
+        <ion-select-option value="Other">Other</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Phone:</ion-label>
+      <ion-input [(ngModel)]="USER.U_PHONE" name="U_PHONE"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Address:</ion-label>
+      <ion-input [(ngModel)]="USER.U_ADDRESS" name="U_ADDRESS"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Role:</ion-label>
+      <ion-input [(ngModel)]="USER.U_ROLE" name="U_ROLE"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Status:</ion-label>
+      <ion-input [(ngModel)]="USER.U_STATE" name="U_STATE"></ion-input>
+    </ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" color="danger" (click)="logout()">Logout</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" color="secondary" (click)="update()">Update</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div *ngIf="!authService.isAuthenticated">
+    <div>
+      <ion-input #email type="email" placeholder="Email"></ion-input>
+      <ion-input #pw type="password" placeholder="Password"></ion-input>
+      <ion-button expand="full" (click)="login(email.value, pw.value)">Login</ion-button>
+    </div>
+  </div>
+</ion-content>
