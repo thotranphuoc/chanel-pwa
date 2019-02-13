@@ -27,6 +27,7 @@ export class AppointmentAddPage implements OnInit {
   Day: iDay;
   Slot: iSlot;
   index: number;
+  searchPhoneStr: string;
   constructor(
     private navCtrl: NavController,
     private navPar: NavParams,
@@ -153,10 +154,11 @@ export class AppointmentAddPage implements OnInit {
 
 
   searchPhone(phone: string) {
+    this.searchPhoneStr = phone;
     this.isSearched = true;
-    console.log(phone);
+    console.log(this.searchPhoneStr);
     this.SEARCHED_CUSTOMERS = [];
-    let phoneStr = phone.trim();
+    let phoneStr = this.searchPhoneStr.trim();
     if (phoneStr.length < 1) return;
     this.crudService.customerGetByPhone(phoneStr)
       .get().subscribe((qSnap) => {
@@ -172,6 +174,7 @@ export class AppointmentAddPage implements OnInit {
   selectCustomer(CUSTOMER: iCustomer) {
     this.CUSTOMER = CUSTOMER;
     this.isSearched = false;
+    this.searchPhoneStr = '';
     this.BOOKING.B_CUSTOMER = CUSTOMER;
     this.BOOKING.B_CUSTOMER_ID = CUSTOMER.C_ID;
     this.BOOKING.B_CUSTOMER_NAME = CUSTOMER.C_NAME;

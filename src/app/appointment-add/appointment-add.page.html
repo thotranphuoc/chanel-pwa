@@ -12,17 +12,20 @@
         <ion-toggle [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
       </ion-item>
       <div *ngIf="!BOOKING.B_isNewCustomer">
-        <ion-searchbar #phone debounce="500" showCancelButton cancelButtonText="Cancel"
-          (ionChange)="searchPhone(phone.value)"></ion-searchbar>
+        <ion-searchbar placeholder="Search phone number" #phone debounce="500" showCancelButton
+          cancelButtonText="Cancel" (ionChange)="searchPhone(phone.value)"></ion-searchbar>
       </div>
 
-      <div *ngIf="isSearched">
+      <div *ngIf="isSearched && SEARCHED_CUSTOMERS.length>0">
         <ion-item *ngFor="let CUSTOMER of SEARCHED_CUSTOMERS" (click)="selectCustomer(CUSTOMER)">
           <ion-avatar slot="start">
             <img [src]="CUSTOMER.C_AVATAR" onError="this.src='../../assets/imgs/user.jpg';">
           </ion-avatar>
           <ion-label>{{CUSTOMER.C_NAME}}</ion-label>
         </ion-item>
+      </div>
+      <div *ngIf="isSearched && SEARCHED_CUSTOMERS.length <1 && searchPhoneStr.length >0">
+        <p style="padding: 10px;">Không có thông tin Khách hàng</p>
       </div>
 
       <div *ngIf="BOOKING.B_isNewCustomer" class="new-customer">
@@ -88,7 +91,7 @@
           <ion-label color="primary" fixed>1st time using facial cabin</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
         </ion-item>
-        
+
         <!-- <div class="btn">
               <button class="add_new" (click)="addNewAppointment()">Add</button>
             </div> -->
@@ -123,7 +126,7 @@
         <div style="height: 5px"></div>
         <ion-item>
           <ion-label color="primary" fixed>Appointment date</ion-label>
-          <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="BOOKING.B_DATE"></ion-datetime>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="BOOKING.B_DATE"></ion-datetime>
         </ion-item>
         <ion-item lines="none">
           <ion-label color="primary">Appointment time</ion-label>
@@ -139,10 +142,6 @@
           <ion-label color="primary" fixed>Note</ion-label>
           <ion-input type="text" placeholder="I would like" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
         </ion-item>
-        <ion-item lines="none">
-          <ion-label color="primary" fixed>Note</ion-label>
-          <ion-input type="text" placeholder="I would like" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
-        </ion-item>
         <ion-item>
           <ion-label color="primary">Chanel Skin Care Use</ion-label>
           <ion-toggle [(ngModel)]="BOOKING.B_CSCU"></ion-toggle>
@@ -154,7 +153,7 @@
         </ion-item>
         <ion-item *ngIf="BOOKING.B_SUBLIMAGE">
           <ion-label stacked></ion-label>
-          <ion-input [(ngModel)]="BOOKING.B_SUBLIMAGES"></ion-input>
+          <ion-input [(ngModel)]="BOOKING.B_SUBLIMAGES" placeholder="Sản phẩm Sublimage khách dùng"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label color="primary">Le lift Customer</ion-label>
@@ -166,13 +165,13 @@
         </ion-item>
         <ion-item *ngIf="BOOKING.B_FASHION">
           <ion-label stacked></ion-label>
-          <ion-input [(ngModel)]="BOOKING.B_FASHIONS"></ion-input>
+          <ion-input [(ngModel)]="BOOKING.B_FASHIONS" placeholder="Sản phẩm Fashion khách dùng"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item lines="none">
           <ion-label color="primary" fixed>1st time using facial cabin</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
         </ion-item>
-        
+
         <!-- <div class="btn">
               <button class="add_new" (click)="addNewAppointment()">Add</button>
             </div> -->
