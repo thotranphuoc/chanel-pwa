@@ -39,4 +39,8 @@ export class UsersPage implements OnInit {
     this.navCtrl.navigateForward('/user-edit');
   }
 
+  go2UserNewAdd() {
+    this.navCtrl.navigateForward('/user-new-add');
+  }
+
 }

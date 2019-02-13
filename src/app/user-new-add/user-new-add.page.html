@@ -6,6 +6,10 @@
 
 <ion-content padding>
   <ion-item>
+    <ion-label color="primary">Name:</ion-label>
+    <ion-input #name type="text"></ion-input>
+  </ion-item>
+  <ion-item>
     <ion-label color="primary">Email:</ion-label>
     <ion-input #email type="email"></ion-input>
   </ion-item>
@@ -21,6 +25,7 @@
       <ion-select-option value="Manager">Manager</ion-select-option>
       <ion-select-option value="Specialist">Specialist</ion-select-option>
       <ion-select-option value="BA">BA</ion-select-option>
+      <ion-select-option value="FA">FA</ion-select-option>
       <ion-select-option value="Admin">Admin</ion-select-option>
     </ion-select>
   </ion-item>
@@ -30,7 +35,8 @@
         <ion-button expand="full" color="danger" (click)="cancel()">Cancel</ion-button>
       </ion-col>
       <ion-col>
-        <ion-button expand="full" (click)="createAccount4User(email.value, pw.value, role.value)">Create User
+        <ion-button expand="full" (click)="createAccount4User(name.value, email.value, pw.value, role.value)">Create
+          User
         </ion-button>
       </ion-col>
     </ion-row>
