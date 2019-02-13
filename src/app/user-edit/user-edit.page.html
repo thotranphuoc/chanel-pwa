@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="main">
+    <div class="content">
+      <div class="input_div">
+        <div class="button_div">
+          <ion-item>
+            <ion-label color="primary" fixed>Name:</ion-label>
+            <ion-input type="text" placeholder="Name" [(ngModel)]="USER.U_NAME"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" fixed>Phone:</ion-label>
+            <ion-input type="text" placeholder="Phone" [(ngModel)]="USER.U_PHONE"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" fixed>Email:</ion-label>
+            <ion-input type="text" placeholder="Email" [(ngModel)]="USER.U_EMAIL"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" fixed>Address:</ion-label>
+            <ion-input type="text" placeholder="Address" [(ngModel)]="USER.U_ADDRESS"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary">Gender:</ion-label>
+            <ion-select [(ngModel)]="USER.U_GENDER">
+              <ion-select-option value="Male">Male</ion-select-option>
+              <ion-select-option value="Female">Female</ion-select-option>
+              <ion-select-option value="Other">Other</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" fixed>Date of Birth</ion-label>
+            <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="USER.U_DoB"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary">Role</ion-label>
+            <ion-select [(ngModel)]="USER.U_ROLE">
+              <ion-select-option value="Manager">Manager</ion-select-option>
+              <ion-select-option value="Specialist">Specialist</ion-select-option>
+              <ion-select-option value="BA">BA</ion-select-option>
+              <ion-select-option value="FA">FA</ion-select-option>
+              <ion-select-option value="IT">IT</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary">Status:</ion-label>
+            <ion-select [(ngModel)]="USER.U_STATE">
+              <ion-select-option value="Active">Active</ion-select-option>
+              <ion-select-option value="Inactive">Inactive</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-button expand="block" color="danger" (click)="doCancel()">Cancel</ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button expand="block" (click)="updateUser()">Update</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <p class="alertUpdate">{{ALERTUPDATE}}</p>
+      </div>
+    </div>
+  </div>
+</ion-content>

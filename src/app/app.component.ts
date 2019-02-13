@@ -22,10 +22,15 @@ export class AppComponent implements OnInit {
     { title: 'Login', url: '/account', icon: 'lock' }
   ];
 
+  // Loggin user menus
   public appPages2 = [
     { title: 'Logout', url: '/account', icon: 'unlock' }
   ];
 
+  // Admin menus
+  public appPages3 = [
+    { title: 'Users', url: '/users', icon: 'contacts' }
+  ];
 
   constructor(
     private platform: Platform,

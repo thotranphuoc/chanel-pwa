@@ -37,6 +37,10 @@ export class CrudService {
     return this.afs.doc(`USERS/${User.U_ID}`).update(User);
   }
 
+  usersGet() {
+    return this.afs.collection('USERS').get();
+  }
+
 
 
 

@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>users</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item *ngFor="let USER of USERS" (click)="go2UserEdit(USER)">
+    <ion-avatar slot="start">
+      <img [src]="USER.U_AVATAR" onError="this.src='../../assets/imgs/user.jpg';">
+    </ion-avatar>
+    <ion-label>{{USER.U_NAME}} - {{USER.U_ROLE}}</ion-label>
+    <ion-note slot="end">
+      <ion-icon name="md-create"></ion-icon>
+    </ion-note>
+  </ion-item>
+</ion-content>
