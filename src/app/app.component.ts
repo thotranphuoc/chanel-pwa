@@ -15,17 +15,8 @@ export class AppComponent implements OnInit {
     { title: 'Customers', url: '/customers', icon: 'contacts' },
     { title: 'Calendars', url: '/calendars', icon: 'calendar' },
     { title: 'Reports', url: '/reports', icon: 'stats' },
-
+    { title: 'Login', url: '/account-login', icon: 'lock' }
   ];
-
-  public appPages1 = [
-    { title: 'Login', url: '/account', icon: 'lock' }
-  ];
-
-  public appPages2 = [
-    { title: 'Logout', url: '/account', icon: 'unlock' }
-  ];
-
 
   constructor(
     private platform: Platform,
