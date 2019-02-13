@@ -106,7 +106,7 @@ export class LocalService {
     B_NOTE: '',
     B_STATUS: '',
     B_CREATED_TIME: '',
-    B_TOTAL: 0,
+    B_TOTAL: null,
     B_SPECIALIST: this.USER_DEFAULT,
     B_SPECIALIST_ID: '',
     B_SPECIALIST_NAME: '',
