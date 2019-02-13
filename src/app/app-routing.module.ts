@@ -37,6 +37,7 @@ const routes: Routes = [
   { path: 'customers', loadChildren: './customers/customers.module#CustomersPageModule' },
   { path: 'users', loadChildren: './users/users.module#UsersPageModule' },
   { path: 'user-edit', loadChildren: './user-edit/user-edit.module#UserEditPageModule' },
+  { path: 'slots-in-day', loadChildren: './slots-in-day/slots-in-day.module#SlotsInDayPageModule' },
 
 ];
 

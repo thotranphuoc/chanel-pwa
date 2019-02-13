@@ -1,0 +1,37 @@
+.CANCELED{
+    background: orange;
+    padding: 3px;
+    border-radius: 2px;
+    color: white;
+}
+.BOOKED{
+    background: lightgrey;
+    padding: 3px;
+    border-radius: 2px;
+    color: white;
+}
+.COMPLETED{
+    background: #71BF45;
+    padding: 3px;
+    border-radius: 2px;
+    color: white;
+}
+.EXPIRED{
+    background: gray;
+    border-radius: 2px;
+    border-radius: 2px;
+    color: white;
+}
+
+.AVAILABLE{
+    background: red;
+    padding: 3px;
+    // border: 1px solid red;
+    border-radius: 2px;
+    color: white;
+}
+
+ion-row{
+    padding: 5px;
+    text-align: center;
+}

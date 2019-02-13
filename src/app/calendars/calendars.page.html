@@ -25,16 +25,17 @@
   <div [ngSwitch]="segment" text-center>
     <div *ngSwitchCase="'list'">
       <!-- LUAN -->
-      
+
       <ion-grid style="margin: 0 auto; text-align: center;">
         <ion-row>
-          <ion-button *ngFor="let STATE of STATES" fill="clear" size="small" color="dark" style="font-size: 9px; text-align: center;">
+          <ion-button *ngFor="let STATE of STATES" fill="clear" size="small" color="dark"
+            style="font-size: 9px; text-align: center;">
             <span [ngClass]="STATE"></span>
             {{STATE}}
           </ion-button>
           <!-- <ion-col *ngFor="let STATE of STATES"><span id="state"><span id="colordot"></span>{{STATE}}</span></ion-col> -->
         </ion-row>
-      </ion-grid> 
+      </ion-grid>
       <ion-grid text-center>
         <ion-row *ngFor="let Day of DaysInM1">
           <ion-col>
@@ -101,7 +102,7 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-      <div *ngIf="selectedDay">
+      <!-- <div *ngIf="selectedDay">
         <h2>{{selectedDay.DateId }}</h2>
         <ion-grid>
           <ion-row *ngFor="let slot of selectedDay.Slots; let i = index" (click)="selectSlot(selectedDay,slot, i)">
@@ -109,7 +110,7 @@
             <ion-col>{{slot.STATUS}}</ion-col>
           </ion-row>
         </ion-grid>
-      </div>
+      </div> -->
       <div style="height: 50px"></div>
     </div>
 

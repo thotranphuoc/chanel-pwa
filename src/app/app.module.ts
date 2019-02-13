@@ -30,6 +30,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerAddPageModule } from './customer-add/customer-add.module';
 import { AppointmentAddPageModule } from './appointment-add/appointment-add.module';
 import { AppointmentEditPageModule } from './appointment-edit/appointment-edit.module';
+import { SlotsInDayPageModule } from './slots-in-day/slots-in-day.module';
 
 firebase.initializeApp(environment.firebase);
 
@@ -56,7 +57,8 @@ firebase.initializeApp(environment.firebase);
     }),
     CustomerAddPageModule,
     AppointmentAddPageModule,
-    AppointmentEditPageModule
+    AppointmentEditPageModule,
+    SlotsInDayPageModule
   ],
   providers: [
     StatusBar,

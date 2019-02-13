@@ -10,6 +10,7 @@ import { iDay } from '../interfaces/day.interface';
 import { AppointmentEditPage } from '../appointment-edit/appointment-edit.page';
 import { LocalService } from '../services/local.service';
 import { AppService } from '../services/app.service';
+import { SlotsInDayPage } from '../slots-in-day/slots-in-day.page';
 
 @Component({
   selector: 'app-calendars',
@@ -28,7 +29,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
   month1Subscription: Subscription;
   month2Subscription: Subscription;
   // STATES = ['AVAILABLE','BOOKED','CANCELED','COMPLETED','EXPIRED']
-  STATES = ['Available','Booked','Canceled','Completed','Expired'];
+  STATES = ['Available', 'Booked', 'Canceled', 'Completed', 'Expired'];
   constructor(
     private alertCtrl: AlertController,
     private navCtrl: NavController,
@@ -145,6 +146,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
     // // this.presentModal();
     // this.presentAlertRadio(Day);
     this.selectedDay = Day;
+    this.openSlotsInDayModal(Day);
   }
   selectSlot(selectedDay: iDay, slot: iSlot, index: number) {
     console.log(selectedDay, slot, index);
@@ -250,6 +252,29 @@ export class CalendarsPage implements OnInit, OnDestroy {
       this.alertConfirmationShow('Confirm!', 'Please login before continuing...');
     }
 
+  }
+
+  openSlotsInDayModal(Day: iDay) {
+    console.log(Day);
+    if (this.localService.USER) {
+      this.slotsInDayModal(Day);
+    } else {
+      this.alertConfirmationShow('Confirm!', 'Please login before continuing...');
+    }
+  }
+
+  async slotsInDayModal(Day: iDay) {
+    const modal = await this.modalController.create({
+      component: SlotsInDayPage,
+      componentProps: { selectedDay: Day }
+    });
+    await modal.present();
+    const data = await modal.onDidDismiss();
+    console.log(data);
+    if (typeof (data.data) !== 'undefined') {
+      let res = data.data;
+      this.openAppointmentModal(res.selectedDay, res.selectedSlot, res.selectedIndex);
+    }
   }
 
 
