@@ -24,6 +24,17 @@
 
   <div [ngSwitch]="segment" text-center>
     <div *ngSwitchCase="'list'">
+      <!-- LUAN -->
+      <div></div>
+      <!-- <ion-grid>
+        <ion-row>
+          <ion-button *ngFor="let STATE of STATES" fill="clear" size="small" color="dark">
+            <ion-icon slot="start" name="square" color="red"></ion-icon>
+            {{STATE}}
+          </ion-button>
+          <ion-col *ngFor="let STATE of STATES"><span id="state"><span id="colordot"></span>{{STATE}}</span></ion-col>
+        </ion-row>
+      </ion-grid> -->
       <ion-grid text-center>
         <ion-row *ngFor="let Day of DaysInM1">
           <ion-col>
@@ -44,12 +55,12 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-      <ion-grid>
+      <!-- <ion-grid>
         <ion-row *ngFor="let STATE of STATES" >
           <ion-col size="4" [ngClass]="STATE">{{STATE}}</ion-col>
           <ion-col></ion-col>
         </ion-row>
-      </ion-grid>
+      </ion-grid> -->
     </div>
     <div *ngSwitchCase="'overall'">
       <ion-grid *ngIf="WEEKSinMONTH1">
@@ -68,7 +79,6 @@
             <h4>{{Day?.Date}}</h4>
             <div *ngIf="Day?.n>=3 && Day?.Date" class="badge-red">{{Day?.n}}</div>
             <div *ngIf="Day?.n<3 && Day?.Date" class="badge-green">{{Day?.n}}</div>
-            <ion-badge></ion-badge>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -88,7 +98,6 @@
             <h4>{{Day?.Date}}</h4>
             <div *ngIf="Day?.n>=3 && Day?.Date" class="badge-red">{{Day?.n}}</div>
             <div *ngIf="Day?.n<3 && Day?.Date" class="badge-green">{{Day?.n}}</div>
-            <ion-badge></ion-badge>
           </ion-col>
         </ion-row>
       </ion-grid>

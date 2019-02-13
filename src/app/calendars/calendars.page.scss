@@ -66,10 +66,10 @@ ion-col h4{
     margin: 2px 2px;
 }
 
-ion-badge{
-    border-radius: 50%;
-    // font-size: 10px;
-}
+// ion-badge{
+//     border-radius: 50%;
+//     // font-size: 10px;
+// }
 
 // .badge{
 //     background: #71BF45;
@@ -111,6 +111,8 @@ ion-badge{
 
 }
 
+
+
 @media(max-width: 576px){
     ion-col span{
         border-radius: 5px;
@@ -132,9 +134,14 @@ ion-badge{
         font-size: 10px;
     }
 
-    // ion-row{
-    //     border-bottom: 1px solid lightgray;
-    // }
+    #state{
+        font-size: 8px;
+    }
+    #colordot{
+        background-color: red;
+        width: 10px;
+        height: 10px;
+    }
 }
 
 

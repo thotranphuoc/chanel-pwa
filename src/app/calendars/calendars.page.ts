@@ -27,7 +27,8 @@ export class CalendarsPage implements OnInit, OnDestroy {
   selectedSlot: iSlot = null;
   month1Subscription: Subscription;
   month2Subscription: Subscription;
-  STATES = ['AVAILABLE','BOOKED','CANCELED','COMPLETED','EXPIRED']
+  // STATES = ['AVAILABLE','BOOKED','CANCELED','COMPLETED','EXPIRED']
+  STATES = ['Available','Booked','Canceled','Completed','Expired'];
   constructor(
     private alertCtrl: AlertController,
     private navCtrl: NavController,

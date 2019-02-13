@@ -50,7 +50,7 @@ export class AppointmentEditPage implements OnInit {
       return;
     }
 
-    if (this.BOOKING.B_STATUS == 'COMPLETED' && !(this.USER.U_ROLE =='Specialist' || this.USER.U_ROLE =='Manage')) {
+    if (this.BOOKING.B_STATUS == 'COMPLETED' && !(this.USER.U_ROLE == 'Specialist' || this.USER.U_ROLE == 'Manager')) {
       this.appService.alertConfirmationShow('Opps', 'Bạn không có quyền close Booking');
       return;
     }

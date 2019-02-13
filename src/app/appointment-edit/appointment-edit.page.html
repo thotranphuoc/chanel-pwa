@@ -18,7 +18,7 @@
           <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_VIPCODE"></ion-input>
         </ion-item>
 
-        <ion-item lines="none">
+        <ion-item>
           <ion-label color="primary" fixed>Phone:</ion-label>
           <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
 
@@ -28,7 +28,7 @@
           <ion-label color="primary" fixed>Appointment date</ion-label>
           <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="BOOKING.B_DATE"></ion-datetime>
         </ion-item>
-        <ion-item lines="none">
+        <ion-item>
           <ion-label color="primary">Appointment time</ion-label>
           <ion-select [(ngModel)]="BOOKING.B_SLOT">
             <ion-select-option value="10:30">10:30</ion-select-option>
@@ -38,6 +38,11 @@
           </ion-select>
         </ion-item>
         <div style="height: 5px"></div>
+
+        <ion-item>
+          <ion-label color="primary" fixed>Note</ion-label>
+          <ion-input type="text" placeholder="I would like" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
+        </ion-item>
         <ion-item>
           <ion-label color="primary">Chanel Skin Care Use</ion-label>
           <ion-toggle [(ngModel)]="BOOKING.B_CSCU"></ion-toggle>
@@ -67,11 +72,7 @@
           <ion-label color="primary" fixed>1st time using facial cabin</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
         </ion-item>
-        <ion-item lines="none">
-          <ion-label color="primary" fixed>Note</ion-label>
-          <ion-input type="text" placeholder="I would like" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
-        </ion-item>
-        <ion-item lines="none">
+        <ion-item>
           <ion-label color="primary">Booking State:</ion-label>
           <ion-select [(ngModel)]="BOOKING.B_STATUS">
             <ion-select-option value="AVAILABLE">AVAILABLE</ion-select-option>
@@ -81,7 +82,7 @@
             <ion-select-option value="EXPIRED">EXPIRED</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item lines="none" *ngIf="BOOKING.B_STATUS =='COMPLETED'">
+        <ion-item *ngIf="BOOKING.B_STATUS =='COMPLETED'">
           <ion-label color="primary" fixed>Total:</ion-label>
           <ion-input type="number" placeholder="Tổng tiền sp BA bán được" [(ngModel)]="BOOKING.B_TOTAL"></ion-input>
         </ion-item>
