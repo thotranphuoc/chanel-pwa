@@ -25,16 +25,16 @@
   <div [ngSwitch]="segment" text-center>
     <div *ngSwitchCase="'list'">
       <!-- LUAN -->
-      <div></div>
-      <!-- <ion-grid>
+      
+      <ion-grid style="margin: 0 auto; text-align: center;">
         <ion-row>
-          <ion-button *ngFor="let STATE of STATES" fill="clear" size="small" color="dark">
-            <ion-icon slot="start" name="square" color="red"></ion-icon>
+          <ion-button *ngFor="let STATE of STATES" fill="clear" size="small" color="dark" style="font-size: 9px; text-align: center;">
+            <span [ngClass]="STATE"></span>
             {{STATE}}
           </ion-button>
-          <ion-col *ngFor="let STATE of STATES"><span id="state"><span id="colordot"></span>{{STATE}}</span></ion-col>
+          <!-- <ion-col *ngFor="let STATE of STATES"><span id="state"><span id="colordot"></span>{{STATE}}</span></ion-col> -->
         </ion-row>
-      </ion-grid> -->
+      </ion-grid> 
       <ion-grid text-center>
         <ion-row *ngFor="let Day of DaysInM1">
           <ion-col>

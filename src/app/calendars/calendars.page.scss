@@ -35,6 +35,23 @@
     border-radius: 2px;
     color: white;
 }
+
+.Available{
+    border-radius: 50%; width: 9px;height: 9px; border-radius: 50%;background: red;margin-right: 2px;
+}
+.Canceled{
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: orange;margin-right: 2px;
+}
+.Booked{
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: lightgrey;margin-right: 2px;
+}
+.Completed{
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #71BF45;margin-right: 2px;
+}
+.Expired{
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: gray;margin-right: 2px;
+}
+
 ion-row{
     margin: 5px 0;
     
