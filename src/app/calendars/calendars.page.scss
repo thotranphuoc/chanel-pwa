@@ -6,25 +6,28 @@
 .CANCELED{
     background: orange;
     padding: 3px;
-    border-radius: 2px;
+    border-radius: 10px;
+    font-size: 12px;
     color: white;
 }
 .BOOKED{
     background: lightgrey;
     padding: 3px;
-    border-radius: 2px;
+    border-radius: 10px;
+    font-size: 12px;
     color: white;
 }
 .COMPLETED{
     background: #71BF45;
     padding: 3px;
-    border-radius: 2px;
+    border-radius: 10px;
+    font-size: 12px;
     color: white;
 }
 .EXPIRED{
     background: gray;
-    border-radius: 2px;
-    border-radius: 2px;
+    border-radius: 10px;
+    font-size: 12px;
     color: white;
 }
 
@@ -32,8 +35,10 @@
     background: red;
     padding: 3px;
     // border: 1px solid red;
-    border-radius: 2px;
+    border-radius: 10px;
+    font-size: 12px;
     color: white;
+
 }
 
 .Available{
@@ -132,8 +137,8 @@ ion-col h4{
 
 @media(max-width: 576px){
     ion-col span{
-        border-radius: 5px;
-        padding: 2px 3px;
+        border-radius: 10px;
+        padding: 2px 10px;
     }
 
     #calendar ion-grid ion-row ion-col{
