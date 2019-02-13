@@ -39,8 +39,24 @@ export class AppointmentAddPage implements OnInit {
     this.data = this.navPar.data;
     console.log(this.data);
     this.Day = this.data.selectedDay;
-    this.Slot = this.data.Slot;
-    this.index = this.data.index;
+
+    var date_to_parse = new Date();
+    var year = date_to_parse.getFullYear().toString();
+    var month = (date_to_parse.getMonth() + 1).toString();
+    var day = date_to_parse.getDate().toString();
+
+    if (!this.Day) {
+      this.Day = {
+        Date: day,
+        DateId: year + (month.length > 2 ? month : '0' + month) + day,
+        Slots: [],
+      }
+    }
+    else {
+      this.Slot = this.data.Slot;
+      this.index = this.data.index;
+    }
+
     // this.FACIALCABIN = this.localService.FACIALCABIN_DEFAULT;
     // this.CUSTOMER = this.localService.CUSTOMER_DEFAULT;
     // this.USER = this.localService.USER_DEFAULT;
@@ -52,8 +68,9 @@ export class AppointmentAddPage implements OnInit {
 
   ngOnInit() {
     this.BOOKING = Object.assign({}, this.localService.BOOKING_DEFAULT);
-    this.BOOKING.B_SLOT = this.Slot.SLOT;
+    this.BOOKING.B_SLOT = this.Slot ? this.Slot.SLOT : '10:30'
     this.BOOKING.B_DATE = this.formatDate(this.Day.DateId);
+
     this.CUSTOMER = Object.assign({}, this.localService.CUSTOMER_DEFAULT);
     console.log(this.BOOKING);
   }
