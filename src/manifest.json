@@ -2,7 +2,7 @@
   "name": "Chanel Facial Cabin",
   "short_name": "Chanel FC",
   "theme_color": "#101011",
-  "background_color": "#0f1011",
+  "background_color": "#ffffff",
   "display": "standalone",
   "Scope": "/",
   "start_url": "/home",
