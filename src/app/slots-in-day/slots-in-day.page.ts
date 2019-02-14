@@ -47,4 +47,11 @@ export class SlotsInDayPage implements OnInit {
     }).catch(err => { console.log(err) });
   }
 
+  doCancel() {
+    this.modalCtrl.getTop().then(res => {
+      console.log(res);
+      if (typeof (res) !== 'undefined') res.dismiss();
+    }).catch(err => { console.log(err) });
+  }
+
 }

@@ -1,12 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>slots-in-day</ion-title>
+    <ion-title>{{DATE}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="doCancel()" color="danger">
+        Cancel
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content padding>
   <div *ngIf="selectedDay">
-    <h2>{{DATE}}</h2>
+    <!-- <h2>{{DATE}}</h2> -->
     <ion-grid>
       <ion-row *ngFor="let slot of selectedDay.Slots; let i = index" (click)="selectSlot(selectedDay,slot, i)">
         <ion-col size="4" [ngClass]="slot.STATUS">{{slot.SLOT}}</ion-col>
