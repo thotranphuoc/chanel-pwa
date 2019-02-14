@@ -11,6 +11,7 @@ import { AppointmentEditPage } from '../appointment-edit/appointment-edit.page';
 import { LocalService } from '../services/local.service';
 import { AppService } from '../services/app.service';
 import { SlotsInDayPage } from '../slots-in-day/slots-in-day.page';
+import { readPatchedData } from '@angular/core/src/render3/util';
 
 @Component({
   selector: 'app-calendars',
@@ -271,7 +272,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
     await modal.present();
     const data = await modal.onDidDismiss();
     console.log(data);
-    if (typeof (data.data) !== 'undefined') {
+    if (typeof (data.data) !== 'undefined' && typeof(data.role) =='undefined') {
       let res = data.data;
       this.openAppointmentModal(res.selectedDay, res.selectedSlot, res.selectedIndex);
     }
