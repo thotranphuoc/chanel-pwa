@@ -29,6 +29,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
   selectedSlot: iSlot = null;
   month1Subscription: Subscription;
   month2Subscription: Subscription;
+  TODAY: string;
   // STATES = ['AVAILABLE','BOOKED','CANCELED','COMPLETED','EXPIRED']
   STATES = ['Available', 'Booked', 'Canceled', 'Completed', 'Expired'];
   constructor(
@@ -53,6 +54,15 @@ export class CalendarsPage implements OnInit, OnDestroy {
 
 
   initCalendar() {
+
+    var date_to_parse = new Date();
+    var year = date_to_parse.getFullYear().toString();
+    var month = (date_to_parse.getMonth() + 1).toString();
+    var day = date_to_parse.getDate().toString();
+
+    this.TODAY = year + (month.length > 2 ? month : '0' + month) + day;
+    console.log(this.TODAY);
+
     // this.WEEKSinMONTH1 = this.calendarService.getWeeksDaysOfMonth(2019, 1);
     // this.WEEKSinMONTH2 = this.calendarService.getWeeksDaysOfMonth(2019, 2);
     // this.MONTHS = [this.WEEKSinMONTH1, this.WEEKSinMONTH2];
@@ -130,6 +140,8 @@ export class CalendarsPage implements OnInit, OnDestroy {
         let date = day.DateId.substr(6, day.DateId.length - 6);
         let finalDate = date.length > 1 ? date : '0' + date;
         day['date'] = Month + '/' + finalDate;
+        let isThePast = Number(this.TODAY) > Number(day.DateId);
+        day['isThePast'] = isThePast;
         newDays.push(day);
       }
     })
@@ -272,7 +284,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
     await modal.present();
     const data = await modal.onDidDismiss();
     console.log(data);
-    if (typeof (data.data) !== 'undefined' && typeof(data.role) =='undefined') {
+    if (typeof (data.data) !== 'undefined' && typeof (data.role) == 'undefined') {
       let res = data.data;
       this.openAppointmentModal(res.selectedDay, res.selectedSlot, res.selectedIndex);
     }

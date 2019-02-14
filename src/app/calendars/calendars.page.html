@@ -41,7 +41,8 @@
           <ion-col>
             <span class="DATE">{{Day.date}}</span>
           </ion-col>
-          <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)">
+          <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)"
+            [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
             <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
           </ion-col>
         </ion-row>
@@ -51,7 +52,8 @@
           <ion-col>
             <span class="DATE">{{Day.date}}</span>
           </ion-col>
-          <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)">
+          <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)"
+            [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
             <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
           </ion-col>
         </ion-row>
