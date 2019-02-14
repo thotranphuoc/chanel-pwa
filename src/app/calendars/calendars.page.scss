@@ -118,8 +118,22 @@ ion-col h4{
 
 }
 
-.badge-red{
+.badge-orange{
     background: orange;
+    width: 0px;
+    height: 0px;
+    color: white;
+    font-size: 10px;
+    padding: 0px 0px;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    text-align: center;
+    display: inline-block;
+
+}
+.badge-red{
+    background: red;
     width: 0px;
     height: 0px;
     color: white;
