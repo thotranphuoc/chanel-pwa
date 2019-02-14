@@ -79,7 +79,10 @@
         </ion-row>
         <ion-row *ngFor="let WK of WEEKSinMONTH1.WEEKS" class="row-bottom-line">
           <ion-col *ngFor="let Day of WK" (click)="selectDay(Day)" style="text-align: center">
-            <h4>{{Day?.Date}}</h4>
+            <h4>
+              <p [ngStyle]="{'background': TODAY == Day?.DateId ? 'red' : 'white',
+              'border-radius': '50%', 'padding': '0', 'width':'35px', 'height':'35px', 'padding-top': '6px', 'margin': '0 auto'}">{{Day?.Date}}</p>
+            </h4>
             <div *ngIf="Day?.n>=3 && Day?.Date" class="badge-red">{{Day?.n}}</div>
             <div *ngIf="Day?.n<3 && Day?.Date" class="badge-green">{{Day?.n}}</div>
           </ion-col>
@@ -98,7 +101,8 @@
         </ion-row>
         <ion-row *ngFor="let WK of WEEKSinMONTH2.WEEKS" class="row-bottom-line">
           <ion-col *ngFor="let Day of WK" (click)="selectDay(Day)" style="text-align: center">
-            <h4>{{Day?.Date}}</h4>
+            <h4><p [ngStyle]="{'background': TODAY == Day?.DateId ? 'red' : 'white',
+              'border-radius': '50%', 'padding': '0', 'width':'35px', 'height':'35px', 'padding-top': '6px', 'margin': '0 auto'}">{{Day?.Date}}</p></h4>
             <div *ngIf="Day?.n>=3 && Day?.Date" class="badge-red">{{Day?.n}}</div>
             <div *ngIf="Day?.n<3 && Day?.Date" class="badge-green">{{Day?.n}}</div>
           </ion-col>
