@@ -7,7 +7,7 @@ import { CrudService } from '../services/crud.service';
 import { AppService } from '../services/app.service';
 import { iUser } from '../interfaces/user.interface';
 import { LocalService } from '../services/local.service';
-
+import { AppointmentCalendarEditPage } from '../appointment-calendar-edit/appointment-calendar-edit.page';
 @Component({
   selector: 'app-appointment-edit',
   templateUrl: './appointment-edit.page.html',
@@ -25,7 +25,9 @@ export class AppointmentEditPage implements OnInit {
     private modalCtrl: ModalController,
     private crudService: CrudService,
     private appService: AppService,
-    private localService: LocalService
+    private localService: LocalService,
+    public modalController: ModalController,
+    
   ) {
     this.data = this.navPar.data;
     console.log(this.data);
@@ -97,6 +99,16 @@ export class AppointmentEditPage implements OnInit {
     // var num = e.replace(/[$,]/g, "");
     // return Number(num);
   }
-
+  async changeTimeSlot()
+  {
+    console.log('Chay chon thay doi ngay');
+    const modal = await this.modalController.create({
+      component: AppointmentCalendarEditPage,
+      componentProps: {BOOKING: this.BOOKING , selectedDay: this.Day, Slot: this.Slot, index: this.index}
+    });
+    await modal.present();
+    const data = await modal.onDidDismiss();
+    console.log(data);
+  }
 
 }
