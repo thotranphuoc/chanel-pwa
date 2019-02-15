@@ -74,7 +74,15 @@
         </ion-item>
         <ion-item>
           <ion-label color="primary">Booking State:</ion-label>
-          <ion-select [(ngModel)]="BOOKING.B_STATUS">
+          <ion-select *ngIf="BOOKING.B_STATUS !='COMPLETED' && !Day.isThePast" [(ngModel)]="BOOKING.B_STATUS">
+            <ion-select-option value="AVAILABLE">AVAILABLE</ion-select-option>
+            <ion-select-option value="BOOKED">BOOKED</ion-select-option>
+            <ion-select-option value="COMPLETED">COMPLETED</ion-select-option>
+            <ion-select-option value="CANCELED">CANCELED</ion-select-option>
+            <ion-select-option value="EXPIRED">EXPIRED</ion-select-option>
+          </ion-select>
+
+          <ion-select *ngIf="BOOKING.B_STATUS =='COMPLETED' || Day.isThePast" [(ngModel)]="BOOKING.B_STATUS" disabled=true>
             <ion-select-option value="AVAILABLE">AVAILABLE</ion-select-option>
             <ion-select-option value="BOOKED">BOOKED</ion-select-option>
             <ion-select-option value="COMPLETED">COMPLETED</ion-select-option>

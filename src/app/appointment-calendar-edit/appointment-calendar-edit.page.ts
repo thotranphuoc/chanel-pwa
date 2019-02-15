@@ -40,7 +40,7 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
   Day: iDay;
   Slot: iSlot;
   index: number;
-  USER: iUser; 
+  USER: iUser;
 
   constructor(
     private alertCtrl: AlertController,
@@ -60,11 +60,10 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
     this.Slot = this.data.Slot;
     this.Day = this.data.selectedDay;
     this.USER = this.localService.USER;
-   }
+  }
 
   ngOnInit() {
     this.initCalendar();
-
 
     this.crudService.bookingGet(this.Slot.BOOK_ID)
       .subscribe(docSnap => {
@@ -287,7 +286,7 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
     if (this.localService.USER) {
       if (SLOT.STATUS == 'AVAILABLE') {
         //this.modalAppointmentAdd(Day, SLOT, index);
-        this.alertChangeShow('Confirm!', 'Are you sure Update...', Day.DateId,SLOT.SLOT);
+        this.alertChangeShow('Confirm!', 'Are you sure Update...', Day.DateId, SLOT.SLOT);
       } else {
         this.alertShow('Confirm!', 'Slot Unvailable...');
       }
