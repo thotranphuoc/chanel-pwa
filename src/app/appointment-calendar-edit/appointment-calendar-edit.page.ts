@@ -286,7 +286,8 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
     if (this.localService.USER) {
       if (SLOT.STATUS == 'AVAILABLE') {
         //this.modalAppointmentAdd(Day, SLOT, index);
-        this.alertChangeShow('Confirm!', 'Are you sure Update...', Day.DateId, SLOT.SLOT);
+        this.alertChangeShow('Confirm!', 'Are you sure Update...', Day, SLOT,index);
+
       } else {
         this.alertShow('Confirm!', 'Slot Unvailable...');
       }
@@ -372,7 +373,7 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  async alertChangeShow(HEADER: string, MSG: string, DAY: string, TIME: string) {
+  async alertChangeShow(HEADER: string, MSG: string, DAY: iDay, SLOT: iSlot, index: number) {
     const alert = await this.alertController.create({
       header: HEADER,
       message: MSG,
@@ -388,7 +389,38 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
           text: 'OK',
           handler: () => {
             console.log('Confirm Okay');
-            console.log(DAY + ' - ' + TIME);
+            console.log(DAY + ' - ' + SLOT.SLOT + ' - ' + this.BOOKING.B_ID);
+            console.log(this.Day);
+            let Year = DAY.DateId.substr(0, 4)
+            let Month = DAY.DateId.substr(4, 2)
+            let date = DAY.DateId.substr(6, DAY.DateId.length - 6);
+            let finalDate = date.length > 1 ? date : '0' + date;
+
+
+            this.BOOKING.B_DATE= Year + '-' + Month + '-' + finalDate;
+            this.BOOKING.B_SLOT=SLOT.SLOT;
+
+            //this.modalAppointmentEdit(this.Day, this.Slot, 1);
+            this.crudService.bookingUpdate(this.BOOKING)
+            .then(res => {
+              console.log(res);
+              // update CALENDARS/DATE/{}
+              //return this.doUpdateCalendarsForDay(this.BOOKING);
+              console.log(DAY);
+              console.log(index);
+
+              //update calendar new to booking
+              DAY.Slots[index].STATUS="BOOKED";
+              this.Day.Slots[this.index].BOOK_ID=this.BOOKING.B_ID;
+              this.crudService.dayUpdate(DAY);
+              //Update calendar old to available.
+              this.Day.Slots[this.index].STATUS="AVAILABLE";
+              this.Day.Slots[this.index].BOOK_ID="";
+              this.crudService.dayUpdate(this.Day)
+            })
+            .catch(err => {
+              console.log(err);
+            })
 
             alert.dismiss();
           }
@@ -399,4 +431,10 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
     await alert.present();
   }
 
+  doCancel() {
+    this.modalCtrl.getTop().then(res => {
+      console.log(res);
+      if (typeof (res) !== 'undefined') res.dismiss({ BOOKING: this.BOOKING, isCancel: true });
+    }).catch(err => { console.log(err) });
+  }
 }
