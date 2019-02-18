@@ -4,42 +4,47 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Change slot</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="doCancel()" color="danger">
+        Cancel
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <div>
-      <!-- LUAN -->
-      <ion-grid style="margin: 0 auto; text-align: center;">
-        <ion-row>
-          <ion-button *ngFor="let STATE of STATES" fill="clear" size="small" color="dark"
-            style="font-size: 9px; text-align: center;">
-            <span [ngClass]="STATE"></span>
-            {{STATE}}
-          </ion-button>
-        </ion-row>
-      </ion-grid>
-      <ion-grid text-center>
-        <ion-row *ngFor="let Day of DaysInM1">
-          <ion-col>
-            <span class="DATE">{{Day.date}}</span>
-          </ion-col>
-          <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)"
-            [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
-            <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-grid text-center>
-        <ion-row *ngFor="let Day of DaysInM2">
-          <ion-col>
-            <span class="DATE">{{Day.date}}</span>
-          </ion-col>
-          <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)"
-            [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
-            <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-    <div style="height: 50px"></div>
+    <!-- LUAN -->
+    <ion-grid style="margin: 0 auto; text-align: center;">
+      <ion-row>
+        <ion-button *ngFor="let STATE of STATES" fill="clear" size="small" color="dark"
+          style="font-size: 9px; text-align: center;">
+          <span [ngClass]="STATE"></span>
+          {{STATE}}
+        </ion-button>
+      </ion-row>
+    </ion-grid>
+    <ion-grid text-center>
+      <ion-row *ngFor="let Day of DaysInM1">
+        <ion-col>
+          <span class="DATE">{{Day.date}}</span>
+        </ion-col>
+        <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)"
+          [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
+          <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid text-center>
+      <ion-row *ngFor="let Day of DaysInM2">
+        <ion-col>
+          <span class="DATE">{{Day.date}}</span>
+        </ion-col>
+        <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)"
+          [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
+          <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div style="height: 50px"></div>
 </ion-content>
