@@ -39,6 +39,7 @@ const routes: Routes = [
   { path: 'user-edit', loadChildren: './user-edit/user-edit.module#UserEditPageModule' },
   { path: 'slots-in-day', loadChildren: './slots-in-day/slots-in-day.module#SlotsInDayPageModule' },
   { path: 'appointment-calendar-edit', loadChildren: './appointment-calendar-edit/appointment-calendar-edit.module#AppointmentCalendarEditPageModule' },
+  { path: 'photo-take', loadChildren: './photo-take/photo-take.module#PhotoTakePageModule' },
 
 ];
 

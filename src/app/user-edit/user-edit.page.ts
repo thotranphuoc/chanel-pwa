@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { iUser } from '../interfaces/user.interface';
-import { NavController } from '@ionic/angular';
+import { NavController, ModalController } from '@ionic/angular';
 import { CrudService } from '../services/crud.service';
 import { SetgetService } from '../services/setget.service';
 import { AppService } from '../services/app.service';
+import { PhotoTakePageModule } from '../photo-take/photo-take.module';
 
 @Component({
   selector: 'app-user-edit',
@@ -12,11 +13,14 @@ import { AppService } from '../services/app.service';
 })
 export class UserEditPage implements OnInit {
   USER: iUser;
+  base64Images: string[] = [];
+  hasNewAvatar: boolean = false;
   constructor(
     private navCtrl: NavController,
     private crudService: CrudService,
     private setGetService: SetgetService,
-    private appService: AppService
+    private appService: AppService,
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
@@ -40,6 +44,32 @@ export class UserEditPage implements OnInit {
 
   doCancel() {
     this.navCtrl.goBack();
+  }
+  
+  /*takePhoto() {
+    console.log('take Photo');
+    //let photosModal = this.modalCtrl.create();
+      //PhotoTakePage, { PHOTOS: this.base64Images });
+    photosModal.onDidDismiss((data) => {
+      console.log(data);
+      this.base64Images = data.PHOTOS;
+      this.hasNewAvatar = true;
+      this.uploadImageThenUpdateURL();
+    });
+    photosModal.present()
+      .then((res) => { console.log(res) })
+      .catch((err) => { console.log(err) })
+  }
+*/
+  uploadImageThenUpdateURL() {
+    // console.log(this.PROFILE);
+    /*this.dbService.uploadBase64Image2FBReturnPromiseWithURL('Avatar/' + this.USER.U_ID, this.base64Images[0], this.USER.U_ID)
+      .then((downloadURL: string) => {
+        this.USER.U_AVATAR = downloadURL;
+        console.log(this.USER);
+        // this.onUpdateProfile();
+      })
+      .catch((err) => console.log(err));*/
   }
 
 }

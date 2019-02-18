@@ -10,6 +10,19 @@
     <div class="content">
       <div class="input_div">
         <div class="button_div">
+            <div class="div_avatar">
+                <div *ngIf="!hasNewAvatar">
+                  <div (click)="takePhoto()">
+                    <img src="{{USER.U_AVATAR}}" alt="" class="img" onError="this.src='../../assets/imgs/imagenotavailable.png';">
+                  </div>
+                </div>
+                <div *ngIf="hasNewAvatar">
+                  <div (click)="takePhoto()">
+                    <img src="{{base64Images[0]}}" alt="" class="img" onError="this.src='../../assets/imgs/imagenotavailable.png';">
+                  </div>
+                </div>
+              </div>
+
           <ion-item>
             <ion-label color="primary" fixed>Name:</ion-label>
             <ion-input type="text" placeholder="Name" [(ngModel)]="USER.U_NAME"></ion-input>
