@@ -5,6 +5,7 @@ import { iCustomer } from '../interfaces/customer.interface';
 import { iFacialCabin } from '../interfaces/facialcabin.interface';
 import { iFacial } from '../interfaces/ifacial.interface';
 import { iBooking } from '../interfaces/booking.interface';
+import { iSlot } from '../interfaces/slot.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -121,6 +122,12 @@ export class LocalService {
     B_SVC_CANCEL: 0,
     B_OTHER: {}
   }
+
+  // SLOT: iSlot = {
+  //   SLOT: '',
+  //   STATUS: 'AVAILABLE',
+  //   BOOK_ID: '';
+  // }
 
 
 

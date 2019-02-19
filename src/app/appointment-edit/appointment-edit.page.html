@@ -24,11 +24,11 @@
 
         </ion-item>
         <div style="height: 5px"></div>
-        <ion-item (click)="changeTimeSlot()" *ngIf="BOOKING.B_STATUS =='COMPLETED' || Day.isThePast" disabled=true>
+        <ion-item (click)="changeTimeSlot()">
           <ion-label color="primary" fixed>Appointment date</ion-label>
-          <ion-label displayFormat="MM/DD/YYYY" [(ngModel)]="BOOKING.B_DATE" style="text-align: right">{{BOOKING.B_DATE | date: 'MM/dd/yyyy' }}</ion-label>
+          <ion-input displayFormat="MM/DD/YYYY" [(ngModel)]="BOOKING.B_DATE" style="text-align: right">{{BOOKING.B_DATE}}</ion-input>
         </ion-item>
-        <ion-item *ngIf="BOOKING.B_STATUS =='COMPLETED' || Day.isThePast" disabled=true>
+        <ion-item>
           <ion-label color="primary">Appointment time</ion-label>
           <ion-select [(ngModel)]="BOOKING.B_SLOT">
             <ion-select-option value="10:30">10:30</ion-select-option>
@@ -74,15 +74,7 @@
         </ion-item>
         <ion-item>
           <ion-label color="primary">Booking State:</ion-label>
-          <ion-select *ngIf="BOOKING.B_STATUS !='COMPLETED' && !Day.isThePast" [(ngModel)]="BOOKING.B_STATUS">
-            <ion-select-option value="AVAILABLE">AVAILABLE</ion-select-option>
-            <ion-select-option value="BOOKED">BOOKED</ion-select-option>
-            <ion-select-option value="COMPLETED">COMPLETED</ion-select-option>
-            <ion-select-option value="CANCELED">CANCELED</ion-select-option>
-            <ion-select-option value="EXPIRED">EXPIRED</ion-select-option>
-          </ion-select>
-
-          <ion-select *ngIf="BOOKING.B_STATUS =='COMPLETED' || Day.isThePast" [(ngModel)]="BOOKING.B_STATUS" disabled=true>
+          <ion-select [(ngModel)]="BOOKING.B_STATUS">
             <ion-select-option value="AVAILABLE">AVAILABLE</ion-select-option>
             <ion-select-option value="BOOKED">BOOKED</ion-select-option>
             <ion-select-option value="COMPLETED">COMPLETED</ion-select-option>
@@ -101,7 +93,7 @@
               <ion-button color="danger" expand="block" (click)="doCancel()">CANCEL</ion-button>
             </ion-col>
             <ion-col>
-              <ion-button color="secondary" expand="block" (click)="updateBooking()" *ngIf="BOOKING.B_STATUS =='COMPLETED' || Day.isThePast" disabled=true>UPDATE</ion-button>
+              <ion-button color="secondary" expand="block" (click)="updateBooking()">UPDATE</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>

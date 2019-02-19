@@ -27,7 +27,7 @@ export class AppointmentEditPage implements OnInit {
     private appService: AppService,
     private localService: LocalService,
     public modalController: ModalController,
-    
+
   ) {
     this.data = this.navPar.data;
     console.log(this.data);
@@ -37,6 +37,7 @@ export class AppointmentEditPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log('ngOnInit');
     this.crudService.bookingGet(this.Slot.BOOK_ID)
       .subscribe(docSnap => {
         console.log(docSnap);
@@ -94,21 +95,21 @@ export class AppointmentEditPage implements OnInit {
     }).catch(err => { console.log(err) });
   }
 
-  convert(e) {
-    console.log(e);
-    // var num = e.replace(/[$,]/g, "");
-    // return Number(num);
-  }
-  async changeTimeSlot()
-  {
+
+  async changeTimeSlot() {
+    this.doCancel();
     console.log('Chay chon thay doi ngay');
     const modal = await this.modalController.create({
       component: AppointmentCalendarEditPage,
-      componentProps: {BOOKING: this.BOOKING , selectedDay: this.Day, Slot: this.Slot, index: this.index}
+      componentProps: { selectedDay: this.Day, Slot: this.Slot, index: this.index, BOOKING: this.BOOKING }
     });
     await modal.present();
-    const data = await modal.onDidDismiss();
+    const data: any = await modal.onDidDismiss();
     console.log(data);
+    this.Day = data.Day;
+    this.Slot = data.Slot;
+    this.index = data.index;
+    this.BOOKING = data.BOOKING;
   }
 
 }

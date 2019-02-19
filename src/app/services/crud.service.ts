@@ -177,10 +177,6 @@ export class CrudService {
     return this.afs.doc('BOOKINGS/' + BOOKING.B_ID).update(BOOKING)
   }
 
-  calendarUpdate(BOOKING: iBooking) {
-    return this.afs.doc('BOOKINGS/' + BOOKING.B_ID).update(BOOKING)
-  }
-
   calendarMonthCreate(MONTH: string, data: any) {
     return this.afs.doc('CALENDARS/' + MONTH).set(data)
   }
@@ -199,7 +195,6 @@ export class CrudService {
     console.log(day2Update);
     return this.afs.collection('CALENDARS').doc(month).update(day2Update);
   }
-  
 }
 
 
