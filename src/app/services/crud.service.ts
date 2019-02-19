@@ -177,8 +177,8 @@ export class CrudService {
     return this.afs.doc('BOOKINGS/' + BOOKING.B_ID).update(BOOKING)
   }
 
-  calendarMonthCreate(MONTH: string, data: any) {
-    return this.afs.doc('CALENDARS/' + MONTH).set(data)
+  calendarMonthCreate(YYYYMM: string, data: any) {
+    return this.afs.doc('CALENDARS/' + YYYYMM).set(data)
   }
 
   calendarMonthGet(Month: string, Year: string) {

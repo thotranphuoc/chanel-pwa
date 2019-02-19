@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Timeouts } from 'selenium-webdriver';
 import { CrudService } from './crud.service';
+import { iSlot } from '../interfaces/slot.interface';
+import { iDay } from '../interfaces/day.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class CalendarService {
   ) { }
 
   // return number of day in certain month
-  getDaysOfMonth(month: number, year: number) {
+  getNumOfDaysInMonth(month: number, year: number) {
     return new Date(year, month, 0).getDate();
   };
 
@@ -27,7 +29,7 @@ export class CalendarService {
 
   getWeeksDaysOfMonth(Year: number, Month: number) {
     let WEEKS = [];
-    let days = this.getDaysOfMonth(Month, Year);
+    let days = this.getNumOfDaysInMonth(Month, Year);
     let _Month = Month < 10 ? '0' + Month.toString() : Month.toString();
     let MONTH = {};
     console.log(days);
@@ -76,7 +78,7 @@ export class CalendarService {
   create35DaysOfMonth(Year: number, Month: number, ) {
     let Days = new Array(35);
     let weekday = this.getWeekday(Year, Month, 1);
-    let days = this.getDaysOfMonth(Month, Year);
+    let days = this.getNumOfDaysInMonth(Month, Year);
     let _Month = Month < 10 ? '0' + Month.toString() : Month.toString();
     for (let index = 0; index < days; index++) {
       let _Date = (index + 1).toString();
@@ -90,9 +92,10 @@ export class CalendarService {
   }
 
 
-  createTemplateForMonth(Year: number, Month: number) {
+  private createDataObjectForMonth(Year: number, Month: number) {
     let MONTH = {};
-    let days = this.getDaysOfMonth(Month, Year);
+    let days = this.getNumOfDaysInMonth(Month, Year);
+    console.log(days);
     let _Month = Month < 10 ? '0' + Month.toString() : Month.toString();
     for (let index = 0; index < days; index++) {
       let _Date = (index + 1).toString();
@@ -106,20 +109,33 @@ export class CalendarService {
         Slots: this.createSlots(4)
       };
       // Days[index + weekday] = DataOfDay;
-      return MONTH[_DateId] = DataOfDay;
+      MONTH[_DateId] = DataOfDay;
     }
+    return MONTH;
   }
 
-  createSlots(numberOfSlot: number) {
+  calendarForMonthCreate(Year: number, Month: number) {
+    let MonthObject = this.createDataObjectForMonth(Year, Month);
+    let Monthstr = Month < 10 ? '0' + Month.toString() : Month.toString();
+    let YYYYMM = Year.toString() + Monthstr;
+    console.log(MonthObject);
+    return this.crudService.calendarMonthCreate(YYYYMM, MonthObject);
+  }
+
+  private createSlots(numberOfSlot: number) {
     let timeSlots = ['10:30', '12:30', '15:30', '17:00', 'over'];
     let Slots = []
     for (let index = 0; index < numberOfSlot; index++) {
-      let SLOT = {
+      let SLOT: iSlot = {
         SLOT: timeSlots[index],
         // BOOKED: Math.random() > 0.5 ? true : false,
         BOOK_ID: '',
         // STATUS: this.getStatus(),
-        STATUS: 'AVAILABLE'
+        STATUS: 'AVAILABLE',
+        BAB_ID: '',
+        BAB_NAME: '',
+        BAS_ID: '',
+        BAS_NAME: ''
       }
       Slots.push(SLOT);
     }
@@ -144,8 +160,8 @@ export class CalendarService {
     return STATES[n];
   }
 
-  getNumberOfReservdSlot(Day) {
-    let n = Day.Data.filter(d => d.BOOKED).length;
+  getNumberOfReservedSlot(Day: iDay) {
+    let n = Day.Slots.filter(d => d.STATUS !=='AVAILABLE').length;
     return n;
   }
 }

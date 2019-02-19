@@ -41,6 +41,7 @@ const routes: Routes = [
   { path: 'appointment-calendar-edit', loadChildren: './appointment-calendar-edit/appointment-calendar-edit.module#AppointmentCalendarEditPageModule' },
   { path: 'photo-take', loadChildren: './photo-take/photo-take.module#PhotoTakePageModule' },
   { path: 'user-photo-take', loadChildren: './user-photo-take/user-photo-take.module#UserPhotoTakePageModule' },
+  { path: 'manager-calendar-add', loadChildren: './manager-calendar-add/manager-calendar-add.module#ManagerCalendarAddPageModule' },
 
 ];
 
