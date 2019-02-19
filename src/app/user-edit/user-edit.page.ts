@@ -4,6 +4,9 @@ import { NavController, ModalController } from '@ionic/angular';
 import { CrudService } from '../services/crud.service';
 import { SetgetService } from '../services/setget.service';
 import { AppService } from '../services/app.service';
+import { PhotoTakePage } from '../photo-take/photo-take.page';
+import { DbService } from '../services/db.service';
+import { UserPhotoTakePage } from '../user-photo-take/user-photo-take.page';
 
 @Component({
   selector: 'app-user-edit',
@@ -20,6 +23,7 @@ export class UserEditPage implements OnInit {
     private setGetService: SetgetService,
     private appService: AppService,
     private modalCtrl: ModalController,
+    private dbService: DbService
   ) { }
 
   ngOnInit() {
@@ -45,30 +49,29 @@ export class UserEditPage implements OnInit {
     this.navCtrl.goBack();
   }
   
-  // takePhoto() {
-  //   console.log('take Photo');
-  //   let photosModal = this.modalCtrl.create(
-  //     PhotoTakePage, { PHOTOS: this.base64Images });
-  //   photosModal.onDidDismiss((data) => {
-  //     console.log(data);
-  //     this.base64Images = data.PHOTOS;
-  //     this.hasNewAvatar = true;
-  //     this.uploadImageThenUpdateURL();
-  //   });
-  //   photosModal.present()
-  //     .then((res) => { console.log(res) })
-  //     .catch((err) => { console.log(err) })
-  // }
+   async takePhoto() {
+     console.log('take Photo');
+     let photosModal = await this.modalCtrl.create({
+       component: UserPhotoTakePage,
+       componentProps: {PHOTOS: this.base64Images}
+     })
+    await photosModal.present();
+    const data:any = await photosModal.onDidDismiss();
+      console.log(data);
+      this.base64Images = data.PHOTOS;
+      this.hasNewAvatar = true;
+      this.uploadImageThenUpdateURL();
+   }
 
   uploadImageThenUpdateURL() {
     // console.log(this.PROFILE);
-    /*this.dbService.uploadBase64Image2FBReturnPromiseWithURL('Avatar/' + this.USER.U_ID, this.base64Images[0], this.USER.U_ID)
+    this.dbService.uploadBase64Image2FBReturnPromiseWithURL('Avatar/' + this.USER.U_ID, this.base64Images[0], this.USER.U_ID)
       .then((downloadURL: string) => {
         this.USER.U_AVATAR = downloadURL;
         console.log(this.USER);
         // this.onUpdateProfile();
       })
-      .catch((err) => console.log(err));*/
+      .catch((err) => console.log(err));
   }
 
 }

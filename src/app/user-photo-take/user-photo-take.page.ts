@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController,
-} from '@ionic/angular';
-import { ImageService } from '../services/image.service';
+import { Component, OnInit } from '@angular/core';
+import { NavController, NavParams, ModalController } from '@ionic/angular';
 import { ViewController } from '@ionic/core';
+import { ImageService } from '../services/image.service';
 
 @Component({
-  selector: 'app-photo-take',
-  templateUrl: './photo-take.page.html',
-  styleUrls: ['./photo-take.page.scss'],
+  selector: 'app-user-photo-take',
+  templateUrl: './user-photo-take.page.html',
+  styleUrls: ['./user-photo-take.page.scss'],
 })
-export class PhotoTakePage {
+export class UserPhotoTakePage implements OnInit {
+
+  ngOnInit() {
+  }
+
   data: any;
   base64Images: string[] = [];
   newPhoto: boolean = false;
@@ -33,7 +36,7 @@ export class PhotoTakePage {
   }
 
   takePhoto() {
-    this.selectPhotoByBrowser();
+    this.selectPhotoByBrowser(); 
   }
 
   selectPhotoByBrowser() {
@@ -78,7 +81,8 @@ export class PhotoTakePage {
       })
   }
 
-  selectPhoto(i) {
+  selectPhoto() {
+    this.selectPhotoByBrowser(); 
     // let actionSheet = this.actionSheetCtrl.create({
     //   buttons: [
     //     {
@@ -121,4 +125,5 @@ export class PhotoTakePage {
       if (typeof (res) !== 'undefined') res.dismiss({ PHOTOS: this.base64Images, isCancel: true });
     }).catch(err => { console.log(err) });
   }
+
 }
