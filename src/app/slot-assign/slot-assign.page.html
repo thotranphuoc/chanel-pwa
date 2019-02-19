@@ -20,16 +20,28 @@
     </ion-datetime>
   </ion-item>
   <ion-item>
+    <ion-label>Specicalist:</ion-label>
+    <ion-select [(ngModel)]="selectedSpecialist">
+      <ion-select-option value="null">None</ion-select-option>
+      <ion-select-option *ngFor="let Specialist of Specialists" [value]="Specialist">{{Specialist.U_NAME}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <!-- <ion-item>
     <ion-label>Beauty Advisor:</ion-label>
     <ion-select [(ngModel)]="selectedBA">
       <ion-select-option value="null">None</ion-select-option>
       <ion-select-option *ngFor="let BA of BAs" [value]="BA">{{BA.U_NAME}}</ion-select-option>
-      <!-- <ion-select-option ="brown"></ion-select-option>
-      <ion-select-option value="blonde">Blonde</ion-select-option>
-      <ion-select-option value="black">Black</ion-select-option>
-      <ion-select-option value="red">Red</ion-select-option> -->
-    </ion-select>
+   </ion-select>
   </ion-item>
+  <ion-item>
+    <ion-label>Beauty Advisor:</ion-label>
+    <ion-select [(ngModel)]="selectedBA">
+      <ion-select-option value="null">None</ion-select-option>
+      <ion-select-option *ngFor="let BA of BAs" [value]="BA">{{BA.U_NAME}}</ion-select-option>
+   </ion-select>
+  </ion-item> -->
+
   <ion-grid text-center>
     <ion-row *ngFor="let Day of DaysInMonth">
       <ion-col>
@@ -37,8 +49,8 @@
       </ion-col>
       <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)"
         [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
-        <span class="{{SLOT.STATUS}}"><span *ngIf="SLOT.BAB_NAME">{{SLOT.BAB_NAME}}</span><span
-            *ngIf="!SLOT.BAB_NAME">{{SLOT.SLOT}}</span></span>
+        <span class="{{SLOT.STATUS}}"><span *ngIf="SLOT.SPE_NAME">{{SLOT.SPE_NAME}}</span><span
+            *ngIf="!SLOT.SPE_NAME">{{SLOT.SLOT}}</span></span>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -161,7 +161,11 @@ export class CalendarService {
         BAB_ID: '',
         BAB_NAME: '',
         BAS_ID: '',
-        BAS_NAME: ''
+        BAS_NAME: '',
+        MAN_ID: '',
+        MAN_NAME: '',
+        SPE_ID: '',
+        SPE_NAME: ''
       }
       Slots.push(SLOT);
     }

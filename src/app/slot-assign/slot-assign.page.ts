@@ -19,8 +19,8 @@ export class SlotAssignPage implements OnInit, OnDestroy {
   DaysInMonth: iDay[] = [];
   STATES = ['Available', 'Booked', 'Canceled', 'Completed', 'Expired'];
   TODAY: string;
-  BAs = [];
-  selectedBA: iUser = null;
+  Specialists = [];
+  selectedSpecialist: iUser = null;
 
   constructor(
     private alertCtrl: AlertController,
@@ -31,7 +31,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.initCalendar();
-    this.getBAInfo();
+    this.getSpecialists();
   }
 
   ngOnDestroy() {
@@ -93,25 +93,25 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     console.log(this.DaysInMonth);
   }
 
-  getBAInfo() {
+  getSpecialists() {
     this.crudService.usersGet().subscribe(qSnap => {
       let USERS = [];
       qSnap.forEach(docSnap => {
         let USER = <iUser>docSnap.data();
         USERS.push(USER);
-        this.BAs = USERS.filter(U => U.U_ROLE == 'BA');
+        this.Specialists = USERS.filter(U => U.U_ROLE == 'Specialist');
       })
-      console.log(this.BAs);
+      console.log(this.Specialists);
       // this.selectedBA = this.BAs[0];
     })
   }
 
   selectSlotInList(Day: iDay, SLOT: iSlot, i: number) {
     console.log(Day, SLOT, i);
-    console.log(this.selectedBA);
-    if (this.selectedBA) {
-      SLOT.BAB_ID = this.selectedBA.U_ID;
-      SLOT.BAB_NAME = this.selectedBA.U_NAME;
+    console.log(this.selectedSpecialist);
+    if (this.selectedSpecialist) {
+      SLOT.SPE_ID = this.selectedSpecialist.U_ID;
+      SLOT.SPE_NAME = this.selectedSpecialist.U_NAME;
       Day.Slots[i] = SLOT;
       console.log(Day, SLOT)
       this.crudService.dayUpdate(Day)
