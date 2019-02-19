@@ -48,27 +48,34 @@ export class UserEditPage implements OnInit {
   doCancel() {
     this.navCtrl.goBack();
   }
-  
-   async takePhoto() {
-     console.log('take Photo');
-     let photosModal = await this.modalCtrl.create({
-       component: UserPhotoTakePage,
-       componentProps: {PHOTOS: this.base64Images}
-     })
+
+  async takePhoto() {
+    console.log('take Photo');
+    let photosModal = await this.modalCtrl.create({
+      component: UserPhotoTakePage,
+      componentProps: { PHOTOS: this.base64Images }
+    })
     await photosModal.present();
-    const data:any = await photosModal.onDidDismiss();
-      console.log(data);
-      this.base64Images = data.PHOTOS;
-      this.hasNewAvatar = true;
-      this.uploadImageThenUpdateURL();
-   }
+    const data: any = await photosModal.onDidDismiss();
+    console.log('show data');
+    console.log(data);
+    console.log('show image photo');
+    console.log(data.data.PHOTOS);
+    this.base64Images = data.data.PHOTOS;
+    this.hasNewAvatar = true;
+    console.log('show image');
+    console.log(this.base64Images);
+    this.uploadImageThenUpdateURL();
+  }
 
   uploadImageThenUpdateURL() {
     // console.log(this.PROFILE);
-    this.dbService.uploadBase64Image2FBReturnPromiseWithURL('Avatar/' + this.USER.U_ID, this.base64Images[0], this.USER.U_ID)
+    this.dbService.uploadBase64Image2FBReturnPromiseWithURL('USERS/' + this.USER.U_ID, this.base64Images[0], this.USER.U_ID)
       .then((downloadURL: string) => {
+        console.log(downloadURL);
         this.USER.U_AVATAR = downloadURL;
         console.log(this.USER);
+        this.updateUser();
         // this.onUpdateProfile();
       })
       .catch((err) => console.log(err));

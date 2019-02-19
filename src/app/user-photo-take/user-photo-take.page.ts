@@ -36,7 +36,7 @@ export class UserPhotoTakePage implements OnInit {
   }
 
   takePhoto() {
-    this.selectPhotoByBrowser(); 
+    this.selectPhotoByBrowser();
   }
 
   selectPhotoByBrowser() {
@@ -49,14 +49,14 @@ export class UserPhotoTakePage implements OnInit {
     this.base64Images = [];
     // FOR NORMAL IMG
     let pro2 = this.imageService.resizeImagesFromChoosenFilesReturnPromiseWithArrayOfImageDataUrlsSizeSetable(event, 750, 750)
-    .then((imgDataUrls: string[]) => {
-      setTimeout(() => {
-        console.log(imgDataUrls);
-        // this.base64Images = imgDataUrls;
-        this.base64Images.push(imgDataUrls[0]);
-      }, 2000)
-    })
-    .catch((err) => console.log(err))
+      .then((imgDataUrls: string[]) => {
+        setTimeout(() => {
+          console.log(imgDataUrls);
+          // this.base64Images = imgDataUrls;
+          this.base64Images.push(imgDataUrls[0]);
+        }, 2000)
+      })
+      .catch((err) => console.log(err))
     // FOR THUMBNAIL
     let pro1 = this.imageService.resizeImagesFromChoosenFilesReturnPromiseWithArrayOfImageDataUrlsSizeSetable(event, 150, 150)
       .then((imgDataUrls: string[]) => {
@@ -68,7 +68,7 @@ export class UserPhotoTakePage implements OnInit {
       })
       .catch((err) => console.log(err))
 
-    
+
     Promise.all([pro1, pro2]).then(() => {
       // this.base64Images.push(this.IMG_URL_DATA);
       // this.base64Images.push(this.THUM_URL_DATA);
@@ -82,7 +82,7 @@ export class UserPhotoTakePage implements OnInit {
   }
 
   selectPhoto() {
-    this.selectPhotoByBrowser(); 
+    this.selectPhotoByBrowser();
     // let actionSheet = this.actionSheetCtrl.create({
     //   buttons: [
     //     {
