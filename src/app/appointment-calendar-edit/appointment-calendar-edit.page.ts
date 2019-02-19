@@ -488,6 +488,7 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
     if (DAY.DateId == oldDay.DateId) {
       console.log('Same day');
       DAY.Slots[this.index].STATUS = 'AVAILABLE';
+      DAY.Slots[this.index].BOOK_ID = '';
       let p1 = this.crudService.dayUpdate(DAY);
       let p3 = this.crudService.bookingUpdate(this.BOOKING);
       PROS.push(p1);
