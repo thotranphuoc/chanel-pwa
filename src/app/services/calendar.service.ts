@@ -27,7 +27,7 @@ export class CalendarService {
     return wkDay;
   }
 
-  getWeeksDaysOfMonth(Year: number, Month: number) {
+  getWeeksDaysOfMonthx(Year: number, Month: number) {
     let WEEKS = [];
     let days = this.getNumOfDaysInMonth(Month, Year);
     let _Month = Month < 10 ? '0' + Month.toString() : Month.toString();
@@ -75,14 +75,17 @@ export class CalendarService {
     }
   }
 
-  create35DaysOfMonth(Year: number, Month: number, ) {
+  create35DaysOfMonth(YYYYMM: string) {
+    let Year = Number(YYYYMM.substr(0, 4));
+    let Month = Number(YYYYMM.substr(4, 2));
     let Days = new Array(35);
     let weekday = this.getWeekday(Year, Month, 1);
     let days = this.getNumOfDaysInMonth(Month, Year);
     let _Month = Month < 10 ? '0' + Month.toString() : Month.toString();
     for (let index = 0; index < days; index++) {
       let _Date = (index + 1).toString();
-      let _DateId = Year.toString() + _Month + _Date;
+      let _finalDate = _Date.length > 1 ? _Date : '0' + _Date;
+      let _DateId = Year.toString() + _Month + _finalDate;
       Days[index + weekday] = {
         Date: _Date,
         DateId: _DateId
@@ -99,7 +102,8 @@ export class CalendarService {
     let _Month = Month < 10 ? '0' + Month.toString() : Month.toString();
     for (let index = 0; index < days; index++) {
       let _Date = (index + 1).toString();
-      let _DateId = Year.toString() + _Month + _Date;
+      let _finalDate = (index + 1) < 10 ? '0' + (index + 1).toString() : (index + 1).toString();
+      let _DateId = Year.toString() + _Month + _finalDate;
       let DataOfDay = {
         Date: _Date,
         DateId: _DateId,
@@ -112,6 +116,28 @@ export class CalendarService {
       MONTH[_DateId] = DataOfDay;
     }
     return MONTH;
+  }
+
+  addAdditionalProsIntoDaysInMonth(days: any[]) {
+    // let date_to_parse = new Date();
+    // let year = date_to_parse.getFullYear().toString();
+    // let month = (date_to_parse.getMonth() + 1).toString();
+    // let day = date_to_parse.getDate().toString();
+    // let TODAY = year + (month.length > 2 ? month : '0' + month) + day;
+    let TODAY = this.getTodayString()
+    let newDays = [];
+    days.forEach(day => {
+      if (day !== ('undefined' || null || '')) {
+        let Month = day.DateId.substr(4, 2)
+        let date = day.DateId.substr(6, day.DateId.length - 6);
+        let finalDate = date.length > 1 ? date : '0' + date;
+        day['date'] = Month + '/' + finalDate;
+        let isThePast = Number(TODAY) > Number(day.DateId);
+        day['isThePast'] = isThePast;
+        newDays.push(day);
+      }
+    })
+    return newDays;
   }
 
   calendarForMonthCreate(Year: number, Month: number) {
@@ -161,7 +187,39 @@ export class CalendarService {
   }
 
   getNumberOfReservedSlot(Day: iDay) {
-    let n = Day.Slots.filter(d => d.STATUS !=='AVAILABLE').length;
+    let n = Day.Slots.filter(d => d.STATUS !== 'AVAILABLE').length;
     return n;
   }
+
+  getTodayString() {
+    let date_to_parse = new Date();
+    let year = date_to_parse.getFullYear().toString();
+    let month = (date_to_parse.getMonth() + 1).toString();
+    let finalMonth = month.length > 2 ? month : '0' + month
+    let day = date_to_parse.getDate().toString();
+    let finalDay = day.length < 2 ? '0' + day : day;
+    let TODAY = year + finalMonth + finalDay;
+    console.log(TODAY);
+    return TODAY;
+  }
+
+  getNextMonth(current: string) {
+    let yearStr = current.substr(0, 4);
+    let year = Number(yearStr);
+    let month = Number(current.substr(4, 2));
+    let next = month + 1;
+    if (next < 13) {
+      let finalMonth = next > 10 ? next.toString() : '0' + next.toString();
+    } else {
+      let finalMonth = '01';
+      yearStr = (year + 1).toString();
+    }
+    let finalMonth = next > 10 ? next.toString() : '0' + next.toString();
+    return yearStr + finalMonth;
+  }
+
+
+
+
+
 }

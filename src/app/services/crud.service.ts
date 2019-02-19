@@ -181,19 +181,21 @@ export class CrudService {
     return this.afs.doc('CALENDARS/' + YYYYMM).set(data)
   }
 
-  calendarMonthGet(Month: string, Year: string) {
-    let MonthStr = Month.length < 2 ? '0' + Month : Month;
-    let str = Year + MonthStr;
-    return this.afs.doc('CALENDARS/' + str).valueChanges()
+  calendarMonthGet(YYYYMM: string) {
+    return this.afs.doc('CALENDARS/' + YYYYMM).valueChanges()
+  }
+
+  calendarMonthUpdate(YYYYMM: string, data: any) {
+    return this.afs.doc('CALENDARS/' + YYYYMM).update(data)
   }
 
   dayUpdate(Day: iDay) {
     let DateId = Day.DateId
-    let month = Day.DateId.substr(0, 6);
+    let monthstr = Day.DateId.substr(0, 6);
     let day2Update = {};
     day2Update[DateId] = Day;
     console.log(day2Update);
-    return this.afs.collection('CALENDARS').doc(month).update(day2Update);
+    return this.afs.collection('CALENDARS').doc(monthstr).update(day2Update);
   }
 }
 

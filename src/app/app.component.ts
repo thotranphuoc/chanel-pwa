@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   // Admin menus
   public appPages3 = [
     { title: 'Users', url: '/users', icon: 'contacts' },
-    { title: 'New Calendar', url: '/manager-calendar-add', icon: 'calendar' }
+    { title: 'Assignment', url: '/slot-assign', icon: 'calendar' }
   ];
 
   constructor(

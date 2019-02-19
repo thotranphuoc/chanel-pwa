@@ -28,8 +28,9 @@
           </ion-menu-toggle>
         </div>
 
+       <hr>
         <div *ngIf="authService.isAuthenticated">
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages2" end>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages3" end>
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
@@ -38,8 +39,10 @@
             </ion-item>
           </ion-menu-toggle>
         </div>
+        <hr>
+
         <div *ngIf="authService.isAuthenticated">
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages3" end>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages2" end>
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>

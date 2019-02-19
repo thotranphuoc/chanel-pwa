@@ -5,12 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ManagerCalendarAddPage } from './manager-calendar-add.page';
+import { SlotAssignPage } from './slot-assign.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ManagerCalendarAddPage
+    component: SlotAssignPage
   }
 ];
 
@@ -21,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ManagerCalendarAddPage]
+  declarations: [SlotAssignPage]
 })
-export class ManagerCalendarAddPageModule {}
+export class SlotAssignPageModule {}

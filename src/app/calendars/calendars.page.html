@@ -67,7 +67,7 @@
     </div>
     <div *ngSwitchCase="'overall'">
       <ion-grid *ngIf="WEEKSinMONTH1">
-        <h1>{{WEEKSinMONTH1.MONTH}} {{WEEKSinMONTH1.YEAR}}</h1>
+        <h1>{{currentYYYYMM.substr(4,2)}}/{{currentYYYYMM.substr(0,4)}}</h1>
         <ion-row class="row-bottom-line">
           <ion-col>Sun</ion-col>
           <ion-col>Mon</ion-col>
@@ -77,11 +77,13 @@
           <ion-col>Fri</ion-col>
           <ion-col>Sat</ion-col>
         </ion-row>
-        <ion-row *ngFor="let WK of WEEKSinMONTH1.WEEKS" class="row-bottom-line">
+        <ion-row *ngFor="let WK of WEEKSinMONTH1" class="row-bottom-line">
           <ion-col *ngFor="let Day of WK" (click)="selectDay(Day)" style="text-align: center">
             <h4>
-              <p [ngStyle]="{'background': TODAY == Day?.DateId ? 'red' : 'white',
-              'border-radius': '50%', 'padding': '0', 'width':'35px', 'height':'35px', 'padding-top': '6px', 'margin': '0 auto'}">{{Day?.Date}}</p>
+              <p
+                [ngStyle]="{'background': TODAY == Day?.DateId ? 'red' : 'white',
+              'border-radius': '50%', 'padding': '0', 'width':'35px', 'height':'35px', 'padding-top': '6px', 'margin': '0 auto'}">
+                {{Day?.Date}}</p>
             </h4>
             <div *ngIf="Day?.n==4 && Day?.Date" class="badge-red">{{Day?.n}}</div>
             <div *ngIf="Day?.n==3 && Day?.Date" class="badge-orange">{{Day?.n}}</div>
@@ -90,7 +92,7 @@
         </ion-row>
       </ion-grid>
       <ion-grid *ngIf="WEEKSinMONTH2">
-        <h1>{{WEEKSinMONTH2.MONTH}} {{WEEKSinMONTH2.YEAR}}</h1>
+        <h1>{{nextYYYYMM.substr(4,2)}}/{{nextYYYYMM.substr(0,4)}}</h1>
         <ion-row class="row-bottom-line">
           <ion-col>Sun</ion-col>
           <ion-col>Mon</ion-col>
@@ -100,12 +102,16 @@
           <ion-col>Fri</ion-col>
           <ion-col>Sat</ion-col>
         </ion-row>
-        <ion-row *ngFor="let WK of WEEKSinMONTH2.WEEKS" class="row-bottom-line">
+        <ion-row *ngFor="let WK of WEEKSinMONTH2" class="row-bottom-line">
           <ion-col *ngFor="let Day of WK" (click)="selectDay(Day)" style="text-align: center">
-            <h4><p [ngStyle]="{'background': TODAY == Day?.DateId ? 'red' : 'white',
-              'border-radius': '50%', 'padding': '0', 'width':'35px', 'height':'35px', 'padding-top': '6px', 'margin': '0 auto'}">{{Day?.Date}}</p></h4>
-              <div *ngIf="Day?.n==4 && Day?.Date" class="badge-red">{{Day?.n}}</div>
-              <div *ngIf="Day?.n==3 && Day?.Date" class="badge-orange">{{Day?.n}}</div>
+            <h4>
+              <p
+                [ngStyle]="{'background': TODAY == Day?.DateId ? 'red' : 'white',
+              'border-radius': '50%', 'padding': '0', 'width':'35px', 'height':'35px', 'padding-top': '6px', 'margin': '0 auto'}">
+                {{Day?.Date}}</p>
+            </h4>
+            <div *ngIf="Day?.n==4 && Day?.Date" class="badge-red">{{Day?.n}}</div>
+            <div *ngIf="Day?.n==3 && Day?.Date" class="badge-orange">{{Day?.n}}</div>
             <div *ngIf="Day?.n<3 && Day?.Date" class="badge-green">{{Day?.n}}</div>
           </ion-col>
         </ion-row>

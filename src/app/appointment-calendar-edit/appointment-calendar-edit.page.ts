@@ -34,7 +34,7 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
   selectedIndex: number = null;
   month1Subscription: Subscription;
   month2Subscription: Subscription;
-  TODAY: string;
+
   // STATES = ['AVAILABLE','BOOKED','CANCELED','COMPLETED','EXPIRED']
   STATES = ['Available', 'Booked', 'Canceled', 'Completed', 'Expired'];
 
@@ -44,7 +44,9 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
   Slot: iSlot;
   index: number;
   USER: iUser;
-
+  TODAY: string;
+  currentYYYYMM: string;
+  nextYYYYMM: string;
   constructor(
     private alertCtrl: AlertController,
     private navCtrl: NavController,
@@ -87,22 +89,13 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
 
   initCalendar() {
 
-    var date_to_parse = new Date();
-    var year = date_to_parse.getFullYear().toString();
-    var month = (date_to_parse.getMonth() + 1).toString();
-    var day = date_to_parse.getDate().toString();
-
-    this.TODAY = year + (month.length > 2 ? month : '0' + month) + day;
-    console.log(this.TODAY);
-
-    // this.WEEKSinMONTH1 = this.calendarService.getWeeksDaysOfMonth(2019, 1);
-    // this.WEEKSinMONTH2 = this.calendarService.getWeeksDaysOfMonth(2019, 2);
-    // this.MONTHS = [this.WEEKSinMONTH1, this.WEEKSinMONTH2];
-    // console.log(this.MONTHS);
-    let Days1: any[] = this.calendarService.create35DaysOfMonth(2019, 1);
-    let Days2: any[] = this.calendarService.create35DaysOfMonth(2019, 2);
+    this.TODAY = this.calendarService.getTodayString();
+    this.currentYYYYMM = this.TODAY.substr(0, 6);
+    this.nextYYYYMM = this.calendarService.getNextMonth(this.currentYYYYMM);
+    let Days1: any[] = this.calendarService.create35DaysOfMonth(this.currentYYYYMM);
+    let Days2: any[] = this.calendarService.create35DaysOfMonth(this.nextYYYYMM);
     console.log(Days1, Days2);
-    this.month1Subscription = this.crudService.calendarMonthGet('01', '2019')
+    this.month1Subscription = this.crudService.calendarMonthGet(this.currentYYYYMM)
       .subscribe(data => {
         // let WEEKS = [];
         // this.MONTHS = [];
@@ -126,7 +119,7 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
         //   YEAR: '2019'
         // }
       });
-    this.month2Subscription = this.crudService.calendarMonthGet('02', '2019')
+    this.month2Subscription = this.crudService.calendarMonthGet(this.nextYYYYMM)
       .subscribe(data => {
         // let WEEKS = [];
         // this.MONTHS = [];

@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManagerCalendarAddPage } from './manager-calendar-add.page';
+import { SlotAssignPage } from './slot-assign.page';
 
-describe('ManagerCalendarAddPage', () => {
-  let component: ManagerCalendarAddPage;
-  let fixture: ComponentFixture<ManagerCalendarAddPage>;
+describe('SlotAssignPage', () => {
+  let component: SlotAssignPage;
+  let fixture: ComponentFixture<SlotAssignPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManagerCalendarAddPage ],
+      declarations: [ SlotAssignPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManagerCalendarAddPage);
+    fixture = TestBed.createComponent(SlotAssignPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

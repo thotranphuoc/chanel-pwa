@@ -11,7 +11,6 @@ import { AppointmentEditPage } from '../appointment-edit/appointment-edit.page';
 import { LocalService } from '../services/local.service';
 import { AppService } from '../services/app.service';
 import { SlotsInDayPage } from '../slots-in-day/slots-in-day.page';
-import { readPatchedData } from '@angular/core/src/render3/util';
 
 @Component({
   selector: 'app-calendars',
@@ -19,8 +18,8 @@ import { readPatchedData } from '@angular/core/src/render3/util';
   styleUrls: ['./calendars.page.scss'],
 })
 export class CalendarsPage implements OnInit, OnDestroy {
-  WEEKSinMONTH1: any;
-  WEEKSinMONTH2: any;
+  WEEKSinMONTH1: any[] = [];
+  WEEKSinMONTH2: any[] = [];
   MONTHS = [];
   DaysInM1 = [];
   DaysInM2 = [];
@@ -30,6 +29,8 @@ export class CalendarsPage implements OnInit, OnDestroy {
   month1Subscription: Subscription;
   month2Subscription: Subscription;
   TODAY: string;
+  currentYYYYMM: string;
+  nextYYYYMM: string;
   // STATES = ['AVAILABLE','BOOKED','CANCELED','COMPLETED','EXPIRED']
   STATES = ['Available', 'Booked', 'Canceled', 'Completed', 'Expired'];
   constructor(
@@ -54,98 +55,51 @@ export class CalendarsPage implements OnInit, OnDestroy {
 
 
   initCalendar() {
-
-    var date_to_parse = new Date();
-    var year = date_to_parse.getFullYear().toString();
-    var month = (date_to_parse.getMonth() + 1).toString();
-    var day = date_to_parse.getDate().toString();
-
-    this.TODAY = year + (month.length > 2 ? month : '0' + month) + day;
-    console.log(this.TODAY);
-
-    // this.WEEKSinMONTH1 = this.calendarService.getWeeksDaysOfMonth(2019, 1);
-    // this.WEEKSinMONTH2 = this.calendarService.getWeeksDaysOfMonth(2019, 2);
-    // this.MONTHS = [this.WEEKSinMONTH1, this.WEEKSinMONTH2];
-    // console.log(this.MONTHS);
-    let Days1: any[] = this.calendarService.create35DaysOfMonth(2019, 1);
-    let Days2: any[] = this.calendarService.create35DaysOfMonth(2019, 2);
-    console.log(Days1, Days2);
-    this.month1Subscription = this.crudService.calendarMonthGet('01', '2019')
+    this.TODAY = this.calendarService.getTodayString();
+    this.currentYYYYMM = this.TODAY.substr(0, 6);
+    this.nextYYYYMM = this.calendarService.getNextMonth(this.currentYYYYMM);
+    let _35Days1: iDay[] = this.calendarService.create35DaysOfMonth(this.currentYYYYMM);
+    let _35Days2: iDay[] = this.calendarService.create35DaysOfMonth(this.nextYYYYMM);
+    console.log(_35Days1, _35Days2);
+    this.month1Subscription = this.crudService.calendarMonthGet(this.currentYYYYMM)
       .subscribe(data => {
-        let WEEKS = [];
-        this.MONTHS = [];
+        this.WEEKSinMONTH1 = [];
         console.log(data)
-        let newdays = Days1.map(day => data[day.DateId]);
+        let newdays = _35Days1.map(day => data[day.DateId]);
+        console.log(newdays);
         newdays.forEach(day => {
           let n = day.Slots.filter(slot => slot.STATUS !== 'AVAILABLE').length;
           day['n'] = n;
         });
         console.log(newdays);
-        this.DaysInM1 = this.getDaysInMonth(newdays);
+        this.DaysInM1 = this.calendarService.addAdditionalProsIntoDaysInMonth(newdays);
         let W1 = newdays.slice(0, 7);
         let W2 = newdays.slice(7, 14);
         let W3 = newdays.slice(14, 21);
         let W4 = newdays.slice(21, 28);
         let W5 = newdays.slice(28, 35);
-        WEEKS.push(W1, W2, W3, W4, W5);
-        this.WEEKSinMONTH1 = {
-          WEEKS: WEEKS,
-          MONTH: 'Jan',
-          YEAR: '2019'
-        }
-        // this.MONTHS.push(this.WEEKSinMONTH1, this.WEEKSinMONTH1);
-        // console.log(this.MONTHS);
+        this.WEEKSinMONTH1.push(W1, W2, W3, W4, W5);
       });
-    this.month2Subscription = this.crudService.calendarMonthGet('02', '2019')
+
+    this.month2Subscription = this.crudService.calendarMonthGet(this.nextYYYYMM)
       .subscribe(data => {
-        let WEEKS = [];
-        this.MONTHS = [];
+        this.WEEKSinMONTH2 = [];
         console.log(data)
-        let newdays = Days2.map(day => data[day.DateId]);
+        let newdays = _35Days2.map(day => data[day.DateId]);
         newdays.forEach(day => {
           let n = day.Slots.filter(slot => slot.STATUS !== 'AVAILABLE').length;
           day['n'] = n;
         });
         console.log(newdays);
-        this.DaysInM2 = this.getDaysInMonth(newdays);
+        this.DaysInM2 = this.calendarService.addAdditionalProsIntoDaysInMonth(newdays);
         let W1 = newdays.slice(0, 7);
         let W2 = newdays.slice(7, 14);
         let W3 = newdays.slice(14, 21);
         let W4 = newdays.slice(21, 28);
         let W5 = newdays.slice(28, 35);
-        WEEKS.push(W1, W2, W3, W4, W5);
-        this.WEEKSinMONTH2 = {
-          WEEKS: WEEKS,
-          MONTH: 'Feb',
-          YEAR: '2019'
-        }
-        // this.MONTHS.push(this.WEEKSinMONTH1, this.WEEKSinMONTH1);
-        // console.log(this.MONTHS);
+        this.WEEKSinMONTH2.push(W1, W2, W3, W4, W5);
       });
 
-  }
-
-  getDaysInMonth(days: any[]) {
-    // let temp = days.filter(item=> {
-    //   return (item !==('undefined'|| null || ''));
-    // });
-    // temp.map(item=>{
-    //   if(this.DaysInM1k)
-    // })
-
-    let newDays = [];
-    days.forEach(day => {
-      if (day !== ('undefined' || null || '')) {
-        let Month = day.DateId.substr(4, 2)
-        let date = day.DateId.substr(6, day.DateId.length - 6);
-        let finalDate = date.length > 1 ? date : '0' + date;
-        day['date'] = Month + '/' + finalDate;
-        let isThePast = Number(this.TODAY) > Number(day.DateId);
-        day['isThePast'] = isThePast;
-        newDays.push(day);
-      }
-    })
-    return newDays;
   }
 
   segmentChanged(ev: CustomEvent) {
@@ -156,19 +110,12 @@ export class CalendarsPage implements OnInit, OnDestroy {
 
   selectDay(Day: iDay) {
     console.log(Day);
-    // // this.presentModal();
-    // this.presentAlertRadio(Day);
     this.selectedDay = Day;
     this.openSlotsInDayModal(Day);
   }
   selectSlot(selectedDay: iDay, slot: iSlot, index: number) {
     console.log(selectedDay, slot, index);
     this.selectedSlot = slot;
-    // this.selectedSlot.STATUS = 'BOOKED';
-    // this.selectedSlot.BOOK_ID = '1111';
-    // this.crudService.dayUpdate(this.selectedDay)
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err));
     this.openAppointmentModal(selectedDay, slot, index);
   }
 
@@ -177,15 +124,6 @@ export class CalendarsPage implements OnInit, OnDestroy {
     if (Day.Data.number >= 2) return "color='danger'";
     return "color='success'";
   }
-
-  // async modalCustomerAdd() {
-  //   const modal = await this.modalController.create({
-  //     component: CustomerAddPage,
-  //     componentProps: { value: '123' }
-  //   });
-
-  //   return await modal.present();
-  // }
 
   addNewAppointment() {
     console.log('fab button')
@@ -210,43 +148,6 @@ export class CalendarsPage implements OnInit, OnDestroy {
     await modal.present();
     const data = await modal.onDidDismiss();
     console.log(data);
-  }
-
-
-  async presentAlertRadio(Day: any) {
-    let INPUTS = [];
-    Day.Data.forEach(slot => {
-      let state = slot.BOOKED ? 'RESERVED' : 'AVAILABLE';
-      let inp = {
-        name: slot.SLOT,
-        type: 'radio',
-        label: slot.SLOT + ' -->' + state,
-        value: slot,
-        checked: false
-      };
-      INPUTS.push(inp);
-    });
-    const alert = await this.alertCtrl.create({
-      header: 'Select slot',
-      inputs: INPUTS,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Ok',
-          handler: (data) => {
-            console.log('Confirm Ok', data);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
   }
 
   selectSlotInList(Day: iDay, SLOT: iSlot, index: number) {
