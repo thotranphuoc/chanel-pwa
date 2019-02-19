@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from '@ionic/angular';
 import { ViewController } from '@ionic/core';
+import { ImageService } from '../services/image.service';
 
 @Component({
   selector: 'app-photo-take',
@@ -16,7 +17,7 @@ export class PhotoTakePage {
     public navParams: NavParams,
     // private actionSheetCtrl: ActionSheetController,
     private viewCtrl: ViewController,
-    private imageService: ImageServic
+    private imageService: ImageService
   ) {
     this.data = this.navParams.data;
     this.base64Images = this.data.PHOTOS;
@@ -32,6 +33,7 @@ export class PhotoTakePage {
   }
 
   takePhoto() {
+    console.log('taking photo camera')
     this.selectPhotoByBrowser();
   }
 
@@ -107,7 +109,7 @@ export class PhotoTakePage {
   //  }
   // }
 
-  setPhotos() {
+  /*setPhotos() {
     this.viewCtrl.dismiss({ isCancel: false, PHOTOS: this.base64Images })
       .then((res) => { console.log(res) })
       .catch((err) => { console.log(err) })
@@ -119,5 +121,5 @@ export class PhotoTakePage {
       .then((res) => { console.log(res) })
       .catch((err) => { console.log(err) })
   }
-
+*/
 }

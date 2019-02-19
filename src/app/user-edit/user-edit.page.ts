@@ -46,21 +46,11 @@ export class UserEditPage implements OnInit {
     this.navCtrl.goBack();
   }
   
-  /*takePhoto() {
+  takePhoto() {
     console.log('take Photo');
-    //let photosModal = this.modalCtrl.create();
-      //PhotoTakePage, { PHOTOS: this.base64Images });
-    photosModal.onDidDismiss((data) => {
-      console.log(data);
-      this.base64Images = data.PHOTOS;
-      this.hasNewAvatar = true;
-      this.uploadImageThenUpdateURL();
-    });
-    photosModal.present()
-      .then((res) => { console.log(res) })
-      .catch((err) => { console.log(err) })
+    
   }
-*/
+
   uploadImageThenUpdateURL() {
     // console.log(this.PROFILE);
     /*this.dbService.uploadBase64Image2FBReturnPromiseWithURL('Avatar/' + this.USER.U_ID, this.base64Images[0], this.USER.U_ID)
