@@ -1,11 +1,6 @@
 <ion-header>
-  
-  <ion-navbar>
-    <!-- <ion-buttons start>
-      <button ion-button (click)="setPhotos()">Close</button>
-    </ion-buttons> -->
-    <ion-title>Take a Photo</ion-title>
-  </ion-navbar>
+
+
 
 </ion-header>
 
@@ -19,7 +14,8 @@
   </ion-item>
 
   <div text-center>
-    <img src="{{base64Images[0]}}" alt="" (click)="selectPhoto(i)" onError="this.src='../../assets/imgs/imagenotavailable.png';">
+    <img src="{{base64Images[0]}}" alt="" (click)="selectPhoto()"
+      onError="this.src='../../assets/imgs/imagenotavailable.png';">
   </div>
 
   <ion-grid>
@@ -28,7 +24,8 @@
         <button ion-button block color="danger" (click)="doCancel()" class="btn-green-photo">Cancel</button>
       </ion-col>
       <ion-col>
-        <button ion-button block color="secondary" (click)="setPhotos()" [disabled]="!newPhoto" class="btn-green-photo">OK</button>
+        <button ion-button block color="secondary" (click)="setPhotos()" [disabled]="!newPhoto"
+          class="btn-green-photo">OK</button>
       </ion-col>
     </ion-row>
   </ion-grid>

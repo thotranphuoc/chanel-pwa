@@ -43,6 +43,7 @@
           <ion-label color="primary" fixed>Phone:</ion-label>
           <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
         </ion-item>
+
         <div style="height: 5px"></div>
         <ion-item>
           <ion-label color="primary" fixed>Appointment date</ion-label>
@@ -121,7 +122,10 @@
         <ion-item lines="none">
           <ion-label color="primary" fixed>Phone:</ion-label>
           <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
-
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>Last Booking Date:</ion-label>
+          <ion-datetime disabled displayFormat="DD/MM/YYYY" [(ngModel)]="CUSTOMER.C_LAST_B_DATE"></ion-datetime>
         </ion-item>
         <div style="height: 5px"></div>
         <ion-item>

@@ -24,19 +24,28 @@
 
         </ion-item>
         <div style="height: 5px"></div>
-        <ion-item (click)="changeTimeSlot()">
+        <!-- <ion-item (click)="changeTimeSlot()">
           <ion-label color="primary" fixed>Appointment date</ion-label>
-          <ion-input displayFormat="MM/DD/YYYY" [(ngModel)]="BOOKING.B_DATE" style="text-align: right">{{BOOKING.B_DATE}}</ion-input>
+          <ion-input disabled displayFormat="MM/DD/YYYY" [(ngModel)]="BOOKING.B_DATE" style="text-align: right">
+            {{BOOKING.B_DATE}}</ion-input>
+        </ion-item> -->
+        <ion-item>
+          <ion-label color="primary" fixed>Appointment date:</ion-label>
+          <ion-button slot="end" (click)="changeTimeSlot()">{{BOOKING.B_DATE}}</ion-button>
         </ion-item>
         <ion-item>
+          <ion-label color="primary" fixed>Appointment time:</ion-label>
+          <ion-button slot="end" (click)="changeTimeSlot()">{{BOOKING.B_SLOT}}</ion-button>
+        </ion-item>
+        <!-- <ion-item>
           <ion-label color="primary">Appointment time</ion-label>
-          <ion-select [(ngModel)]="BOOKING.B_SLOT">
+          <ion-select disabled [(ngModel)]="BOOKING.B_SLOT">
             <ion-select-option value="10:30">10:30</ion-select-option>
             <ion-select-option value="12:30">12:30</ion-select-option>
             <ion-select-option value="15:30">15:30</ion-select-option>
             <ion-select-option value="17:00">17:00</ion-select-option>
           </ion-select>
-        </ion-item>
+        </ion-item> -->
         <div style="height: 5px"></div>
 
         <ion-item>
@@ -82,10 +91,22 @@
             <ion-select-option value="EXPIRED">EXPIRED</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item *ngIf="BOOKING.B_STATUS =='COMPLETED'">
-          <ion-label color="primary" fixed>Total:</ion-label>
-          <ion-input type="number" placeholder="Tổng tiền sp BA bán được" [(ngModel)]="BOOKING.B_TOTAL"></ion-input>
-        </ion-item>
+        <div *ngIf="BOOKING.B_STATUS =='COMPLETED'">
+          <ion-item>
+            <ion-label color="primary" fixed>Total:</ion-label>
+            <!-- <ion-input type="number" placeholder="Tổng tiền sp BA bán được" [(ngModel)]="BOOKING.B_TOTAL"></ion-input> -->
+            <ion-button slot="end" (click)="setTotal()"><span
+                *ngIf="BOOKING.B_TOTAL">{{BOOKING.B_TOTAL | currency}}</span><span *ngIf="!BOOKING.B_TOTAL">0</span>
+            </ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" fixed>Selling BA:</ion-label>
+            <ion-button slot="end" (click)="setBASelling()"><span
+                *ngIf="BOOKING.B_BA_SELL_NAME">{{BOOKING.B_BA_SELL_NAME}}</span><span
+                *ngIf="!BOOKING.B_BA_SELL_NAME">Chọn B.A bán hàng</span></ion-button>
+          </ion-item>
+        </div>
+
         <!-- <input type="number" placeholder="Tổng tiền sp BA bán được" [(ngModel)]="BOOKING.B_TOTAL | currency :'symbol':'4.2-2'"/> -->
         <ion-grid text-center>
           <ion-row>

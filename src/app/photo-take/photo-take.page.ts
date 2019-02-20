@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController,
+import {
+  NavController, NavParams, ModalController,
 } from '@ionic/angular';
 import { ImageService } from '../services/image.service';
 import { ViewController } from '@ionic/core';
@@ -46,14 +47,14 @@ export class PhotoTakePage {
     this.base64Images = [];
     // FOR NORMAL IMG
     let pro2 = this.imageService.resizeImagesFromChoosenFilesReturnPromiseWithArrayOfImageDataUrlsSizeSetable(event, 750, 750)
-    .then((imgDataUrls: string[]) => {
-      setTimeout(() => {
-        console.log(imgDataUrls);
-        // this.base64Images = imgDataUrls;
-        this.base64Images.push(imgDataUrls[0]);
-      }, 2000)
-    })
-    .catch((err) => console.log(err))
+      .then((imgDataUrls: string[]) => {
+        setTimeout(() => {
+          console.log(imgDataUrls);
+          // this.base64Images = imgDataUrls;
+          this.base64Images.push(imgDataUrls[0]);
+        }, 2000)
+      })
+      .catch((err) => console.log(err))
     // FOR THUMBNAIL
     let pro1 = this.imageService.resizeImagesFromChoosenFilesReturnPromiseWithArrayOfImageDataUrlsSizeSetable(event, 150, 150)
       .then((imgDataUrls: string[]) => {
@@ -65,7 +66,7 @@ export class PhotoTakePage {
       })
       .catch((err) => console.log(err))
 
-    
+
     Promise.all([pro1, pro2]).then(() => {
       // this.base64Images.push(this.IMG_URL_DATA);
       // this.base64Images.push(this.THUM_URL_DATA);
@@ -78,7 +79,7 @@ export class PhotoTakePage {
       })
   }
 
-  selectPhoto(i) {
+  selectPhoto() {
     // let actionSheet = this.actionSheetCtrl.create({
     //   buttons: [
     //     {

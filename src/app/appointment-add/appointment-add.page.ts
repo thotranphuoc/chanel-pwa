@@ -5,7 +5,7 @@ import { iFacial } from '../interfaces/ifacial.interface';
 import { iCustomer } from '../interfaces/customer.interface';
 import { iUser } from '../interfaces/user.interface';
 import { CrudService } from '../services/crud.service';
-import { ModalController, NavController, NavParams } from '@ionic/angular';
+import { ModalController, NavController, NavParams, AlertController } from '@ionic/angular';
 import { iFacialCabin } from '../interfaces/facialcabin.interface';
 import { iDay } from '../interfaces/day.interface';
 import { iSlot } from '../interfaces/slot.interface';
@@ -31,6 +31,7 @@ export class AppointmentAddPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private navPar: NavParams,
+    private alertCtrl: AlertController,
     private modalCtrl: ModalController,
     private localService: LocalService,
     private crudService: CrudService,
@@ -85,7 +86,34 @@ export class AppointmentAddPage implements OnInit {
     return year + '-' + month + '-' + finalDate;
   }
 
-  addNewAppointment() {
+  async addNewAppointment() {
+    let MSG = 'Customer already had booking on ' + this.CUSTOMER.C_LAST_B_DATE + '. Are you sure to continue?'
+    const alert = await this.alertCtrl.create({
+      header: 'Confirm!',
+      message: MSG,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+            this.doCancel();
+          }
+        }, {
+          text: 'OK',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.doAddAppointment();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  doAddAppointment() {
     this.BOOKING.B_CREATED_TIME = new Date().toISOString();
     this.CUSTOMER.C_NAME = this.BOOKING.B_CUSTOMER_NAME;
     this.CUSTOMER.C_PHONE = this.BOOKING.B_CUSTOMER_PHONE;
@@ -102,8 +130,6 @@ export class AppointmentAddPage implements OnInit {
     } else {
       this.createBookingWithExistingCustomer();
     }
-
-
   }
 
   createBookingWithExistingCustomer() {
@@ -197,7 +223,17 @@ export class AppointmentAddPage implements OnInit {
     this.BOOKING.B_CUSTOMER_NAME = CUSTOMER.C_NAME;
     this.BOOKING.B_CUSTOMER_PHONE = CUSTOMER.C_PHONE;
     this.BOOKING.B_CUSTOMER_VIPCODE = CUSTOMER.C_VIPCODE;
+    if (!this.isAllowed2Book()) {
+      this.appService.alertConfirmationShow('Oops', 'Customer already had booking on ' + this.CUSTOMER.C_LAST_B_DATE);
+    }
   }
+
+  isAllowed2Book() {
+    let lastBookYYYYMM = this.CUSTOMER.C_LAST_B_DATE.substr(0, 7)
+    let bookingYYYYMM = this.BOOKING.B_DATE.substr(0, 7)
+    return lastBookYYYYMM !== bookingYYYYMM
+  }
+
 
   resetData() {
     this.CUSTOMER = this.localService.CUSTOMER_DEFAULT;
