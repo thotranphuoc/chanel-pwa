@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Avatar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div text-center>
+    <img src="{{base64Images[0]}}" alt="" (click)="selectPhoto()" onError="this.src='../../assets/imgs/imagenotavailable.png';">
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button block color="danger" (click)="doCancel()" class="btn-green-photo">Cancel</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button block color="secondary" (click)="setPhotos()" [disabled]="!newPhoto" class="btn-green-photo">OK</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <input type="file" (change)="takePictureAndResizeByBrowser($event)" hidden accept="image/*" id="inputFile">
+</ion-content>
