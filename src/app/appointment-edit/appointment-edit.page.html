@@ -26,11 +26,13 @@
         <div style="height: 5px"></div>
         <ion-item>
           <ion-label color="primary" fixed>Appointment date:</ion-label>
-          <ion-button slot="end" (click)="changeTimeSlot()">{{BOOKING.B_DATE}}</ion-button>
+          <ion-button [disabled]="isChangeSlotDisabled()" slot="end" (click)="changeTimeSlot()">{{BOOKING.B_DATE}}
+          </ion-button>
         </ion-item>
         <ion-item>
           <ion-label color="primary" fixed>Appointment time:</ion-label>
-          <ion-button slot="end" (click)="changeTimeSlot()">{{BOOKING.B_SLOT}}</ion-button>
+          <ion-button [disabled]="isChangeSlotDisabled()" slot="end" (click)="changeTimeSlot()">{{BOOKING.B_SLOT}}
+          </ion-button>
         </ion-item>
         <div style="height: 5px"></div>
 
@@ -93,7 +95,8 @@
               <ion-button color="danger" expand="block" (click)="doCancel()">CANCEL</ion-button>
             </ion-col>
             <ion-col>
-              <ion-button color="secondary" expand="block" (click)="updateBooking()">UPDATE</ion-button>
+              <ion-button [disabled]="isDisabled()" color="secondary" expand="block" (click)="updateBooking()">UPDATE
+              </ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>

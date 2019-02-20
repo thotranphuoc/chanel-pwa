@@ -252,6 +252,13 @@ export class AppointmentEditPage implements OnInit {
   isDisabled() {
     let isDisabled = false;
     if (this.USER.U_ROLE !== 'Manager' && this.BOOKING.B_STATUS == 'DRAFT') isDisabled = true;
+    if (this.USER.U_ROLE !== 'Manager' && this.BOOKING.B_STATUS == 'COMPLETED') isDisabled = true;
+    return isDisabled;
+  }
+
+  isChangeSlotDisabled() {
+    let isDisabled = false;
+    if (this.BOOKING.B_STATUS == 'COMPLETED' || this.BOOKING.B_STATUS == 'EXPIRED') isDisabled = true;
     return isDisabled;
   }
 

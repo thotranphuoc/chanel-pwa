@@ -25,7 +25,8 @@ export class LocalService {
     U_ROLE: '',
     U_ID: '',
     U_AVATAR: '',
-    U_STATE: ''
+    U_STATE: '',
+    U_FULLNAME: ''
   }
 
   ACCOUNT = {
