@@ -1,0 +1,9 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>calendar-upload</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <input type="file" (change)="parse($event.target.files)"/>
+</ion-content>

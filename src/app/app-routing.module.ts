@@ -42,6 +42,7 @@ const routes: Routes = [
   { path: 'slot-assign', loadChildren: './slot-assign/slot-assign.module#SlotAssignPageModule' },
   { path: 'photo-take', loadChildren: './photo-take/photo-take.module#PhotoTakePageModule' },
   { path: 'user-photo-take', loadChildren: './user-photo-take/user-photo-take.module#UserPhotoTakePageModule' },
+  { path: 'calendar-upload', loadChildren: './calendar-upload/calendar-upload.module#CalendarUploadPageModule' },
 
 ];
 

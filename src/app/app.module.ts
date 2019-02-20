@@ -36,7 +36,7 @@ import { DbService } from './services/db.service';
 import { PhotoTakePageModule } from './photo-take/photo-take.module';
 import { UserPhotoTakePageModule } from './user-photo-take/user-photo-take.module';
 import { ImageService } from './services/image.service';
-
+import { PapaParseModule } from 'ngx-papaparse';
 firebase.initializeApp(environment.firebase);
 
 @NgModule({
@@ -56,6 +56,7 @@ firebase.initializeApp(environment.firebase);
     BrowserAnimationsModule,
     CommonModule,
     FormsModule,
+    PapaParseModule,
     NgbModalModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
