@@ -21,7 +21,10 @@ export class SlotAssignPage implements OnInit, OnDestroy {
   TODAY: string;
   Specialists = [];
   selectedSpecialist: iUser = null;
-
+  NONE = {
+    SPE_ID: '',
+    SPE_NAME: ''
+  }
   constructor(
     private alertCtrl: AlertController,
     private crudService: CrudService,
@@ -39,7 +42,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     // this.updateWholeMonthWhenLeaving();
   }
 
-  updateWholeMonthWhenLeaving(){
+  updateWholeMonthWhenLeaving() {
     let MonthObj = {}
     this.DaysInMonth.forEach(Day => {
       MonthObj[Day.DateId] = Day
@@ -105,14 +108,14 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     console.log(Day, SLOT, i);
     console.log(this.selectedSpecialist);
     if (this.selectedSpecialist) {
-      SLOT.SPE_ID = this.selectedSpecialist.U_ID;
-      SLOT.SPE_NAME = this.selectedSpecialist.U_NAME;
+      SLOT.SPE_ID = this.selectedSpecialist.U_ID ? this.selectedSpecialist.U_ID : '';
+      SLOT.SPE_NAME = this.selectedSpecialist.U_NAME ? this.selectedSpecialist.U_NAME : '';
       Day.Slots[i] = SLOT;
-      console.log(Day, SLOT)
+      console.log(Day, SLOT, this.selectedSpecialist)
       this.crudService.dayUpdate(Day)
         .then((res) => console.log(res))
         .catch(err => console.log(err));
-    }else{
+    } else {
       this.appService.alertConfirmationShow(null, 'Select Specical please');
     }
 

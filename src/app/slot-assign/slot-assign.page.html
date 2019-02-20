@@ -22,7 +22,7 @@
   <ion-item>
     <ion-label>Specicalist:</ion-label>
     <ion-select [(ngModel)]="selectedSpecialist">
-      <ion-select-option value="null">None</ion-select-option>
+      <ion-select-option [value]="NONE">None</ion-select-option>
       <ion-select-option *ngFor="let Specialist of Specialists" [value]="Specialist">{{Specialist.U_NAME}}
       </ion-select-option>
     </ion-select>
