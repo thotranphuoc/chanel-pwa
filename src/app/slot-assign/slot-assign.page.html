@@ -49,8 +49,16 @@
       </ion-col>
       <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)"
         [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
-        <span class="{{SLOT.STATUS}}"><span *ngIf="SLOT.SPE_NAME">{{SLOT.SPE_NAME}}</span><span
-            *ngIf="!SLOT.SPE_NAME">{{SLOT.SLOT}}</span></span>
+        <div class="{{SLOT.STATUS}}">
+          <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 50px;">
+            <div><h4>{{SLOT.SPE_NAME}}</h4></div>
+            <div>{{SLOT.SLOT}}</div> 
+          </div> 
+          <div *ngIf="!SLOT.SPE_NAME">
+              <div style="height: 25px;"><h4> </h4></div>
+              <div>{{SLOT.SLOT}}</div> 
+          </div>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>
