@@ -36,27 +36,22 @@ export class SlotAssignPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     console.log(this.DaysInMonth);
-    // let MonthObj = {}
-    // this.DaysInMonth.forEach(Day => {
-    //   MonthObj[Day.DateId] = Day
-    // })
-    // console.log(MonthObj);
-    // this.crudService.calendarMonthUpdate(this.YYYYMM, MonthObj)
-    //   .then((res) => console.log(res))
-    //   .catch(err => console.log(err));
+    // this.updateWholeMonthWhenLeaving();
   }
 
+  updateWholeMonthWhenLeaving(){
+    let MonthObj = {}
+    this.DaysInMonth.forEach(Day => {
+      MonthObj[Day.DateId] = Day
+    })
+    console.log(MonthObj);
+    this.crudService.calendarMonthUpdate(this.YYYYMM, MonthObj)
+      .then((res) => console.log(res))
+      .catch(err => console.log(err));
+  }
 
   initCalendar() {
-    let date_to_parse = new Date();
-    let year = date_to_parse.getFullYear().toString();
-    let month = (date_to_parse.getMonth() + 1).toString();
-    let finalMonth = month.length > 2 ? month : '0' + month
-    let day = date_to_parse.getDate().toString();
-    let finalDay = day.length < 2 ? '0' + day : day;
-    this.MM = finalMonth;
-    this.YYYY = year + this.MM;
-    this.TODAY = year + finalMonth + finalDay;
+    this.TODAY = this.calendarService.getTodayString();
     console.log(this.TODAY);
     this.getCalendarsOfMonth();
   }
@@ -117,6 +112,8 @@ export class SlotAssignPage implements OnInit, OnDestroy {
       this.crudService.dayUpdate(Day)
         .then((res) => console.log(res))
         .catch(err => console.log(err));
+    }else{
+      this.appService.alertConfirmationShow(null, 'Select Specical please');
     }
 
   }
