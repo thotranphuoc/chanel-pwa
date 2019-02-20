@@ -55,6 +55,10 @@ export class LocalService {
     C_ID: '1',
     C_VIPCODE: '',
     C_AVATAR: '',
+    C_LAST_B_ID: '',
+    C_LAST_B_DATE: '',
+    C_LAST_B_SLOT: ''
+
   }
 
   ////////////////////////////////

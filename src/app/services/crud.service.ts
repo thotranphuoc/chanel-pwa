@@ -69,6 +69,15 @@ export class CrudService {
     return this.afs.doc('CUSTOMERS/' + customer.C_ID).update(customer);
   }
 
+  customerUpdateLastBooking(BOOKING: iBooking) {
+    let CID = BOOKING.B_CUSTOMER_ID;
+    return this.afs.doc('CUSTOMERS/' + CID).update({
+      C_LAST_B_ID: BOOKING.B_ID,
+      C_LAST_B_DATE: BOOKING.B_DATE,
+      C_LAST_B_SLOT: BOOKING.B_SLOT
+    })
+  }
+
   customersGet() {
     return this.afs.collection('CUSTOMERS').get();
   }
@@ -157,6 +166,10 @@ export class CrudService {
         .then((res) => {
           BOOKING.B_ID = res.id;
           return res.update({ B_ID: res.id })
+        })
+        .then(() => {
+          // update last booking for customer
+          return this.customerUpdateLastBooking(BOOKING);
         })
         .then(() => {
           resolve({ MSG: 'Booking created successfully', BOOKING: BOOKING });
