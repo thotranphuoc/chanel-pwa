@@ -46,6 +46,14 @@
 
         <div style="height: 5px"></div>
         <ion-item>
+          <ion-label color="primary" fixed>Appointment date:</ion-label>
+          <ion-button slot="end">{{BOOKING.B_DATE}}</ion-button>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>Appointment time:</ion-label>
+          <ion-button slot="end">{{BOOKING.B_SLOT}}</ion-button>
+        </ion-item>
+        <!-- <ion-item>
           <ion-label color="primary" fixed>Appointment date</ion-label>
           <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="BOOKING.B_DATE"></ion-datetime>
         </ion-item>
@@ -57,7 +65,7 @@
             <ion-select-option value="15:30">15:30</ion-select-option>
             <ion-select-option value="17:00">17:00</ion-select-option>
           </ion-select>
-        </ion-item>
+        </ion-item> -->
         <div style="height: 5px"></div>
         <ion-item>
           <ion-label color="primary" fixed>Note</ion-label>
@@ -128,7 +136,7 @@
           <ion-datetime disabled displayFormat="DD/MM/YYYY" [(ngModel)]="CUSTOMER.C_LAST_B_DATE"></ion-datetime>
         </ion-item>
         <div style="height: 5px"></div>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label color="primary" fixed>Appointment date</ion-label>
           <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="BOOKING.B_DATE"></ion-datetime>
         </ion-item>
@@ -140,6 +148,14 @@
             <ion-select-option value="15:30">15:30</ion-select-option>
             <ion-select-option value="17:00">17:00</ion-select-option>
           </ion-select>
+        </ion-item> -->
+        <ion-item>
+          <ion-label color="primary" fixed>Appointment date:</ion-label>
+          <ion-button slot="end">{{BOOKING.B_DATE}}</ion-button>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>Appointment time:</ion-label>
+          <ion-button slot="end">{{BOOKING.B_SLOT}}</ion-button>
         </ion-item>
         <div style="height: 5px"></div>
         <ion-item>
