@@ -25,6 +25,13 @@ export class AppointmentEditPage implements OnInit {
   sub2: Subscription;
   BAs: iUser[] = [];
   selectedBA: iUser;
+  RIGHTS = {
+    Admin: ['AVAILABLE', 'BOOKED', 'COMPLETED', 'CANCELED', 'EXPIRED'],
+    Manager: ['DRAFT', 'AVAILABLE', 'BOOKED', 'COMPLETED', 'CANCELED', 'EXPIRED'],
+    Specialist: ['AVAILABLE', 'BOOKED', 'COMPLETED', 'CANCELED', 'EXPIRED'],
+    BA: ['AVAILABLE', 'BOOKED', 'CANCELED', 'EXPIRED'],
+    FA: ['AVAILABLE', 'BOOKED', 'CANCELED', 'EXPIRED']
+  }
   constructor(
     private navPar: NavParams,
     private modalCtrl: ModalController,
@@ -74,9 +81,6 @@ export class AppointmentEditPage implements OnInit {
   }
 
   doUpdateBooking() {
-    // this.BOOKING.B_BA_SELL = this.selectedBA;
-    // this.BOOKING.B_BA_SELL_ID = this.selectedBA.U_ID;
-    // this.BOOKING.B_BA_SELL_NAME = this.selectedBA.U_NAME;
     this.crudService.bookingUpdate(this.BOOKING)
       .then(res => {
         console.log(res);
@@ -137,7 +141,6 @@ export class AppointmentEditPage implements OnInit {
         this.BAs = USERS.filter(U => U.U_ROLE == 'BA');
       })
       console.log(this.BAs);
-      // this.selectedBA = this.BAs[0];
     })
   }
 
@@ -208,5 +211,49 @@ export class AppointmentEditPage implements OnInit {
 
     await alert.present();
   }
+
+  async setBookingStatus() {
+    let STATES = this.RIGHTS[this.USER.U_ROLE];
+    let INPUTS = [];
+
+    STATES.forEach(STATE => {
+      let INP = {
+        name: 'radio1',
+        type: 'radio',
+        label: STATE,
+        value: STATE,
+      }
+      INPUTS.push(INP);
+    })
+    const alert = await this.alertCtrl.create({
+      header: 'STATUS',
+      inputs: INPUTS,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (data: string) => {
+            console.log(data);
+            this.BOOKING.B_STATUS = data;
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  isDisabled() {
+    let isDisabled = false;
+    if (this.USER.U_ROLE !== 'Manager' && this.BOOKING.B_STATUS == 'DRAFT') isDisabled = true;
+    return isDisabled;
+  }
+
 
 }

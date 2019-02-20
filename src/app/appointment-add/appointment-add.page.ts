@@ -28,6 +28,7 @@ export class AppointmentAddPage implements OnInit {
   Slot: iSlot;
   index: number;
   searchPhoneStr: string;
+
   constructor(
     private navCtrl: NavController,
     private navPar: NavParams,
@@ -86,7 +87,7 @@ export class AppointmentAddPage implements OnInit {
     return year + '-' + month + '-' + finalDate;
   }
 
-  async addNewAppointment() {
+  async confirmBookTimesInMonth() {
     let MSG = 'Customer already had booking on ' + this.CUSTOMER.C_LAST_B_DATE + '. Are you sure to continue?'
     const alert = await this.alertCtrl.create({
       header: 'Confirm!',
@@ -113,6 +114,27 @@ export class AppointmentAddPage implements OnInit {
     await alert.present();
   }
 
+  preCheckAddNewAppointment() {
+    if (this.isAllowed2BookTimesInMonth()) {
+      this.doAddAppointment();
+      this.BOOKING.B_STATUS = 'BOOKED';
+    } else {
+      this.BOOKING.B_STATUS = 'DRAFT';
+      this.confirmBookTimesInMonth();
+    }
+
+  }
+
+  isFullFilled() {
+    if (
+      !this.BOOKING.B_CUSTOMER_NAME ||
+      !this.BOOKING.B_CUSTOMER_PHONE
+    ) {
+      return false;
+    }
+    return true;
+  }
+
   doAddAppointment() {
     this.BOOKING.B_CREATED_TIME = new Date().toISOString();
     this.CUSTOMER.C_NAME = this.BOOKING.B_CUSTOMER_NAME;
@@ -123,7 +145,7 @@ export class AppointmentAddPage implements OnInit {
     this.BOOKING.B_BA_BOOK_ID = currentUser.U_ID;
     this.BOOKING.B_BA_BOOK_NAME = currentUser.U_NAME;
     this.BOOKING.B_BA_BOOK = currentUser;
-    this.BOOKING.B_STATUS = 'BOOKED';
+    // this.BOOKING.B_STATUS = 'BOOKED';
     console.log(this.BOOKING);
     if (this.BOOKING.B_isNewCustomer) {
       this.createBookingWithNewCustomer();
@@ -223,12 +245,12 @@ export class AppointmentAddPage implements OnInit {
     this.BOOKING.B_CUSTOMER_NAME = CUSTOMER.C_NAME;
     this.BOOKING.B_CUSTOMER_PHONE = CUSTOMER.C_PHONE;
     this.BOOKING.B_CUSTOMER_VIPCODE = CUSTOMER.C_VIPCODE;
-    if (!this.isAllowed2Book()) {
+    if (!this.isAllowed2BookTimesInMonth()) {
       this.appService.alertConfirmationShow('Oops', 'Customer already had booking on ' + this.CUSTOMER.C_LAST_B_DATE);
     }
   }
 
-  isAllowed2Book() {
+  isAllowed2BookTimesInMonth() {
     let lastBookYYYYMM = this.CUSTOMER.C_LAST_B_DATE.substr(0, 7)
     let bookingYYYYMM = this.BOOKING.B_DATE.substr(0, 7)
     return lastBookYYYYMM !== bookingYYYYMM

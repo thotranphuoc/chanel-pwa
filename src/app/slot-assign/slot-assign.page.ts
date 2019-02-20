@@ -116,7 +116,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
         .then((res) => console.log(res))
         .catch(err => console.log(err));
     } else {
-      this.appService.alertConfirmationShow(null, 'Select Specical please');
+      this.appService.alertConfirmationShow(null, 'Select Specicalist please');
     }
 
   }
@@ -196,5 +196,5 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     }
     return color;
   }
-  
+
 }
