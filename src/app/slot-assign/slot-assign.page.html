@@ -49,14 +49,18 @@
       </ion-col>
       <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)"
         [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
-        <div class="{{SLOT.STATUS}}">
+        <div class="{{SLOT.STATUS}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
           <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 50px;">
-            <div><h4>{{SLOT.SPE_NAME}}</h4></div>
-            <div>{{SLOT.SLOT}}</div> 
-          </div> 
+            <div>
+              <h4>{{SLOT.SPE_NAME}}</h4>
+            </div>
+            <div>{{SLOT.SLOT}}</div>
+          </div>
           <div *ngIf="!SLOT.SPE_NAME">
-              <div style="height: 25px;"><h4> </h4></div>
-              <div>{{SLOT.SLOT}}</div> 
+            <div style="height: 25px;">
+              <h4> </h4>
+            </div>
+            <div>{{SLOT.SLOT}}</div>
           </div>
         </div>
       </ion-col>

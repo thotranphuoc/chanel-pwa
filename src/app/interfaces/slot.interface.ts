@@ -9,5 +9,5 @@ export interface iSlot {
     MAN_ID: string,
     MAN_NAME: string,
     SPE_ID: string,
-    SPE_NAME: string
+    SPE_NAME: string,
 }
