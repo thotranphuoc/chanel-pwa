@@ -19,6 +19,8 @@ export class SlotAssignPage implements OnInit, OnDestroy {
   DaysInMonth: iDay[] = [];
   STATES = ['Available', 'Booked', 'Canceled', 'Completed', 'Expired'];
   TODAY: string;
+  COLOR_SPE:any = [];
+  
   Specialists = [];
   selectedSpecialist: iUser = null;
   NONE = {
@@ -30,7 +32,9 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     private crudService: CrudService,
     private calendarService: CalendarService,
     private appService: AppService
-  ) { }
+  ) { 
+    this.COLOR_SPE['']='Gray';
+  }
 
   ngOnInit() {
     // this.initCalendar();
@@ -96,10 +100,12 @@ export class SlotAssignPage implements OnInit, OnDestroy {
       let USERS = [];
       qSnap.forEach(docSnap => {
         let USER = <iUser>docSnap.data();
+        this.COLOR_SPE[USER.U_ID]=this.getRandomColor();
         USERS.push(USER);
         this.Specialists = USERS.filter(U => U.U_ROLE == 'Specialist');
       })
       console.log(this.Specialists);
+      console.log(this.COLOR_SPE);
       // this.selectedBA = this.BAs[0];
     })
   }
