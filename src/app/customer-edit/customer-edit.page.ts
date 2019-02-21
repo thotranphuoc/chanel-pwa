@@ -40,11 +40,11 @@ export class CustomerEditPage implements OnInit {
       .then((res: any) => {
         console.log(res);
         //this.presentToast("thanh cong");
-        this.ALERTUPDATE = 'Updated Success';
+        this.ALERTUPDATE = 'Cập nhật thành công';
       })
       .catch((err) => {
         console.log(err);
-        this.ALERTUPDATE = 'Updated Fail';
+        this.ALERTUPDATE = 'Cập nhật thất bại';
       })
 
   }
@@ -54,12 +54,12 @@ export class CustomerEditPage implements OnInit {
     this.crudService.customerUpdate(this.CUSTOMER)
       .then((res) => {
         console.log(res);
-        this.appService.alertShow('Success', null, 'Customer updated successfully');
+        this.appService.alertShow('Thành công', null, 'Cập nhật khách hàng thành công');
         this.navCtrl.goBack();
       })
       .catch(err => {
         console.log(err);
-        this.appService.alertShow('Fail', null, 'Customer update failed');
+        this.appService.alertShow('Thất bại', null, 'Cập nhật khách hàng thất bại');
       })
   }
 

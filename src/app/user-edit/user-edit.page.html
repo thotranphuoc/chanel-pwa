@@ -24,11 +24,11 @@
               </div>
 
           <ion-item>
-            <ion-label color="primary" fixed>Name:</ion-label>
+            <ion-label color="primary" fixed>Tên:</ion-label>
             <ion-input type="text" placeholder="Name" [(ngModel)]="USER.U_NAME"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label color="primary" fixed>Phone:</ion-label>
+            <ion-label color="primary" fixed>Số điện thoại:</ion-label>
             <ion-input type="text" placeholder="Phone" [(ngModel)]="USER.U_PHONE"></ion-input>
           </ion-item>
           <ion-item>
@@ -36,23 +36,23 @@
             <ion-input type="text" placeholder="Email" [(ngModel)]="USER.U_EMAIL"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label color="primary" fixed>Address:</ion-label>
+            <ion-label color="primary" fixed>Địa chỉ:</ion-label>
             <ion-input type="text" placeholder="Address" [(ngModel)]="USER.U_ADDRESS"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label color="primary">Gender:</ion-label>
+            <ion-label color="primary">Giới tính:</ion-label>
             <ion-select [(ngModel)]="USER.U_GENDER">
-              <ion-select-option value="Male">Male</ion-select-option>
-              <ion-select-option value="Female">Female</ion-select-option>
-              <ion-select-option value="Other">Other</ion-select-option>
+              <ion-select-option value="Male">Nam</ion-select-option>
+              <ion-select-option value="Female">Nữ</ion-select-option>
+              <ion-select-option value="Other">Khác</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-label color="primary" fixed>Date of Birth</ion-label>
+            <ion-label color="primary" fixed>Ngày sinh</ion-label>
             <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="USER.U_DoB"></ion-datetime>
           </ion-item>
           <ion-item>
-            <ion-label color="primary">Role</ion-label>
+            <ion-label color="primary">Quyền</ion-label>
             <ion-select [(ngModel)]="USER.U_ROLE">
               <ion-select-option value="Manager">Manager</ion-select-option>
               <ion-select-option value="Specialist">Specialist</ion-select-option>
@@ -62,7 +62,7 @@
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-label color="primary">Status:</ion-label>
+            <ion-label color="primary">Trạng thái:</ion-label>
             <ion-select [(ngModel)]="USER.U_STATE">
               <ion-select-option value="Active">Active</ion-select-option>
               <ion-select-option value="Inactive">Inactive</ion-select-option>
@@ -71,10 +71,10 @@
           <ion-grid>
             <ion-row>
               <ion-col>
-                <ion-button expand="block" color="danger" (click)="doCancel()">Cancel</ion-button>
+                <ion-button expand="block" color="danger" (click)="doCancel()">Huỷ bỏ</ion-button>
               </ion-col>
               <ion-col>
-                <ion-button expand="block" (click)="updateUser()">Update</ion-button>
+                <ion-button expand="block" (click)="updateUser()">Cập nhật</ion-button>
               </ion-col>
             </ion-row>
           </ion-grid>

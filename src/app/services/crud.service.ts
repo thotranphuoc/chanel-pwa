@@ -59,7 +59,7 @@ export class CrudService {
           return res.update({ C_ID: res.id })
         })
         .then(() => {
-          resolve({ MSG: 'create success', CUSTOMER: CUS })
+          resolve({ MSG: 'Thêm thành công', CUSTOMER: CUS })
         })
         .catch((err) => reject(err))
     })
@@ -128,7 +128,7 @@ export class CrudService {
           return res.update({ B_ID: res.id })
         })
         .then(() => {
-          resolve({ MSG: 'create success' })
+          resolve({ MSG: 'Thêm thành công' })
         })
         .catch((err) => reject(err))
     })
@@ -147,7 +147,7 @@ export class CrudService {
         })
         .then((res2) => {
           console.log(res2);
-          resolve({ MSG: 'new booking done', BOOKING: BOOKING, CUSTOMER: _CUSTOMER })
+          resolve({ MSG: 'Đặt hẹn hoàn tất', BOOKING: BOOKING, CUSTOMER: _CUSTOMER })
         })
         .catch(err => {
           reject(err);
@@ -172,7 +172,7 @@ export class CrudService {
           return this.customerUpdateLastBooking(BOOKING);
         })
         .then(() => {
-          resolve({ MSG: 'Booking created successfully', BOOKING: BOOKING });
+          resolve({ MSG: 'Đặt hẹn thành công', BOOKING: BOOKING });
         })
         .catch((err) => reject(err));
     })

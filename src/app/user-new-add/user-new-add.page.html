@@ -1,12 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>user-new-add</ion-title>
+    <ion-title>Thêm nhân viên</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <ion-item>
-    <ion-label color="primary">Name:</ion-label>
+    <ion-label color="primary">Tên:</ion-label>
     <ion-input #name type="text"></ion-input>
   </ion-item>
   <ion-item>
@@ -14,13 +14,13 @@
     <ion-input #email type="email"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label color="primary">Password:</ion-label>
+    <ion-label color="primary">Mật khẩu:</ion-label>
     <ion-input #pw type="text"></ion-input>
   </ion-item>
 
 
   <ion-item>
-    <ion-label color="primary">Role</ion-label>
+    <ion-label color="primary">Quyền</ion-label>
     <ion-select #role>
       <ion-select-option value="Manager">Manager</ion-select-option>
       <ion-select-option value="Specialist">Specialist</ion-select-option>
@@ -32,11 +32,10 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-button expand="full" color="danger" (click)="cancel()">Cancel</ion-button>
+        <ion-button expand="full" color="danger" (click)="cancel()">Huỷ bỏ</ion-button>
       </ion-col>
       <ion-col>
-        <ion-button expand="full" (click)="createAccount4User(name.value, email.value, pw.value, role.value)">Create
-          User
+        <ion-button expand="full" (click)="createAccount4User(name.value, email.value, pw.value, role.value)">Thêm mới
         </ion-button>
       </ion-col>
     </ion-row>

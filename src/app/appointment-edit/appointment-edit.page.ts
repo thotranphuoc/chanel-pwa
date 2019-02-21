@@ -187,7 +187,7 @@ export class AppointmentEditPage implements OnInit {
       INPUTS.push(INP);
     })
     const alert = await this.alertCtrl.create({
-      header: 'Selling BA',
+      header: 'BA bán hàng',
       inputs: INPUTS,
       buttons: [
         {

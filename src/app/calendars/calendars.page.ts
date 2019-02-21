@@ -163,7 +163,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
         this.modalAppointmentEdit(Day, SLOT, index);
       }
     } else {
-      this.alertConfirmationShow('Confirm!', 'Please login before continuing...');
+      this.alertConfirmationShow('Confirm!', 'Vui lòng đăng nhập để tiếp tục...');
     }
 
   }
@@ -173,7 +173,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
     if (this.localService.USER) {
       this.slotsInDayModal(Day);
     } else {
-      this.alertConfirmationShow('Confirm!', 'Please login before continuing...');
+      this.alertConfirmationShow('Confirm!', 'Vui lòng đăng nhập để tiếp tục...');
     }
   }
 

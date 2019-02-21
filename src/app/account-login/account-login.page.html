@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>account-login</ion-title>
+    <ion-title>Đăng nhập</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,15 +15,15 @@
       <div *ngIf="authService.isSigned">
         <div class="input_div">
           <ion-input #email type="email" placeholder="Email"></ion-input>
-          <ion-input #pw type="password" placeholder="Password"></ion-input>
+          <ion-input #pw type="password" placeholder="Mật khẩu"></ion-input>
           <div class="button_div">
             <ion-grid>
               <ion-row>
                 <ion-col>
-                  <button class="btn_login" (click)="login(email.value, pw.value)">Logout</button>
+                  <button class="btn_login" (click)="login(email.value, pw.value)">Đăng xuất</button>
                 </ion-col>
                 <ion-col>
-                  <button class="btn_register">Recov</button>
+                  <button class="btn_register">Đăng nhập</button>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -33,15 +33,15 @@
       <div *ngIf="!authService.isSigned">
         <div class="input_div">
           <ion-input #email type="email" placeholder="Email"></ion-input>
-          <ion-input #pw type="password" placeholder="Password"></ion-input>
+          <ion-input #pw type="password" placeholder="Mật khẩu"></ion-input>
           <div class="button_div">
             <ion-grid>
               <ion-row>
                 <ion-col>
-                  <button class="btn_login" (click)="login(email.value, pw.value)">Login</button>
+                  <button class="btn_login" (click)="login(email.value, pw.value)">Đăng nhập</button>
                 </ion-col>
                 <ion-col>
-                  <button class="btn_register">Register</button>
+                  <button class="btn_register">Đăng ký</button>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -50,5 +50,5 @@
       </div>
     </div>
   </div>
-  <ion-button (click)="authService.signOutWithAfAuth()">Logout</ion-button>
+  <ion-button (click)="authService.signOutWithAfAuth()">Đăng xuất</ion-button>
 </ion-content>

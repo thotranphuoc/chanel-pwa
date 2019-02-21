@@ -256,7 +256,7 @@ export class DbService {
                 let index = array.indexOf(el);
                 if (index < 0) {
                     // el not exist
-                    reject({ message: 'Element not exist' });
+                    reject({ message: 'Giá trị không tồn tại' });
                 } else {
                     array.splice(index, 1);
                     firebase.database().ref(dbURL).set(array).then((res) => {

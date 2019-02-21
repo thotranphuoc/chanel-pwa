@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Facial cabin add</ion-title>
+    <ion-title>Thêm Facial cabin</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,17 +8,17 @@
   <div class="main">
     <div class="content">
         <div class="input_div">
-            <ion-input #location type="text" placeholder="LOCATION"></ion-input>
-            <ion-input #manager type="text" placeholder="MANAGER"></ion-input>
-            <ion-input #name type="text" placeholder="NAME"></ion-input>
+            <ion-input #location type="text" placeholder="Địa điểm"></ion-input>
+            <ion-input #manager type="text" placeholder="Người quản lý"></ion-input>
+            <ion-input #name type="text" placeholder="Họ và tên"></ion-input>
             <div class="button_div">
                 <ion-grid>
                     <ion-row>
                       <ion-col>
-                        <button class="btn_add" (click)="addNew(location.value, manager.value,name.value)">Add New</button>
+                        <button class="btn_add" (click)="addNew(location.value, manager.value,name.value)">Thêm</button>
                       </ion-col>
                       <ion-col>
-                        <button class="btn_cancle">Cancle</button>
+                        <button class="btn_cancle">Huỷ bỏ</button>
                       </ion-col>
                     </ion-row>
                   </ion-grid>

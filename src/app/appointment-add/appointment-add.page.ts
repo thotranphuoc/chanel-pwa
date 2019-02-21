@@ -88,7 +88,7 @@ export class AppointmentAddPage implements OnInit {
   }
 
   async confirmBookTimesInMonth() {
-    let MSG = 'Customer already had booking on ' + this.CUSTOMER.C_LAST_B_DATE + '. Are you sure to continue?'
+    let MSG = 'KH đã đặt lịch hẹn ngày ' + this.CUSTOMER.C_LAST_B_DATE + '. Bạn có chắc tiếp tục không?'
     const alert = await this.alertCtrl.create({
       header: 'Confirm!',
       message: MSG,
@@ -192,7 +192,7 @@ export class AppointmentAddPage implements OnInit {
 
   doUpdateCalendarsForDay(newBooking: iBooking) {
     // alert booking success;
-    this.appService.toastWithOptionsShow('Success!');
+    this.appService.toastWithOptionsShow('Thành công!');
     // update CALENDARS/DATE/{}
     this.Day.Slots[this.index].BOOK_ID = newBooking.B_ID;
     this.Day.Slots[this.index].STATUS = newBooking.B_STATUS;
@@ -246,7 +246,7 @@ export class AppointmentAddPage implements OnInit {
     this.BOOKING.B_CUSTOMER_PHONE = CUSTOMER.C_PHONE;
     this.BOOKING.B_CUSTOMER_VIPCODE = CUSTOMER.C_VIPCODE;
     if (!this.isAllowed2BookTimesInMonth()) {
-      this.appService.alertConfirmationShow('Oops', 'Customer already had booking on ' + this.CUSTOMER.C_LAST_B_DATE);
+      this.appService.alertConfirmationShow('Oops', 'KH đã đặt lịch hẹn ngày ' + this.CUSTOMER.C_LAST_B_DATE);
     }
   }
 

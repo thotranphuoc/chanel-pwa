@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>account-register</ion-title>
+    <ion-title>Đăng ký</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,17 +10,17 @@
       <div class="div_register">
 
           <ion-input #email type="email" placeholder="Email"></ion-input>
-          <ion-input #pw type="password" placeholder="Password"></ion-input>
-          <ion-input #fullname type="text" placeholder="FullName"></ion-input>
+          <ion-input #pw type="password" placeholder="Mật khẩu"></ion-input>
+          <ion-input #fullname type="text" placeholder="Họ và tên"></ion-input>
 
             <div class="button_div">
                 <ion-grid>
                     <ion-row>
                       <ion-col>
-                        <button class="btn_register" (click)="register(email.value, pw.value,fullname.value) ">Register</button>
+                        <button class="btn_register" (click)="register(email.value, pw.value,fullname.value) ">Đăng ký</button>
                       </ion-col>
                       <ion-col>
-                        <button class="btn_cancel">Cancel</button>
+                        <button class="btn_cancel">Huỷ bỏ</button>
                       </ion-col>
                     </ion-row>
                   </ion-grid>

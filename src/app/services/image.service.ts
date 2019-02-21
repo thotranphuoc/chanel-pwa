@@ -183,11 +183,6 @@ export class ImageService {
             }
             resolve(resizedDataURLs);
         })
-
-
     }
-
-
-
 }
 

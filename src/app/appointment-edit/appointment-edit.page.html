@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Update Appointment</ion-title>
+    <ion-title>Cập nhật lịch hẹn</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -9,7 +9,7 @@
     <div class="content">
       <div class="old-customer" *ngIf="BOOKING">
         <ion-item>
-          <ion-label color="primary" fixed>Name:</ion-label>
+          <ion-label color="primary" fixed>Tên:</ion-label>
           <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_NAME"></ion-input>
         </ion-item>
 
@@ -19,34 +19,34 @@
         </ion-item>
 
         <ion-item>
-          <ion-label color="primary" fixed>Phone:</ion-label>
+          <ion-label color="primary" fixed>Số điện thoại:</ion-label>
           <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
 
         </ion-item>
         <div style="height: 5px"></div>
         <ion-item>
-          <ion-label color="primary" fixed>Appointment date:</ion-label>
+          <ion-label color="primary" fixed>Ngày hẹn:</ion-label>
           <ion-button [disabled]="isChangeSlotDisabled()" slot="end" (click)="changeTimeSlot()">{{BOOKING.B_DATE}}
           </ion-button>
         </ion-item>
         <ion-item>
-          <ion-label color="primary" fixed>Appointment time:</ion-label>
+          <ion-label color="primary" fixed>Thời gian:</ion-label>
           <ion-button [disabled]="isChangeSlotDisabled()" slot="end" (click)="changeTimeSlot()">{{BOOKING.B_SLOT}}
           </ion-button>
         </ion-item>
         <div style="height: 5px"></div>
 
         <ion-item>
-          <ion-label color="primary" fixed>Note</ion-label>
+          <ion-label color="primary" fixed>Ghi chú</ion-label>
           <ion-input type="text" placeholder="Ghi chú" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label color="primary">Chanel Skin Care Use</ion-label>
+          <ion-label color="primary">KH sử dụng Skin Care</ion-label>
           <ion-toggle [(ngModel)]="BOOKING.B_CSCU"></ion-toggle>
         </ion-item>
 
         <ion-item>
-          <ion-label color="primary">Sublimage Customer</ion-label>
+          <ion-label color="primary">KH sử dụng Sublimage</ion-label>
           <ion-toggle [(ngModel)]="BOOKING.B_SUBLIMAGE"></ion-toggle>
         </ion-item>
         <ion-item *ngIf="BOOKING.B_SUBLIMAGE">
@@ -54,11 +54,11 @@
           <ion-input [(ngModel)]="BOOKING.B_SUBLIMAGES" placeholder="Sản phẩm Sublimage khách dùng"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label color="primary">Le lift Customer</ion-label>
+          <ion-label color="primary">KH sử dụng Le lift</ion-label>
           <ion-toggle [(ngModel)]="BOOKING.B_LELIFT"></ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-label color="primary">Fashion Customer</ion-label>
+          <ion-label color="primary">KH sử dụng Fashion</ion-label>
           <ion-toggle [(ngModel)]="BOOKING.B_FASHION"></ion-toggle>
         </ion-item>
         <ion-item *ngIf="BOOKING.B_FASHION">
@@ -66,23 +66,23 @@
           <ion-input [(ngModel)]="BOOKING.B_FASHIONS" placeholder="Sản phẩm Fashion khách dùng"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label color="primary" fixed>1st time using facial cabin</ion-label>
+          <ion-label color="primary" fixed>Lần đầu sử dụng facial cabin</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-label color="primary" fixed>Booking State:</ion-label>
+          <ion-label color="primary" fixed>Trạng thái:</ion-label>
           <ion-button [disabled]="isDisabled()" slot="end" (click)="setBookingStatus()">{{BOOKING.B_STATUS}}
           </ion-button>
         </ion-item>
         <div *ngIf="BOOKING.B_STATUS =='COMPLETED'">
           <ion-item>
-            <ion-label color="primary" fixed>Total:</ion-label>
+            <ion-label color="primary" fixed>Tổng tiền:</ion-label>
             <ion-button slot="end" (click)="setTotal()"><span
                 *ngIf="BOOKING.B_TOTAL">{{BOOKING.B_TOTAL | currency}}</span><span *ngIf="!BOOKING.B_TOTAL">0</span>
             </ion-button>
           </ion-item>
           <ion-item>
-            <ion-label color="primary" fixed>Selling BA:</ion-label>
+            <ion-label color="primary" fixed>BA bán hàng:</ion-label>
             <ion-button slot="end" (click)="setBASelling()">
               <span *ngIf="BOOKING.B_BA_SELL_NAME">{{BOOKING.B_BA_SELL_NAME}}</span>
               <span *ngIf="!BOOKING.B_BA_SELL_NAME">Chọn B.A bán hàng</span>
@@ -92,10 +92,10 @@
         <ion-grid text-center>
           <ion-row>
             <ion-col>
-              <ion-button color="danger" expand="block" (click)="doCancel()">CANCEL</ion-button>
+              <ion-button color="danger" expand="block" (click)="doCancel()">Huỷ bỏ</ion-button>
             </ion-col>
             <ion-col>
-              <ion-button [disabled]="isDisabled()" color="secondary" expand="block" (click)="updateBooking()">UPDATE
+              <ion-button [disabled]="isDisabled()" color="secondary" expand="block" (click)="updateBooking()">Cập nhật
               </ion-button>
             </ion-col>
           </ion-row>

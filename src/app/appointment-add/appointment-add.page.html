@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>New Appointment</ion-title>
+    <ion-title>Đặt hẹn</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,7 +8,7 @@
   <div class="main">
     <div class="content">
       <ion-item lines="none">
-        <ion-label color="primary">New Customer?</ion-label>
+        <ion-label color="primary">Có phải khách hàng mới không?</ion-label>
         <ion-toggle [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
       </ion-item>
       <div *ngIf="!BOOKING.B_isNewCustomer">
@@ -30,7 +30,7 @@
       <!-- NEW CUSTOMER -->
       <div *ngIf="BOOKING.B_isNewCustomer" class="new-customer">
         <ion-item>
-          <ion-label color="primary" fixed>Name:</ion-label>
+          <ion-label color="primary" fixed>Tên:</ion-label>
           <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_NAME"></ion-input>
         </ion-item>
 
@@ -40,17 +40,17 @@
         </ion-item>
 
         <ion-item lines="none">
-          <ion-label color="primary" fixed>Phone:</ion-label>
+          <ion-label color="primary" fixed>Số điện:</ion-label>
           <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
         </ion-item>
 
         <div style="height: 5px"></div>
         <ion-item>
-          <ion-label color="primary" fixed>Appointment date:</ion-label>
+          <ion-label color="primary" fixed>Ngày hẹn:</ion-label>
           <ion-button slot="end">{{BOOKING.B_DATE}}</ion-button>
         </ion-item>
         <ion-item lines="none">
-          <ion-label color="primary" fixed>Appointment time:</ion-label>
+          <ion-label color="primary" fixed>Thời gian:</ion-label>
           <ion-button slot="end">{{BOOKING.B_SLOT}}</ion-button>
         </ion-item>
         <!-- <ion-item>
@@ -68,16 +68,16 @@
         </ion-item> -->
         <div style="height: 5px"></div>
         <ion-item>
-          <ion-label color="primary" fixed>Note</ion-label>
+          <ion-label color="primary" fixed>Ghi chú</ion-label>
           <ion-input type="text" placeholder="Ghi chú" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label color="primary">Chanel Skin Care Use</ion-label>
+          <ion-label color="primary">KH sử dụng Skin Care</ion-label>
           <ion-toggle [(ngModel)]="BOOKING.B_CSCU"></ion-toggle>
         </ion-item>
 
         <ion-item>
-          <ion-label color="primary">Sublimage Customer</ion-label>
+          <ion-label color="primary">KH sử dụng Sublimage</ion-label>
           <ion-toggle [(ngModel)]="BOOKING.B_SUBLIMAGE"></ion-toggle>
         </ion-item>
         <ion-item *ngIf="BOOKING.B_SUBLIMAGE">
@@ -85,11 +85,11 @@
           <ion-input [(ngModel)]="BOOKING.B_SUBLIMAGES"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label color="primary">Le lift Customer</ion-label>
+          <ion-label color="primary">KH sử dụng Le lift</ion-label>
           <ion-toggle [(ngModel)]="BOOKING.B_LELIFT"></ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-label color="primary">Fashion Customer</ion-label>
+          <ion-label color="primary">KH sử dụng Fashion</ion-label>
           <ion-toggle [(ngModel)]="BOOKING.B_FASHION"></ion-toggle>
         </ion-item>
         <ion-item *ngIf="BOOKING.B_FASHION">
@@ -97,7 +97,7 @@
           <ion-input [(ngModel)]="BOOKING.B_FASHIONS"></ion-input>
         </ion-item>
         <ion-item lines="none">
-          <ion-label color="primary" fixed>1st time using facial cabin</ion-label>
+          <ion-label color="primary" fixed>Lần đầu sử dụng facial cabin</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
         </ion-item>
 
@@ -110,7 +110,7 @@
       <!-- OLD CUSTOMER -->
       <div *ngIf="!BOOKING.B_isNewCustomer" class="old-customer">
         <ion-item>
-          <ion-label color="primary" fixed>Name:</ion-label>
+          <ion-label color="primary" fixed>Tên:</ion-label>
           <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_NAME"></ion-input>
         </ion-item>
 
@@ -120,34 +120,34 @@
         </ion-item>
 
         <ion-item>
-          <ion-label color="primary" fixed>Phone:</ion-label>
+          <ion-label color="primary" fixed>Số điện thoại:</ion-label>
           <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
         </ion-item>
         <ion-item lines="none">
-          <ion-label color="primary" fixed>Last Booking Date:</ion-label>
+          <ion-label color="primary" fixed>Ngày đặt lịch trước:</ion-label>
           <ion-datetime disabled displayFormat="DD/MM/YYYY" [(ngModel)]="CUSTOMER.C_LAST_B_DATE"></ion-datetime>
         </ion-item>
         <div style="height: 5px"></div>
         <ion-item>
-          <ion-label color="primary" fixed>Appointment date:</ion-label>
+          <ion-label color="primary" fixed>Ngày hẹn:</ion-label>
           <ion-button slot="end">{{BOOKING.B_DATE}}</ion-button>
         </ion-item>
         <ion-item lines="none">
-          <ion-label color="primary" fixed>Appointment time:</ion-label>
+          <ion-label color="primary" fixed>Thời gian:</ion-label>
           <ion-button slot="end">{{BOOKING.B_SLOT}}</ion-button>
         </ion-item>
         <div style="height: 5px"></div>
         <ion-item>
-          <ion-label color="primary" fixed>Note</ion-label>
+          <ion-label color="primary" fixed>Ghi chú</ion-label>
           <ion-input type="text" placeholder="Ghi chú" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label color="primary">Chanel Skin Care Use</ion-label>
+          <ion-label color="primary">KH sử dụng Skin Care</ion-label>
           <ion-toggle [(ngModel)]="BOOKING.B_CSCU"></ion-toggle>
         </ion-item>
 
         <ion-item>
-          <ion-label color="primary">Sublimage Customer</ion-label>
+          <ion-label color="primary">KH sử dụng Sublimage</ion-label>
           <ion-toggle [(ngModel)]="BOOKING.B_SUBLIMAGE"></ion-toggle>
         </ion-item>
         <ion-item *ngIf="BOOKING.B_SUBLIMAGE">
@@ -155,11 +155,11 @@
           <ion-input [(ngModel)]="BOOKING.B_SUBLIMAGES" placeholder="Sản phẩm Sublimage khách dùng"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label color="primary">Le lift Customer</ion-label>
+          <ion-label color="primary">KH sử dụng Le lift</ion-label>
           <ion-toggle [(ngModel)]="BOOKING.B_LELIFT"></ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-label color="primary">Fashion Customer</ion-label>
+          <ion-label color="primary">KH sử dụng Fashion</ion-label>
           <ion-toggle [(ngModel)]="BOOKING.B_FASHION"></ion-toggle>
         </ion-item>
         <ion-item *ngIf="BOOKING.B_FASHION">
@@ -167,7 +167,7 @@
           <ion-input [(ngModel)]="BOOKING.B_FASHIONS" placeholder="Sản phẩm Fashion khách dùng"></ion-input>
         </ion-item>
         <ion-item lines="none">
-          <ion-label color="primary" fixed>1st time using facial cabin</ion-label>
+          <ion-label color="primary" fixed>Lần đầu sử dụng facial cabin</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
         </ion-item>
 
@@ -189,10 +189,10 @@
       <ion-grid text-center>
         <ion-row>
           <ion-col>
-            <ion-button color="danger" expand="block" (click)="doCancel()">Cancel</ion-button>
+            <ion-button color="danger" expand="block" (click)="doCancel()">Huỷ bỏ</ion-button>
           </ion-col>
           <ion-col>
-            <ion-button expand="block" (click)="preCheckAddNewAppointment()" [disabled]="!isFullFilled()">Add
+            <ion-button expand="block" (click)="preCheckAddNewAppointment()" [disabled]="!isFullFilled()">Thêm
             </ion-button>
           </ion-col>
         </ion-row>
