@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Assignment</ion-title>
+    <ion-title>Lịch làm việc</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,14 +15,14 @@
     </ion-row>
   </ion-grid> -->
   <ion-item>
-    <ion-label>Select Month</ion-label>
+    <ion-label>Chọn tháng</ion-label>
     <ion-datetime #selectedMonth display-format="MMM, YYYY" (ionChange)="selectMonth(selectedMonth.value)">
     </ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label>Specicalist:</ion-label>
     <ion-select [(ngModel)]="selectedSpecialist">
-      <ion-select-option [value]="NONE">None</ion-select-option>
+      <ion-select-option [value]="NONE">Huỷ lịch</ion-select-option>
       <ion-select-option *ngFor="let Specialist of Specialists" [value]="Specialist">{{Specialist.U_NAME}}
       </ion-select-option>
     </ion-select>
@@ -50,7 +50,7 @@
       <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)"
         [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
         <div class="{{SLOT.STATUS}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
-          <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 50px;">
+          <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
             <div>
               <h4>{{SLOT.SPE_NAME}}</h4>
             </div>
@@ -74,7 +74,7 @@
       <ion-col *ngFor="let SLOT of selectedDay.Slots; let i = index" (click)="selectSlotInList(selectedDay,SLOT,i)"
         [ngStyle]="{'opacity': selectedDay.isThePast ? '0.3' : '1'}">
         <div class="{{SLOT.STATUS}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
-          <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 50px;">
+          <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
             <div>
               <h4>{{SLOT.SPE_NAME}}</h4>
             </div>

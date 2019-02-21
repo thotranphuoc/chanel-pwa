@@ -135,7 +135,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
         .then((res) => console.log(res))
         .catch(err => console.log(err));
     } else {
-      this.appService.alertConfirmationShow(null, 'Select Specicalist please');
+      this.appService.alertConfirmationShow(null, 'Vui lòng chọn Specicalist');
     }
   }
 
@@ -144,7 +144,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     let MONTHSTR = this.MM + '/' + this.YYYY
     const alert = await this.alertCtrl.create({
       header: 'Confirm!',
-      message: MONTHSTR + ' is not existing. Do you want to create it?',
+      message: MONTHSTR + ' không tồn tại. Bạn có muốn tạo mới không?',
       buttons: [
         {
           text: 'Cancel',
@@ -234,13 +234,13 @@ export class SlotAssignPage implements OnInit, OnDestroy {
           this.deleteUpdateSlotsMode = true;
         }
       }, {
-        text: 'New',
+        text: 'Thêm',
         icon: 'add',
         handler: () => {
           this.doAddNewSlot(Day);
         }
       }, {
-        text: 'Cancel',
+        text: 'Huỷ bỏ',
         icon: 'close',
         role: 'cancel',
         handler: () => {
@@ -264,7 +264,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
       ],
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Huỷ bỏ',
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
@@ -361,7 +361,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
       ],
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Huỷ bỏ',
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
@@ -369,7 +369,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
             this.deleteUpdateSlotsMode = false;
           }
         }, {
-          text: 'Update',
+          text: 'Cập nhật',
           handler: (data) => {
             console.log('Confirm Ok', data);
             SLOT.SLOT = data.newSLotValue;
@@ -378,7 +378,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
             this.deleteUpdateSlotsMode = false;
           }
         }, {
-          text: 'Delete',
+          text: 'Xoá',
           role: 'destructive',
           handler: (data) => {
             console.log('Confirm Ok', data);
