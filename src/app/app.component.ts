@@ -11,26 +11,26 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent implements OnInit {
   public appPages = [
-    { title: 'Home', url: '/home', icon: 'home' },
-    { title: 'Customers', url: '/customers', icon: 'contacts' },
-    { title: 'Calendars', url: '/calendars', icon: 'calendar' },
-    { title: 'Reports', url: '/reports', icon: 'stats' },
+    { title: 'Trang Chủ', url: '/home', icon: 'home' },
+    { title: 'Khách hàng', url: '/customers', icon: 'contacts' },
+    { title: 'Lịch hẹn', url: '/calendars', icon: 'calendar' },
+    { title: 'Báo cáo', url: '/reports', icon: 'stats' },
 
   ];
 
   public appPages1 = [
-    { title: 'Login', url: '/account', icon: 'lock' }
+    { title: 'Đăng nhập', url: '/account', icon: 'lock' }
   ];
 
   // Loggin user menus
   public appPages2 = [
-    { title: 'Logout', url: '/account', icon: 'unlock' }
+    { title: 'Đăng xuất', url: '/account', icon: 'unlock' }
   ];
 
   // Admin menus
   public appPages3 = [
-    { title: 'Users', url: '/users', icon: 'contacts' },
-    { title: 'Assignment', url: '/slot-assign', icon: 'calendar' }
+    { title: 'Nhân viên', url: '/users', icon: 'contacts' },
+    { title: 'Lịch làm việc', url: '/slot-assign', icon: 'calendar' }
   ];
 
   constructor(
