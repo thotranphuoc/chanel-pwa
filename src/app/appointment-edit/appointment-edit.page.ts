@@ -68,10 +68,10 @@ export class AppointmentEditPage implements OnInit {
   }
 
   updateBooking() {
-    if (this.BOOKING.B_STATUS == 'COMPLETED' && this.BOOKING.B_TOTAL < 1) {
-      this.appService.alertConfirmationShow('Opps', 'Nhập số tiền trước khi close Booking');
-      return;
-    }
+    // if (this.BOOKING.B_STATUS == 'COMPLETED' && this.BOOKING.B_TOTAL < 1) {
+    //   this.appService.alertConfirmationShow('Opps', 'Nhập số tiền trước khi close Booking');
+    //   return;
+    // }
 
     if (this.BOOKING.B_STATUS == 'COMPLETED' && !(this.USER.U_ROLE == 'Specialist' || this.USER.U_ROLE == 'Manager')) {
       this.appService.alertConfirmationShow('Opps', 'Bạn không có quyền close Booking');
@@ -213,6 +213,7 @@ export class AppointmentEditPage implements OnInit {
   }
 
   async setBookingStatus() {
+    if (this.USER.U_ROLE == 'Specialist' && this.BOOKING.B_STATUS == 'COMPLETED') return;
     let STATES = this.RIGHTS[this.USER.U_ROLE];
     let INPUTS = [];
 
@@ -252,7 +253,7 @@ export class AppointmentEditPage implements OnInit {
   isDisabled() {
     let isDisabled = false;
     if (this.USER.U_ROLE !== 'Manager' && this.BOOKING.B_STATUS == 'DRAFT') isDisabled = true;
-    if (this.USER.U_ROLE !== 'Manager' && this.BOOKING.B_STATUS == 'COMPLETED') isDisabled = true;
+    if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Specialist' && this.BOOKING.B_STATUS == 'COMPLETED') isDisabled = true;
     return isDisabled;
   }
 

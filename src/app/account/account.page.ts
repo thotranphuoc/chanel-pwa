@@ -5,6 +5,7 @@ import { LocalService } from '../services/local.service';
 import { Subscription } from 'rxjs';
 import { CrudService } from '../services/crud.service';
 import { NavController } from '@ionic/angular';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-account',
@@ -19,7 +20,8 @@ export class AccountPage implements OnInit, OnDestroy {
     private navCtrl: NavController,
     public authService: AuthService,
     private localService: LocalService,
-    private crudService: CrudService
+    private crudService: CrudService,
+    private appService: AppService
   ) {
 
     // this.USER = this.localService.USER_DEFAULT;
@@ -46,6 +48,20 @@ export class AccountPage implements OnInit, OnDestroy {
     this.authService.signInWithAfAuth(email, passwd)
       .then(() => {
         this.navCtrl.goBack();
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.code == 'auth/user-not-found') {
+          this.appService.alertConfirmationShow('Lỗi', 'Thông tin đăng nhập không đúng');
+        }
+
+        if (err.code == 'auth/invalid-email') {
+          this.appService.alertConfirmationShow('Lỗi', 'Email không đúng');
+        }
+
+        if (err.code == 'auth/wrong-password') {
+          this.appService.alertConfirmationShow('Lỗi', 'Thông tin đăng nhập không đúng');
+        }
       })
   }
 

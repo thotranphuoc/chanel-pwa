@@ -272,7 +272,10 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
 
   selectSlotInList(Day: iDay, SLOT: iSlot, index: number) {
     // this.openAppointmentModal(Day, SLOT, index);
-    this.presentAlertConfirm('Confirm!', 'Are you sure to change slot ...?', Day, SLOT, index);
+    let _date = Day.DateId.substr(6, 2) + '/' + Day.DateId.substr(4, 2) + '/' + Day.DateId.substr(0, 4);
+    let _slot = SLOT.SLOT;
+    let MSG = 'Bạn chắc muốn đổi sang slot ' + _date + ' ' + _slot + ' ?';
+    this.presentAlertConfirm('Xác nhận!', MSG, Day, SLOT, index);
     console.log(Day, SLOT, index)
   }
 
