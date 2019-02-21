@@ -9,13 +9,16 @@
     border-radius: 10px;
     font-size: 12px;
     color: white;
+    width: 66px;
 }
 .BOOKED{
     background: lightgrey;
     padding: 3px;
     border-radius: 10px;
-    font-size: 12px;
+    font-size: 12px;    
+    width: 66px;
     color: white;
+
 }
 .COMPLETED{
     background: #71BF45;
@@ -23,12 +26,14 @@
     border-radius: 10px;
     font-size: 12px;
     color: white;
+    width: 66px;
 }
 .EXPIRED{
     background: gray;
     border-radius: 10px;
     font-size: 12px;
     color: white;
+    width: 66px;
 }
 
 .AVAILABLE{
@@ -38,7 +43,7 @@
     border-radius: 10px;
     font-size: 12px;
     color: white;
-
+    width: 66px;
 }
 
 ion-row{

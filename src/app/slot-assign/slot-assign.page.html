@@ -72,7 +72,7 @@
         <span class="DATE">{{selectedDay.date}}</span>
       </ion-col>
       <ion-col *ngFor="let SLOT of selectedDay.Slots; let i = index" (click)="selectSlotInList(selectedDay,SLOT,i)"
-        [ngStyle]="{'opacity': selectedDay.isThePast ? '0.3' : '1'}">
+        [ngStyle]="{'opacity': selectedDay.isThePast ? '0.3' : '1', 'width':'20%'}">
         <div class="{{SLOT.STATUS}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
           <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
             <div>
