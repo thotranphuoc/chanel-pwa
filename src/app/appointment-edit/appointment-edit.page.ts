@@ -156,14 +156,14 @@ export class AppointmentEditPage implements OnInit {
       ],
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Huỷ bỏ',
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
             console.log('Confirm Cancel');
           }
         }, {
-          text: 'OK',
+          text: 'Chấp nhận',
           handler: (data) => {
             console.log('Confirm Ok', data);
             this.BOOKING.B_TOTAL = data.total;
@@ -191,14 +191,14 @@ export class AppointmentEditPage implements OnInit {
       inputs: INPUTS,
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Huỷ bỏ',
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
             console.log('Confirm Cancel');
           }
         }, {
-          text: 'Ok',
+          text: 'Chấp nhận',
           handler: (data: iUser) => {
             console.log(data);
             this.BOOKING.B_BA_SELL = data;
@@ -231,14 +231,14 @@ export class AppointmentEditPage implements OnInit {
       inputs: INPUTS,
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Huỷ bỏ',
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
             console.log('Confirm Cancel');
           }
         }, {
-          text: 'Ok',
+          text: 'Chấp nhận',
           handler: (data: string) => {
             console.log(data);
             this.BOOKING.B_STATUS = data;

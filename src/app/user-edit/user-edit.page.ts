@@ -36,12 +36,12 @@ export class UserEditPage implements OnInit {
     this.crudService.userUpdate(this.USER)
       .then((res) => {
         console.log(res);
-        this.appService.alertShow('Success', null, 'User updated successfully');
+        this.appService.alertShow('Thành công', null, 'Cập nhật thành công');
         this.navCtrl.goBack();
       })
       .catch(err => {
         console.log(err);
-        this.appService.alertShow('Fail', null, 'User update failed');
+        this.appService.alertShow('Thất bại', null, 'Cập nhật thất bại');
       })
   }
 

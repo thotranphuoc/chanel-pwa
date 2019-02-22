@@ -17,7 +17,7 @@ export class AppService {
       header: HEADER,
       subHeader: SUBHEADER,
       message: MSG,
-      buttons: ['OK']
+      buttons: ['Chấp nhận']
     });
 
     await alert.present();
@@ -29,14 +29,14 @@ export class AppService {
       message: MSG,
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Huỷ bỏ',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
         }, {
-          text: 'OK',
+          text: 'Chấp nhận',
           handler: () => {
             console.log('Confirm Okay');
           }
@@ -60,7 +60,7 @@ export class AppService {
       message: MSG,
       showCloseButton: true,
       position: 'middle',
-      closeButtonText: 'OK'
+      closeButtonText: 'Chấp nhận'
     });
     toast.present();
   }

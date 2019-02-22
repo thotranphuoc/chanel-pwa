@@ -32,11 +32,11 @@ export class FacialCabinEditPage implements OnInit {
     .then((res: any) => {
       console.log(res);
       //this.presentToast("thanh cong");
-      this.ALERTUPDATE='Updated Success';
+      this.ALERTUPDATE='Cập nhật thành công';
     })
     .catch((err) => {
       console.log(err);
-      this.ALERTUPDATE='Updated Fail';
+      this.ALERTUPDATE='Cập nhật thất bại';
     })
 
   }
