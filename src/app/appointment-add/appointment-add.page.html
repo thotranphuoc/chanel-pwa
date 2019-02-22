@@ -47,7 +47,7 @@
         <div style="height: 5px"></div>
         <ion-item>
           <ion-label color="primary" fixed>Ngày hẹn:</ion-label>
-          <ion-button slot="end">{{BOOKING.B_DATE}}</ion-button>
+          <ion-button slot="end">{{BOOKING.B_DATE | date:'dd/MM/yyyy'}}</ion-button>
         </ion-item>
         <ion-item lines="none">
           <ion-label color="primary" fixed>Thời gian:</ion-label>
@@ -130,7 +130,7 @@
         <div style="height: 5px"></div>
         <ion-item>
           <ion-label color="primary" fixed>Ngày hẹn:</ion-label>
-          <ion-button slot="end">{{BOOKING.B_DATE}}</ion-button>
+          <ion-button slot="end">{{BOOKING.B_DATE | date:'dd/MM/yyyy'}}</ion-button>
         </ion-item>
         <ion-item lines="none">
           <ion-label color="primary" fixed>Thời gian:</ion-label>

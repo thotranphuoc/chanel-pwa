@@ -10,6 +10,7 @@ import { iFacialCabin } from '../interfaces/facialcabin.interface';
 import { iDay } from '../interfaces/day.interface';
 import { iSlot } from '../interfaces/slot.interface';
 import { AppService } from '../services/app.service';
+import { CalendarService } from '../services/calendar.service';
 @Component({
   selector: 'app-appointment-add',
   templateUrl: './appointment-add.page.html',
@@ -36,7 +37,8 @@ export class AppointmentAddPage implements OnInit {
     private modalCtrl: ModalController,
     private localService: LocalService,
     private crudService: CrudService,
-    private appService: AppService
+    private appService: AppService,
+    private calendarService: CalendarService
   ) {
     this.data = this.navPar.data;
     console.log(this.data);
@@ -246,7 +248,8 @@ export class AppointmentAddPage implements OnInit {
     this.BOOKING.B_CUSTOMER_PHONE = CUSTOMER.C_PHONE;
     this.BOOKING.B_CUSTOMER_VIPCODE = CUSTOMER.C_VIPCODE;
     if (!this.isAllowed2BookTimesInMonth()) {
-      this.appService.alertConfirmationShow('Oops', 'KH đã đặt lịch hẹn ngày ' + this.CUSTOMER.C_LAST_B_DATE);
+      let dateStr = this.calendarService.convertDate(this.CUSTOMER.C_LAST_B_DATE)
+      this.appService.alertConfirmationShow('Oops', 'KH đã đặt lịch hẹn ngày ' + dateStr);
     }
   }
 

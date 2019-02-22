@@ -26,7 +26,8 @@
         <div style="height: 5px"></div>
         <ion-item>
           <ion-label color="primary" fixed>Ngày hẹn:</ion-label>
-          <ion-button [disabled]="isChangeSlotDisabled()" slot="end" (click)="changeTimeSlot()">{{BOOKING.B_DATE}}
+          <ion-button [disabled]="isChangeSlotDisabled()" slot="end" (click)="changeTimeSlot()">
+            {{BOOKING.B_DATE | date:'dd/MM/yyyy'}}
           </ion-button>
         </ion-item>
         <ion-item>
@@ -78,7 +79,8 @@
           <ion-item>
             <ion-label color="primary" fixed>Tổng tiền:</ion-label>
             <ion-button slot="end" (click)="setTotal()"><span
-                *ngIf="BOOKING.B_TOTAL">{{BOOKING.B_TOTAL | currency}}</span><span *ngIf="!BOOKING.B_TOTAL">0</span>
+                *ngIf="BOOKING.B_TOTAL">{{BOOKING.B_TOTAL | currency:'VND'}}</span><span
+                *ngIf="!BOOKING.B_TOTAL">0</span>
             </ion-button>
           </ion-item>
           <ion-item>

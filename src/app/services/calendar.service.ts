@@ -222,6 +222,13 @@ export class CalendarService {
     return yearStr + finalMonth;
   }
 
+  convertDate(YYYYMMDD: string) {
+    let year = YYYYMMDD.substr(0, 4);
+    let month = YYYYMMDD.substr(5, 2);
+    let date = YYYYMMDD.substr(8, 2);
+    return date + '/' + month + '/' + year;
+  }
+
 
 
 
