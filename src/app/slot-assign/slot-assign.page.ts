@@ -6,7 +6,7 @@ import { iSlot } from '../interfaces/slot.interface';
 import { iDay } from '../interfaces/day.interface';
 import { AppService } from '../services/app.service';
 import { AlertController, ActionSheetController } from '@ionic/angular';
-
+import { Papa } from 'ngx-papaparse';
 @Component({
   selector: 'app-slot-assign',
   templateUrl: './slot-assign.page.html',
@@ -21,7 +21,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
   TODAY: string;
   COLOR_SPE: any = [];
 
-  Specialists = [];
+  Specialists: iUser[] = [];
   selectedSpecialist: iUser = null;
   NONE = {
     SPE_ID: '',
@@ -29,12 +29,15 @@ export class SlotAssignPage implements OnInit, OnDestroy {
   }
   selectedDay: iDay;
   deleteUpdateSlotsMode = false;
+
+  INPUTS: iInput[] = [];
   constructor(
     private alertCtrl: AlertController,
     private actionSheetCtrl: ActionSheetController,
     private crudService: CrudService,
     private calendarService: CalendarService,
-    private appService: AppService
+    private appService: AppService,
+    private papa: Papa,
   ) {
     this.COLOR_SPE[''] = 'Gray';
   }
@@ -178,31 +181,6 @@ export class SlotAssignPage implements OnInit, OnDestroy {
 
       })
 
-    //   // console.log(selectedMonth);
-    //   // let YYYYMM = selectedMonth.replace('-', '');
-    //   // let MM = YYYYMM.substr(4, 2);
-    //   // let YYYY = YYYYMM.substr(0, 4);
-    //   // console.log(YYYYMM);
-    //   let sub = this.crudService.calendarMonthGet(this.MM, this.YYYY)
-    //     .subscribe(res => {
-    //       console.log(res);
-    //       sub.unsubscribe();
-    //       if (typeof (res) !== 'undefined') {
-    //         this.appService.alertConfirmationShow('Notice', 'Data for this month is already existing');
-    //         return Promise.resolve();
-    //       } else {
-    //         return this.calendarService.calendarForMonthCreate(Number(YYYY), Number(MM))
-    //           .then((res) => {
-    //             console.log(res);
-    //           })
-    //           .catch(err => {
-    //             console.log(err);
-    //           })
-    //       }
-    //     })
-
-    // this.crudService.cal
-
   }
 
   //random color
@@ -330,34 +308,6 @@ export class SlotAssignPage implements OnInit, OnDestroy {
           value: SLOT.STATUS,
           placeholder: 'Placeholder 2'
         },
-        // {
-        //   name: 'name3',
-        //   value: 'http://ionicframework.com',
-        //   type: 'url',
-        //   placeholder: 'Favorite site ever'
-        // },
-        // // input date with min & max
-        // {
-        //   name: 'name4',
-        //   type: 'date',
-        //   min: '2017-03-01',
-        //   max: '2018-01-12'
-        // },
-        // // input date without min nor max
-        // {
-        //   name: 'name5',
-        //   type: 'date'
-        // },
-        // {
-        //   name: 'name6',
-        //   type: 'number',
-        //   min: -5,
-        //   max: 10
-        // },
-        // {
-        //   name: 'name7',
-        //   type: 'number'
-        // }
       ],
       buttons: [
         {
@@ -392,4 +342,154 @@ export class SlotAssignPage implements OnInit, OnDestroy {
 
     await alert.present();
   }
+
+  uploadCalendar() {
+    document.getElementById('inputFile').click();
+  }
+
+  parse(files: FileList) {
+    this.parse1(files)
+      .then((res: any) => {
+        console.log(res);
+        return this.convertData(res);
+      })
+      .catch(err => { console.log(err) })
+  }
+
+  async parse1(files: FileList) {
+    return new Promise((resolve, reject) => {
+      const file: File = files.item(0);
+      console.log(files);
+      const reader: FileReader = new FileReader();
+      reader.readAsText(file);
+      reader.onload = (e) => {
+        let csv = reader.result;
+        console.log(csv);
+        this.papa.parse(String(csv), {
+          header: true,
+          complete: function (results) {
+            // console.log(results);
+            resolve(results.data);
+            // this.INPUTS = results.data;
+            // console.log(this.INPUTS);
+            // this.convertData(this.INPUTS);
+          },
+          error: (err) => {
+            reject(err)
+          }
+        });
+      }
+    })
+
+  }
+
+  convertData(ARR: iInput[]) {
+    let DAYS: iDay[] = [];
+    let Obj = {};
+    let YYYY = ARR[0].NAM;
+    let MM = ARR[0].THANG.length < 2 ? '0' + ARR[0].THANG : ARR[0].THANG;
+    let YYYYMM = YYYY + MM;
+
+    ARR.forEach(item => {
+      let _Date = item.NGAY;
+      let THANG = item.THANG.length < 2 ? '0' + item.THANG : item.THANG;
+      let NGAY = item.NGAY.length < 2 ? '0' + item.NGAY : item.NGAY;
+      let _DateId = item.NAM + THANG + NGAY;
+      let _date = THANG + '/' + NGAY;
+      let SLOT1 = this.getSpecialistOfSlot(item._10h30, '10:30');
+      let SLOT2 = this.getSpecialistOfSlot(item._12h30, '12:30');
+      let SLOT3 = this.getSpecialistOfSlot(item._15h30, '15:30');
+      let SLOT4 = this.getSpecialistOfSlot(item._17h30, '17:30');
+      let _Slots: iSlot[] = [SLOT1, SLOT2, SLOT3, SLOT4];
+      let _DAY: iDay = {
+        Date: _Date,
+        DateId: _DateId,
+        Slots: _Slots,
+        date: _date,
+        isThePast: false
+      };
+      Obj[_DateId] = _DAY;
+      DAYS.push(_DAY);
+
+    })
+    console.log(DAYS);
+    console.log(Obj);
+    this.presentAlertConfirm2calendarMonthCreate(YYYYMM, Obj, YYYY, MM)
+    // .then((res) => {
+    //   console.log(res);
+    //   let selectedMonth = YYYY + '-' + MM;
+    //   this.selectMonth(selectedMonth);
+    // }).catch(err => {
+    //   console.log(err);
+    // })
+  }
+
+  async presentAlertConfirm2calendarMonthCreate(YYYYMM: string, Obj: any, YYYY: string, MM: string) {
+    let MM_YYYY = MM + '/' + YYYY;
+    const alert = await this.alertCtrl.create({
+      header: 'Xác nhận',
+      message: 'Thêm lịch làm việc cho tháng <strong>' + MM_YYYY + '</strong>!!!',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'OK',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.crudService.calendarMonthCreate(YYYYMM, Obj)
+              .then((res) => {
+                console.log(res);
+                let selectedMonth = YYYY + '-' + MM;
+                this.selectMonth(selectedMonth);
+              }).catch(err => {
+                console.log(err);
+              })
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
+  getSpecialistOfSlot(Name: string, Slot: string) {
+    let SLOT: iSlot = {
+      BAB_ID: "",
+      BAB_NAME: "",
+      BAS_ID: "",
+      BAS_NAME: "",
+      BOOK_ID: "",
+      MAN_ID: "",
+      MAN_NAME: "",
+      SLOT: Slot.replace('h', ':'),
+      SPE_ID: this.getIDFromName(Name),
+      SPE_NAME: Name,
+      STATUS: "AVAILABLE"
+    };
+    return SLOT;
+  }
+
+  getIDFromName(Name: string) {
+    let ID = this.Specialists.filter(SP => SP.U_NAME == Name)[0].U_ID;
+    console.log(ID);
+    return ID
+  }
+}
+
+export interface iInput {
+  _10h30: 'string',
+  _12h30: 'string',
+  _15h30: 'string',
+  _17h30: 'string',
+  NAM: 'string',
+  THANG: 'string',
+  NGAY: 'string',
+  STT: 'string',
+
 }

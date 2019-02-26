@@ -8,14 +8,16 @@ import { iBooking } from '../interfaces/booking.interface';
 import { pipe } from '@angular/core/src/render3';
 import { iSlot } from '../interfaces/slot.interface';
 import { iDay } from '../interfaces/day.interface';
+import { AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CrudService {
   USER: Observable<any[]>;
-  constructor(private afs: AngularFirestore,
-
+  constructor(
+    private afs: AngularFirestore,
+    private alertCtrl: AlertController
   ) {
 
   }
@@ -191,8 +193,13 @@ export class CrudService {
   }
 
   calendarMonthCreate(YYYYMM: string, data: any) {
+    // this.afs.doc('CALENDARS/' + YYYYMM).get().toPromise().then(res=>{
+    //   if(res.exists)
+    // })
     return this.afs.doc('CALENDARS/' + YYYYMM).set(data)
   }
+
+
 
   calendarMonthGet(YYYYMM: string) {
     return this.afs.doc('CALENDARS/' + YYYYMM).valueChanges()

@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Lịch làm việc</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="uploadCalendar()">
+        <input type="file" (change)="parse($event.target.files)" hidden accept="*.csv" id="inputFile" />
+        <ion-icon slot="end" name="cloud-upload"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
