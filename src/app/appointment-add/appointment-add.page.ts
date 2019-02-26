@@ -99,7 +99,7 @@ export class AppointmentAddPage implements OnInit {
       message: MSG,
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Huỷ bỏ',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
@@ -107,7 +107,7 @@ export class AppointmentAddPage implements OnInit {
             this.doCancel();
           }
         }, {
-          text: 'OK',
+          text: 'Chấp nhận',
           handler: () => {
             console.log('Confirm Okay');
             this.doAddAppointment();

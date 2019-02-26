@@ -198,14 +198,14 @@ export class CalendarsPage implements OnInit, OnDestroy {
       message: MSG,
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Huỷ bỏ',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
         }, {
-          text: 'OK',
+          text: 'Chấp nhận',
           handler: () => {
             console.log('Confirm Okay');
             this.navCtrl.navigateForward('/account');

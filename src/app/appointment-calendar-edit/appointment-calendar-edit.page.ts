@@ -300,7 +300,7 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
     if (this.localService.USER) {
       this.slotsInDayModal(Day);
     } else {
-      this.alertConfirmationShow('Confirm!', 'Please login before continuing...');
+      this.alertConfirmationShow('Confirm!', 'Vui lòng đăng nhập để tiếp tục...');
     }
   }
 
@@ -325,14 +325,14 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
       message: MSG,
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Huỷ bỏ',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
         }, {
-          text: 'OK',
+          text: 'Chấp nhận',
           handler: () => {
             console.log('Confirm Okay');
             this.navCtrl.navigateForward('/account');
@@ -377,14 +377,14 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
       message: MSG,
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Huỷ bỏ',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
         }, {
-          text: 'Okay',
+          text: 'Chấp nhận',
           handler: () => {
             console.log('Confirm Okay');
             this.doChangeSlot(Day, SLOT, index);
@@ -402,7 +402,7 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
       message: MSG,
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Huỷ bỏ',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
@@ -410,7 +410,7 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
             this.doCancel();
           }
         }, {
-          text: 'OK',
+          text: 'Chấp nhận',
           handler: () => {
             console.log('OK');
             this.doChangeSlot(DAY, SLOT, index);

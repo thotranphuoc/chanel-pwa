@@ -143,18 +143,18 @@ export class SlotAssignPage implements OnInit, OnDestroy {
   async monthNotExistAlertConfirm() {
     let MONTHSTR = this.MM + '/' + this.YYYY
     const alert = await this.alertCtrl.create({
-      header: 'Confirm!',
+      header: 'Xác nhận!',
       message: MONTHSTR + ' không tồn tại. Bạn có muốn tạo mới không?',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Huỷ bỏ',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
         }, {
-          text: 'Okay',
+          text: 'Chấp nhận',
           handler: () => {
             console.log('Confirm Okay');
             this.calendarForMonthCreate();
@@ -271,7 +271,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
             console.log('Confirm Cancel');
           }
         }, {
-          text: 'OK',
+          text: 'Chấp nhận',
           handler: (data) => {
             console.log('Confirm Ok', data);
             this.addNewSlotIntoDay(Day, data.slotStr);

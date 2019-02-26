@@ -38,11 +38,11 @@ export class UserNewAddPage implements OnInit {
       .then((res) => {
         console.log(res);
         this.navCtrl.goBack();
-        this.appService.alertConfirmationShow('Success', 'User created successully')
+        this.appService.alertConfirmationShow('Thành công', 'Tạo Thành công')
       })
       .catch(err => {
         console.log(err);
-        this.appService.alertConfirmationShow('Failed', 'Failed to create user')
+        this.appService.alertConfirmationShow('Thất bại', 'Tạo thất bại')
       })
   }
 

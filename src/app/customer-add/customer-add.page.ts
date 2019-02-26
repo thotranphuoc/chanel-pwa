@@ -38,11 +38,11 @@ export class CustomerAddPage implements OnInit {
     this.crudService.customerCreate(this.CUSTOMER)
       .then((res: any) => {
         console.log(res);
-        this.ALERTADD = 'Add new customer success';
+        this.ALERTADD = 'Thêm khách hàng thành công';
       })
       .catch((err) => {
         console.log(err);
-        this.ALERTADD = 'Add new customer fail';
+        this.ALERTADD = 'Thêm khách hàng thất bại';
       })
   }
 
