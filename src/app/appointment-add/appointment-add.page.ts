@@ -48,12 +48,15 @@ export class AppointmentAddPage implements OnInit {
     var year = date_to_parse.getFullYear().toString();
     var month = (date_to_parse.getMonth() + 1).toString();
     var day = date_to_parse.getDate().toString();
-
+    let _month = month.length > 2 ? month : '0' + month;
+    let _day = day.length > 2 ? month : '0' + month;
     if (!this.Day) {
       this.Day = {
         Date: day,
-        DateId: year + (month.length > 2 ? month : '0' + month) + day,
+        DateId: year + _month + _day,
         Slots: [],
+        date: _month + '/' + _day,
+        isThePast: false
       }
     }
     else {
