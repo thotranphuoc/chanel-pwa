@@ -9,19 +9,21 @@
   <div class="main">
     <div class="content">
       <div class="input_div">
-        <div class="button_div">
-            <div class="div_avatar">
-                <div *ngIf="!hasNewAvatar">
-                  <div (click)="takePhoto()">
-                    <img src="{{USER.U_AVATAR}}" alt="" class="img" onError="this.src='../../assets/imgs/imagenotavailable.png';">
-                  </div>
-                </div>
-                <div *ngIf="hasNewAvatar">
-                  <div (click)="takePhoto()">
-                    <img src="{{base64Images[0]}}" alt="" class="img" onError="this.src='../../assets/imgs/imagenotavailable.png';">
-                  </div>
-                </div>
+        <div class="button_div" *ngIf="USER">
+          <div class="div_avatar">
+            <div *ngIf="!hasNewAvatar">
+              <div (click)="takePhoto()">
+                <img src="{{USER.U_AVATAR}}" alt="" class="img"
+                  onError="this.src='../../assets/imgs/imagenotavailable.png';">
               </div>
+            </div>
+            <div *ngIf="hasNewAvatar">
+              <div (click)="takePhoto()">
+                <img src="{{base64Images[0]}}" alt="" class="img"
+                  onError="this.src='../../assets/imgs/imagenotavailable.png';">
+              </div>
+            </div>
+          </div>
 
           <ion-item>
             <ion-label color="primary" fixed>Tên:</ion-label>
@@ -57,6 +59,7 @@
               <ion-select-option value="Manager">Manager</ion-select-option>
               <ion-select-option value="Specialist">Specialist</ion-select-option>
               <ion-select-option value="BA">BA</ion-select-option>
+              <ion-select-option value="BAS">BA Sale</ion-select-option>
               <ion-select-option value="FA">FA</ion-select-option>
               <ion-select-option value="Admin">Admin</ion-select-option>
             </ion-select>

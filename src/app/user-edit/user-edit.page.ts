@@ -4,7 +4,6 @@ import { NavController, ModalController } from '@ionic/angular';
 import { CrudService } from '../services/crud.service';
 import { SetgetService } from '../services/setget.service';
 import { AppService } from '../services/app.service';
-import { PhotoTakePage } from '../photo-take/photo-take.page';
 import { DbService } from '../services/db.service';
 import { UserPhotoTakePage } from '../user-photo-take/user-photo-take.page';
 
@@ -29,6 +28,9 @@ export class UserEditPage implements OnInit {
   ngOnInit() {
     this.USER = this.setGetService.getPar();
     console.log(this.USER);
+    if (typeof (this.USER) == 'undefined') {
+      this.navCtrl.navigateRoot('/home');
+    }
   }
 
   updateUser() {

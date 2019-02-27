@@ -222,6 +222,7 @@ export class CalendarService {
     return yearStr + finalMonth;
   }
 
+  // convert from 2019-10-12 to 12/10/2019
   convertDate(YYYYMMDD: string) {
     let year = YYYYMMDD.substr(0, 4);
     let month = YYYYMMDD.substr(5, 2);

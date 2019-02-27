@@ -93,7 +93,8 @@ export class AppointmentAddPage implements OnInit {
   }
 
   async confirmBookTimesInMonth() {
-    let MSG = 'KH đã đặt lịch hẹn ngày ' + this.CUSTOMER.C_LAST_B_DATE + '. Bạn có chắc tiếp tục không?'
+    let LAST_B_DATE = this.calendarService.convertDate(this.CUSTOMER.C_LAST_B_DATE);
+    let MSG = 'KH đã đặt lịch hẹn ngày ' + LAST_B_DATE + '. Bạn có chắc tiếp tục không?'
     const alert = await this.alertCtrl.create({
       header: 'Confirm!',
       message: MSG,
