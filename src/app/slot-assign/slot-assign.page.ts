@@ -5,8 +5,9 @@ import { iUser } from '../interfaces/user.interface';
 import { iSlot } from '../interfaces/slot.interface';
 import { iDay } from '../interfaces/day.interface';
 import { AppService } from '../services/app.service';
-import { AlertController, ActionSheetController } from '@ionic/angular';
+import { AlertController, ActionSheetController, NavController } from '@ionic/angular';
 import { Papa } from 'ngx-papaparse';
+import { LocalService } from '../services/local.service';
 @Component({
   selector: 'app-slot-assign',
   templateUrl: './slot-assign.page.html',
@@ -31,12 +32,15 @@ export class SlotAssignPage implements OnInit, OnDestroy {
   deleteUpdateSlotsMode = false;
 
   INPUTS: iInput[] = [];
+  USER: iUser;
   constructor(
     private alertCtrl: AlertController,
     private actionSheetCtrl: ActionSheetController,
+    private navCtrl: NavController,
     private crudService: CrudService,
     private calendarService: CalendarService,
     private appService: AppService,
+    private localService: LocalService,
     private papa: Papa,
   ) {
     this.COLOR_SPE[''] = 'Gray';
@@ -45,7 +49,21 @@ export class SlotAssignPage implements OnInit, OnDestroy {
   ngOnInit() {
     // this.initCalendar();
     this.getSpecialists();
+    this.authenticateUser();
   }
+
+  authenticateUser() {
+    this.USER = this.localService.USER;
+    if (!this.USER) {
+      this.navCtrl.navigateRoot('/home');
+    } else {
+      if (this.USER.U_ROLE !== 'Specialist' && this.USER.U_ROLE !== 'Manager') {
+        this.navCtrl.navigateRoot('/home');
+      }
+    }
+
+  }
+
 
   ngOnDestroy() {
     console.log(this.DaysInMonth);

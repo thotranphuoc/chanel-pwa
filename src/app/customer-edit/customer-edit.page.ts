@@ -64,6 +64,7 @@ export class CustomerEditPage implements OnInit {
   }
 
   doCancel() {
+    console.log('doCancel, goback')
     this.navCtrl.goBack();
   }
 

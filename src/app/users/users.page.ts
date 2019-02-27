@@ -3,6 +3,7 @@ import { iUser } from '../interfaces/user.interface';
 import { NavController } from '@ionic/angular';
 import { CrudService } from '../services/crud.service';
 import { SetgetService } from '../services/setget.service';
+import { LocalService } from '../services/local.service';
 
 @Component({
   selector: 'app-users',
@@ -11,14 +12,29 @@ import { SetgetService } from '../services/setget.service';
 })
 export class UsersPage implements OnInit {
   USERS: iUser[] = [];
+  USER: iUser;
   constructor(
     private navCtrl: NavController,
     private crudService: CrudService,
-    private setGetService: SetgetService
+    private setGetService: SetgetService,
+    private localService: LocalService,
   ) { }
 
   ngOnInit() {
-    this.getUsers()
+    this.getUsers();
+    this.authenticateUser();
+  }
+
+  authenticateUser() {
+    this.USER = this.localService.USER;
+    if (!this.USER) {
+      this.navCtrl.navigateRoot('/home');
+    } else {
+      if (this.USER.U_ROLE !== 'Admin' && this.USER.U_ROLE !== 'Manager') {
+        this.navCtrl.navigateRoot('/home');
+      }
+    }
+
   }
 
 
