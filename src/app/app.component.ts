@@ -4,40 +4,30 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
+import { iUser } from './interfaces/user.interface';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit {
-  public appPages = [
+
+  public appPagex = [
     { title: 'Trang Chủ', url: '/home', icon: 'home' },
     { title: 'Khách hàng', url: '/customers', icon: 'contacts' },
     { title: 'Lịch hẹn', url: '/calendars', icon: 'calendar' },
     { title: 'Báo cáo', url: '/reports', icon: 'stats' },
-
-  ];
-
-  public appPages1 = [
-    { title: 'Đăng nhập', url: '/account', icon: 'lock' }
-  ];
-
-  // Loggin user menus
-  public appPages2 = [
+    { title: 'Nhân viên', url: '/users', icon: 'contacts' },
+    { title: 'Lịch làm việc', url: '/slot-assign', icon: 'calendar' },
+    { title: 'Đăng nhập', url: '/account', icon: 'lock' },
     { title: 'Đăng xuất', url: '/account', icon: 'unlock' }
   ];
-
-  // Admin menus
-  public appPages3 = [
-    { title: 'Nhân viên', url: '/users', icon: 'contacts' },
-    { title: 'Lịch làm việc', url: '/slot-assign', icon: 'calendar' }
-  ];
-
+  USER: iUser = null;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public authService: AuthService
+    public authService: AuthService,
   ) {
     this.initializeApp();
   }
@@ -51,5 +41,52 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.authService.initAuthListener();
+    console.log(this.isAdminManager());
+    this.loadSideMenu();
+    this.authService.userChange.subscribe(user => {
+      this.USER = user;
+      console.log(this.USER);
+      this.loadSideMenu();
+    })
+  }
+
+  loadSideMenu() {
+    if (this.isFABA()) {
+      this.appPagex = [
+        { title: 'Trang Chủ', url: '/home', icon: 'home' },
+        { title: 'Khách hàng', url: '/customers', icon: 'contacts' },
+        { title: 'Lịch hẹn', url: '/calendars', icon: 'calendar' },
+        { title: 'Đăng xuất', url: '/account', icon: 'unlock' }
+      ];
+      return;
+    }
+    if (this.isAdminManager()) {
+      this.appPagex = [
+        { title: 'Trang Chủ', url: '/home', icon: 'home' },
+        { title: 'Khách hàng', url: '/customers', icon: 'contacts' },
+        { title: 'Lịch hẹn', url: '/calendars', icon: 'calendar' },
+        { title: 'Báo cáo', url: '/reports', icon: 'stats' },
+        { title: 'Nhân viên', url: '/users', icon: 'contacts' },
+        { title: 'Lịch làm việc', url: '/slot-assign', icon: 'calendar' },
+        { title: 'Đăng xuất', url: '/account', icon: 'unlock' }
+      ];
+      return;
+    }
+    this.appPagex = [
+      { title: 'Trang Chủ', url: '/home', icon: 'home' },
+      { title: 'Đăng nhập', url: '/account', icon: 'lock' },
+    ];
+  }
+
+  isAdminManager() {
+    if (!this.USER) return false;
+    if (this.USER.U_ROLE == 'Manager' || this.USER.U_ROLE == 'Admin') return true;
+    return false;
+  }
+
+  isFABA() {
+    if (!this.USER) return false;
+    if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Admin') return true;
+    return false;
   }
 }
