@@ -10,8 +10,12 @@
 <ion-content padding>
   <div *ngIf="authService.isAuthenticated && USER">
     <ion-item>
-      <ion-label color="primary">Tên:</ion-label>
+      <ion-label color="primary">Nickname:</ion-label>
       <ion-input [(ngModel)]="USER.U_NAME" name="U_NAME"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Họ và Tên:</ion-label>
+      <ion-input [(ngModel)]="USER.U_FULLNAME" name="U_FULLNAME"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary">Email:</ion-label>

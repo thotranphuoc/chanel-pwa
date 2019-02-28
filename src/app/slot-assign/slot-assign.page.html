@@ -1,8 +1,11 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>Lịch làm việc</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="uploadCalendar()">
+      <ion-button (click)="uploadCalendar()" *ngIf="USER?.U_ROLE !=='Specialist'">
         <input type="file" (change)="parse($event.target.files)" hidden accept="*.csv" id="inputFile" />
         <ion-icon slot="end" name="cloud-upload"></ion-icon>
       </ion-button>
@@ -16,7 +19,7 @@
     <ion-datetime #selectedMonth display-format="MM, YYYY" (ionChange)="selectMonth(selectedMonth.value)">
     </ion-datetime>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="USER?.U_ROLE !=='Specialist'">
     <ion-label>Specicalist:</ion-label>
     <ion-select [(ngModel)]="selectedSpecialist">
       <ion-select-option [value]="NONE">Huỷ lịch</ion-select-option>

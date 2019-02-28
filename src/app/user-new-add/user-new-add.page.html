@@ -1,13 +1,20 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>Thêm nhân viên</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <ion-item>
-    <ion-label color="primary">Tên:</ion-label>
+    <ion-label color="primary">Họ và Tên:</ion-label>
     <ion-input #name type="text"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">Nickname:</ion-label>
+    <ion-input #nickname type="text"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label color="primary">Email:</ion-label>
@@ -36,7 +43,8 @@
         <ion-button expand="full" color="danger" (click)="cancel()">Huỷ bỏ</ion-button>
       </ion-col>
       <ion-col>
-        <ion-button expand="full" (click)="createAccount4User(name.value, email.value, pw.value, role.value)">Thêm mới
+        <ion-button expand="full"
+          (click)="createAccount4User(name.value, nickname.value, email.value, pw.value, role.value)">Thêm mới
         </ion-button>
       </ion-col>
     </ion-row>

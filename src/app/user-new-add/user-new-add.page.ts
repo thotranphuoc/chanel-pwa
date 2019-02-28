@@ -25,14 +25,15 @@ export class UserNewAddPage implements OnInit {
     this.USER = this.localService.USER_DEFAULT;
   }
 
-  createAccount4User(name: string, email: string, passwd: string, role: string) {
+  createAccount4User(fullname: string, nickname: string, email: string, passwd: string, role: string) {
     console.log(email, passwd, role);
     this.authService.accountCreate(email, passwd)
       .then((res) => {
         this.USER.U_ID = res.user.uid;
         this.USER.U_EMAIL = email;
         this.USER.U_ROLE = role;
-        this.USER.U_NAME = name;
+        this.USER.U_NAME = nickname;
+        this.USER.U_FULLNAME = fullname;
         return this.crudService.userCreate(this.USER)
       })
       .then((res) => {

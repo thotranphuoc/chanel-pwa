@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -26,8 +26,12 @@
           </div>
 
           <ion-item>
-            <ion-label color="primary" fixed>Tên:</ion-label>
+            <ion-label color="primary" fixed>Nickname:</ion-label>
             <ion-input type="text" placeholder="Name" [(ngModel)]="USER.U_NAME"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" fixed>Họ và Tên:</ion-label>
+            <ion-input type="text" placeholder="FullName" [(ngModel)]="USER.U_FULLNAME"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label color="primary" fixed>Số điện thoại:</ion-label>

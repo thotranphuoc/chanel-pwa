@@ -72,6 +72,16 @@ export class AppComponent implements OnInit {
       ];
       return;
     }
+    if (this.isSpecialist()) {
+      this.appPagex = [
+        { title: 'Trang Chủ', url: '/home', icon: 'home' },
+        { title: 'Khách hàng', url: '/customers', icon: 'contacts' },
+        { title: 'Lịch hẹn', url: '/calendars', icon: 'calendar' },
+        { title: 'Lịch làm việc', url: '/slot-assign', icon: 'calendar' },
+        { title: 'Đăng xuất', url: '/account', icon: 'unlock' }
+      ];
+      return;
+    }
     this.appPagex = [
       { title: 'Trang Chủ', url: '/home', icon: 'home' },
       { title: 'Đăng nhập', url: '/account', icon: 'lock' },
@@ -84,9 +94,15 @@ export class AppComponent implements OnInit {
     return false;
   }
 
+  isSpecialist() {
+    if (!this.USER) return false;
+    if (this.USER.U_ROLE == 'Specialist') return true;
+    return false;
+  }
+
   isFABA() {
     if (!this.USER) return false;
-    if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Admin') return true;
+    if (this.USER.U_ROLE == 'BA' || this.USER.U_ROLE == 'BAS') return true;
     return false;
   }
 }

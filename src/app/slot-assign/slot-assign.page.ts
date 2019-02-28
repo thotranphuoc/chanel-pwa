@@ -147,6 +147,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
   updateSlotInList(Day: iDay, SLOT: iSlot, i: number) {
     console.log(Day, SLOT, i);
     console.log(this.selectedSpecialist);
+    if (this.USER.U_ROLE == 'Specialist') return;
     if (this.selectedSpecialist) {
       SLOT.SPE_ID = this.selectedSpecialist.U_ID ? this.selectedSpecialist.U_ID : '';
       SLOT.SPE_NAME = this.selectedSpecialist.U_NAME ? this.selectedSpecialist.U_NAME : '';
@@ -156,12 +157,19 @@ export class SlotAssignPage implements OnInit, OnDestroy {
         .then((res) => console.log(res))
         .catch(err => console.log(err));
     } else {
-      this.appService.alertConfirmationShow(null, 'Vui lòng chọn Specicalist');
+      this.appService.alertConfirmationShow(null, 'Vui lòng chọn Specialist');
     }
   }
 
+  monthNotExistAlertConfirm() {
+    if (this.USER.U_ROLE == 'Manager') {
+      this.monthNotExistAlertConfirmManager();
+    } else {
+      this.monthNotExistAlertConfirmSpecialist();
+    }
+  }
 
-  async monthNotExistAlertConfirm() {
+  async monthNotExistAlertConfirmManager() {
     let MONTHSTR = this.MM + '/' + this.YYYY
     const alert = await this.alertCtrl.create({
       header: 'Xác nhận!',
@@ -179,6 +187,25 @@ export class SlotAssignPage implements OnInit, OnDestroy {
           handler: () => {
             console.log('Confirm Okay');
             this.calendarForMonthCreate();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async monthNotExistAlertConfirmSpecialist() {
+    let MONTHSTR = this.MM + '/' + this.YYYY
+    const alert = await this.alertCtrl.create({
+      header: 'Xác nhận!',
+      message: MONTHSTR + ' không tồn tại.',
+      buttons: [
+        {
+          text: 'Chấp nhận',
+          handler: () => {
+            console.log('Confirm Okay');
+            // this.calendarForMonthCreate();
           }
         }
       ]
