@@ -110,7 +110,7 @@ export class LocalService {
     B_FASHION: false,
     B_FASHIONS: '',
     B_NOTE: '',
-    B_STATUS: '',
+    B_STATUS: 'BOOKED',
     B_CREATED_TIME: '',
     B_TOTAL: null,
     B_SPECIALIST: this.USER_DEFAULT,

@@ -5,5 +5,9 @@
 </ion-header>
 
 <ion-content padding>
-  <input type="file" (change)="parse($event.target.files)"/>
+  <input type="file" (change)="parse($event.target.files)" />
+
+  <ion-item *ngFor="let USER of USERS" (click)="createUser(USER)">
+    {{USER.Email}} - {{USER.UID}} - {{USER.result}}
+  </ion-item>
 </ion-content>

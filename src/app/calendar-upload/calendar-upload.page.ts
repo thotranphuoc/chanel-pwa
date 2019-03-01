@@ -4,6 +4,9 @@ import { iDay } from '../interfaces/day.interface';
 import { iSlot } from '../interfaces/slot.interface';
 import { parse } from 'querystring';
 import { CrudService } from '../services/crud.service';
+import { AuthService } from '../services/auth.service';
+import { iUser } from '../interfaces/user.interface';
+import { LocalService } from '../services/local.service';
 @Component({
   selector: 'app-calendar-upload',
   templateUrl: './calendar-upload.page.html',
@@ -17,9 +20,12 @@ export class CalendarUploadPage implements OnInit {
     { Name: 'Ngoc', ID: 'LCsL0Dc1fxO8ri6bLU12EYmM4C23' },
 
   ]
+  USERS: any[] = [];
   constructor(
     private papa: Papa,
-    private crudService: CrudService
+    private crudService: CrudService,
+    private authService: AuthService,
+    private localService: LocalService
   ) { }
 
   ngOnInit() {
@@ -75,11 +81,75 @@ export class CalendarUploadPage implements OnInit {
     })
       .then((res: any) => {
         console.log(res);
-        this.convertData(res);
+        // this.convertData(res);
+        // this.createUsers(res);
+        // this.loginThenDeleteUSERS(res);
+        this.USERS = res;
       })
       .catch(err => { console.log(err) })
   }
 
+  loginThenDeleteUSERS(USERS: any[]) {
+    USERS.forEach(USER => {
+      setTimeout(() => {
+        this.authService.accountLogin(USER.Email, '123456')
+          .then(res => {
+            let uid = res.user.uid;
+            let currentUser = res.user;
+            return currentUser.delete()
+          })
+          .then(res => {
+            console.log(USER.Email, ' deleted', res)
+          })
+          .catch(err => {
+            console.log(USER.Email, ' delete failed');
+          })
+      }, 2000);
+    })
+  }
+
+  createUsers(USERS: any[]) {
+    let PROMISES = [];
+    for (let index = 0; index < USERS.length; index++) {
+      const USER = USERS[index];
+      setTimeout(() => {
+        let p = this.createUser(USER)
+        PROMISES.push(p);
+      }, 5000);
+    }
+
+    Promise.all(PROMISES).then(res => {
+      console.log(res);
+    }).catch(err => console.log(err))
+
+  }
+
+  createUser(USER: any) {
+    console.log(USER);
+    return this.authService.accountCreate(USER.Email, '123456')
+      .then((res: firebase.auth.UserCredential) => {
+        console.log(USER.Email, '--> created')
+        let USR: iUser = this.localService.USER_DEFAULT;
+        USR.U_ID = res.user.uid
+        USR.U_EMAIL = USER.Email;
+        USR.U_ROLE = USER.Group;
+        USR.U_NAME = this.getNickName(USER.Name);
+        USR.U_FULLNAME = USER.Name;
+        return this.crudService.userCreate(USR)
+      })
+      .then(res => {
+        USER.result = 'Done';
+        console.log(USER.Email + '--> Done')
+      })
+      .catch(err => {
+        console.log(USER.Email + '--> failed', err)
+      })
+  }
+
+  getNickName(FullName: string) {
+    let myArray = FullName.split(' ');
+    return myArray[myArray.length - 1];
+  }
 
 
   convertCsv2ArrayObject() {
