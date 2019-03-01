@@ -44,30 +44,53 @@
 
   <ion-grid text-center *ngIf="!deleteUpdateSlotsMode">
     <ion-row *ngFor="let Day of DaysInMonth">
-      <ion-col (click)="updateSlots(Day)">
-        <span class="DATE">{{Day.date}}</span>
-      </ion-col>
-      <ion-col *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)"
-        [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
-        <div class="{{SLOT.STATUS}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
-          <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
-            <div>
-              <h4>{{SLOT.SPE_NAME}}</h4>
+        <ion-col style="width: 20%" (click)="updateSlots(Day)">
+            <span class="DATE" >{{Day.date}}</span>
+          </ion-col>
+          <div *ngFor="let SLOT of Day.Slots; let i = index" (click)="selectSlotInList(Day,SLOT,i)"
+          [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}" style="width:20%">
+            <div *ngIf="i == 0 || i%4 > 0">
+                <div class="{{SLOT.STATUS}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
+                    <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
+                      <div>
+                        <h4>{{SLOT.SPE_NAME}}</h4>
+                      </div>
+                      <div>{{SLOT.SLOT}}</div>
+                    </div>
+                    <div *ngIf="!SLOT.SPE_NAME">
+                      <div style="height: 25px;">
+                        <h4> </h4>
+                      </div>
+                      <div>{{SLOT.SLOT}}</div>
+                    </div>
+                  </div>
             </div>
-            <div>{{SLOT.SLOT}}</div>
-          </div>
-          <div *ngIf="!SLOT.SPE_NAME">
-            <div style="height: 25px;">
-              <h4> </h4>
+            <div *ngIf="i%4 == 0 && i > 3 " style="margin-left: 100%;width: 100%;height: 100%;">
+                <ion-col (click)="selectSlotInList(Day,SLOT,i)"
+                  [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
+                  <div class="{{SLOT.STATUS}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
+                      <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
+                        <div>
+                          <h4>{{SLOT.SPE_NAME}}</h4>
+                        </div>
+                        <div>{{SLOT.SLOT}}</div>
+                      </div>
+                      <div *ngIf="!SLOT.SPE_NAME">
+                        <div style="height: 50px;">
+                          <h4> </h4>
+                        </div>
+                        <div>{{SLOT.SLOT}}</div>
+                      </div>
+                    </div>
+                </ion-col>
             </div>
-            <div>{{SLOT.SLOT}}</div>
           </div>
-        </div>
-      </ion-col>
     </ion-row>
   </ion-grid>
   <ion-grid text-center *ngIf="deleteUpdateSlotsMode">
     <ion-row>
+
+      
       <ion-col (click)="updateSlots(selectedDay)">
         <span class="DATE">{{selectedDay.date}}</span>
       </ion-col>
