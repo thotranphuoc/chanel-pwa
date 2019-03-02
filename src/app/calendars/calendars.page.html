@@ -25,7 +25,6 @@
   <div [ngSwitch]="segment" text-center>
     <div *ngSwitchCase="'list'">
       <!-- LUAN -->
-
       <ion-grid style="margin: 0 auto; text-align: center;">
         <ion-row>
           <ion-button *ngFor="let STATE of STATES" fill="clear" size="small" color="dark"
@@ -33,49 +32,124 @@
             <span [ngClass]="STATE"></span>
             {{STATE}}
           </ion-button>
-          <!-- <ion-col *ngFor="let STATE of STATES"><span id="state"><span id="colordot"></span>{{STATE}}</span></ion-col> -->
         </ion-row>
       </ion-grid>
-      <ion-grid text-center>
+      <!-- CLOSED on 2019/03/02 by Tho -->
+      <!-- <ion-grid text-center>
         <ion-row *ngFor="let Day of DaysInM1">
           <ion-col style="width: 20%">
-            <span class="DATE" >{{Day.date}}</span>
+            <span class="DATE">{{Day.date}}</span>
           </ion-col>
           <div *ngFor="let SLOT of Day.Slots; let i = index" style="width:20%">
             <div *ngIf="i == 0 || i%4 > 0">
-                <ion-col (click)="selectSlotInList(Day,SLOT,i)"
-                  [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
-                  <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
-                </ion-col>
+              <ion-col (click)="selectSlotInList(Day,SLOT,i)" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
+                <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
+              </ion-col>
             </div>
             <div *ngIf="i%4 == 0 && i > 3 " style="margin-left: 100%;width: 100%; margin-bottom: 5px;">
-                <ion-col (click)="selectSlotInList(Day,SLOT,i)"
-                  [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
-                  <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
-                </ion-col>
+              <ion-col (click)="selectSlotInList(Day,SLOT,i)" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
+                <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
+              </ion-col>
             </div>
           </div>
         </ion-row>
       </ion-grid>
       <ion-grid text-center>
         <ion-row *ngFor="let Day of DaysInM2">
-            <ion-col style="width: 20%">
-                <span class="DATE" >{{Day.date}}</span>
+          <ion-col style="width: 20%">
+            <span class="DATE">{{Day.date}}</span>
+          </ion-col>
+          <div *ngFor="let SLOT of Day.Slots; let i = index" style="width:20%">
+            <div *ngIf="i == 0 || i%4 > 0">
+              <ion-col (click)="selectSlotInList(Day,SLOT,i)" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
+                <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
               </ion-col>
-              <div *ngFor="let SLOT of Day.Slots; let i = index" style="width:20%">
-                <div *ngIf="i == 0 || i%4 > 0">
-                    <ion-col (click)="selectSlotInList(Day,SLOT,i)"
-                      [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
-                      <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
-                    </ion-col>
-                </div>
-                <div *ngIf="i%4 == 0 && i > 3 " style="margin-left: 100%;width: 100%; margin-bottom: 5px;">
-                    <ion-col (click)="selectSlotInList(Day,SLOT,i)"
-                      [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
-                      <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
-                    </ion-col>
-                </div>
-              </div>
+            </div>
+            <div *ngIf="i%4 == 0 && i > 3 " style="margin-left: 100%;width: 100%; margin-bottom: 5px;">
+              <ion-col (click)="selectSlotInList(Day,SLOT,i)" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
+                <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
+              </ion-col>
+            </div>
+          </div>
+        </ion-row>
+      </ion-grid> -->
+
+      <!-- NEW 2019/03/02 -->
+
+      <ion-grid text-center>
+        <h1>{{currentYYYYMM.substr(4,2)}}/{{currentYYYYMM.substr(0,4)}}</h1>
+        <ion-row *ngFor="let Day of DaysInM1">
+          <ion-col size="2">
+            <span class="DATE1">{{Day.date.substr(3,2)}}</span>
+          </ion-col>
+          <ion-col>
+            <ion-row>
+              <ion-col *ngFor="let SLOT of Day.Slots.slice(0,4); let i = index" (click)="selectSlotInList(Day,SLOT,i)"
+                [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
+                <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
+              </ion-col>
+              <ion-col *ngIf="Day.Slots.slice(0,4).length<2"></ion-col>
+              <ion-col *ngIf="Day.Slots.slice(0,4).length<3"></ion-col>
+              <ion-col *ngIf="Day.Slots.slice(0,4).length<4"></ion-col>
+            </ion-row>
+            <ion-row *ngIf="Day.Slots.length > 4">
+              <ion-col *ngFor="let SLOT of Day.Slots.slice(4,8); let i = index" (click)="selectSlotInList(Day,SLOT,i)"
+                [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
+                <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
+              </ion-col>
+              <ion-col *ngIf="Day.Slots.slice(4,8).length<2"></ion-col>
+              <ion-col *ngIf="Day.Slots.slice(4,8).length<3"></ion-col>
+              <ion-col *ngIf="Day.Slots.slice(4,8).length<4"></ion-col>
+            </ion-row>
+            <ion-row *ngIf="Day.Slots.length > 8">
+              <ion-col *ngFor="let SLOT of Day.Slots.slice(8,12); let i = index" (click)="selectSlotInList(Day,SLOT,i)"
+                [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
+                <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
+              </ion-col>
+              <ion-col *ngIf="Day.Slots.slice(8,12).length<2"></ion-col>
+              <ion-col *ngIf="Day.Slots.slice(8,12).length<3"></ion-col>
+              <ion-col *ngIf="Day.Slots.slice(8,12).length<4"></ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <hr>
+
+      <ion-grid text-center>
+        <h1>{{nextYYYYMM.substr(4,2)}}/{{nextYYYYMM.substr(0,4)}}</h1>
+        <ion-row *ngFor="let Day of DaysInM2">
+          <ion-col size="2">
+            <span class="DATE1">{{Day.date.substr(3,2)}}</span>
+          </ion-col>
+          <ion-col>
+            <ion-row>
+              <ion-col *ngFor="let SLOT of Day.Slots.slice(0,4); let i = index" (click)="selectSlotInList(Day,SLOT,i)"
+                [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
+                <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
+              </ion-col>
+              <ion-col *ngIf="Day.Slots.slice(0,4).length<2"></ion-col>
+              <ion-col *ngIf="Day.Slots.slice(0,4).length<3"></ion-col>
+              <ion-col *ngIf="Day.Slots.slice(0,4).length<4"></ion-col>
+            </ion-row>
+            <ion-row *ngIf="Day.Slots.length > 4">
+              <ion-col *ngFor="let SLOT of Day.Slots.slice(4,8); let i = index" (click)="selectSlotInList(Day,SLOT,i)"
+                [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
+                <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
+              </ion-col>
+              <ion-col *ngIf="Day.Slots.slice(4,8).length<2"></ion-col>
+              <ion-col *ngIf="Day.Slots.slice(4,8).length<3"></ion-col>
+              <ion-col *ngIf="Day.Slots.slice(4,8).length<4"></ion-col>
+            </ion-row>
+            <ion-row *ngIf="Day.Slots.length > 8">
+              <ion-col *ngFor="let SLOT of Day.Slots.slice(8,12); let i = index" (click)="selectSlotInList(Day,SLOT,i)"
+                [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">
+                <span class="{{SLOT.STATUS}}">{{SLOT.SLOT}}</span>
+              </ion-col>
+              <ion-col *ngIf="Day.Slots.slice(8,12).length<2"></ion-col>
+              <ion-col *ngIf="Day.Slots.slice(8,12).length<3"></ion-col>
+              <ion-col *ngIf="Day.Slots.slice(8,12).length<4"></ion-col>
+            </ion-row>
+          </ion-col>
         </ion-row>
       </ion-grid>
       <!-- <ion-grid>

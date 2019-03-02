@@ -5,6 +5,12 @@ ion-col{
     font-weight: 700;
 }
 
+.DATE1 {
+    font-weight: 700;
+    // font-size: 12px;
+    padding-top: 25px;
+}
+
 
 .CANCELED{
     background: orange;
@@ -61,7 +67,7 @@ ion-col{
 }
 
 ion-row{
-    margin: 5px 0;
+    // margin: 5px 0;
     
 }
 
@@ -72,6 +78,10 @@ ion-header{
 ion-col span{
     border-radius: 10px;
     padding: 5px 15px;
+}
+ion-col span .DATE1{
+    border-radius: 10px;
+    padding: 15px 15px;
 }
 
 .active-date{
