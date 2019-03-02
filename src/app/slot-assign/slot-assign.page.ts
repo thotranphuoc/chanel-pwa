@@ -117,6 +117,33 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     })
     this.DaysInMonth = this.calendarService.addAdditionalProsIntoDaysInMonth(_DaysInMonth);
     console.log(this.DaysInMonth);
+    // this.getNewDaysInMonth(this.DaysInMonth)
+  }
+
+  // getNewDaysInMonth(ARR: iDay[]) {
+  //   ARR.forEach(Day => {
+  //     // Day['nRows'] = this.splitIntoSubArray(Day.Slots, 4);
+  //   })
+  //   console.log(ARR);
+  // }
+
+  splitIntoSubArray(arr: any[], count: number) {
+    var newArray = [];
+    let cloneArr = arr.slice(0);
+    while (cloneArr.length > 0) {
+      let arr = cloneArr.splice(0, count);
+      if (arr.length < count) {
+        while (arr.length < count) {
+          arr.push(null);
+        }
+        console.log(arr);
+        newArray.push(arr);
+      } else {
+        newArray.push(arr);
+      }
+
+    }
+    return newArray;
   }
 
   getSpecialists() {
@@ -143,6 +170,15 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     }
 
   }
+  selectSlotInListNew(Day: iDay, SLOT: iSlot) {
+    let i = Day.Slots.map(slot => slot.SLOT).indexOf(SLOT.SLOT);
+    if (this.deleteUpdateSlotsMode) {
+      console.log('update/delete slot in list')
+      this.alertActionDeleteOrUpdateslot(Day, SLOT, i);
+    } else {
+      this.updateSlotInList(Day, SLOT, i);
+    }
+  }
 
   updateSlotInList(Day: iDay, SLOT: iSlot, i: number) {
     console.log(Day, SLOT, i);
@@ -152,7 +188,11 @@ export class SlotAssignPage implements OnInit, OnDestroy {
       SLOT.SPE_ID = this.selectedSpecialist.U_ID ? this.selectedSpecialist.U_ID : '';
       SLOT.SPE_NAME = this.selectedSpecialist.U_NAME ? this.selectedSpecialist.U_NAME : '';
       Day.Slots[i] = SLOT;
-      console.log(Day, SLOT, this.selectedSpecialist)
+      console.log(Day, SLOT, this.selectedSpecialist);
+      // let _Day = Object.assign({},Day);
+      // if(_Day['nRows']){
+      //   delete _Day['nRows'];
+      // }
       this.crudService.dayUpdate(Day)
         .then((res) => console.log(res))
         .catch(err => console.log(err));
@@ -329,6 +369,10 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     })
 
     Day.Slots = _Slots;
+    // let _Day = Object.assign({},Day);
+    //   if(_Day['nRows']){
+    //     delete _Day['nRows'];
+    //   }
     this.crudService.dayUpdate(Day);
   }
 
@@ -524,6 +568,13 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     let ID = this.Specialists.filter(SP => SP.U_NAME == Name)[0].U_ID;
     console.log(ID);
     return ID
+  }
+
+  isSecondRowOfSlots(Day: iDay) {
+    if (Day.Slots.length > 4) return true;
+  }
+  isThirdRowOfSlots(Day: iDay) {
+    if (Day.Slots.length > 8) return true;
   }
 }
 

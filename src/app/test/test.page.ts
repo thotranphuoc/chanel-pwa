@@ -21,6 +21,25 @@ export class TestPage implements OnInit {
   ngOnInit() {
     console.log(2 / 3);
     console.log(4 / 3);
+    console.log(5 % 3);
+    console.log(Math.ceil(4 / 4));
+    console.log(Math.ceil(3 / 4));
+    console.log(Math.ceil(6 / 4));
+    console.log(Math.ceil(8 / 4));
+    console.log(Math.ceil(9 / 4));
+
+    let arr = [1, 2, 3, 4, 5, 4, 6];
+    let newArr = this.splitIntoSubArray(arr, 4);
+    console.log(newArr);
+  }
+
+
+  splitIntoSubArray(arr, count) {
+    var newArray = [];
+    while (arr.length > 0) {
+      newArray.push(arr.splice(0, count));
+    }
+    return newArray;
   }
 
 }
