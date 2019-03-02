@@ -137,41 +137,44 @@
   <ion-grid text-center *ngIf="!deleteUpdateSlotsMode">
     <ion-row *ngFor="let Day of DaysInMonth">
       <ion-col (click)="updateSlots(Day)" size="2">
-        <span class="DATE">{{Day.date}}</span>
+        <span class="DATE">{{Day.date.substr(3,2)}}</span>
       </ion-col>
-      <ion-col>
+      <ion-col size="10">
         <ion-row>
           <ion-col *ngFor="let SLOT of Day.Slots.slice(0,4)" (click)="selectSlotInListNew(Day,SLOT)">
-            <div *ngIf="SLOT" class="{{SLOT.STATUS}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
+            <div *ngIf="SLOT" class="SLOT" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
               <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
                 <div>
                   <h4>{{SLOT.SPE_NAME}}</h4>
                 </div>
-                <div>{{SLOT.SLOT}}</div>
+                <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
               <div *ngIf="!SLOT.SPE_NAME">
-                <div style="height: 25px;">
+                <div style="height: 21px;">
                   <h4> </h4>
                 </div>
-                <div>{{SLOT.SLOT}}</div>
+                <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
             </div>
           </ion-col>
+          <ion-col *ngIf="Day.Slots.slice(0,4).length<2"></ion-col>
+          <ion-col *ngIf="Day.Slots.slice(0,4).length<3"></ion-col>
+          <ion-col *ngIf="Day.Slots.slice(0,4).length<4"></ion-col>
         </ion-row>
         <ion-row *ngIf="isSecondRowOfSlots(Day)">
           <ion-col *ngFor="let SLOT of Day.Slots.slice(4,8)" (click)="selectSlotInListNew(Day,SLOT)">
-            <div *ngIf="SLOT" class="{{SLOT.STATUS}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
+            <div *ngIf="SLOT" class="SLOT" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
               <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
                 <div>
                   <h4>{{SLOT.SPE_NAME}}</h4>
                 </div>
-                <div>{{SLOT.SLOT}}</div>
+                <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
               <div *ngIf="!SLOT.SPE_NAME">
                 <div style="height: 25px;">
                   <h4> </h4>
                 </div>
-                <div>{{SLOT.SLOT}}</div>
+                <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
             </div>
           </ion-col>
@@ -181,18 +184,18 @@
         </ion-row>
         <ion-row *ngIf="isThirdRowOfSlots(Day)">
           <ion-col *ngFor="let SLOT of Day.Slots.slice(8,12)" (click)="selectSlotInListNew(Day,SLOT)">
-            <div *ngIf="SLOT" class="{{SLOT.STATUS}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
+            <div *ngIf="SLOT" class="SLOT" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
               <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
                 <div>
                   <h4>{{SLOT.SPE_NAME}}</h4>
                 </div>
-                <div>{{SLOT.SLOT}}</div>
+                <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
               <div *ngIf="!SLOT.SPE_NAME">
                 <div style="height: 25px;">
                   <h4> </h4>
                 </div>
-                <div>{{SLOT.SLOT}}</div>
+                <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
             </div>
           </ion-col>
@@ -208,39 +211,39 @@
       <ion-col size="2">
         <span class="DATE">{{selectedDay.date}}</span>
       </ion-col>
-      <ion-col>
+      <ion-col size="10">
         <ion-row>
           <ion-col *ngFor="let SLOT of selectedDay.Slots.slice(0,4)" (click)="selectSlotInListNew(selectedDay,SLOT)">
-            <div *ngIf="SLOT" class="{{SLOT.STATUS}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
+            <div *ngIf="SLOT" class="SLOT" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
               <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
                 <div>
                   <h4>{{SLOT.SPE_NAME}}</h4>
                 </div>
-                <div>{{SLOT.SLOT}}</div>
+                <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
               <div *ngIf="!SLOT.SPE_NAME">
                 <div style="height: 25px;">
                   <h4> </h4>
                 </div>
-                <div>{{SLOT.SLOT}}</div>
+                <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
             </div>
           </ion-col>
         </ion-row>
         <ion-row *ngIf="isSecondRowOfSlots(selectedDay)">
           <ion-col *ngFor="let SLOT of selectedDay.Slots.slice(4,8)" (click)="selectSlotInListNew(selectedDay,SLOT)">
-            <div *ngIf="SLOT" class="{{SLOT.STATUS}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
+            <div *ngIf="SLOT" class="{{SLOT}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
               <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
                 <div>
                   <h4>{{SLOT.SPE_NAME}}</h4>
                 </div>
-                <div>{{SLOT.SLOT}}</div>
+                <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
               <div *ngIf="!SLOT.SPE_NAME">
                 <div style="height: 25px;">
                   <h4> </h4>
                 </div>
-                <div>{{SLOT.SLOT}}</div>
+                <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
             </div>
           </ion-col>
@@ -250,18 +253,18 @@
         </ion-row>
         <ion-row *ngIf="isThirdRowOfSlots(selectedDay)">
           <ion-col *ngFor="let SLOT of selectedDay.Slots.slice(8,12)" (click)="selectSlotInListNew(selectedDay,SLOT)">
-            <div *ngIf="SLOT" class="{{SLOT.STATUS}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
+            <div *ngIf="SLOT" class="{{SLOT}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
               <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
                 <div>
                   <h4>{{SLOT.SPE_NAME}}</h4>
                 </div>
-                <div>{{SLOT.SLOT}}</div>
+                <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
               <div *ngIf="!SLOT.SPE_NAME">
                 <div style="height: 25px;">
                   <h4> </h4>
                 </div>
-                <div>{{SLOT.SLOT}}</div>
+                <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
             </div>
           </ion-col>

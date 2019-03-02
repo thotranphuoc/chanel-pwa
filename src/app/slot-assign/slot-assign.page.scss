@@ -1,5 +1,6 @@
 .DATE {
-    font-weight: 700;
+    font-weight: 500;
+    font-size: 15px;
 }
 
 
@@ -62,10 +63,10 @@
     max-width: 100px;
 }
 
-ion-row{
-    margin: 5px 0;
+// ion-row{
+//     margin: 5px 0;
     
-}
+// }
 
 ion-col span{
     border-radius: 0px;
@@ -75,4 +76,12 @@ ion-col span{
 ion-col h4{
     margin: 2px 2px;
     font-size: 15px;
+}
+
+.SLOT{
+    border-radius: 5px;
+    color: white;
+}
+.SLOT_SLOT{
+    font-size: 12px;
 }
