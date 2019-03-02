@@ -126,10 +126,10 @@ export class CalendarsPage implements OnInit, OnDestroy {
     return "color='success'";
   }
 
-  addNewAppointment() {
-    console.log('fab button')
-    this.modalAppointmentAdd(null, null, null);
-  }
+  // addNewAppointment() {
+  //   console.log('fab button')
+  //   this.modalAppointmentAdd(null, null, null);
+  // }
 
   async modalAppointmentAdd(selectedDay: iDay, slot: iSlot, index: number) {
     const modal = await this.modalController.create({
