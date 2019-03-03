@@ -138,8 +138,12 @@ export class AppointmentEditPage implements OnInit {
       qSnap.forEach(docSnap => {
         let USER = <iUser>docSnap.data();
         USERS.push(USER);
-        this.BAs = USERS.filter(U => U.U_ROLE == 'BA');
       })
+      this.BAs = USERS.filter(U => U.U_ROLE == 'BA').sort((a, b) => {
+        if (a.U_NAME > b.U_NAME) return 1;
+        if (a.U_NAME < b.U_NAME) return -1;
+        return 0;
+      });
       console.log(this.BAs);
     })
   }

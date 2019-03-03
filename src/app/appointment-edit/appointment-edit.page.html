@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Cập nhật lịch hẹn</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="doCancel()">
+        <ion-icon color="danger" slot="end" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -43,28 +48,30 @@
         </ion-item>
         <ion-item>
           <ion-label color="primary">KH sử dụng Skin Care</ion-label>
-          <ion-toggle [(ngModel)]="BOOKING.B_CSCU"></ion-toggle>
+          <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_CSCU"></ion-toggle>
         </ion-item>
 
         <ion-item>
           <ion-label color="primary">KH sử dụng Sublimage</ion-label>
-          <ion-toggle [(ngModel)]="BOOKING.B_SUBLIMAGE"></ion-toggle>
+          <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_SUBLIMAGE"></ion-toggle>
         </ion-item>
         <ion-item *ngIf="BOOKING.B_SUBLIMAGE">
           <ion-label stacked></ion-label>
-          <ion-input [(ngModel)]="BOOKING.B_SUBLIMAGES" placeholder="Sản phẩm Sublimage khách dùng"></ion-input>
+          <ion-input disabled="true" [(ngModel)]="BOOKING.B_SUBLIMAGES" placeholder="Sản phẩm Sublimage khách dùng">
+          </ion-input>
         </ion-item>
         <ion-item>
           <ion-label color="primary">KH sử dụng Le lift</ion-label>
-          <ion-toggle [(ngModel)]="BOOKING.B_LELIFT"></ion-toggle>
+          <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_LELIFT"></ion-toggle>
         </ion-item>
         <ion-item>
           <ion-label color="primary">KH sử dụng Fashion</ion-label>
-          <ion-toggle [(ngModel)]="BOOKING.B_FASHION"></ion-toggle>
+          <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_FASHION"></ion-toggle>
         </ion-item>
         <ion-item *ngIf="BOOKING.B_FASHION">
           <ion-label stacked></ion-label>
-          <ion-input [(ngModel)]="BOOKING.B_FASHIONS" placeholder="Sản phẩm Fashion khách dùng"></ion-input>
+          <ion-input disabled="true" [(ngModel)]="BOOKING.B_FASHIONS" placeholder="Sản phẩm Fashion khách dùng">
+          </ion-input>
         </ion-item>
         <ion-item>
           <ion-label color="primary" fixed>Lần đầu sử dụng facial cabin</ion-label>
