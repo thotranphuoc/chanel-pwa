@@ -9,6 +9,20 @@
 
 <ion-content padding>
   <div *ngIf="authService.isAuthenticated && USER">
+      <div class="div_avatar">
+          <div *ngIf="!hasNewAvatar">
+            <div (click)="takePhoto()">
+              <img src="{{USER.U_AVATAR}}" alt="" class="img"
+                onError="this.src='../../assets/imgs/imagenotavailable.png';">
+            </div>
+          </div>
+          <div *ngIf="hasNewAvatar">
+            <div (click)="takePhoto()">
+              <img src="{{base64Images[0]}}" alt="" class="img"
+                onError="this.src='../../assets/imgs/imagenotavailable.png';">
+            </div>
+          </div>
+        </div>
     <ion-item>
       <ion-label color="primary">Nickname:</ion-label>
       <ion-input [(ngModel)]="USER.U_NAME" name="U_NAME"></ion-input>
