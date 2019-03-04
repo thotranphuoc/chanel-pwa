@@ -111,6 +111,7 @@ export class LocalService {
     B_FASHIONS: '',
     B_NOTE: '',
     B_STATUS: 'BOOKED',
+    B_STATUS_VI: 'ĐÃ ĐẶT',
     B_CREATED_TIME: '',
     B_TOTAL: null,
     B_SPECIALIST: this.USER_DEFAULT,

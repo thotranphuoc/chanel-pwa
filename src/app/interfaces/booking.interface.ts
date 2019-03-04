@@ -29,6 +29,7 @@ export interface iBooking {
     // B_1stTIME: boolean,
     B_NOTE: string,
     B_STATUS: string,
+    B_STATUS_VI: string,
     B_CREATED_TIME: string,
     B_TOTAL: number,
     B_SPECIALIST: iUser,

@@ -79,7 +79,7 @@
         </ion-item>
         <ion-item>
           <ion-label color="primary" fixed>Trạng thái:</ion-label>
-          <ion-button [disabled]="isDisabled()" slot="end" (click)="setBookingStatus()">{{BOOKING.B_STATUS}}
+          <ion-button [disabled]="isDisabled()" slot="end" (click)="setBookingStatus()">{{BOOKING.B_STATUS_VI}}
           </ion-button>
         </ion-item>
         <div *ngIf="BOOKING.B_STATUS =='COMPLETED'">
@@ -91,7 +91,7 @@
             </ion-button>
           </ion-item>
           <ion-item>
-            <ion-label color="primary" fixed>BA bán hàng:</ion-label>
+            <ion-label color="primary" fixed>B.A bán hàng:</ion-label>
             <ion-button slot="end" (click)="setBASelling()">
               <span *ngIf="BOOKING.B_BA_SELL_NAME">{{BOOKING.B_BA_SELL_NAME}}</span>
               <span *ngIf="!BOOKING.B_BA_SELL_NAME">Chọn B.A bán hàng</span>

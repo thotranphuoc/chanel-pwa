@@ -26,12 +26,21 @@ export class AppointmentEditPage implements OnInit {
   BAs: iUser[] = [];
   selectedBA: iUser;
   RIGHTS = {
-    Admin: ['AVAILABLE', 'BOOKED', 'COMPLETED', 'CANCELED', 'EXPIRED'],
-    Manager: ['DRAFT', 'AVAILABLE', 'BOOKED', 'COMPLETED', 'CANCELED', 'EXPIRED'],
-    Specialist: ['AVAILABLE', 'BOOKED', 'COMPLETED', 'CANCELED', 'EXPIRED'],
-    BA: ['AVAILABLE', 'BOOKED', 'CANCELED', 'EXPIRED'],
-    FA: ['AVAILABLE', 'BOOKED', 'CANCELED', 'EXPIRED']
+    Admin: [{ VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
+    Manager: [{ VI: 'TẠM', EN: 'DRAFT' }, { VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
+    Specialist: [{ VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
+    BA: [{ VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
+    BAS: [{ VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
+    FA: [{ VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
   }
+
+  // RIGHTS = {
+  //   Admin: [{ VI: 'TẠM', EN: 'DRAFT' }, { VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
+  //   Manager: ['DRAFT', 'AVAILABLE', 'BOOKED', 'COMPLETED', 'CANCELED', 'EXPIRED'],
+  //   Specialist: ['AVAILABLE', 'BOOKED', 'COMPLETED', 'CANCELED', 'EXPIRED'],
+  //   BA: ['AVAILABLE', 'BOOKED', 'CANCELED', 'EXPIRED'],
+  //   FA: ['AVAILABLE', 'BOOKED', 'CANCELED', 'EXPIRED']
+  // }
   constructor(
     private navPar: NavParams,
     private modalCtrl: ModalController,
@@ -225,13 +234,13 @@ export class AppointmentEditPage implements OnInit {
       let INP = {
         name: 'radio1',
         type: 'radio',
-        label: STATE,
+        label: STATE.VI,
         value: STATE,
       }
       INPUTS.push(INP);
     })
     const alert = await this.alertCtrl.create({
-      header: 'STATUS',
+      header: 'TRẠNG THÁI',
       inputs: INPUTS,
       buttons: [
         {
@@ -243,9 +252,10 @@ export class AppointmentEditPage implements OnInit {
           }
         }, {
           text: 'Chấp nhận',
-          handler: (data: string) => {
+          handler: (data: any) => {
             console.log(data);
-            this.BOOKING.B_STATUS = data;
+            this.BOOKING.B_STATUS = data.EN;
+            this.BOOKING.B_STATUS_VI = data.VI;
           }
         }
       ]
