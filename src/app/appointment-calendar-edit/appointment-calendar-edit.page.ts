@@ -36,7 +36,7 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
   month2Subscription: Subscription;
 
   // STATES = ['AVAILABLE','BOOKED','CANCELED','COMPLETED','EXPIRED']
-  STATES = ['Available', 'Booked', 'Canceled', 'Completed', 'Expired'];
+  STATES = [{ VI: 'TRỐNG', EN: 'Available' }, { VI: 'ĐÃ ĐẶT', EN: 'Booked' }, { VI: 'HOÀN THÀNH', EN: 'Completed' }, { VI: 'HUỶ BỎ', EN: 'Canceled' }, { VI: 'HẾT HẠN', EN: 'Expired' }, { VI: 'CHỜ DUYỆT', EN: 'Draft' }];
 
   BOOKING: iBooking;
   data: any;
