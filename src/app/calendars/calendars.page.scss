@@ -59,19 +59,33 @@ ion-col{
 }
 
 .Available{
-    border-radius: 50%; width: 9px;height: 9px; border-radius: 50%;background: red;margin-right: 2px;
+    border-radius: 50%; width: 9px;height: 9px; border-radius: 50%;background: rgb(150, 238, 63);margin-right: 2px;
 }
 .Canceled{
     border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: orange;margin-right: 2px;
 }
 .Booked{
-    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: lightgrey;margin-right: 2px;
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: red;margin-right: 2px;
 }
 .Completed{
-    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #71BF45;margin-right: 2px;
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: rgb(14, 181, 178);margin-right: 2px;
 }
 .Expired{
-    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: gray;margin-right: 2px;
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: rgb(148, 21, 203);margin-right: 2px;
+}
+.Draft{
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: rgb(243, 235, 6);margin-right: 2px;
+}
+
+
+.FULL_{
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: red;margin-right: 2px;
+}
+.BOOKING_{
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #71BF45;margin-right: 2px;
+}
+.AVAILABLE_{
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: white;margin-right: 2px; border: 0.5px solid black;
 }
 
 ion-row{

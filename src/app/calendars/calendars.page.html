@@ -163,28 +163,20 @@
       <ion-grid style="margin: 0 auto; text-align: center;">
         <ion-row>
           <ion-button fill="clear" size="small" color="dark" style="font-size: 9px; text-align: center;">
-            <span [ngClass]="STATE"></span>
+            <span class="AVAILABLE_"></span>
             Chưa có Booking
           </ion-button>
           <ion-button fill="clear" size="small" color="dark" style="font-size: 9px; text-align: center;">
-            <span [ngClass]="COMPLETED"></span>
+            <span class="BOOKING_"></span>
             Đã có Booking
           </ion-button>
           <ion-button fill="clear" size="small" color="dark" style="font-size: 9px; text-align: center;">
-            <span [ngClass]="AVAILABLE"></span>
+            <span class="FULL_"></span>
             Đầy booking
           </ion-button>
         </ion-row>
       </ion-grid>
-      <ion-grid style="margin: 0 auto; text-align: center;">
-        <ion-row>
-          <ion-button *ngFor="let STATE of STATES" fill="clear" size="small" color="dark"
-            style="font-size: 9px; text-align: center;">
-            <span [ngClass]="STATE"></span>
-            {{STATE}}
-          </ion-button>
-        </ion-row>
-      </ion-grid>
+      
       <ion-grid *ngIf="WEEKSinMONTH1">
         <h1>{{currentYYYYMM.substr(4,2)}}/{{currentYYYYMM.substr(0,4)}}</h1>
         <ion-row class="row-bottom-line">

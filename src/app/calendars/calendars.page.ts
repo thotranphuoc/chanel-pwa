@@ -32,7 +32,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
   currentYYYYMM: string;
   nextYYYYMM: string;
   // STATES = ['AVAILABLE','BOOKED','CANCELED','COMPLETED','EXPIRED']
-  STATES = ['Available', 'Booked', 'Canceled', 'Completed', 'Expired'];
+  STATES = ['Available', 'Booked', 'Canceled', 'Completed', 'Expired', 'Draft'];
   StateOfDay = ['Chưa có Booking', 'Đã có booking', 'Đầy booking'];
   constructor(
     private alertCtrl: AlertController,
