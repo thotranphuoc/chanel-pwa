@@ -124,8 +124,10 @@ export class AppointmentAddPage implements OnInit {
     if (this.isAllowed2BookTimesInMonth()) {
       this.doAddAppointment();
       this.BOOKING.B_STATUS = 'BOOKED';
+      this.BOOKING.B_STATUS_VI = 'ĐÃ ĐẶT';
     } else {
       this.BOOKING.B_STATUS = 'DRAFT';
+      this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
       this.confirmBookTimesInMonth();
     }
 

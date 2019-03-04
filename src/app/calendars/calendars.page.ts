@@ -32,7 +32,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
   currentYYYYMM: string;
   nextYYYYMM: string;
   // STATES = {AVAILABLE:{EN:'AVAILABLE', VI: 'TRỐNG'},'BOOKED','CANCELED','COMPLETED','EXPIRED'}
-  STATES = [{ VI: 'TRỐNG', EN: 'Available' }, { VI: 'ĐÃ ĐẶT', EN: 'Booked' }, { VI: 'HOÀN THÀNH', EN: 'Completed' }, { VI: 'HUỶ BỎ', EN: 'Canceled' }, { VI: 'HẾT HẠN', EN: 'Expired' },{ VI: 'TẠM', EN: 'DRAFT' }];
+  STATES = [{ VI: 'TRỐNG', EN: 'Available' }, { VI: 'ĐÃ ĐẶT', EN: 'Booked' }, { VI: 'HOÀN THÀNH', EN: 'Completed' }, { VI: 'HUỶ BỎ', EN: 'Canceled' }, { VI: 'HẾT HẠN', EN: 'Expired' }, { VI: 'CHỜ DUYỆT', EN: 'Draft' }];
   StateOfDay = ['Chưa có Booking', 'Đã có booking', 'Đầy booking'];
   constructor(
     private alertCtrl: AlertController,
