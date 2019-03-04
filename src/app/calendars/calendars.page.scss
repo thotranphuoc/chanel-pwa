@@ -13,21 +13,21 @@ ion-col{
 
 
 .CANCELED{
-    background: orange;
+    background: #A37FF6;
     padding: 3px;
     border-radius: 10px;
     font-size: 12px;
     color: white;
 }
 .BOOKED{
-    background: red;
+    background: #FF0050;
     padding: 3px;
     border-radius: 10px;
     font-size: 12px;
     color: white;
 }
 .COMPLETED{
-    background: rgb(14, 181, 178);
+    background: #61B500;
     padding: 3px;
     border-radius: 10px;
     font-size: 12px;
@@ -35,21 +35,20 @@ ion-col{
 }
 
 .DRAFT{
-    background: rgb(243, 235, 6);
+    background: #EFDE0A;
     padding: 3px;
     border-radius: 10px;
     font-size: 12px;
     color: white;
 }
 .EXPIRED{
-    background: rgb(148, 21, 203);
+    background: #9B9B9B;
     border-radius: 10px;
     font-size: 12px;
     color: white;
 }
-
 .AVAILABLE{
-    background: rgb(150, 238, 63);
+    background: #50E3C2;
     padding: 3px;
     // border: 1px solid red;
     border-radius: 10px;
@@ -59,22 +58,22 @@ ion-col{
 }
 
 .Available{
-    border-radius: 50%; width: 9px;height: 9px; border-radius: 50%;background: rgb(150, 238, 63);margin-right: 2px;
+    border-radius: 50%; width: 9px;height: 9px; border-radius: 50%;background: #50E3C2;margin-right: 2px;
 }
 .Canceled{
-    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: orange;margin-right: 2px;
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #A37FF6;margin-right: 2px;
 }
 .Booked{
-    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: red;margin-right: 2px;
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #FF0050;margin-right: 2px;
 }
 .Completed{
-    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: rgb(14, 181, 178);margin-right: 2px;
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #61B500;margin-right: 2px;
 }
 .Expired{
-    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: rgb(148, 21, 203);margin-right: 2px;
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #9B9B9B;margin-right: 2px;
 }
 .Draft{
-    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: rgb(243, 235, 6);margin-right: 2px;
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #EFDE0A;margin-right: 2px;
 }
 
 

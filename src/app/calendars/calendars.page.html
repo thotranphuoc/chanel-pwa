@@ -29,8 +29,8 @@
         <ion-row>
           <ion-button *ngFor="let STATE of STATES" fill="clear" size="small" color="dark"
             style="font-size: 9px; text-align: center;">
-            <span [ngClass]="STATE"></span>
-            {{STATE}}
+            <span [ngClass]="STATE.EN"></span>
+            {{STATE.VI}}
           </ion-button>
         </ion-row>
       </ion-grid>
