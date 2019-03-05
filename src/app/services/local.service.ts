@@ -103,6 +103,8 @@ export class LocalService {
     B_FHOUR: '',
     B_THOUR: '',
     B_isNewCustomer: false,
+    B_PERFUME: false,
+    B_MAKEUP: false,
     B_CSCU: false,
     B_SUBLIMAGE: false,
     B_SUBLIMAGES: '',

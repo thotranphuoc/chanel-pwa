@@ -32,7 +32,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
   currentYYYYMM: string;
   nextYYYYMM: string;
   // STATES = {AVAILABLE:{EN:'AVAILABLE', VI: 'TRỐNG'},'BOOKED','CANCELED','COMPLETED','EXPIRED'}
-  STATES = [{ VI: 'TRỐNG', EN: 'Available' }, { VI: 'ĐÃ ĐẶT', EN: 'Booked' }, { VI: 'HOÀN THÀNH', EN: 'Completed' }, { VI: 'HUỶ BỎ', EN: 'Canceled' }, { VI: 'HẾT HẠN', EN: 'Expired' }, { VI: 'CHỜ DUYỆT', EN: 'Draft' }];
+  STATES = [{ VI: 'TRỐNG', EN: 'Available' }, { VI: 'ĐÃ ĐẶT', EN: 'Booked' }, { VI: 'HOÀN THÀNH', EN: 'Completed' }, { VI: 'HUỶ BỎ', EN: 'Canceled' }, { VI: 'HẾT HẠN', EN: 'Expired' }, { VI: 'CHỜ DUYỆT', EN: 'Draft' }, { VI: 'KHOÁ', EN: 'Blocked' }];
   StateOfDay = ['Chưa có Booking', 'Đã có booking', 'Đầy booking'];
   constructor(
     private alertCtrl: AlertController,
@@ -158,6 +158,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
   openAppointmentModal(Day: iDay, SLOT: iSlot, index: number) {
     console.log(Day, SLOT);
     if (this.localService.USER) {
+      if (SLOT.STATUS == 'BLOCKED') return;
       if (SLOT.STATUS == 'AVAILABLE') {
         this.modalAppointmentAdd(Day, SLOT, index);
       } else {

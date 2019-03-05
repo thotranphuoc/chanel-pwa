@@ -23,6 +23,7 @@
     <ion-label>Specicalist:</ion-label>
     <ion-select [(ngModel)]="selectedSpecialist">
       <ion-select-option [value]="NONE">Huỷ lịch</ion-select-option>
+      <ion-select-option [value]="BLOCKED">Khoá lịch</ion-select-option>
       <ion-select-option *ngFor="let Specialist of Specialists" [value]="Specialist">{{Specialist.U_NAME}}
       </ion-select-option>
     </ion-select>

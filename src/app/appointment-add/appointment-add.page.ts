@@ -200,7 +200,9 @@ export class AppointmentAddPage implements OnInit {
 
   doUpdateCalendarsForDay(newBooking: iBooking) {
     // alert booking success;
-    this.appService.toastWithOptionsShow('Thành công!');
+
+    // this.appService.toastWithOptionsShow('Thành công!');
+    this.appService.toastShow('Thành công!', 3000);
     // update CALENDARS/DATE/{}
     this.Day.Slots[this.index].BOOK_ID = newBooking.B_ID;
     this.Day.Slots[this.index].STATUS = newBooking.B_STATUS;

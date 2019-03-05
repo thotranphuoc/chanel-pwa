@@ -20,6 +20,8 @@ export interface iBooking {
     B_FHOUR: string,
     B_THOUR: string,
     B_isNewCustomer: boolean,
+    B_PERFUME: boolean,
+    B_MAKEUP: boolean,
     B_CSCU: boolean,
     B_SUBLIMAGE: boolean,
     B_SUBLIMAGES: string,

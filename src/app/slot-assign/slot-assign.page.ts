@@ -25,8 +25,12 @@ export class SlotAssignPage implements OnInit, OnDestroy {
   Specialists: iUser[] = [];
   selectedSpecialist: iUser = null;
   NONE = {
-    SPE_ID: '',
-    SPE_NAME: ''
+    U_ID: '',
+    U_NAME: ''
+  };
+  BLOCKED = {
+    U_ID: 'BLOCKED',
+    U_NAME: 'KHOÁ'
   }
   selectedDay: iDay;
   deleteUpdateSlotsMode = false;
@@ -44,6 +48,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     private papa: Papa,
   ) {
     this.COLOR_SPE[''] = 'Gray';
+    this.COLOR_SPE['BLOCKED'] = 'Black';
   }
 
   ngOnInit() {
@@ -185,14 +190,16 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     console.log(this.selectedSpecialist);
     if (this.USER.U_ROLE == 'Specialist') return;
     if (this.selectedSpecialist) {
-      SLOT.SPE_ID = this.selectedSpecialist.U_ID ? this.selectedSpecialist.U_ID : '';
-      SLOT.SPE_NAME = this.selectedSpecialist.U_NAME ? this.selectedSpecialist.U_NAME : '';
+      if (this.selectedSpecialist.U_ID !== 'BLOCKED') {
+        SLOT.SPE_ID = this.selectedSpecialist.U_ID ? this.selectedSpecialist.U_ID : '';
+        SLOT.SPE_NAME = this.selectedSpecialist.U_NAME ? this.selectedSpecialist.U_NAME : '';
+      } else {
+        SLOT.SPE_ID = this.selectedSpecialist.U_ID;
+        SLOT.SPE_NAME = this.selectedSpecialist.U_NAME;
+        SLOT.STATUS = 'BLOCKED';
+      }
       Day.Slots[i] = SLOT;
       console.log(Day, SLOT, this.selectedSpecialist);
-      // let _Day = Object.assign({},Day);
-      // if(_Day['nRows']){
-      //   delete _Day['nRows'];
-      // }
       this.crudService.dayUpdate(Day)
         .then((res) => console.log(res))
         .catch(err => console.log(err));
