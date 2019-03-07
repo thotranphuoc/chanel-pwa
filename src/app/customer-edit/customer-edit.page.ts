@@ -6,6 +6,7 @@ import { CrudService } from '../services/crud.service';
 import { SetgetService } from '../services/setget.service';
 import { AppService } from '../services/app.service';
 import { NavController } from '@ionic/angular';
+import { iUser } from '../interfaces/user.interface';
 
 @Component({
   selector: 'app-customer-edit',
@@ -15,6 +16,7 @@ import { NavController } from '@ionic/angular';
 export class CustomerEditPage implements OnInit {
   CUSTOMER: iCustomer;
   ALERTUPDATE: string = '';
+  USER:iUser;
   constructor(
     private navCtrl: NavController,
     private localService: LocalService,
@@ -27,6 +29,9 @@ export class CustomerEditPage implements OnInit {
     // this.CUSTOMER=this.localService.CUSTOMER;
     this.CUSTOMER = this.setGetService.getPar();
     console.log(this.CUSTOMER);
+    this.USER=this.localService.USER;
+    console.log(this.USER);
+    
   }
 
 
@@ -68,4 +73,8 @@ export class CustomerEditPage implements OnInit {
     this.navCtrl.goBack();
   }
 
+  doShowHistory(CUSTOMER:iCustomer){
+    this.setGetService.setPar(CUSTOMER);
+    this.navCtrl.navigateForward('/booking-history');
+  }
 }

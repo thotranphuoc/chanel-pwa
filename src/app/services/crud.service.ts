@@ -84,6 +84,11 @@ export class CrudService {
     return this.afs.collection('CUSTOMERS').get();
   }
 
+  customersBookingGet(C_ID: string)
+  {
+    return this.afs.collection('BOOKINGS', ref => ref.where('B_CUSTOMER_ID', '==', C_ID)).get();
+  }
+
   namePhoneIDUpdate() {
     this.afs.doc('NamePhoneID')
   }

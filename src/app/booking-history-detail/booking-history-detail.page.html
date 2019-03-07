@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>booking-history-detail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="DetatilLeft">Tên</ion-col>
+      <ion-col class="DetatilRight">{{BOOKING.B_CUSTOMER_NAME}}</ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="DetatilLeft">Số điện thoại</ion-col>
+        <ion-col class="DetatilRight">{{BOOKING.B_CUSTOMER_PHONE}}</ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="DetatilLeft">VIP Code</ion-col>
+        <ion-col class="DetatilRight">{{BOOKING.B_CUSTOMER_VIPCODE}}</ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="DetatilLeft">Ngày</ion-col>
+        <ion-col class="DetatilRight">{{BOOKING.B_DATE}}</ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="DetatilLeft">Giờ</ion-col>
+        <ion-col class="DetatilRight">{{BOOKING.B_SLOT}}</ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="DetatilLeft">BA</ion-col>
+        <ion-col class="DetatilRight">{{BOOKING.B_BA_BOOK_NAME}}</ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="DetatilLeft">BA bán</ion-col>
+        <ion-col class="DetatilRight">{{BOOKING.B_BA_SELL_NAME}}</ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="DetatilLeft">Trạng thái</ion-col>
+        <ion-col class="DetatilRight">{{BOOKING.B_STATUS_VI}}</ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+

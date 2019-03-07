@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>booking history</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="2">STT</ion-col>
+      <ion-col size="4">Ngày</ion-col>
+      <ion-col size="2">Giờ</ion-col>
+      <ion-col size="4">Trạng thái</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let BOOK of BOOKINGS, let i = index" (click)="doShowHistoryDetail(BOOK)">
+      <ion-col size="2">{{i + 1}}</ion-col>
+      <ion-col size="4">{{BOOK.B_DATE}}</ion-col>
+      <ion-col size="2">{{BOOK.B_SLOT}}</ion-col>
+      <ion-col size="4">{{BOOK.B_STATUS_VI}}</ion-col>
+    </ion-row>
+  </ion-grid> 
+</ion-content>

@@ -43,6 +43,8 @@ const routes: Routes = [
   { path: 'photo-take', loadChildren: './photo-take/photo-take.module#PhotoTakePageModule' },
   { path: 'user-photo-take', loadChildren: './user-photo-take/user-photo-take.module#UserPhotoTakePageModule' },
   { path: 'calendar-upload', loadChildren: './calendar-upload/calendar-upload.module#CalendarUploadPageModule' },
+  { path: 'booking-history', loadChildren: './booking-history/booking-history.module#BookingHistoryPageModule' },
+  { path: 'booking-history-detail', loadChildren: './booking-history-detail/booking-history-detail.module#BookingHistoryDetailPageModule' },
 
 ];
 
