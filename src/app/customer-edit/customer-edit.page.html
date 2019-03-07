@@ -9,10 +9,34 @@
   <div class="main">
     <div class="content">
       <div class="input_div">
-        <ion-input type="text" placeholder="Họ và tên" [(ngModel)]="CUSTOMER.C_NAME"></ion-input>
+        <!-- <ion-input type="text" placeholder="Họ và tên" [(ngModel)]="CUSTOMER.C_NAME"></ion-input>
         <ion-input type="text" placeholder="Số điện thoại" [(ngModel)]="CUSTOMER.C_PHONE"></ion-input>
         <ion-input type="email" placeholder="Email" [(ngModel)]="CUSTOMER.C_EMAIL"></ion-input>
-        <ion-input type="text" placeholder="VipCode" [(ngModel)]="CUSTOMER.C_VIPCODE"></ion-input>
+        <ion-input type="text" placeholder="VipCode" [(ngModel)]="CUSTOMER.C_VIPCODE"></ion-input> -->
+        <ion-item>
+          <ion-label color="primary" fixed>Họ và tên:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="CUSTOMER.C_NAME"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>Số điện thoại:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="CUSTOMER.C_PHONE"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>Email:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="CUSTOMER.C_EMAIL"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>VipCode:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="CUSTOMER.C_VIPCODE"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Khách Sublimage:</ion-label>
+          <ion-toggle [(ngModel)]="CUSTOMER.C_isSUBLIMAGE"></ion-toggle>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label color="primary" fixed>Ngày đặt lịch trước:</ion-label>
+          <ion-datetime disabled displayFormat="DD/MM/YYYY" [(ngModel)]="CUSTOMER.C_LAST_B_DATE"></ion-datetime>
+        </ion-item>
         <div class="button_div">
           <ion-grid>
             <ion-row>

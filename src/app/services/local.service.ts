@@ -58,7 +58,10 @@ export class LocalService {
     C_AVATAR: '',
     C_LAST_B_ID: '',
     C_LAST_B_DATE: '',
-    C_LAST_B_SLOT: ''
+    C_LAST_B_SLOT: '',
+    C_BOOKINGS: [],
+    C_isSUBLIMAGE: false,
+    C_BOOK_STATE: ''
 
   }
 
@@ -103,6 +106,8 @@ export class LocalService {
     B_FHOUR: '',
     B_THOUR: '',
     B_isNewCustomer: false,
+    B_PERFUME: false,
+    B_MAKEUP: false,
     B_CSCU: false,
     B_SUBLIMAGE: false,
     B_SUBLIMAGES: '',
