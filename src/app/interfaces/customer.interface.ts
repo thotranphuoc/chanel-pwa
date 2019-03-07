@@ -7,5 +7,8 @@ export interface iCustomer {
     C_AVATAR: string,
     C_LAST_B_ID: string,
     C_LAST_B_DATE: string,
-    C_LAST_B_SLOT: string
+    C_LAST_B_SLOT: string,
+    C_isSUBLIMAGE: boolean,
+    C_BOOKINGS: any[],
+    C_BOOK_STATE: string
 }

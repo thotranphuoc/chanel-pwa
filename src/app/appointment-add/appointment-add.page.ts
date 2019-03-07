@@ -23,6 +23,7 @@ export class AppointmentAddPage implements OnInit {
   USER: iUser;
   // ALERTADD: string = '';
   SEARCHED_CUSTOMERS = [];
+  selectedCUSTOMER: iCustomer = null;
   isSearched = false;
   data: any;
   Day: iDay;
@@ -92,11 +93,11 @@ export class AppointmentAddPage implements OnInit {
     return year + '-' + month + '-' + finalDate;
   }
 
-  async confirmBookTimesInMonth() {
-    let LAST_B_DATE = this.calendarService.convertDate(this.CUSTOMER.C_LAST_B_DATE);
-    let MSG = 'KH đã đặt lịch hẹn ngày ' + LAST_B_DATE + '. Bạn có chắc tiếp tục không?'
+  async confirmBookTimesInMonth(MSG) {
+    // let LAST_B_DATE = this.calendarService.convertDate(this.CUSTOMER.C_LAST_B_DATE);
+    // let MSG = 'KH đã đặt lịch hẹn ngày ' + LAST_B_DATE + '. Bạn có chắc tiếp tục không?'
     const alert = await this.alertCtrl.create({
-      header: 'Confirm!',
+      header: 'Xác nhận!',
       message: MSG,
       buttons: [
         {
@@ -105,7 +106,7 @@ export class AppointmentAddPage implements OnInit {
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
-            this.doCancel();
+            // this.doCancel();
           }
         }, {
           text: 'Chấp nhận',
@@ -121,15 +122,42 @@ export class AppointmentAddPage implements OnInit {
   }
 
   preCheckAddNewAppointment() {
-    if (this.isAllowed2BookTimesInMonth()) {
+    let MSG = ''
+    if (this.isNotBooking2TimesInMonth() && this.CUSTOMER.C_isSUBLIMAGE && this.BOOKING.B_SUBLIMAGE) {
       this.doAddAppointment();
       this.BOOKING.B_STATUS = 'BOOKED';
       this.BOOKING.B_STATUS_VI = 'ĐÃ ĐẶT';
     } else {
       this.BOOKING.B_STATUS = 'DRAFT';
       this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
-      this.confirmBookTimesInMonth();
+      this.CUSTOMER.C_BOOK_STATE = 'DRAFT';
+      if (!this.isNotBooking2TimesInMonth())
+        MSG += '- Khách đã book trong tháng. <br/>'
+      if (!this.CUSTOMER.C_isSUBLIMAGE)
+        MSG += '- Khách chưa là KH Sublimage. <br/>';
+      if (!this.BOOKING.B_SUBLIMAGE)
+        MSG += '- Bạn chưa chọn dịch vụ Sublimage. <br/>'
+
+      MSG += '<br/>Bạn có chắc tiếp tục không?'
+      console.log(MSG);
+      console.log(this.isNotBooking2TimesInMonth(), this.CUSTOMER.C_isSUBLIMAGE, this.BOOKING.B_SUBLIMAGE)
+      this.confirmBookTimesInMonth(MSG);
     }
+    // if (!this.isNotBooking2TimesInMonth() && !this.BOOKING.B_SUBLIMAGE) {
+    //   this.BOOKING.B_STATUS = 'DRAFT';
+    //   this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
+    //   this.CUSTOMER.C_BOOK_STATE = 'DRAFT';
+    //   this.confirmBookTimesInMonth();
+    // }
+
+    // if (!this.isNotBooking2TimesInMonth() && !this.BOOKING.B_SUBLIMAGE) {
+    //   this.BOOKING.B_STATUS = 'DRAFT';
+    //   this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
+    //   this.CUSTOMER.C_BOOK_STATE = 'DRAFT';
+    //   this.confirmBookTimesInMonth();
+    // }
+
+    // // khách Sun
 
   }
 
@@ -198,6 +226,18 @@ export class AppointmentAddPage implements OnInit {
       })
   }
 
+  // doUpdateCustomer(CUSTOMER: iCustomer, BOOKING: iBooking) {
+  //   if (BOOKING.B_SUBLIMAGE) {
+  //     CUSTOMER.C_isSUBLIMAGE = true;
+  //     CUSTOMER.C_LAST_B_ID = BOOKING.B_ID;
+  //     CUSTOMER.C_LAST_B_DATE = BOOKING.B_DATE;
+  //     CUSTOMER.C_LAST_B_SLOT = BOOKING.B_SLOT;
+  //     CUSTOMER.C_BOOKINGS.push({ ID: BOOKING.B_ID, DATE: BOOKING.B_DATE, SLOT: BOOKING.B_SLOT });
+  //   }
+  // }
+
+
+
   doUpdateCalendarsForDay(newBooking: iBooking) {
     // alert booking success;
 
@@ -247,6 +287,7 @@ export class AppointmentAddPage implements OnInit {
   }
 
   selectCustomer(CUSTOMER: iCustomer) {
+    this.selectedCUSTOMER = CUSTOMER;
     this.CUSTOMER = CUSTOMER;
     this.isSearched = false;
     this.searchPhoneStr = '';
@@ -255,13 +296,13 @@ export class AppointmentAddPage implements OnInit {
     this.BOOKING.B_CUSTOMER_NAME = CUSTOMER.C_NAME;
     this.BOOKING.B_CUSTOMER_PHONE = CUSTOMER.C_PHONE;
     this.BOOKING.B_CUSTOMER_VIPCODE = CUSTOMER.C_VIPCODE;
-    if (!this.isAllowed2BookTimesInMonth()) {
+    if (!this.isNotBooking2TimesInMonth()) {
       let dateStr = this.calendarService.convertDate(this.CUSTOMER.C_LAST_B_DATE)
       this.appService.alertConfirmationShow('Oops', 'KH đã đặt lịch hẹn ngày ' + dateStr);
     }
   }
 
-  isAllowed2BookTimesInMonth() {
+  isNotBooking2TimesInMonth() {
     let lastBookYYYYMM = this.CUSTOMER.C_LAST_B_DATE.substr(0, 7)
     let bookingYYYYMM = this.BOOKING.B_DATE.substr(0, 7)
     return lastBookYYYYMM !== bookingYYYYMM

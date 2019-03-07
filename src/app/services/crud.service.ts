@@ -71,13 +71,26 @@ export class CrudService {
     return this.afs.doc('CUSTOMERS/' + customer.C_ID).update(customer);
   }
 
-  customerUpdateLastBooking(BOOKING: iBooking) {
+  customerUpdateLastBookingAndSublimage(BOOKING: iBooking) {
     let CID = BOOKING.B_CUSTOMER_ID;
-    return this.afs.doc('CUSTOMERS/' + CID).update({
-      C_LAST_B_ID: BOOKING.B_ID,
-      C_LAST_B_DATE: BOOKING.B_DATE,
-      C_LAST_B_SLOT: BOOKING.B_SLOT
-    })
+    let DATA = {};
+    if (BOOKING.B_SUBLIMAGE) {
+      DATA = {
+        C_isSUBLIMAGE: true,
+        C_LAST_B_ID: BOOKING.B_ID,
+        C_LAST_B_DATE: BOOKING.B_DATE,
+        C_LAST_B_SLOT: BOOKING.B_SLOT,
+        C_BOOK_STATE: BOOKING.B_STATUS
+      }
+    }else{
+      DATA = {
+        C_LAST_B_ID: BOOKING.B_ID,
+        C_LAST_B_DATE: BOOKING.B_DATE,
+        C_LAST_B_SLOT: BOOKING.B_SLOT,
+        C_BOOK_STATE: BOOKING.B_STATUS
+      }
+    }
+    return this.afs.doc('CUSTOMERS/' + CID).update(DATA)
   }
 
   customersGet() {
@@ -170,8 +183,8 @@ export class CrudService {
           return res.update({ B_ID: res.id })
         })
         .then(() => {
-          // update last booking for customer
-          return this.customerUpdateLastBooking(BOOKING);
+          // update last booking and isSublimage for customer
+          return this.customerUpdateLastBookingAndSublimage(BOOKING);
         })
         .then(() => {
           resolve({ MSG: 'Đặt hẹn thành công', BOOKING: BOOKING });
