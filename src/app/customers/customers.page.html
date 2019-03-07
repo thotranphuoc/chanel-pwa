@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-searchbar type="tel" #search_phone (ionChange)="search(search_phone.value)"></ion-searchbar>
   <ion-item *ngFor="let CUSTOMER of CUSTOMERS" (click)="go2CustomerEdit(CUSTOMER)">
     <ion-avatar slot="start">
       <img [src]="CUSTOMER.C_AVATAR" onError="this.src='../../assets/imgs/user.jpg';">

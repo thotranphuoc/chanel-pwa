@@ -9,6 +9,7 @@ import { iUser } from '../interfaces/user.interface';
 import { LocalService } from '../services/local.service';
 import { AppointmentCalendarEditPage } from '../appointment-calendar-edit/appointment-calendar-edit.page';
 import { Subscription } from 'rxjs';
+import { SetgetService } from '../services/setget.service';
 @Component({
   selector: 'app-appointment-edit',
   templateUrl: './appointment-edit.page.html',
@@ -49,7 +50,7 @@ export class AppointmentEditPage implements OnInit {
     private appService: AppService,
     private localService: LocalService,
     public modalController: ModalController,
-
+    private setGetService: SetgetService
   ) {
     this.data = this.navPar.data;
     console.log(this.data);
@@ -65,7 +66,7 @@ export class AppointmentEditPage implements OnInit {
 
   ngOnInit() {
     console.log('ngOnInit');
-    this.sub1 = this.crudService.bookingGet(this.Slot.BOOK_ID)
+      this.sub1 = this.crudService.bookingGet(this.Slot.BOOK_ID)
       .subscribe(docSnap => {
         console.log(docSnap);
         let BOOKING = <iBooking>docSnap.data();

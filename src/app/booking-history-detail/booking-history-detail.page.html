@@ -41,6 +41,12 @@
         <ion-col class="DetatilLeft">Trạng thái</ion-col>
         <ion-col class="DetatilRight">{{BOOKING.B_STATUS_VI}}</ion-col>
     </ion-row>
+
+    <ion-row> 
+        <ion-col>
+          <ion-button expand="block" color="danger" (click)="doEditBooking(BOOKING)">Cập nhật</ion-button>
+        </ion-col>
+      </ion-row>
   </ion-grid>
 </ion-content>
 

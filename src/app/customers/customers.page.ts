@@ -11,6 +11,7 @@ import { SetgetService } from '../services/setget.service';
 })
 export class CustomersPage implements OnInit {
   CUSTOMERS: iCustomer[] =[];
+  CUSTOMERS_: iCustomer[] =[];
   constructor(  
     private navCtrl: NavController,
     private crudService: CrudService,
@@ -30,12 +31,25 @@ export class CustomersPage implements OnInit {
         this.CUSTOMERS.push(CUS);
       })
       console.log(this.CUSTOMERS);
+      this.CUSTOMERS_=this.CUSTOMERS;
     })
   }
 
   go2CustomerEdit(CUSTOMER: iCustomer){
     this.setGetService.setPar(CUSTOMER);
     this.navCtrl.navigateForward('/customer-edit');
+  }
+
+  search(e){
+    console.log(e);
+    let str = e.toLowerCase();
+    console.log(str);
+    if(str.length>0){
+      this.CUSTOMERS = this.CUSTOMERS.filter(CUS => CUS.C_PHONE.toLowerCase().indexOf(str)>-1 || CUS.C_NAME.toLowerCase().indexOf(str)>-1)
+    }else{
+      console.log('str = 0');
+      this.CUSTOMERS = this.CUSTOMERS_; 
+    }
   }
 
 }
