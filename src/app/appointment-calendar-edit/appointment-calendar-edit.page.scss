@@ -1,38 +1,54 @@
+ion-col{
+    width: 20%;
+}
 .DATE {
     font-weight: 700;
 }
 
+.DATE1 {
+    font-weight: 700;
+    // font-size: 12px;
+    padding-top: 25px;
+}
+
 
 .CANCELED{
-    background: orange;
+    background: #A37FF6;
     padding: 3px;
     border-radius: 10px;
     font-size: 12px;
     color: white;
 }
 .BOOKED{
-    background: lightgrey;
+    background: #FF0050;
     padding: 3px;
     border-radius: 10px;
     font-size: 12px;
     color: white;
 }
 .COMPLETED{
-    background: #71BF45;
+    background: #4198FD;
+    padding: 3px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: white;
+}
+
+.DRAFT{
+    background: #EFDE0A;
     padding: 3px;
     border-radius: 10px;
     font-size: 12px;
     color: white;
 }
 .EXPIRED{
-    background: gray;
+    background: #9B9B9B;
     border-radius: 10px;
     font-size: 12px;
     color: white;
 }
-
 .AVAILABLE{
-    background: red;
+    background: #7ED321;
     padding: 3px;
     // border: 1px solid red;
     border-radius: 10px;
@@ -42,23 +58,37 @@
 }
 
 .Available{
-    border-radius: 50%; width: 9px;height: 9px; border-radius: 50%;background: red;margin-right: 2px;
+    border-radius: 50%; width: 9px;height: 9px; border-radius: 50%;background: #7ED321;margin-right: 2px;
 }
 .Canceled{
-    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: orange;margin-right: 2px;
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #A37FF6;margin-right: 2px;
 }
 .Booked{
-    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: lightgrey;margin-right: 2px;
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #FF0050;margin-right: 2px;
 }
 .Completed{
-    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #71BF45;margin-right: 2px;
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #4198FD;margin-right: 2px;
 }
 .Expired{
-    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: gray;margin-right: 2px;
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #9B9B9B;margin-right: 2px;
+}
+.Draft{
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #EFDE0A;margin-right: 2px;
+}
+
+
+.FULL_{
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #FF0050;margin-right: 2px;
+}
+.BOOKING_{
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: #7ED321;margin-right: 2px;
+}
+.AVAILABLE_{
+    border-radius: 50%; width: 9px; height: 9px; border-radius: 50%;background: white;margin-right: 2px; border: 0.5px solid black;
 }
 
 ion-row{
-    margin: 5px 0;
+    // margin: 5px 0;
     
 }
 
@@ -69,6 +99,10 @@ ion-header{
 ion-col span{
     border-radius: 10px;
     padding: 5px 15px;
+}
+ion-col span .DATE1{
+    border-radius: 10px;
+    padding: 15px 15px;
 }
 
 .active-date{
@@ -134,6 +168,20 @@ ion-col h4{
 }
 .badge-red{
     background: red;
+    width: 0px;
+    height: 0px;
+    color: white;
+    font-size: 10px;
+    padding: 0px 0px;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    text-align: center;
+    display: inline-block;
+
+}
+.badge-transperant{
+    background: white;
     width: 0px;
     height: 0px;
     color: white;
