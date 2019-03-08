@@ -68,6 +68,7 @@ export class AppComponent implements OnInit {
         { title: 'Báo cáo', url: '/reports', icon: 'stats' },
         { title: 'Nhân viên', url: '/users', icon: 'contacts' },
         { title: 'Lịch làm việc', url: '/slot-assign', icon: 'calendar' },
+        { title: 'Quản ly booking', url: '/appointments-manage', icon: 'md-briefcase'},
         { title: 'Đăng xuất', url: '/account', icon: 'unlock' }
       ];
       return;

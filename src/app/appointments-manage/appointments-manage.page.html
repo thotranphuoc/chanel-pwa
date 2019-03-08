@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Quản lý trạng thái</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item (click)="go2BookingsView(['DRAFT'])">
+      <ion-label>Chờ duyệt</ion-label>
+    </ion-item>
+    <ion-item (click)="go2BookingsView(['COMPLETED'])">
+      <ion-label>Hoàn thành</ion-label>
+    </ion-item>
+    <ion-item (click)="go2BookingsView(['CANCELED'])">
+      <ion-label>Huỷ bỏ</ion-label>
+    </ion-item>
+    <ion-item (click)="go2BookingsView(['BOOKED'])">
+      <ion-label>Đặt lịch</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

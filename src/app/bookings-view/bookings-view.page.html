@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Danh sánh</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item *ngFor="let BOOKING of BOOKINGS" (click)="viewEditBooking(BOOKING)">
+    <ion-avatar slot="start">
+      <img [src]="BOOKING.B_CUSTOMER.C_AVATAR" onError="this.src='../../assets/imgs/user.jpg';">
+    </ion-avatar>
+    <ion-label>
+      <h4>{{BOOKING.B_CUSTOMER_NAME}} </h4>
+      <p>{{BOOKING.B_DATE}} - {{BOOKING.B_SLOT}}</p>
+    </ion-label>
+    <ion-note slot="end">
+      {{BOOKING.B_STATUS}}
+    </ion-note>
+  </ion-item>
+</ion-content>

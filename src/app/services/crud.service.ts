@@ -9,6 +9,8 @@ import { pipe } from '@angular/core/src/render3';
 import { iSlot } from '../interfaces/slot.interface';
 import { iDay } from '../interfaces/day.interface';
 import { AlertController } from '@ionic/angular';
+import * as firebase from 'firebase';
+import 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +84,7 @@ export class CrudService {
         C_LAST_B_SLOT: BOOKING.B_SLOT,
         C_BOOK_STATE: BOOKING.B_STATUS
       }
-    }else{
+    } else {
       DATA = {
         C_LAST_B_ID: BOOKING.B_ID,
         C_LAST_B_DATE: BOOKING.B_DATE,
@@ -97,8 +99,7 @@ export class CrudService {
     return this.afs.collection('CUSTOMERS').get();
   }
 
-  customersBookingGet(C_ID: string)
-  {
+  customersBookingGet(C_ID: string) {
     return this.afs.collection('BOOKINGS', ref => ref.where('B_CUSTOMER_ID', '==', C_ID)).get();
   }
 
@@ -223,6 +224,10 @@ export class CrudService {
     return this.afs.doc('CALENDARS/' + YYYYMM).valueChanges()
   }
 
+  calendarMonthGetPromise(YYYYMM: string){
+    return firebase.firestore().doc('CALENDARS/'+ YYYYMM).get();
+  }
+
   calendarMonthUpdate(YYYYMM: string, data: any) {
     return this.afs.doc('CALENDARS/' + YYYYMM).update(data)
   }
@@ -234,6 +239,71 @@ export class CrudService {
     day2Update[DateId] = Day;
     console.log(day2Update);
     return this.afs.collection('CALENDARS').doc(monthstr).update(day2Update);
+  }
+
+  bookingsGetWithState(STATE: string, USER: iUser) {
+
+    switch (USER.U_ROLE) {
+      case 'Admin':
+        return firebase.firestore().collection('BOOKINGS')
+          .where('B_STATUS', '==', STATE)
+          .get();
+      case 'Manager':
+        return firebase.firestore().collection('BOOKINGS')
+          .where('B_STATUS', '==', STATE)
+          .get();
+      case 'Specialist':
+        return firebase.firestore().collection('BOOKINGS')
+          .where('B_STATUS', '==', STATE)
+          .where('B_SPECIALIST_ID', '==', USER.U_ID)
+          .get();
+      case 'BA':
+        return firebase.firestore().collection('BOOKINGS')
+          .where('B_STATUS', '==', STATE)
+          .where('B_BA_BOOK_ID', '==', USER.U_ID)
+          .get();
+      case 'BAS':
+        return firebase.firestore().collection('BOOKINGS')
+          .where('B_STATUS', '==', STATE)
+          .where('B_BA_SELL_ID', '==', USER.U_ID)
+          .get();
+      case 'BA':
+        return firebase.firestore().collection('BOOKINGS')
+          .where('B_STATUS', '==', STATE)
+          .where('B_BA_BOOK_ID', '==', USER.U_ID)
+          .get();
+      default:
+        break;
+    }
+  }
+
+  bookingsOfUserWithStatesGet(USER: iUser, STATES: string[]) {
+    // console.log(USER, STATES);
+    return new Promise((resolve, reject) => {
+      let BOOKINGS = [];
+      let Pros = Array(STATES.length);
+      STATES.forEach((STATE, i) => {
+        Pros[i] = this.bookingsGetWithState(STATE, USER)
+          .then(qSnap => {
+            let _BOOKINGS = [];
+            qSnap.forEach(doc => {
+              let _Booking = <iBooking>doc.data();
+              // console.log(pat);
+              _BOOKINGS.push(_Booking);
+            })
+            BOOKINGS = BOOKINGS.concat(_BOOKINGS);
+          })
+      })
+      Promise.all(Pros)
+        .then(res => {
+          console.log(res);
+          resolve({ BOOKINGS: BOOKINGS });
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+
   }
 }
 

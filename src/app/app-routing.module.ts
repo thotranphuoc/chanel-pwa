@@ -45,6 +45,8 @@ const routes: Routes = [
   { path: 'calendar-upload', loadChildren: './calendar-upload/calendar-upload.module#CalendarUploadPageModule' },
   { path: 'booking-history', loadChildren: './booking-history/booking-history.module#BookingHistoryPageModule' },
   { path: 'booking-history-detail', loadChildren: './booking-history-detail/booking-history-detail.module#BookingHistoryDetailPageModule' },
+  { path: 'appointments-manage', loadChildren: './appointments-manage/appointments-manage.module#AppointmentsManagePageModule' },
+  { path: 'bookings-view', loadChildren: './bookings-view/bookings-view.module#BookingsViewPageModule' },
 
 ];
 
