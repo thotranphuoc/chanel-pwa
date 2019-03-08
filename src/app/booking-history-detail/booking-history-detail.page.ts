@@ -16,6 +16,7 @@ import { CrudService } from '../services/crud.service';
 export class BookingHistoryDetailPage implements OnInit {
   BOOKING: iBooking;
   selectedDay: iDay;
+  selectedMonthDay: iDay[];
   slot: iSlot = {
     BOOK_ID: '',
     SLOT: '',
@@ -29,6 +30,7 @@ export class BookingHistoryDetailPage implements OnInit {
     SPE_ID: '',
     SPE_NAME: '',
 }
+  index:any;
   constructor(
     private setGetService: SetgetService,
     private navCtrl: NavController,
@@ -47,7 +49,7 @@ export class BookingHistoryDetailPage implements OnInit {
     console.log(this.BOOKING);
     
     this.slot.BOOK_ID=this.BOOKING.B_ID;
-    this.modalAppointmentEdit(this.selectedDay, this.slot, 1);
+    this.modalAppointmentEdit(this.selectedDay, this.slot, this.index);
     //this.navCtrl.navigateForward('/appointment-edit');
   }
 
@@ -62,11 +64,23 @@ export class BookingHistoryDetailPage implements OnInit {
   }
 
   getCalendarBooking(){
-    this.crudService.calendarDayGet('2019-03-18').subscribe(qSnap=>{
+    let fullday=this.BOOKING.B_DATE.split("-")
+    console.log(fullday);
+    let yearmonthtime = fullday[0]+fullday[1];
+    let YYYYMMDD_=fullday[0]+fullday[1]+fullday[2]+'';
+    this.crudService.calendarDayGet(this.BOOKING.B_DATE).subscribe(qSnap=>{
       console.log(qSnap);
-      //this.selectedDay = null;
-       this.selectedDay = <iDay>qSnap.data();
-      console.log(this.selectedDay);
+      this.selectedDay = qSnap[YYYYMMDD_];
+      for(let i=0; i< this.selectedDay.Slots.length;i++)
+      {
+        if(this.selectedDay.Slots[i].SLOT==this.BOOKING.B_SLOT)
+        {
+          this.slot=this.selectedDay.Slots[i];
+          this.index=i;
+        }
+      }
+      
+      console.log(this.selectedDay,this.slot, this.index);
     })
   }
 

@@ -224,6 +224,15 @@ export class CrudService {
     return this.afs.doc('CALENDARS/' + YYYYMM).valueChanges()
   }
 
+  calendarDayGet(YYYYMMDD: string) {
+    let fullday=YYYYMMDD.split("-")
+    console.log(fullday);
+    let yearmonthtime = fullday[0]+fullday[1];
+    let YYYYMMDD_=fullday[0]+fullday[1]+fullday[2];
+    return this.afs.doc('CALENDARS/' + yearmonthtime).valueChanges()
+    //return this.afs.collection('CALENDARS', ref => ref.where(YYYYMMDD_ + '', '==', YYYYMMDD_ + '')).get();
+  }
+
   calendarMonthGetPromise(YYYYMM: string){
     return firebase.firestore().doc('CALENDARS/'+ YYYYMM).get();
   }
