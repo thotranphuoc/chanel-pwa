@@ -47,14 +47,14 @@
                 <ion-button expand="block" (click)="updateCustomer()">Cập nhật</ion-button>
               </ion-col>
             </ion-row>
-            <ion-row *ngIf="USER.U_ROLE=='Manager'"> 
+            <ion-row>
               <ion-col>
-                <ion-button expand="block" color="danger" (click)="doShowHistory(CUSTOMER)">Lịch sử slot</ion-button>
+                <ion-button expand="block" color="secondary" (click)="doShowHistory(CUSTOMER)">Lịch sử đặt hẹn
+                </ion-button>
               </ion-col>
             </ion-row>
           </ion-grid>
         </div>
-        <p class="alertUpdate">{{ALERTUPDATE}}</p>
       </div>
     </div>
   </div>

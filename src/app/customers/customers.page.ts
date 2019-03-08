@@ -31,7 +31,7 @@ export class CustomersPage implements OnInit {
         this.CUSTOMERS.push(CUS);
       })
       console.log(this.CUSTOMERS);
-      this.CUSTOMERS_=this.CUSTOMERS;
+      this.CUSTOMERS_=this.CUSTOMERS.slice(0);
     })
   }
 
@@ -40,12 +40,12 @@ export class CustomersPage implements OnInit {
     this.navCtrl.navigateForward('/customer-edit');
   }
 
-  search(e){
+  search(e: string){
     console.log(e);
     let str = e.toLowerCase();
     console.log(str);
     if(str.length>0){
-      this.CUSTOMERS = this.CUSTOMERS.filter(CUS => CUS.C_PHONE.toLowerCase().indexOf(str)>-1 || CUS.C_NAME.toLowerCase().indexOf(str)>-1)
+      this.CUSTOMERS = this.CUSTOMERS_.filter(CUS => CUS.C_PHONE.toLowerCase().indexOf(str)>-1 || CUS.C_NAME.toLowerCase().indexOf(str)>-1)
     }else{
       console.log('str = 0');
       this.CUSTOMERS = this.CUSTOMERS_; 

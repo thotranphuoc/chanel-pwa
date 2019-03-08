@@ -13,12 +13,12 @@ import { NavController } from '@ionic/angular';
 })
 export class BookingHistoryPage implements OnInit {
   CUSTOMER: iCustomer;
-  BOOKINGS: iBooking[] =[];
+  BOOKINGS: iBooking[] = [];
   constructor(
     private crudService: CrudService,
     private setGetService: SetgetService,
     private navCtrl: NavController
-  ) { 
+  ) {
     this.CUSTOMER = this.setGetService.getPar();
   }
 
@@ -26,11 +26,11 @@ export class BookingHistoryPage implements OnInit {
     this.getBookingCustomers();
   }
 
-  getBookingCustomers(){
-    this.crudService.customersBookingGet(this.CUSTOMER.C_ID).subscribe(qSnap=>{
+  getBookingCustomers() {
+    this.crudService.customersBookingGet(this.CUSTOMER.C_ID).subscribe(qSnap => {
       console.log(qSnap);
       this.BOOKINGS = [];
-      qSnap.forEach(doc=>{
+      qSnap.forEach(doc => {
         let CUS = <iBooking>doc.data();
         this.BOOKINGS.push(CUS);
       })
@@ -38,7 +38,7 @@ export class BookingHistoryPage implements OnInit {
     })
   }
 
-  doShowHistoryDetail(BOOKING:iBooking){
+  doShowHistoryDetail(BOOKING: iBooking) {
     this.setGetService.setPar(BOOKING);
     this.navCtrl.navigateForward('/booking-history-detail');
   }
