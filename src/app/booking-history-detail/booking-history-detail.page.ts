@@ -6,6 +6,7 @@ import { iDay } from '../interfaces/day.interface';
 import { iSlot } from '../interfaces/slot.interface';
 import { AppointmentEditPage } from '../appointment-edit/appointment-edit.page';
 import { isLastDayOfMonth } from 'date-fns';
+import { CrudService } from '../services/crud.service';
 
 @Component({
   selector: 'app-booking-history-detail',
@@ -31,9 +32,11 @@ export class BookingHistoryDetailPage implements OnInit {
   constructor(
     private setGetService: SetgetService,
     private navCtrl: NavController,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private crudService: CrudService
   ) { 
     this.BOOKING = this.setGetService.getPar();
+    this.getCalendarBooking();
   }
 
   ngOnInit() {
@@ -57,4 +60,14 @@ export class BookingHistoryDetailPage implements OnInit {
     const data = await modal.onDidDismiss();
     console.log(data);
   }
+
+  getCalendarBooking(){
+    this.crudService.calendarDayGet('2019-03-18').subscribe(qSnap=>{
+      console.log(qSnap);
+      //this.selectedDay = null;
+       this.selectedDay = <iDay>qSnap.data();
+      console.log(this.selectedDay);
+    })
+  }
+
 }
