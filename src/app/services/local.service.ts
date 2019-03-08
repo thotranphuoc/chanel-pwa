@@ -141,5 +141,19 @@ export class LocalService {
   // }
 
 
-
+///////////////SLOT/////////////////
+SLOT: iSlot = null;
+SLOT_DEFAULT: iSlot = {
+    BOOK_ID: '',
+    SLOT: '',
+    STATUS: '',
+    BAB_ID: '',
+    BAB_NAME: '',
+    BAS_ID: '',
+    BAS_NAME: '',
+    MAN_ID: '',
+    MAN_NAME: '',
+    SPE_ID: '',
+    SPE_NAME: '',
+}
 }
