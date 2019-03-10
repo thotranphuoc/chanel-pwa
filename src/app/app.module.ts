@@ -38,6 +38,7 @@ import { UserPhotoTakePageModule } from './user-photo-take/user-photo-take.modul
 import { ImageService } from './services/image.service';
 import { PapaParseModule } from 'ngx-papaparse';
 import { AppointmentCalendarEditNewPageModule } from './appointment-calendar-edit-new/appointment-calendar-edit-new.module';
+import { SearchPageModule } from './search/search.module';
 firebase.initializeApp(environment.firebase);
 
 @NgModule({
@@ -69,7 +70,8 @@ firebase.initializeApp(environment.firebase);
     AppointmentCalendarEditPageModule,
     AppointmentCalendarEditNewPageModule,
     SlotsInDayPageModule,
-    UserPhotoTakePageModule
+    UserPhotoTakePageModule,
+    SearchPageModule
   ],
   providers: [
     StatusBar,

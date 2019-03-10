@@ -11,6 +11,8 @@ import { AppointmentCalendarEditPage } from '../appointment-calendar-edit/appoin
 import { Subscription } from 'rxjs';
 import { SetgetService } from '../services/setget.service';
 import { AppointmentCalendarEditNewPage } from '../appointment-calendar-edit-new/appointment-calendar-edit-new.page';
+import { LoadingService } from '../loading.service';
+import { SearchPage } from '../search/search.page';
 @Component({
   selector: 'app-appointment-edit',
   templateUrl: './appointment-edit.page.html',
@@ -51,7 +53,8 @@ export class AppointmentEditPage implements OnInit {
     private appService: AppService,
     private localService: LocalService,
     public modalController: ModalController,
-    private setGetService: SetgetService
+    private setGetService: SetgetService,
+    private loadingService: LoadingService
   ) {
     this.data = this.navPar.data;
     console.log(this.data);
@@ -87,25 +90,32 @@ export class AppointmentEditPage implements OnInit {
   }
 
   doUpdateBooking() {
+    this.loadingService.presentLoading();
+    // update Specialist
+    if (this.BOOKING.B_STATUS == 'COMPLETED') {
+      this.BOOKING.B_SPECIALIST = this.USER;
+      this.BOOKING.B_SPECIALIST_ID = this.USER.U_ID;
+      this.BOOKING.B_SPECIALIST_NAME = this.USER.U_FULLNAME;
+    }
     this.crudService.bookingUpdate(this.BOOKING)
       .then(res => {
         console.log(res);
-        // update CALENDARS/DATE/{}
-        return this.doUpdateCalendarsForDay(this.BOOKING);
-      })
-      .then(() => {
         this.doDismiss(null);
+        this.loadingService.loadingDissmiss();
+        // // update CALENDARS/DATE/{}
+        // return this.doUpdateCalendarsForDay(this.BOOKING);
       })
       .catch(err => {
         console.log(err);
+        this.loadingService.loadingDissmiss();
       })
   }
 
-  doUpdateCalendarsForDay(Booking: iBooking) {
-    // update CALENDARS/DATE/{}
-    this.Day.Slots[this.index].STATUS = Booking.B_STATUS;
-    return this.crudService.dayUpdate(this.Day)
-  }
+  // doUpdateCalendarsForDay(Booking: iBooking) {
+  //   // update CALENDARS/DATE/{}
+  //   this.Day.Slots[this.index].STATUS = Booking.B_STATUS;
+  //   return this.crudService.dayUpdate(this.Day)
+  // }
 
   doDismiss(data: any) {
     this.modalCtrl.getTop().then(res => {
@@ -189,41 +199,57 @@ export class AppointmentEditPage implements OnInit {
     await alert.present();
   }
 
-  async setBASelling() {
-    let INPUTS = [];
-    this.BAs.forEach(BA => {
-      let INP = {
-        name: 'radio1',
-        type: 'radio',
-        label: BA.U_NAME,
-        value: BA,
-      }
-      INPUTS.push(INP);
-    })
-    const alert = await this.alertCtrl.create({
-      header: 'BA bán hàng',
-      inputs: INPUTS,
-      buttons: [
-        {
-          text: 'Huỷ bỏ',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Chấp nhận',
-          handler: (data: iUser) => {
-            console.log(data);
-            this.BOOKING.B_BA_SELL = data;
-            this.BOOKING.B_BA_SELL_ID = data.U_ID;
-            this.BOOKING.B_BA_SELL_NAME = data.U_NAME;
-          }
-        }
-      ]
-    });
+  // async setBASelling() {
+  //   let INPUTS = [];
+  //   this.BAs.forEach(BA => {
+  //     let INP = {
+  //       name: 'radio1',
+  //       type: 'radio',
+  //       label: BA.U_FULLNAME,
+  //       value: BA,
+  //     }
+  //     INPUTS.push(INP);
+  //   })
+  //   const alert = await this.alertCtrl.create({
+  //     header: 'BA bán hàng',
+  //     inputs: INPUTS,
+  //     buttons: [
+  //       {
+  //         text: 'Huỷ bỏ',
+  //         role: 'cancel',
+  //         cssClass: 'secondary',
+  //         handler: () => {
+  //           console.log('Confirm Cancel');
+  //         }
+  //       }, {
+  //         text: 'Chấp nhận',
+  //         handler: (data: iUser) => {
+  //           console.log(data);
+  //           this.BOOKING.B_BA_SELL = data;
+  //           this.BOOKING.B_BA_SELL_ID = data.U_ID;
+  //           this.BOOKING.B_BA_SELL_NAME = data.U_FULLNAME;
+  //         }
+  //       }
+  //     ]
+  //   });
 
-    await alert.present();
+  //   await alert.present();
+  // }
+
+  async setBASelling() {
+    const modal = await this.modalController.create({
+      component: SearchPage,
+      componentProps: { BAs: this.BAs }
+    });
+    await modal.present();
+    const res: any = await modal.onDidDismiss();
+    console.log(res);
+    if (res && typeof(res) !=='undefined') {
+      let BA_SALE = res.data.selectedBA;
+      this.BOOKING.B_BA_SELL = BA_SALE;
+      this.BOOKING.B_BA_SELL_ID = BA_SALE.U_ID;
+      this.BOOKING.B_BA_SELL_NAME = BA_SALE.U_FULLNAME;
+    }
   }
 
   async setBookingStatus() {
@@ -266,16 +292,16 @@ export class AppointmentEditPage implements OnInit {
   }
 
   isDisabled() {
-    let isDisabled = false;
-    if (this.USER.U_ROLE !== 'Manager' && this.BOOKING.B_STATUS == 'DRAFT') isDisabled = true;
-    if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Specialist' && this.BOOKING.B_STATUS == 'COMPLETED') isDisabled = true;
-    return isDisabled;
+    if (!this.BOOKING) return false;
+    if (this.USER.U_ROLE !== 'Manager' && this.BOOKING.B_STATUS == 'DRAFT') return true;
+    if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Specialist' && this.BOOKING.B_STATUS == 'COMPLETED') return true;
+    return false;
   }
 
   isChangeSlotDisabled() {
-    let isDisabled = false;
-    if (this.BOOKING.B_STATUS == 'COMPLETED' || this.BOOKING.B_STATUS == 'EXPIRED') isDisabled = true;
-    return isDisabled;
+    if (!this.BOOKING) return false;
+    if (this.BOOKING.B_STATUS == 'COMPLETED' || this.BOOKING.B_STATUS == 'EXPIRED') return true;
+    return false;
   }
 
 

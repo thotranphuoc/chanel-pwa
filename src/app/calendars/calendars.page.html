@@ -112,6 +112,9 @@
             </ion-row>
           </ion-col>
         </ion-row>
+        <ion-row *ngIf="DaysInM1.length<1">
+          <p text-center>Chưa có thông tin lịch hẹn. Vui lòng liên hệ Quản lý</p>
+        </ion-row>
       </ion-grid>
       <hr style="border-top: 2px solid lightgray; width: 70%">
 
@@ -151,6 +154,9 @@
             </ion-row>
           </ion-col>
         </ion-row>
+        <ion-row *ngIf="DaysInM1.length<1">
+          <p text-center>Chưa có thông tin lịch hẹn. Vui lòng liên hệ Quản lý</p>
+        </ion-row>
       </ion-grid>
     </div>
     <div *ngSwitchCase="'overall'">
@@ -170,7 +176,7 @@
           </ion-button>
         </ion-row>
       </ion-grid>
-      
+
       <ion-grid *ngIf="WEEKSinMONTH1">
         <h1>{{currentYYYYMM.substr(4,2)}}/{{currentYYYYMM.substr(0,4)}}</h1>
         <ion-row class="row-bottom-line">
@@ -198,6 +204,9 @@
             <div *ngIf="Day?.n<1 && Day?.Date" class="badge-transperant">{{Day?.n}}</div>
           </ion-col>
         </ion-row>
+        <ion-row *ngIf="WEEKSinMONTH1.length<1">
+          <p text-center>Chưa có thông tin lịch hẹn. Vui lòng liên hệ Quản lý</p>
+        </ion-row>
       </ion-grid>
       <ion-grid *ngIf="WEEKSinMONTH2">
         <h1>{{nextYYYYMM.substr(4,2)}}/{{nextYYYYMM.substr(0,4)}}</h1>
@@ -222,6 +231,9 @@
             <div *ngIf="Day?.n<4 && Day?.n>0 && Day?.Date" class="badge-green">{{Day?.n}}</div>
             <div *ngIf="Day?.n<1 && Day?.Date" class="badge-transperant">{{Day?.n}}</div>
           </ion-col>
+        </ion-row>
+        <ion-row *ngIf="WEEKSinMONTH2.length<1">
+          <p style="text-align: center;">Chưa có thông tin lịch hẹn. Vui lòng liên hệ Quản lý</p>
         </ion-row>
       </ion-grid>
       <!-- <div *ngIf="selectedDay">

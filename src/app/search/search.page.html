@@ -1,21 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Nhân viên</ion-title>
+    <ion-searchbar type="text" placeholder="Tìm kiếm" #search_phone (ionChange)="search(search_phone.value)"></ion-searchbar>
     <ion-buttons slot="end">
-      <ion-button (click)="go2UserNewAdd()">
-        Thêm
-        <ion-icon slot="end" name="md-add"></ion-icon>
+      <ion-button (click)="doCancel()">
+        <ion-icon color="danger" slot="end" name="close"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-
 </ion-header>
 
 <ion-content padding>
-  <ion-item *ngFor="let USER of USERS" (click)="go2UserEdit(USER)">
+  <ion-item *ngFor="let USER of filteredBAs" (click)="selectBA(USER)">
     <ion-avatar slot="start">
       <img [src]="USER.U_AVATAR" onError="this.src='../../assets/imgs/user.jpg';">
     </ion-avatar>

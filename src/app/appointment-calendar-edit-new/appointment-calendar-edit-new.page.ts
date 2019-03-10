@@ -8,6 +8,7 @@ import { AlertController, ModalController, NavParams } from '@ionic/angular';
 import { LocalService } from '../services/local.service';
 import { iBooking } from '../interfaces/booking.interface';
 import { iUser } from '../interfaces/user.interface';
+import { LoadingService } from '../loading.service';
 
 @Component({
   selector: 'app-appointment-calendar-edit-new',
@@ -40,6 +41,7 @@ export class AppointmentCalendarEditNewPage implements OnInit {
     private crudService: CrudService,
     private localService: LocalService,
     private navPar: NavParams,
+    private loadingService: LoadingService
   ) { 
     this.data = this.navPar.data;
     console.log(this.data);
@@ -71,7 +73,6 @@ export class AppointmentCalendarEditNewPage implements OnInit {
       .subscribe(data => {
         console.log(data)
         let newdays = _35Days1.map(day => data[day.DateId]);
-        console.log(newdays);
         newdays.forEach(day => {
           let n = day.Slots.filter(slot => slot.STATUS !== 'AVAILABLE').length;
           day['n'] = n;
@@ -129,6 +130,7 @@ export class AppointmentCalendarEditNewPage implements OnInit {
   }
 
   doChangeSlot(DAY: iDay, SLOT: iSlot, index: number) {
+    this.loadingService.presentLoading();
     let PROS = [];
     SLOT.STATUS = this.Slot.STATUS;
     SLOT.BOOK_ID = this.Slot.BOOK_ID;
@@ -170,10 +172,12 @@ export class AppointmentCalendarEditNewPage implements OnInit {
       .then((res) => {
         console.log(res);
         this.doCancel();
-        console.log()
+        console.log();
+        this.loadingService.loadingDissmiss();
       }).catch(err => {
         console.log(err);
         this.doCancel();
+        this.loadingService.loadingDissmiss();
       })
   }
 

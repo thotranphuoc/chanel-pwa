@@ -217,7 +217,7 @@
     </div>
     <div class="new-customer">
       <ion-item>
-        <ion-label color="primary" fixed>Số điện:</ion-label>
+        <ion-label color="primary" fixed>Số điện thoại:</ion-label>
         <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
       </ion-item>
       <ion-item>
@@ -249,32 +249,32 @@
       <div style="height: 5px"></div>
       <h3>NHÓM KHÁCH HÀNG</h3>
       <ion-item>
-        <ion-label color="primary">Khách nước hoa</ion-label>
+        <ion-label color="primary">Khách Nước Hoa</ion-label>
         <ion-toggle [(ngModel)]="BOOKING.B_PERFUME"></ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-label color="primary">Khách make up</ion-label>
+        <ion-label color="primary">Khách MakeUp</ion-label>
         <ion-toggle [(ngModel)]="BOOKING.B_MAKEUP"></ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-label color="primary">KH sử dụng Skin Care</ion-label>
+        <ion-label color="primary">Khách Skin Care</ion-label>
         <ion-toggle [(ngModel)]="BOOKING.B_CSCU"></ion-toggle>
       </ion-item>
 
       <ion-item>
-        <ion-label color="primary">KH sử dụng Sublimage</ion-label>
+        <ion-label color="primary">Khách Sublimage</ion-label>
         <ion-toggle [(ngModel)]="BOOKING.B_SUBLIMAGE"></ion-toggle>
       </ion-item>
       <ion-item *ngIf="BOOKING.B_SUBLIMAGE">
         <ion-label stacked></ion-label>
-        <ion-input [(ngModel)]="BOOKING.B_SUBLIMAGES"></ion-input>
+        <ion-input [(ngModel)]="BOOKING.B_SUBLIMAGES" placeholder="Sản phẩm Sublimage khách dùng"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label color="primary">KH sử dụng Le lift</ion-label>
+        <ion-label color="primary">Khách Le Lift</ion-label>
         <ion-toggle [(ngModel)]="BOOKING.B_LELIFT"></ion-toggle>
       </ion-item>
       <ion-item>
-        <ion-label color="primary">KH sử dụng Fashion</ion-label>
+        <ion-label color="primary">Khách Fashion</ion-label>
         <ion-toggle [(ngModel)]="BOOKING.B_FASHION"></ion-toggle>
       </ion-item>
       <ion-item *ngIf="BOOKING.B_FASHION">
@@ -292,7 +292,7 @@
             <ion-button color="danger" expand="block" (click)="doCancel()">Huỷ bỏ</ion-button>
           </ion-col> -->
         <ion-col>
-          <ion-button expand="block" (click)="doAdd()" [disabled]="!isFullFilled()">Thêm
+          <ion-button expand="block" (click)="doAddBooking()" [disabled]="!isFullFilled()">Thêm
           </ion-button>
         </ion-col>
       </ion-row>

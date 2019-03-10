@@ -11,6 +11,7 @@ import { AppointmentEditPage } from '../appointment-edit/appointment-edit.page';
 import { LocalService } from '../services/local.service';
 import { AppService } from '../services/app.service';
 import { SlotsInDayPage } from '../slots-in-day/slots-in-day.page';
+import { LoadingService } from '../loading.service';
 
 @Component({
   selector: 'app-calendars',
@@ -41,11 +42,13 @@ export class CalendarsPage implements OnInit, OnDestroy {
     private calendarService: CalendarService,
     private crudService: CrudService,
     private localService: LocalService,
-    private appService: AppService
+    private appService: AppService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
     this.initCalendar();
+    this.loadingService.presentLoading();
   }
 
   ngOnDestroy() {
@@ -65,39 +68,44 @@ export class CalendarsPage implements OnInit, OnDestroy {
       .subscribe(data => {
         this.WEEKSinMONTH1 = [];
         console.log(data)
-        let newdays = _35Days1.map(day => data[day.DateId]);
-        console.log(newdays);
-        newdays.forEach(day => {
-          let n = day.Slots.filter(slot => slot.STATUS !== 'AVAILABLE').length;
-          day['n'] = n;
-        });
-        console.log(newdays);
-        this.DaysInM1 = this.calendarService.addAdditionalProsIntoDaysInMonth(newdays);
-        let W1 = newdays.slice(0, 7);
-        let W2 = newdays.slice(7, 14);
-        let W3 = newdays.slice(14, 21);
-        let W4 = newdays.slice(21, 28);
-        let W5 = newdays.slice(28, 35);
-        this.WEEKSinMONTH1.push(W1, W2, W3, W4, W5);
+        if (typeof (data) !== 'undefined') {
+          let newdays = _35Days1.map(day => data[day.DateId]);
+          newdays.forEach(day => {
+            let n = day.Slots.filter(slot => slot.STATUS !== 'AVAILABLE').length;
+            day['n'] = n;
+          });
+          console.log(newdays);
+          this.DaysInM1 = this.calendarService.addAdditionalProsIntoDaysInMonth(newdays);
+          let W1 = newdays.slice(0, 7);
+          let W2 = newdays.slice(7, 14);
+          let W3 = newdays.slice(14, 21);
+          let W4 = newdays.slice(21, 28);
+          let W5 = newdays.slice(28, 35);
+          this.WEEKSinMONTH1.push(W1, W2, W3, W4, W5);
+        }
+        this.loadingService.loadingDissmiss();
       });
 
     this.month2Subscription = this.crudService.calendarMonthGet(this.nextYYYYMM)
       .subscribe(data => {
         this.WEEKSinMONTH2 = [];
         console.log(data)
-        let newdays = _35Days2.map(day => data[day.DateId]);
-        newdays.forEach(day => {
-          let n = day.Slots.filter(slot => slot.STATUS !== 'AVAILABLE').length;
-          day['n'] = n;
-        });
-        console.log(newdays);
-        this.DaysInM2 = this.calendarService.addAdditionalProsIntoDaysInMonth(newdays);
-        let W1 = newdays.slice(0, 7);
-        let W2 = newdays.slice(7, 14);
-        let W3 = newdays.slice(14, 21);
-        let W4 = newdays.slice(21, 28);
-        let W5 = newdays.slice(28, 35);
-        this.WEEKSinMONTH2.push(W1, W2, W3, W4, W5);
+        if (typeof (data) !== 'undefined') {
+          let newdays = _35Days2.map(day => data[day.DateId]);
+          newdays.forEach(day => {
+            let n = day.Slots.filter(slot => slot.STATUS !== 'AVAILABLE').length;
+            day['n'] = n;
+          });
+          console.log(newdays);
+          this.DaysInM2 = this.calendarService.addAdditionalProsIntoDaysInMonth(newdays);
+          let W1 = newdays.slice(0, 7);
+          let W2 = newdays.slice(7, 14);
+          let W3 = newdays.slice(14, 21);
+          let W4 = newdays.slice(21, 28);
+          let W5 = newdays.slice(28, 35);
+          this.WEEKSinMONTH2.push(W1, W2, W3, W4, W5);
+        }
+        this.loadingService.loadingDissmiss();
       });
 
   }

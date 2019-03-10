@@ -11,6 +11,7 @@ import { iDay } from '../interfaces/day.interface';
 import { iSlot } from '../interfaces/slot.interface';
 import { AppService } from '../services/app.service';
 import { CalendarService } from '../services/calendar.service';
+import { LoadingService } from '../loading.service';
 @Component({
   selector: 'app-appointment-add',
   templateUrl: './appointment-add.page.html',
@@ -40,7 +41,8 @@ export class AppointmentAddPage implements OnInit {
     private localService: LocalService,
     private crudService: CrudService,
     private appService: AppService,
-    private calendarService: CalendarService
+    private calendarService: CalendarService,
+    private loadingService: LoadingService,
   ) {
     this.data = this.navPar.data;
     console.log(this.data);
@@ -170,7 +172,7 @@ export class AppointmentAddPage implements OnInit {
       this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
       this.CUSTOMER.C_BOOK_STATE = 'DRAFT';
       let NAME = '<strong>' + this.CUSTOMER.C_NAME + '</strong>'
-      MSG += 'Khách ' + NAME + 'Sublimage book lần 2 trong tháng. <br/>'
+      MSG += 'Khách ' + NAME + ' Sublimage book lần 2 trong tháng. <br/>'
     }
 
     // Khách thường book lần thứ 2
@@ -189,7 +191,9 @@ export class AppointmentAddPage implements OnInit {
       !this.BOOKING.B_SUBLIMAGE &&
       !this.BOOKING.B_LELIFT &&
       !this.BOOKING.B_FASHION) {
-      MSG += 'Bạn vui lòng chọn phân nhóm Khách hàng. <br/>'
+      MSG = 'Bạn vui lòng chọn phân nhóm Khách hàng. <br/>'
+      this.appService.alertShow('Chú ý',null,MSG);
+      return;
     }
     MSG += '<br/>Bạn có chắc tiếp tục không?'
 
@@ -257,8 +261,8 @@ export class AppointmentAddPage implements OnInit {
         this.BOOKING.B_LELIFT = typeof (this.CUSTOMER.C_LELIFT) == 'undefined' ? false : this.CUSTOMER.C_LELIFT;
         this.BOOKING.B_FASHION = typeof (this.CUSTOMER.C_FASHION) == 'undefined' ? false : this.CUSTOMER.C_FASHION;
         let NAME = '<strong>' + this.CUSTOMER.C_NAME + '</strong>'
-        let Message = 'Khách ' + NAME + '<br/><br/>' + 'Vui lòng kiểm tra lần nữa trước khi tạo lịch hẹn'
-        this.appService.alertShow('Chú ý', null, Message);
+        let Message = 'Thông tin khách ' + NAME + ' đã được cập nhật.<br/><br/>' + 'Vui lòng kiểm tra trước khi tạo lịch hẹn'
+        this.appService.alertShow('Chú ý:', null, Message);
       }
     })
   }
@@ -289,6 +293,7 @@ export class AppointmentAddPage implements OnInit {
   }
 
   createBookingWithExistingCustomer() {
+    this.loadingService.presentLoading()
     let newBooking: iBooking;
     this.crudService.bookingCreateWithExistingCustomer(this.BOOKING)
       // .then((res: any) => {
@@ -303,14 +308,17 @@ export class AppointmentAddPage implements OnInit {
       // })
       .then(() => {
         this.doDismiss(newBooking);
+        this.loadingService.loadingDissmiss();
       })
       .catch((err) => {
         console.log(err);
+        this.loadingService.loadingDissmiss();
         // this.ALERTADD = 'Add new Booking fail';
       })
   }
 
   createBookingWithNotExistingCustomer() {
+    this.loadingService.presentLoading()
     console.log(this.BOOKING, this.CUSTOMER);
     let newBooking: iBooking;
     this.crudService.bookingCreateWithNewCustomer(this.BOOKING, this.CUSTOMER)
@@ -318,13 +326,17 @@ export class AppointmentAddPage implements OnInit {
         newBooking = res.BOOKING;
         console.log(newBooking);
         this.resetData();
-        this.doUpdateCalendarsForDay(newBooking);
-      })
-      .then(() => {
+        // this.doUpdateCalendarsForDay(newBooking);
         this.doDismiss(newBooking);
+        this.loadingService.loadingDissmiss();
       })
+      // .then(() => {
+      //   this.doDismiss(newBooking);
+      //   this.loadingService.loadingDissmiss();
+      // })
       .catch((err) => {
         console.log(err);
+        this.loadingService.loadingDissmiss();
         // this.ALERTADD = 'Add new Booking fail';
       })
   }

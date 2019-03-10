@@ -8,13 +8,14 @@ import { AppService } from '../services/app.service';
 import { AlertController, ActionSheetController, NavController } from '@ionic/angular';
 import { Papa } from 'ngx-papaparse';
 import { LocalService } from '../services/local.service';
+import { LoadingService } from '../loading.service';
 @Component({
   selector: 'app-slot-assign',
   templateUrl: './slot-assign.page.html',
   styleUrls: ['./slot-assign.page.scss'],
 })
 export class SlotAssignPage implements OnInit, OnDestroy {
-  YYYYMM = '201908';
+  YYYYMM = null;
   YYYY = '2019';
   MM = '08';
   DaysInMonth: iDay[] = [];
@@ -46,6 +47,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     private appService: AppService,
     private localService: LocalService,
     private papa: Papa,
+    private loadingService: LoadingService,
   ) {
     this.COLOR_SPE[''] = 'Gray';
     this.COLOR_SPE['BLOCKED'] = 'Black';
@@ -263,14 +265,16 @@ export class SlotAssignPage implements OnInit, OnDestroy {
 
 
   calendarForMonthCreate() {
+    this.loadingService.presentLoading()
     this.calendarService.calendarForMonthCreate(Number(this.YYYY), Number(this.MM))
       .then((res) => {
         console.log(res);
         this.getCalendarsOfMonth();
+        this.loadingService.loadingDissmiss()
       })
       .catch(err => {
         console.log(err);
-
+        this.loadingService.loadingDissmiss()
       })
 
   }

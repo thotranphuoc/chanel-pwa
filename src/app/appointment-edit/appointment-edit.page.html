@@ -21,7 +21,7 @@
           <ion-label color="primary" fixed>VIP Code:</ion-label>
           <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_VIPCODE"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item lines="none">
           <ion-label color="primary" fixed>Tên:</ion-label>
           <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_NAME"></ion-input>
         </ion-item>
@@ -40,27 +40,41 @@
         </ion-item>
         <div style="height: 5px"></div>
 
-        <ion-item>
+        <ion-item lines="none">
           <ion-label color="primary" fixed>Ghi chú:</ion-label>
           <ion-input type="text" placeholder="Ghi chú" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
         </ion-item>
         <div style="height: 5px"></div>
-        <h3>NHÓM KHÁCH HÀNG</h3>
+        <h3>NHÂN VIÊN:</h3>
+        <ion-item lines="none">
+          <ion-label color="primary">BA book lịch:</ion-label>
+          <ion-input disabled="true" type="text" placeholder="" [(ngModel)]="BOOKING.B_BA_BOOK.U_FULLNAME"></ion-input>
+        </ion-item>
+        <!-- <ion-item>
+          <ion-label color="primary">Specialist:</ion-label>
+          <ion-input disabled="true" type="text" placeholder="" [(ngModel)]="BOOKING.B_SPECIALIST.U_FULLNAME"></ion-input>
+        </ion-item>
         <ion-item>
-          <ion-label color="primary">Khách nước hoa</ion-label>
+          <ion-label color="primary">B.A Sale:</ion-label>
+          <ion-input disabled="true" type="text" placeholder="" [(ngModel)]="BOOKING.B_BA_SELL.U_FULLNAME"></ion-input>
+        </ion-item> -->
+        <div style="height: 5px"></div>
+        <h3>NHÓM KHÁCH HÀNG:</h3>
+        <ion-item>
+          <ion-label color="primary">Khách Nước Hoa</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_PERFUME"></ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-label color="primary">Khách make up</ion-label>
+          <ion-label color="primary">Khách MakeUp</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_MAKEUP"></ion-toggle>
         </ion-item>
         <ion-item>
-          <ion-label color="primary">KH sử dụng Skin Care</ion-label>
+          <ion-label color="primary">Khách Skin Care</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_CSCU"></ion-toggle>
         </ion-item>
 
         <ion-item>
-          <ion-label color="primary">KH sử dụng Sublimage</ion-label>
+          <ion-label color="primary">Khách Sublimage</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_SUBLIMAGE"></ion-toggle>
         </ion-item>
         <ion-item *ngIf="BOOKING.B_SUBLIMAGE">
@@ -69,11 +83,11 @@
           </ion-input>
         </ion-item>
         <ion-item>
-          <ion-label color="primary">KH sử dụng Le lift</ion-label>
+          <ion-label color="primary">Khách Le Lift</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_LELIFT"></ion-toggle>
         </ion-item>
-        <ion-item>
-          <ion-label color="primary">KH sử dụng Fashion</ion-label>
+        <ion-item lines="none">
+          <ion-label color="primary">Khách Fashion</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_FASHION"></ion-toggle>
         </ion-item>
         <ion-item lines="none" *ngIf="BOOKING.B_FASHION">
@@ -104,12 +118,12 @@
             </ion-button>
           </ion-item>
           <ion-item>
-            <ion-label color="primary" fixed>MEMOS:</ion-label>
-            <ion-input type="text" placeholder="Nhập thông tin MEMOS" [(ngModel)]="BOOKING.B_MEMOS"></ion-input>
+            <ion-label color="primary" fixed>Sales Memo:</ion-label>
+            <ion-input type="text" placeholder="Nhập thông tin ..." [(ngModel)]="BOOKING.B_MEMOS"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label color="primary" fixed>TILL:</ion-label>
-            <ion-input type="text" placeholder="Nhập thông tin TILL" [(ngModel)]="BOOKING.B_TILL"></ion-input>
+            <ion-input type="text" placeholder="Nhập thông tin ..." [(ngModel)]="BOOKING.B_TILL"></ion-input>
           </ion-item>
         </div>
 

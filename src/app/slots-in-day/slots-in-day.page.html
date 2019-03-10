@@ -12,7 +12,6 @@
 
 <ion-content padding>
   <div *ngIf="selectedDay">
-    <!-- <h2>{{DATE}}</h2> -->
     <ion-grid>
       <ion-row *ngFor="let slot of selectedDay.Slots; let i = index" (click)="selectSlot(selectedDay,slot, i)">
         <ion-col size="4" [ngClass]="slot.STATUS">{{slot.SLOT}}</ion-col>

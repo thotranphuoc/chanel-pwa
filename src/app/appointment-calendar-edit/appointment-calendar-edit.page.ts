@@ -12,6 +12,7 @@ import { AppService } from '../services/app.service';
 import { SlotsInDayPage } from '../slots-in-day/slots-in-day.page';
 import { iBooking } from '../interfaces/booking.interface';
 import { iUser } from '../interfaces/user.interface';
+import { LoadingService } from '../loading.service';
 
 
 
@@ -55,6 +56,7 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
     private localService: LocalService,
     private appService: AppService,
     private navPar: NavParams,
+    private loadingService: LoadingService
 
   ) {
     this.data = this.navPar.data;
@@ -77,7 +79,7 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
 
 
   initCalendar() {
-
+    this.loadingService.presentLoading();
     this.TODAY = this.calendarService.getTodayString();
     this.currentYYYYMM = this.TODAY.substr(0, 6);
     this.nextYYYYMM = this.calendarService.getNextMonth(this.currentYYYYMM);
@@ -131,6 +133,7 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
         //   MONTH: 'Feb',
         //   YEAR: '2019'
         // }
+        this.loadingService.loadingDissmiss();
       });
 
   }
