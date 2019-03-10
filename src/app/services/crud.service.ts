@@ -11,6 +11,7 @@ import { iDay } from '../interfaces/day.interface';
 import { AlertController } from '@ionic/angular';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import { AppService } from './app.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class CrudService {
   USER: Observable<any[]>;
   constructor(
     private afs: AngularFirestore,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private appService: AppService
   ) {
 
   }
@@ -73,26 +75,45 @@ export class CrudService {
     return this.afs.doc('CUSTOMERS/' + customer.C_ID).update(customer);
   }
 
-  customerUpdateLastBookingAndSublimage(BOOKING: iBooking) {
+  customerUpdateAfterBookingChange(BOOKING: iBooking) {
     let CID = BOOKING.B_CUSTOMER_ID;
     let DATA = {};
+    let CUSTOMER = BOOKING.B_CUSTOMER;
+    CUSTOMER.C_LAST_B_ID = BOOKING.B_ID;
+    CUSTOMER.C_LAST_B_DATE = BOOKING.B_DATE;
+    CUSTOMER.C_LAST_B_SLOT = BOOKING.B_SLOT;
     if (BOOKING.B_SUBLIMAGE) {
-      DATA = {
-        C_isSUBLIMAGE: true,
-        C_LAST_B_ID: BOOKING.B_ID,
-        C_LAST_B_DATE: BOOKING.B_DATE,
-        C_LAST_B_SLOT: BOOKING.B_SLOT,
-        C_BOOK_STATE: BOOKING.B_STATUS
-      }
-    } else {
-      DATA = {
-        C_LAST_B_ID: BOOKING.B_ID,
-        C_LAST_B_DATE: BOOKING.B_DATE,
-        C_LAST_B_SLOT: BOOKING.B_SLOT,
-        C_BOOK_STATE: BOOKING.B_STATUS
-      }
+      CUSTOMER.C_LASTUSE_SUBLIMAGE = this.appService.getCurrentDateFormat1();
+      CUSTOMER.C_isSUBLIMAGE = true;
     }
-    return this.afs.doc('CUSTOMERS/' + CID).update(DATA)
+    let YYYYMMDD = this.appService.getCurrentDateFormat3();
+    CUSTOMER.C_BOOKINGS[YYYYMMDD] = BOOKING.B_ID;
+    CUSTOMER.C_BOOK_STATE = BOOKING.B_STATUS;
+    CUSTOMER.C_PERFUME = BOOKING.B_PERFUME
+    CUSTOMER.C_MAKEUP = BOOKING.B_MAKEUP;
+    CUSTOMER.C_CSCU = BOOKING.B_CSCU;
+    CUSTOMER.C_SUBLIMAGE = BOOKING.B_SUBLIMAGE;
+    CUSTOMER.C_LELIFT = BOOKING.B_LELIFT;
+    CUSTOMER.C_FASHION = BOOKING.B_FASHION;
+
+    // if (BOOKING.B_SUBLIMAGE) {
+    //   DATA = {
+    //     C_isSUBLIMAGE: true,
+    //     C_LAST_B_ID: BOOKING.B_ID,
+    //     C_LAST_B_DATE: BOOKING.B_DATE,
+    //     C_LAST_B_SLOT: BOOKING.B_SLOT,
+    //     C_BOOK_STATE: BOOKING.B_STATUS
+    //   }
+    // } else {
+    //   DATA = {
+    //     C_LAST_B_ID: BOOKING.B_ID,
+    //     C_LAST_B_DATE: BOOKING.B_DATE,
+    //     C_LAST_B_SLOT: BOOKING.B_SLOT,
+    //     C_BOOK_STATE: BOOKING.B_STATUS
+    //   }
+    // }
+    console.log(CUSTOMER);
+    this.customerUpdate(CUSTOMER);
   }
 
   customersGet() {
@@ -110,7 +131,7 @@ export class CrudService {
 
 
   customerGetByPhone(PhoneNumber: string) {
-    return this.afs.collection('CUSTOMERS', ref => ref.where('C_PHONE', '==', PhoneNumber))
+    return this.afs.collection('CUSTOMERS', ref => ref.where('C_PHONE', '==', PhoneNumber)).get();
   }
 
   createFacialCabin(facialcabin: iFacialCabin) {
@@ -139,21 +160,21 @@ export class CrudService {
   }
 
 
-  createBooking(booking: iBooking) {
-    console.log(booking);
-    let BOOK = booking
-    return new Promise((resolve, reject) => {
-      this.afs.collection('BOOKINGS').add(booking)
-        .then((res) => {
-          BOOK.B_ID = res.id;
-          return res.update({ B_ID: res.id })
-        })
-        .then(() => {
-          resolve({ MSG: 'Thêm thành công' })
-        })
-        .catch((err) => reject(err))
-    })
-  }
+  // createBooking(booking: iBooking) {
+  //   console.log(booking);
+  //   let BOOK = booking
+  //   return new Promise((resolve, reject) => {
+  //     this.afs.collection('BOOKINGS').add(booking)
+  //       .then((res) => {
+  //         BOOK.B_ID = res.id;
+  //         return res.update({ B_ID: res.id })
+  //       })
+  //       .then(() => {
+  //         resolve({ MSG: 'Thêm thành công' })
+  //       })
+  //       .catch((err) => reject(err))
+  //   })
+  // }
 
   bookingCreateWithNewCustomer(BOOKING: iBooking, CUSTOMER: iCustomer) {
     return new Promise((resolve, reject) => {
@@ -161,6 +182,7 @@ export class CrudService {
       this.customerCreate(CUSTOMER)
         .then((res1: any) => {
           _CUSTOMER = res1.CUSTOMER;
+          BOOKING.B_CUSTOMER = _CUSTOMER;
           BOOKING.B_CUSTOMER_ID = _CUSTOMER.C_ID;
           BOOKING.B_CUSTOMER_NAME = _CUSTOMER.C_NAME;
           BOOKING.B_CUSTOMER_PHONE = _CUSTOMER.C_PHONE;
@@ -190,7 +212,11 @@ export class CrudService {
         })
         .then(() => {
           // update last booking and isSublimage for customer
-          return this.customerUpdateLastBookingAndSublimage(BOOKING);
+          return this.customerUpdateAfterBookingChange(BOOKING);
+        })
+        .then(() => {
+          // update calendars after booking change
+          return this.dayUpdateAfterBookingChange(BOOKING);
         })
         .then(() => {
           resolve({ MSG: 'Đặt hẹn thành công', BOOKING: BOOKING });
@@ -224,8 +250,8 @@ export class CrudService {
     return this.afs.doc('CALENDARS/' + YYYYMM).valueChanges()
   }
 
-  calendarMonthGetPromise(YYYYMM: string){
-    return firebase.firestore().doc('CALENDARS/'+ YYYYMM).get();
+  calendarMonthGetPromise(YYYYMM: string) {
+    return firebase.firestore().doc('CALENDARS/' + YYYYMM).get();
   }
 
   calendarMonthUpdate(YYYYMM: string, data: any) {
@@ -239,6 +265,52 @@ export class CrudService {
     day2Update[DateId] = Day;
     console.log(day2Update);
     return this.afs.collection('CALENDARS').doc(monthstr).update(day2Update);
+  }
+
+  dayUpdateAfterBookingChange(BOOKING: iBooking) {
+    let Day = BOOKING.B_DAY;
+    let index = Day.Slots.map(Slot => Slot.SLOT).indexOf(BOOKING.B_SLOT);
+    Day.Slots[index].STATUS = BOOKING.B_STATUS;
+    Day.Slots[index].BOOK_ID = BOOKING.B_ID;
+    console.log(Day);
+    return this.dayUpdate(Day);
+  }
+
+
+  bookingsGetWithStateObservable(STATE: string, USER: iUser) {
+    switch (USER.U_ROLE) {
+      case 'Admin':
+        // this.afs.collection('BOOKINGS').valueChanges().
+        return firebase.firestore().collection('BOOKINGS')
+          .where('B_STATUS', '==', STATE)
+          .get();
+      case 'Manager':
+        return firebase.firestore().collection('BOOKINGS')
+          .where('B_STATUS', '==', STATE)
+          .get();
+      case 'Specialist':
+        return firebase.firestore().collection('BOOKINGS')
+          .where('B_STATUS', '==', STATE)
+          .where('B_SPECIALIST_ID', '==', USER.U_ID)
+          .get();
+      case 'BA':
+        return firebase.firestore().collection('BOOKINGS')
+          .where('B_STATUS', '==', STATE)
+          .where('B_BA_BOOK_ID', '==', USER.U_ID)
+          .get();
+      case 'BAS':
+        return firebase.firestore().collection('BOOKINGS')
+          .where('B_STATUS', '==', STATE)
+          .where('B_BA_SELL_ID', '==', USER.U_ID)
+          .get();
+      case 'BA':
+        return firebase.firestore().collection('BOOKINGS')
+          .where('B_STATUS', '==', STATE)
+          .where('B_BA_BOOK_ID', '==', USER.U_ID)
+          .get();
+      default:
+        break;
+    }
   }
 
   bookingsGetWithState(STATE: string, USER: iUser) {

@@ -1,6 +1,7 @@
 import { iUser } from '../interfaces/user.interface';
 import { iCustomer } from '../interfaces/customer.interface';
 import { iFacialCabin } from './facialcabin.interface';
+import { iDay } from './day.interface';
 
 export interface iBooking {
     B_ID: string,
@@ -9,6 +10,7 @@ export interface iBooking {
     B_CUSTOMER_PHONE: string,
     B_CUSTOMER_ID: string,
     B_CUSTOMER: iCustomer,
+    B_DAY: iDay;
     B_FACIAL: iFacialCabin,
     B_FACIAL_ID: string,
     B_FACIAL_NAME: string,

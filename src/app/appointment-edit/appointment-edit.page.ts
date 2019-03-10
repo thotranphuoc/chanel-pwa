@@ -29,10 +29,10 @@ export class AppointmentEditPage implements OnInit {
   RIGHTS = {
     Admin: [{ VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
     Manager: [{ VI: 'CHỜ DUYỆT', EN: 'DRAFT' }, { VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
-    Specialist: [{ VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
-    BA: [{ VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
-    BAS: [{ VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
-    FA: [{ VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
+    Specialist: [{ VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }],
+    BA: [{ VI: 'HUỶ BỎ', EN: 'CANCELED' }],
+    BAS: [{ VI: 'HUỶ BỎ', EN: 'CANCELED' }],
+    FA: [{ VI: 'HUỶ BỎ', EN: 'CANCELED' }],
   }
 
   // RIGHTS = {
@@ -66,7 +66,7 @@ export class AppointmentEditPage implements OnInit {
 
   ngOnInit() {
     console.log('ngOnInit');
-      this.sub1 = this.crudService.bookingGet(this.Slot.BOOK_ID)
+    this.sub1 = this.crudService.bookingGet(this.Slot.BOOK_ID)
       .subscribe(docSnap => {
         console.log(docSnap);
         let BOOKING = <iBooking>docSnap.data();

@@ -30,7 +30,8 @@ export class AppointmentAddPage implements OnInit {
   Slot: iSlot;
   index: number;
   searchPhoneStr: string;
-
+  isCustomerExistingChecked: boolean = false;
+  isFirstTimeUsedApp: boolean = false;
   constructor(
     private navCtrl: NavController,
     private navPar: NavParams,
@@ -93,7 +94,16 @@ export class AppointmentAddPage implements OnInit {
     return year + '-' + month + '-' + finalDate;
   }
 
-  async confirmBookTimesInMonth(MSG) {
+  doAddBooking() {
+    if (!this.isCustomerExistingChecked) {
+      this.checkIfCustomerExisting();
+    } else {
+      this.preCheckAddNewAppointment();
+    }
+  }
+
+  async makeConfirm1(MSG: string) {
+    console.log(this.BOOKING, MSG);
     // let LAST_B_DATE = this.calendarService.convertDate(this.CUSTOMER.C_LAST_B_DATE);
     // let MSG = 'KH đã đặt lịch hẹn ngày ' + LAST_B_DATE + '. Bạn có chắc tiếp tục không?'
     const alert = await this.alertCtrl.create({
@@ -101,7 +111,7 @@ export class AppointmentAddPage implements OnInit {
       message: MSG,
       buttons: [
         {
-          text: 'Huỷ bỏ',
+          text: 'Không',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
@@ -109,10 +119,11 @@ export class AppointmentAddPage implements OnInit {
             // this.doCancel();
           }
         }, {
-          text: 'Chấp nhận',
+          text: 'Có',
           handler: () => {
             console.log('Confirm Okay');
             this.doAddAppointment();
+
           }
         }
       ]
@@ -121,44 +132,89 @@ export class AppointmentAddPage implements OnInit {
     await alert.present();
   }
 
+  // preCheckAddNewAppointment() {
+  //   let MSG = ''
+  //   if (this.isNotBooking2TimesInMonth() && this.CUSTOMER.C_isSUBLIMAGE && this.BOOKING.B_SUBLIMAGE) {
+  //     this.doAddAppointment();
+  //     this.BOOKING.B_STATUS = 'BOOKED';
+  //     this.BOOKING.B_STATUS_VI = 'ĐÃ ĐẶT';
+  //   } else {
+  //     this.BOOKING.B_STATUS = 'DRAFT';
+  //     this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
+  //     this.CUSTOMER.C_BOOK_STATE = 'DRAFT';
+  //     if (!this.isNotBooking2TimesInMonth())
+  //       MSG += '- Khách đã book trong tháng. <br/>'
+  //     if (!this.CUSTOMER.C_isSUBLIMAGE)
+  //       MSG += '- Khách chưa là KH Sublimage. <br/>';
+  //     if (!this.BOOKING.B_SUBLIMAGE)
+  //       MSG += '- Bạn chưa chọn dịch vụ Sublimage. <br/>'
+
+  //     MSG += '<br/>Bạn có chắc tiếp tục không?'
+  //     console.log(MSG);
+  //     console.log(this.isNotBooking2TimesInMonth(), this.CUSTOMER.C_isSUBLIMAGE, this.BOOKING.B_SUBLIMAGE)
+  //     this.confirmBookTimesInMonth(MSG);
+  //   }
+  // }
+
+  // New rule after meeting 2019/03/08
   preCheckAddNewAppointment() {
+    console.log(this.CUSTOMER, this.BOOKING);
     let MSG = ''
-    if (this.isNotBooking2TimesInMonth() && this.CUSTOMER.C_isSUBLIMAGE && this.BOOKING.B_SUBLIMAGE) {
-      this.doAddAppointment();
-      this.BOOKING.B_STATUS = 'BOOKED';
-      this.BOOKING.B_STATUS_VI = 'ĐÃ ĐẶT';
-    } else {
+    // khi KH sub book 2 lan trong thang
+    this.BOOKING.B_STATUS = 'BOOKED';
+    this.BOOKING.B_STATUS_VI = 'ĐÃ ĐẶT';
+    this.CUSTOMER.C_BOOK_STATE = 'BOOKED';
+    // Khách sub book lần 2 trong tháng
+    if (this.isBooking2TimesInMonth(this.CUSTOMER, this.BOOKING) && this.CUSTOMER.C_isSUBLIMAGE) {
       this.BOOKING.B_STATUS = 'DRAFT';
       this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
       this.CUSTOMER.C_BOOK_STATE = 'DRAFT';
-      if (!this.isNotBooking2TimesInMonth())
-        MSG += '- Khách đã book trong tháng. <br/>'
-      if (!this.CUSTOMER.C_isSUBLIMAGE)
-        MSG += '- Khách chưa là KH Sublimage. <br/>';
-      if (!this.BOOKING.B_SUBLIMAGE)
-        MSG += '- Bạn chưa chọn dịch vụ Sublimage. <br/>'
-
-      MSG += '<br/>Bạn có chắc tiếp tục không?'
-      console.log(MSG);
-      console.log(this.isNotBooking2TimesInMonth(), this.CUSTOMER.C_isSUBLIMAGE, this.BOOKING.B_SUBLIMAGE)
-      this.confirmBookTimesInMonth(MSG);
+      let NAME = '<strong>' + this.CUSTOMER.C_NAME + '</strong>'
+      MSG += 'Khách ' + NAME + 'Sublimage book lần 2 trong tháng. <br/>'
     }
-    // if (!this.isNotBooking2TimesInMonth() && !this.BOOKING.B_SUBLIMAGE) {
+
+    // Khách thường book lần thứ 2
+    if (!this.CUSTOMER.C_isSUBLIMAGE && this.CUSTOMER.C_PHONE.length > 0) {
+      this.BOOKING.B_STATUS = 'DRAFT';
+      this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
+      this.CUSTOMER.C_BOOK_STATE = 'DRAFT';
+      let NAME = '<strong>' + this.CUSTOMER.C_NAME + '</strong>'
+      MSG += 'Khách ' + NAME + ' book lần 2. <br/>'
+    }
+
+    if (
+      !this.BOOKING.B_PERFUME &&
+      !this.BOOKING.B_MAKEUP &&
+      !this.BOOKING.B_CSCU &&
+      !this.BOOKING.B_SUBLIMAGE &&
+      !this.BOOKING.B_LELIFT &&
+      !this.BOOKING.B_FASHION) {
+      MSG += 'Bạn vui lòng chọn phân nhóm Khách hàng. <br/>'
+    }
+    MSG += '<br/>Bạn có chắc tiếp tục không?'
+
+    this.makeConfirm1(MSG);
+
+    // if (this.isNotBooking2TimesInMonth() && this.BOOKING.B_SUBLIMAGE) {
+    //   this.doAddAppointment();
+    //   this.BOOKING.B_STATUS = 'BOOKED';
+    //   this.BOOKING.B_STATUS_VI = 'ĐÃ ĐẶT';
+    // } else {
     //   this.BOOKING.B_STATUS = 'DRAFT';
     //   this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
     //   this.CUSTOMER.C_BOOK_STATE = 'DRAFT';
-    //   this.confirmBookTimesInMonth();
+    //   if (!this.isNotBooking2TimesInMonth())
+    //     MSG += '- Khách đã book trong tháng. <br/>'
+    //   if (!this.CUSTOMER.C_isSUBLIMAGE)
+    //     MSG += '- Khách chưa là KH Sublimage. <br/>';
+    //   if (!this.BOOKING.B_SUBLIMAGE)
+    //     MSG += '- Bạn chưa chọn dịch vụ Sublimage. <br/>'
+
+    //   MSG += '<br/>Bạn có chắc tiếp tục không?'
+    //   console.log(MSG);
+    //   console.log(this.isNotBooking2TimesInMonth(), this.CUSTOMER.C_isSUBLIMAGE, this.BOOKING.B_SUBLIMAGE)
+    //   this.confirmBookTimesInMonth(MSG);
     // }
-
-    // if (!this.isNotBooking2TimesInMonth() && !this.BOOKING.B_SUBLIMAGE) {
-    //   this.BOOKING.B_STATUS = 'DRAFT';
-    //   this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
-    //   this.CUSTOMER.C_BOOK_STATE = 'DRAFT';
-    //   this.confirmBookTimesInMonth();
-    // }
-
-    // // khách Sun
-
   }
 
   isFullFilled() {
@@ -171,20 +227,62 @@ export class AppointmentAddPage implements OnInit {
     return true;
   }
 
+  checkIfCustomerExisting() {
+    this.isCustomerExistingChecked = true;
+    this.crudService.customerGetByPhone(this.BOOKING.B_CUSTOMER_PHONE).subscribe(qSnap => {
+      console.log(qSnap);
+      if (qSnap.empty) {
+        console.log('customer info not exit');
+        // this.createBookingWithNotExistingCustomer();
+        this.isFirstTimeUsedApp = true;
+        this.preCheckAddNewAppointment();
+      } else {
+        this.isFirstTimeUsedApp = false;
+        let CUSTOMERS = [];
+        qSnap.forEach(docSnap => {
+          let CUSTOMER = <iCustomer>docSnap.data();
+          CUSTOMERS.push(CUSTOMER);
+        })
+        this.CUSTOMER = CUSTOMERS[0];
+        console.log(this.CUSTOMER);
+        this.BOOKING.B_CUSTOMER = this.CUSTOMER;
+        this.BOOKING.B_CUSTOMER_ID = this.CUSTOMER.C_ID;
+        this.BOOKING.B_CUSTOMER_NAME = this.CUSTOMER.C_NAME;
+        this.BOOKING.B_CUSTOMER_PHONE = this.CUSTOMER.C_PHONE;
+        this.BOOKING.B_CUSTOMER_VIPCODE = this.CUSTOMER.C_VIPCODE;
+        this.BOOKING.B_PERFUME = typeof (this.CUSTOMER.C_PERFUME) == 'undefined' ? false : this.CUSTOMER.C_PERFUME;
+        this.BOOKING.B_MAKEUP = typeof (this.CUSTOMER.C_MAKEUP) == 'undefined' ? false : this.CUSTOMER.C_MAKEUP;
+        this.BOOKING.B_CSCU = typeof (this.CUSTOMER.C_CSCU) == 'undefined' ? false : this.CUSTOMER.C_CSCU;
+        this.BOOKING.B_SUBLIMAGE = typeof (this.CUSTOMER.C_SUBLIMAGE) == 'undefined' ? false : this.CUSTOMER.C_SUBLIMAGE;
+        this.BOOKING.B_LELIFT = typeof (this.CUSTOMER.C_LELIFT) == 'undefined' ? false : this.CUSTOMER.C_LELIFT;
+        this.BOOKING.B_FASHION = typeof (this.CUSTOMER.C_FASHION) == 'undefined' ? false : this.CUSTOMER.C_FASHION;
+        let NAME = '<strong>' + this.CUSTOMER.C_NAME + '</strong>'
+        let Message = 'Khách ' + NAME + '<br/><br/>' + 'Vui lòng kiểm tra lần nữa trước khi tạo lịch hẹn'
+        this.appService.alertShow('Chú ý', null, Message);
+      }
+    })
+  }
+
+
   doAddAppointment() {
     this.BOOKING.B_CREATED_TIME = new Date().toISOString();
     this.CUSTOMER.C_NAME = this.BOOKING.B_CUSTOMER_NAME;
     this.CUSTOMER.C_PHONE = this.BOOKING.B_CUSTOMER_PHONE;
+    this.CUSTOMER.C_VIPCODE = this.BOOKING.B_CUSTOMER_VIPCODE;
+    this.CUSTOMER.C_isNewCustomer = this.BOOKING.B_isNewCustomer
     let currentUser = this.localService.USER;
 
     // update BA_BOOK info
     this.BOOKING.B_BA_BOOK_ID = currentUser.U_ID;
     this.BOOKING.B_BA_BOOK_NAME = currentUser.U_NAME;
     this.BOOKING.B_BA_BOOK = currentUser;
-    // this.BOOKING.B_STATUS = 'BOOKED';
+
+    // Update Slot;
+    this.BOOKING.B_DAY = this.Day;
     console.log(this.BOOKING);
-    if (this.BOOKING.B_isNewCustomer) {
-      this.createBookingWithNewCustomer();
+
+    if (this.isFirstTimeUsedApp) {
+      this.createBookingWithNotExistingCustomer();
     } else {
       this.createBookingWithExistingCustomer();
     }
@@ -193,12 +291,16 @@ export class AppointmentAddPage implements OnInit {
   createBookingWithExistingCustomer() {
     let newBooking: iBooking;
     this.crudService.bookingCreateWithExistingCustomer(this.BOOKING)
-      .then((res: any) => {
-        newBooking = res.BOOKING;
-        console.log(newBooking);
-        this.resetData();
-        this.doUpdateCalendarsForDay(newBooking);
-      })
+      // .then((res: any) => {
+      //   newBooking = res.BOOKING;
+      //   console.log(newBooking);
+      //   this.resetData();
+      //   return this.doUpdateCalendarsForDay(newBooking);
+      // })
+      // .then((res)=>{
+      //   console.log(this.CUSTOMER);
+      //   return this.crudService.customerUpdate(this.CUSTOMER);
+      // })
       .then(() => {
         this.doDismiss(newBooking);
       })
@@ -208,7 +310,8 @@ export class AppointmentAddPage implements OnInit {
       })
   }
 
-  createBookingWithNewCustomer() {
+  createBookingWithNotExistingCustomer() {
+    console.log(this.BOOKING, this.CUSTOMER);
     let newBooking: iBooking;
     this.crudService.bookingCreateWithNewCustomer(this.BOOKING, this.CUSTOMER)
       .then((res: any) => {
@@ -276,7 +379,7 @@ export class AppointmentAddPage implements OnInit {
     let phoneStr = this.searchPhoneStr.trim();
     if (phoneStr.length < 1) return;
     this.crudService.customerGetByPhone(phoneStr)
-      .get().subscribe((qSnap) => {
+      .subscribe((qSnap) => {
         console.log(qSnap);
         qSnap.forEach(docSnap => {
           let CUSTOMER = <iCustomer>docSnap.data();
@@ -287,19 +390,26 @@ export class AppointmentAddPage implements OnInit {
   }
 
   selectCustomer(CUSTOMER: iCustomer) {
-    this.selectedCUSTOMER = CUSTOMER;
+    this.selectedCUSTOMER = CUSTOMER
     this.CUSTOMER = CUSTOMER;
     this.isSearched = false;
     this.searchPhoneStr = '';
-    this.BOOKING.B_CUSTOMER = CUSTOMER;
-    this.BOOKING.B_CUSTOMER_ID = CUSTOMER.C_ID;
-    this.BOOKING.B_CUSTOMER_NAME = CUSTOMER.C_NAME;
-    this.BOOKING.B_CUSTOMER_PHONE = CUSTOMER.C_PHONE;
-    this.BOOKING.B_CUSTOMER_VIPCODE = CUSTOMER.C_VIPCODE;
-    if (!this.isNotBooking2TimesInMonth()) {
+    this.BOOKING.B_CUSTOMER = this.CUSTOMER;
+    this.BOOKING.B_CUSTOMER_ID = this.CUSTOMER.C_ID;
+    this.BOOKING.B_CUSTOMER_NAME = this.CUSTOMER.C_NAME;
+    this.BOOKING.B_CUSTOMER_PHONE = this.CUSTOMER.C_PHONE;
+    this.BOOKING.B_CUSTOMER_VIPCODE = this.CUSTOMER.C_VIPCODE;
+    this.BOOKING.B_PERFUME = typeof (this.CUSTOMER.C_PERFUME) == 'undefined' ? false : this.CUSTOMER.C_PERFUME;
+    this.BOOKING.B_MAKEUP = typeof (this.CUSTOMER.C_MAKEUP) == 'undefined' ? false : this.CUSTOMER.C_MAKEUP;
+    this.BOOKING.B_CSCU = typeof (this.CUSTOMER.C_CSCU) == 'undefined' ? false : this.CUSTOMER.C_CSCU;
+    this.BOOKING.B_SUBLIMAGE = typeof (this.CUSTOMER.C_SUBLIMAGE) == 'undefined' ? false : this.CUSTOMER.C_SUBLIMAGE;
+    this.BOOKING.B_LELIFT = typeof (this.CUSTOMER.C_LELIFT) == 'undefined' ? false : this.CUSTOMER.C_LELIFT;
+    this.BOOKING.B_FASHION = typeof (this.CUSTOMER.C_FASHION) == 'undefined' ? false : this.CUSTOMER.C_FASHION;
+    if (this.isBooking2TimesInMonth(this.CUSTOMER, this.BOOKING)) {
       let dateStr = this.calendarService.convertDate(this.CUSTOMER.C_LAST_B_DATE)
-      this.appService.alertConfirmationShow('Oops', 'KH đã đặt lịch hẹn ngày ' + dateStr);
+      this.appService.alertShow('Chú ý', null, 'KH đã đặt lịch hẹn ngày ' + dateStr);
     }
+    this.isCustomerExistingChecked = true;
   }
 
   isNotBooking2TimesInMonth() {
@@ -307,6 +417,19 @@ export class AppointmentAddPage implements OnInit {
     let bookingYYYYMM = this.BOOKING.B_DATE.substr(0, 7)
     return lastBookYYYYMM !== bookingYYYYMM
   }
+
+  isBooking2TimesInMonth(CUSTOMER: iCustomer, BOOKING: iBooking) {
+    let lastBookYYYYMM = CUSTOMER.C_LAST_B_DATE.substr(0, 7)
+    let bookingYYYYMM = BOOKING.B_DATE.substr(0, 7)
+    return lastBookYYYYMM == bookingYYYYMM
+  }
+
+  isSublimageCustomerAndBook2TimesInMonth(CUSTOMER: iCustomer, BOOKING: iBooking) {
+    if (this.isBooking2TimesInMonth(CUSTOMER, BOOKING) && CUSTOMER.C_isSUBLIMAGE) {
+      return true;
+    }
+  }
+
 
 
   resetData() {

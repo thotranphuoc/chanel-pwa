@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content>
-  <div class="main">
+  <!-- <div class="main">
     <div class="content">
       <ion-item lines="none">
         <ion-label color="primary">Có phải khách hàng mới không?</ion-label>
@@ -31,10 +31,10 @@
       </div>
       <div *ngIf="isSearched && SEARCHED_CUSTOMERS.length <1 && searchPhoneStr.length >0">
         <p style="padding: 10px;">Không có thông tin Khách hàng</p>
-      </div>
+      </div> -->
 
-      <!-- OLD CUSTOMER -->
-      <div *ngIf="!BOOKING.B_isNewCustomer" class="old-customer">
+  <!-- OLD CUSTOMER -->
+  <!-- <div *ngIf="!BOOKING.B_isNewCustomer" class="old-customer">
         <div *ngIf="selectedCUSTOMER">
           <ion-item>
             <ion-label color="primary" fixed>Tên:</ion-label>
@@ -109,24 +109,9 @@
             <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
           </ion-item>
         </div>
-
-        <!-- <div class="btn">
-              <button class="add_new" (click)="addNewAppointment()">Add</button>
-            </div> -->
-        <!-- <ion-grid text-center>
-          <ion-row>
-            <ion-col>
-              <ion-button color="danger" expand="block" (click)="doCancel()">Cancel</ion-button>
-            </ion-col>
-            <ion-col>
-              <ion-button expand="block" (click)="addNewAppointment()">Add</ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid> -->
-        <p class="alertAdd">{{ALERTADD}}</p>
-      </div>
-      <!-- NEW CUSTOMER -->
-      <div *ngIf="BOOKING.B_isNewCustomer" class="new-customer">
+      </div> -->
+  <!-- NEW CUSTOMER -->
+  <!-- <div *ngIf="BOOKING.B_isNewCustomer" class="new-customer">
         <ion-item>
           <ion-label color="primary" fixed>Tên:</ion-label>
           <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_NAME"></ion-input>
@@ -151,19 +136,6 @@
           <ion-label color="primary" fixed>Thời gian:</ion-label>
           <ion-button slot="end">{{BOOKING.B_SLOT}}</ion-button>
         </ion-item>
-        <!-- <ion-item>
-          <ion-label color="primary" fixed>Appointment date</ion-label>
-          <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="BOOKING.B_DATE"></ion-datetime>
-        </ion-item>
-        <ion-item lines="none">
-          <ion-label color="primary">Appointment time</ion-label>
-          <ion-select [(ngModel)]="BOOKING.B_SLOT">
-            <ion-select-option value="10:30">10:30</ion-select-option>
-            <ion-select-option value="12:30">12:30</ion-select-option>
-            <ion-select-option value="15:30">15:30</ion-select-option>
-            <ion-select-option value="17:00">17:00</ion-select-option>
-          </ion-select>
-        </ion-item> -->
         <div style="height: 5px"></div>
         <ion-item>
           <ion-label color="primary" fixed>Ghi chú:</ion-label>
@@ -206,12 +178,6 @@
           <ion-label color="primary" fixed>Lần đầu sử dụng facial cabin</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
         </ion-item>
-
-        <!-- <div class="btn">
-              <button class="add_new" (click)="addNewAppointment()">Add</button>
-            </div> -->
-
-        <p class="alertAdd">{{ALERTADD}}</p>
       </div>
       <ion-grid text-center>
         <ion-row>
@@ -225,5 +191,110 @@
         </ion-row>
       </ion-grid>
     </div>
+  </div> -->
+
+  <!-- New update 2019/03/08 -->
+  <div>
+    <ion-item lines="none">
+      <ion-label color="primary">Có phải khách hàng mới không?</ion-label>
+      <ion-toggle [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
+    </ion-item>
+    <div>
+      <ion-searchbar placeholder="Nhập số điện thoại tìm khách hàng cũ" #phone debounce="500" showCancelButton
+        cancelButtonText="Cancel" (ionChange)="searchPhone(phone.value)"></ion-searchbar>
+    </div>
+
+    <div *ngIf="isSearched && SEARCHED_CUSTOMERS.length>0">
+      <ion-item *ngFor="let CUSTOMER of SEARCHED_CUSTOMERS" (click)="selectCustomer(CUSTOMER)">
+        <ion-avatar slot="start">
+          <img [src]="CUSTOMER.C_AVATAR" onError="this.src='../../assets/imgs/user.jpg';">
+        </ion-avatar>
+        <ion-label>{{CUSTOMER.C_NAME}}</ion-label>
+      </ion-item>
+    </div>
+    <div *ngIf="isSearched && SEARCHED_CUSTOMERS.length <1 && searchPhoneStr.length >0">
+      <p style="padding: 10px;">Không có thông tin Khách hàng</p>
+    </div>
+    <div class="new-customer">
+      <ion-item>
+        <ion-label color="primary" fixed>Số điện:</ion-label>
+        <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary" fixed>VIP Code:</ion-label>
+        <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_VIPCODE"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label color="primary" fixed>Tên:</ion-label>
+        <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_NAME"></ion-input>
+      </ion-item>
+
+      <div style="height: 5px"></div>
+      <ion-item>
+        <ion-label color="primary" fixed>Ngày hẹn:</ion-label>
+        <ion-button slot="end">{{BOOKING.B_DATE | date:'dd/MM/yyyy'}}</ion-button>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label color="primary" fixed>Thời gian:</ion-label>
+        <ion-button slot="end">{{BOOKING.B_SLOT}}</ion-button>
+      </ion-item>
+      <div style="height: 5px"></div>
+      <ion-item lines="none">
+        <ion-label color="primary" fixed>Ghi chú:</ion-label>
+        <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
+      </ion-item>
+      <div style="height: 5px"></div>
+      <h3>NHÓM KHÁCH HÀNG</h3>
+      <ion-item>
+        <ion-label color="primary">Khách nước hoa</ion-label>
+        <ion-toggle [(ngModel)]="BOOKING.B_PERFUME"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary">Khách make up</ion-label>
+        <ion-toggle [(ngModel)]="BOOKING.B_MAKEUP"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary">KH sử dụng Skin Care</ion-label>
+        <ion-toggle [(ngModel)]="BOOKING.B_CSCU"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">KH sử dụng Sublimage</ion-label>
+        <ion-toggle [(ngModel)]="BOOKING.B_SUBLIMAGE"></ion-toggle>
+      </ion-item>
+      <ion-item *ngIf="BOOKING.B_SUBLIMAGE">
+        <ion-label stacked></ion-label>
+        <ion-input [(ngModel)]="BOOKING.B_SUBLIMAGES"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary">KH sử dụng Le lift</ion-label>
+        <ion-toggle [(ngModel)]="BOOKING.B_LELIFT"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary">KH sử dụng Fashion</ion-label>
+        <ion-toggle [(ngModel)]="BOOKING.B_FASHION"></ion-toggle>
+      </ion-item>
+      <ion-item *ngIf="BOOKING.B_FASHION">
+        <ion-label stacked></ion-label>
+        <ion-input [(ngModel)]="BOOKING.B_FASHIONS"></ion-input>
+      </ion-item>
+      <!-- <ion-item lines="none">
+        <ion-label color="primary" fixed>Lần đầu sử dụng facial cabin</ion-label>
+        <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
+      </ion-item> -->
+    </div>
+    <ion-grid text-center>
+      <ion-row>
+        <!-- <ion-col>
+            <ion-button color="danger" expand="block" (click)="doCancel()">Huỷ bỏ</ion-button>
+          </ion-col> -->
+        <ion-col>
+          <ion-button expand="block" (click)="doAddBooking()" [disabled]="!isFullFilled()">Thêm
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 </ion-content>

@@ -6,6 +6,7 @@ import { iFacialCabin } from '../interfaces/facialcabin.interface';
 import { iFacial } from '../interfaces/ifacial.interface';
 import { iBooking } from '../interfaces/booking.interface';
 import { iSlot } from '../interfaces/slot.interface';
+import { iDay } from '../interfaces/day.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -59,9 +60,20 @@ export class LocalService {
     C_LAST_B_ID: '',
     C_LAST_B_DATE: '',
     C_LAST_B_SLOT: '',
-    C_BOOKINGS: [],
+    C_BOOKINGS: {},
     C_isSUBLIMAGE: false,
-    C_BOOK_STATE: ''
+    C_LASTUSE_SUBLIMAGE: '',
+    C_BOOK_STATE: '',
+    C_PERFUME: false,
+    C_MAKEUP: false,
+    C_CSCU: false,
+    C_SUBLIMAGE: false,
+    C_SUBLIMAGES: '',
+    C_LELIFT: false,
+    C_FASHION: false,
+    C_FASHIONS: '',
+    C_NOTE: '',
+    C_isNewCustomer: null
 
   }
 
@@ -84,6 +96,29 @@ export class LocalService {
     F_FASHIONCUSTOMER: 'false',
     F_FASHIONPRODUCT: null,
     F_FIRSTTIME: 'false',
+  }
+
+  DAY_DAFAULT: iDay = {
+    Date: '',
+    DateId: '',
+    Slots: [],
+    date: '=',
+    isThePast: false
+  }
+
+  SLOT: iSlot = null;
+  SLOT_DEFAULT: iSlot = {
+    BOOK_ID: '',
+    SLOT: '',
+    STATUS: '',
+    BAB_ID: '',
+    BAB_NAME: '',
+    BAS_ID: '',
+    BAS_NAME: '',
+    MAN_ID: '',
+    MAN_NAME: '',
+    SPE_ID: '',
+    SPE_NAME: '',
   }
 
 
@@ -131,29 +166,8 @@ export class LocalService {
     B_SVC_BOOK: 0,
     B_SVC_USE: 0,
     B_SVC_CANCEL: 0,
-    B_OTHER: {}
+    B_OTHER: {},
+    B_DAY: this.DAY_DAFAULT,
+
   }
-
-  // SLOT: iSlot = {
-  //   SLOT: '',
-  //   STATUS: 'AVAILABLE',
-  //   BOOK_ID: '';
-  // }
-
-
-///////////////SLOT/////////////////
-SLOT: iSlot = null;
-SLOT_DEFAULT: iSlot = {
-    BOOK_ID: '',
-    SLOT: '',
-    STATUS: '',
-    BAB_ID: '',
-    BAB_NAME: '',
-    BAS_ID: '',
-    BAS_NAME: '',
-    MAN_ID: '',
-    MAN_NAME: '',
-    SPE_ID: '',
-    SPE_NAME: '',
-}
 }
