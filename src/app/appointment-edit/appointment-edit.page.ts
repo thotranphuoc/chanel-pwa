@@ -10,6 +10,7 @@ import { LocalService } from '../services/local.service';
 import { AppointmentCalendarEditPage } from '../appointment-calendar-edit/appointment-calendar-edit.page';
 import { Subscription } from 'rxjs';
 import { SetgetService } from '../services/setget.service';
+import { AppointmentCalendarEditNewPage } from '../appointment-calendar-edit-new/appointment-calendar-edit-new.page';
 @Component({
   selector: 'app-appointment-edit',
   templateUrl: './appointment-edit.page.html',
@@ -124,8 +125,12 @@ export class AppointmentEditPage implements OnInit {
   async changeTimeSlot() {
     this.doCancel();
     console.log('Chay chon thay doi ngay');
+    // const modal = await this.modalController.create({
+    //   component: AppointmentCalendarEditPage,
+    //   componentProps: { selectedDay: this.Day, Slot: this.Slot, index: this.index, BOOKING: this.BOOKING }
+    // });
     const modal = await this.modalController.create({
-      component: AppointmentCalendarEditPage,
+      component: AppointmentCalendarEditNewPage,
       componentProps: { selectedDay: this.Day, Slot: this.Slot, index: this.index, BOOKING: this.BOOKING }
     });
     await modal.present();

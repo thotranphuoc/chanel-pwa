@@ -220,17 +220,18 @@
         <ion-label color="primary" fixed>Số điện:</ion-label>
         <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
       </ion-item>
-
       <ion-item>
         <ion-label color="primary" fixed>VIP Code:</ion-label>
         <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_VIPCODE"></ion-input>
       </ion-item>
-
-      <ion-item lines="none">
+      <ion-item>
         <ion-label color="primary" fixed>Tên:</ion-label>
         <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_NAME"></ion-input>
       </ion-item>
-
+      <ion-item lines="none">
+        <ion-label color="primary" fixed>Ngày đặt lịch trước:</ion-label>
+        <ion-datetime disabled displayFormat="DD/MM/YYYY" [(ngModel)]="CUSTOMER.C_LAST_B_DATE"></ion-datetime>
+      </ion-item>
       <div style="height: 5px"></div>
       <ion-item>
         <ion-label color="primary" fixed>Ngày hẹn:</ion-label>
@@ -291,7 +292,7 @@
             <ion-button color="danger" expand="block" (click)="doCancel()">Huỷ bỏ</ion-button>
           </ion-col> -->
         <ion-col>
-          <ion-button expand="block" (click)="doAddBooking()" [disabled]="!isFullFilled()">Thêm
+          <ion-button expand="block" (click)="doAdd()" [disabled]="!isFullFilled()">Thêm
           </ion-button>
         </ion-col>
       </ion-row>

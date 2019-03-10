@@ -7,11 +7,9 @@ import { CrudService } from '../services/crud.service';
 import { Subscription, Observable } from 'rxjs';
 import { iSlot } from '../interfaces/slot.interface';
 import { iDay } from '../interfaces/day.interface';
-// import { AppointmentEditPage } from '../appointment-edit/appointment-edit.page';
 import { LocalService } from '../services/local.service';
 import { AppService } from '../services/app.service';
 import { SlotsInDayPage } from '../slots-in-day/slots-in-day.page';
-import { readPatchedData } from '@angular/core/src/render3/util';
 import { iBooking } from '../interfaces/booking.interface';
 import { iUser } from '../interfaces/user.interface';
 
@@ -70,15 +68,6 @@ export class AppointmentCalendarEditPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initCalendar();
-
-    // this.crudService.bookingGet(this.Slot.BOOK_ID)
-    //   .subscribe(docSnap => {
-    //     console.log(docSnap);
-    //     let BOOKING = <iBooking>docSnap.data();
-    //     console.log('Booking');
-    //     console.log(BOOKING);
-    //     this.BOOKING = BOOKING;
-    //   })
   }
 
   ngOnDestroy() {

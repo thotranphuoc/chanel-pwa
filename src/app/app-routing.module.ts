@@ -47,6 +47,7 @@ const routes: Routes = [
   { path: 'booking-history-detail', loadChildren: './booking-history-detail/booking-history-detail.module#BookingHistoryDetailPageModule' },
   { path: 'appointments-manage', loadChildren: './appointments-manage/appointments-manage.module#AppointmentsManagePageModule' },
   { path: 'bookings-view', loadChildren: './bookings-view/bookings-view.module#BookingsViewPageModule' },
+  { path: 'appointment-calendar-edit-new', loadChildren: './appointment-calendar-edit-new/appointment-calendar-edit-new.module#AppointmentCalendarEditNewPageModule' },
 
 ];
 

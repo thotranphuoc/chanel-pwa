@@ -37,12 +37,13 @@ import { PhotoTakePageModule } from './photo-take/photo-take.module';
 import { UserPhotoTakePageModule } from './user-photo-take/user-photo-take.module';
 import { ImageService } from './services/image.service';
 import { PapaParseModule } from 'ngx-papaparse';
+import { AppointmentCalendarEditNewPageModule } from './appointment-calendar-edit-new/appointment-calendar-edit-new.module';
 firebase.initializeApp(environment.firebase);
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [
-    
+
   ],
   imports: [
     BrowserModule,
@@ -66,6 +67,7 @@ firebase.initializeApp(environment.firebase);
     AppointmentAddPageModule,
     AppointmentEditPageModule,
     AppointmentCalendarEditPageModule,
+    AppointmentCalendarEditNewPageModule,
     SlotsInDayPageModule,
     UserPhotoTakePageModule
   ],
@@ -77,6 +79,6 @@ firebase.initializeApp(environment.firebase);
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],
-  
+
 })
 export class AppModule { }

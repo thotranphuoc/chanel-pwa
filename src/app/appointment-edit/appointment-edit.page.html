@@ -12,22 +12,20 @@
 <ion-content>
   <div class="main">
     <div class="content">
-      <div class="old-customer" *ngIf="BOOKING">
+      <div class="new-customer" *ngIf="BOOKING">
+        <ion-item>
+          <ion-label color="primary" fixed>Số điện thoại:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" fixed>VIP Code:</ion-label>
+          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_VIPCODE"></ion-input>
+        </ion-item>
         <ion-item>
           <ion-label color="primary" fixed>Tên:</ion-label>
           <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_NAME"></ion-input>
         </ion-item>
 
-        <ion-item>
-          <ion-label color="primary" fixed>VIP Code:</ion-label>
-          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_VIPCODE"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label color="primary" fixed>Số điện thoại:</ion-label>
-          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
-
-        </ion-item>
         <div style="height: 5px"></div>
         <ion-item>
           <ion-label color="primary" fixed>Ngày hẹn:</ion-label>
@@ -35,7 +33,7 @@
             {{BOOKING.B_DATE | date:'dd/MM/yyyy'}}
           </ion-button>
         </ion-item>
-        <ion-item>
+        <ion-item lines="none">
           <ion-label color="primary" fixed>Thời gian:</ion-label>
           <ion-button [disabled]="isChangeSlotDisabled()" slot="end" (click)="changeTimeSlot()">{{BOOKING.B_SLOT}}
           </ion-button>
@@ -47,7 +45,7 @@
           <ion-input type="text" placeholder="Ghi chú" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
         </ion-item>
         <div style="height: 5px"></div>
-
+        <h3>NHÓM KHÁCH HÀNG</h3>
         <ion-item>
           <ion-label color="primary">Khách nước hoa</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_PERFUME"></ion-toggle>
@@ -78,20 +76,18 @@
           <ion-label color="primary">KH sử dụng Fashion</ion-label>
           <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_FASHION"></ion-toggle>
         </ion-item>
-        <ion-item *ngIf="BOOKING.B_FASHION">
+        <ion-item lines="none" *ngIf="BOOKING.B_FASHION">
           <ion-label stacked></ion-label>
           <ion-input disabled="true" [(ngModel)]="BOOKING.B_FASHIONS" placeholder="Sản phẩm Fashion khách dùng">
           </ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label color="primary" fixed>Lần đầu sử dụng facial cabin</ion-label>
-          <ion-toggle disabled="true" [(ngModel)]="BOOKING.B_isNewCustomer"></ion-toggle>
-        </ion-item>
+        <div style="height: 5px"></div>
         <ion-item>
           <ion-label color="primary" fixed>Trạng thái:</ion-label>
           <ion-button [disabled]="isDisabled()" slot="end" (click)="setBookingStatus()">{{BOOKING.B_STATUS_VI}}
           </ion-button>
         </ion-item>
+
         <div *ngIf="BOOKING.B_STATUS =='COMPLETED'">
           <ion-item>
             <ion-label color="primary" fixed>Tổng tiền:</ion-label>
@@ -116,15 +112,16 @@
             <ion-input type="text" placeholder="Nhập thông tin TILL" [(ngModel)]="BOOKING.B_TILL"></ion-input>
           </ion-item>
         </div>
-        <ion-grid text-center>
-          <ion-row>
-            <ion-col>
-              <ion-button [disabled]="isDisabled()" color="secondary" expand="block" (click)="updateBooking()">Cập nhật
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+
       </div>
     </div>
   </div>
+  <ion-grid text-center>
+    <ion-row>
+      <ion-col>
+        <ion-button [disabled]="isDisabled()" color="secondary" expand="block" (click)="updateBooking()">Cập nhật
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
