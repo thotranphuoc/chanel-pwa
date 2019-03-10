@@ -78,11 +78,6 @@ export class AppointmentEditPage implements OnInit {
   }
 
   updateBooking() {
-    // if (this.BOOKING.B_STATUS == 'COMPLETED' && this.BOOKING.B_TOTAL < 1) {
-    //   this.appService.alertConfirmationShow('Opps', 'Nhập số tiền trước khi close Booking');
-    //   return;
-    // }
-
     if (this.BOOKING.B_STATUS == 'COMPLETED' && !(this.USER.U_ROLE == 'Specialist' || this.USER.U_ROLE == 'Manager')) {
       this.appService.alertConfirmationShow('Opps', 'Bạn không có quyền close Booking');
       return;
@@ -245,7 +240,7 @@ export class AppointmentEditPage implements OnInit {
       inputs: INPUTS,
       buttons: [
         {
-          text: 'Huỷ bỏ',
+          text: 'Quay lại',
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {

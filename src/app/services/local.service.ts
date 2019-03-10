@@ -168,6 +168,8 @@ export class LocalService {
     B_SVC_CANCEL: 0,
     B_OTHER: {},
     B_DAY: this.DAY_DAFAULT,
+    B_MEMOS: '',
+    B_TILL: ''
 
   }
 }

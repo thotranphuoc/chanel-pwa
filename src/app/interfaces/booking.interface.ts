@@ -48,5 +48,7 @@ export interface iBooking {
     B_SVC_BOOK: number,
     B_SVC_USE: number,
     B_SVC_CANCEL: number,
+    B_MEMOS: string,
+    B_TILL: string,
     B_OTHER: any
 }

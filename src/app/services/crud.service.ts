@@ -203,6 +203,12 @@ export class CrudService {
     return this.bookingCreate(BOOKING);
   }
 
+  /**
+   * 
+   * 1- create booking
+   * 2- update Customer info
+   * 3- update calendar 
+   */
   bookingCreate(BOOKING: iBooking) {
     return new Promise((resolve, reject) => {
       this.afs.collection('BOOKINGS').add(BOOKING)
@@ -234,7 +240,21 @@ export class CrudService {
   }
 
   bookingUpdate(BOOKING: iBooking) {
-    return this.afs.doc('BOOKINGS/' + BOOKING.B_ID).update(BOOKING)
+    return new Promise((resolve, reject) => {
+      this.afs.doc('BOOKINGS/' + BOOKING.B_ID).update(BOOKING)
+        .then(() => {
+          // update last booking and isSublimage for customer
+          return this.customerUpdateAfterBookingChange(BOOKING);
+        })
+        .then(() => {
+          // update calendars after booking change
+          return this.dayUpdateAfterBookingChange(BOOKING);
+        })
+        .then(() => {
+          resolve({ MSG: 'Đặt hẹn thành công', BOOKING: BOOKING });
+        })
+        .catch((err) => reject(err));
+    })
   }
 
   calendarMonthCreate(YYYYMM: string, data: any) {

@@ -107,12 +107,17 @@
               <span *ngIf="!BOOKING.B_BA_SELL_NAME">Chọn B.A bán hàng</span>
             </ion-button>
           </ion-item>
+          <ion-item>
+            <ion-label color="primary" fixed>MEMOS:</ion-label>
+            <ion-input type="text" placeholder="Nhập thông tin MEMOS" [(ngModel)]="BOOKING.B_MEMOS"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary" fixed>TILL:</ion-label>
+            <ion-input type="text" placeholder="Nhập thông tin TILL" [(ngModel)]="BOOKING.B_TILL"></ion-input>
+          </ion-item>
         </div>
         <ion-grid text-center>
           <ion-row>
-            <ion-col>
-              <ion-button color="danger" expand="block" (click)="doCancel()">Huỷ bỏ</ion-button>
-            </ion-col>
             <ion-col>
               <ion-button [disabled]="isDisabled()" color="secondary" expand="block" (click)="updateBooking()">Cập nhật
               </ion-button>
