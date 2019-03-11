@@ -30,18 +30,39 @@
           <ion-input type="text" placeholder="" [(ngModel)]="CUSTOMER.C_VIPCODE"></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label color="primary">Khách Nước Hoa:</ion-label>
+          <ion-toggle disabled [(ngModel)]="CUSTOMER.C_PERFUME"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Khách MakeUp:</ion-label>
+          <ion-toggle disabled [(ngModel)]="CUSTOMER.C_MAKEUP"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Khách Skin Care:</ion-label>
+          <ion-toggle disabled [(ngModel)]="CUSTOMER.C_CSCU"></ion-toggle>
+        </ion-item>
+        <ion-item>
           <ion-label color="primary">Khách Sublimage:</ion-label>
-          <ion-toggle [(ngModel)]="CUSTOMER.C_isSUBLIMAGE"></ion-toggle>
+          <ion-toggle disabled [(ngModel)]="CUSTOMER.C_SUBLIMAGE"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Khách Le Lift:</ion-label>
+          <ion-toggle disabled [(ngModel)]="CUSTOMER.C_LELIFT"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Khách Fashion:</ion-label>
+          <ion-toggle disabled [(ngModel)]="CUSTOMER.C_FASHION"></ion-toggle>
         </ion-item>
         <ion-item lines="none">
-          <ion-label color="primary" fixed>Ngày đặt lịch trước:</ion-label>
-          <ion-datetime disabled displayFormat="DD/MM/YYYY" [(ngModel)]="CUSTOMER.C_LAST_B_DATE"></ion-datetime>
+          <ion-label color="primary" fixed>Lịch lần trước:</ion-label>
+          <ion-button fill="outline">{{CUSTOMER.C_LAST_B_DATE}} -{{CUSTOMER.C_LAST_B_SLOT}} </ion-button>
+          <!-- <ion-datetime disabled displayFormat="DD/MM/YYYY" [(ngModel)]="CUSTOMER.C_LAST_B_DATE"></ion-datetime> -->
         </ion-item>
         <div class="button_div">
           <ion-grid>
             <ion-row>
               <ion-col>
-                <ion-button expand="block" color="danger" (click)="doCancel()">Huỷ bỏ</ion-button>
+                <ion-button expand="block" color="danger" (click)="doCancel()">Quay lại</ion-button>
               </ion-col>
               <ion-col>
                 <ion-button expand="block" (click)="updateCustomer()">Cập nhật</ion-button>

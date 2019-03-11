@@ -11,9 +11,14 @@
   <ion-searchbar type="tel" #search_phone (ionChange)="search(search_phone.value)"></ion-searchbar>
   <ion-item *ngFor="let CUSTOMER of CUSTOMERS" (click)="go2CustomerEdit(CUSTOMER)">
     <ion-avatar slot="start">
-      <img [src]="CUSTOMER.C_AVATAR" onError="this.src='../../assets/imgs/user.jpg';">
+      <img [src]="CUSTOMER.U_AVATAR" onError="this.src='../../assets/imgs/user.jpg';">
     </ion-avatar>
-    <ion-label>{{CUSTOMER.C_NAME}} - {{CUSTOMER.C_PHONE}}</ion-label>
+    <ion-label>
+      <h3>{{CUSTOMER.C_NAME}}</h3>
+      <h4>{{CUSTOMER.C_VIPCODE}}</h4>
+      <p><i>{{CUSTOMER.C_PHONE}}</i></p>
+      <p>{{CUSTOMER.C_LAST_B_DATE}} {{CUSTOMER.C_LAST_B_SLOT}} </p>
+    </ion-label>
     <ion-note slot="end">
       <ion-icon name="md-create"></ion-icon>
     </ion-note>

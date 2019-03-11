@@ -38,7 +38,6 @@ const routes: Routes = [
   { path: 'users', loadChildren: './users/users.module#UsersPageModule' },
   { path: 'user-edit', loadChildren: './user-edit/user-edit.module#UserEditPageModule' },
   { path: 'slots-in-day', loadChildren: './slots-in-day/slots-in-day.module#SlotsInDayPageModule' },
-  { path: 'appointment-calendar-edit', loadChildren: './appointment-calendar-edit/appointment-calendar-edit.module#AppointmentCalendarEditPageModule' },
   { path: 'slot-assign', loadChildren: './slot-assign/slot-assign.module#SlotAssignPageModule' },
   { path: 'photo-take', loadChildren: './photo-take/photo-take.module#PhotoTakePageModule' },
   { path: 'user-photo-take', loadChildren: './user-photo-take/user-photo-take.module#UserPhotoTakePageModule' },

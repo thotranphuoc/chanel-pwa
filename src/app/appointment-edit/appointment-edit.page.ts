@@ -7,7 +7,6 @@ import { CrudService } from '../services/crud.service';
 import { AppService } from '../services/app.service';
 import { iUser } from '../interfaces/user.interface';
 import { LocalService } from '../services/local.service';
-import { AppointmentCalendarEditPage } from '../appointment-calendar-edit/appointment-calendar-edit.page';
 import { Subscription } from 'rxjs';
 import { SetgetService } from '../services/setget.service';
 import { AppointmentCalendarEditNewPage } from '../appointment-calendar-edit-new/appointment-calendar-edit-new.page';
@@ -38,13 +37,6 @@ export class AppointmentEditPage implements OnInit {
     FA: [{ VI: 'HUỶ BỎ', EN: 'CANCELED' }],
   }
 
-  // RIGHTS = {
-  //   Admin: [{ VI: 'CHỜ DUYỆT', EN: 'DRAFT' }, { VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
-  //   Manager: ['DRAFT', 'AVAILABLE', 'BOOKED', 'COMPLETED', 'CANCELED', 'EXPIRED'],
-  //   Specialist: ['AVAILABLE', 'BOOKED', 'COMPLETED', 'CANCELED', 'EXPIRED'],
-  //   BA: ['AVAILABLE', 'BOOKED', 'CANCELED', 'EXPIRED'],
-  //   FA: ['AVAILABLE', 'BOOKED', 'CANCELED', 'EXPIRED']
-  // }
   constructor(
     private navPar: NavParams,
     private modalCtrl: ModalController,
@@ -102,20 +94,12 @@ export class AppointmentEditPage implements OnInit {
         console.log(res);
         this.doDismiss(null);
         this.loadingService.loadingDissmiss();
-        // // update CALENDARS/DATE/{}
-        // return this.doUpdateCalendarsForDay(this.BOOKING);
       })
       .catch(err => {
         console.log(err);
         this.loadingService.loadingDissmiss();
       })
   }
-
-  // doUpdateCalendarsForDay(Booking: iBooking) {
-  //   // update CALENDARS/DATE/{}
-  //   this.Day.Slots[this.index].STATUS = Booking.B_STATUS;
-  //   return this.crudService.dayUpdate(this.Day)
-  // }
 
   doDismiss(data: any) {
     this.modalCtrl.getTop().then(res => {
@@ -198,44 +182,6 @@ export class AppointmentEditPage implements OnInit {
 
     await alert.present();
   }
-
-  // async setBASelling() {
-  //   let INPUTS = [];
-  //   this.BAs.forEach(BA => {
-  //     let INP = {
-  //       name: 'radio1',
-  //       type: 'radio',
-  //       label: BA.U_FULLNAME,
-  //       value: BA,
-  //     }
-  //     INPUTS.push(INP);
-  //   })
-  //   const alert = await this.alertCtrl.create({
-  //     header: 'BA bán hàng',
-  //     inputs: INPUTS,
-  //     buttons: [
-  //       {
-  //         text: 'Huỷ bỏ',
-  //         role: 'cancel',
-  //         cssClass: 'secondary',
-  //         handler: () => {
-  //           console.log('Confirm Cancel');
-  //         }
-  //       }, {
-  //         text: 'Chấp nhận',
-  //         handler: (data: iUser) => {
-  //           console.log(data);
-  //           this.BOOKING.B_BA_SELL = data;
-  //           this.BOOKING.B_BA_SELL_ID = data.U_ID;
-  //           this.BOOKING.B_BA_SELL_NAME = data.U_FULLNAME;
-  //         }
-  //       }
-  //     ]
-  //   });
-
-  //   await alert.present();
-  // }
-
   async setBASelling() {
     const modal = await this.modalController.create({
       component: SearchPage,
@@ -244,11 +190,13 @@ export class AppointmentEditPage implements OnInit {
     await modal.present();
     const res: any = await modal.onDidDismiss();
     console.log(res);
-    if (res && typeof(res) !=='undefined') {
+    if (res && typeof (res) !== 'undefined') {
       let BA_SALE = res.data.selectedBA;
-      this.BOOKING.B_BA_SELL = BA_SALE;
-      this.BOOKING.B_BA_SELL_ID = BA_SALE.U_ID;
-      this.BOOKING.B_BA_SELL_NAME = BA_SALE.U_FULLNAME;
+      if (BA_SALE) {
+        this.BOOKING.B_BA_SELL = BA_SALE;
+        this.BOOKING.B_BA_SELL_ID = BA_SALE.U_ID;
+        this.BOOKING.B_BA_SELL_NAME = BA_SALE.U_FULLNAME;
+      }
     }
   }
 

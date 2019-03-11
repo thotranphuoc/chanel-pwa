@@ -31,7 +31,6 @@ import { CustomerAddPageModule } from './customer-add/customer-add.module';
 import { AppointmentAddPageModule } from './appointment-add/appointment-add.module';
 import { AppointmentEditPageModule } from './appointment-edit/appointment-edit.module';
 import { SlotsInDayPageModule } from './slots-in-day/slots-in-day.module';
-import { AppointmentCalendarEditPageModule } from './appointment-calendar-edit/appointment-calendar-edit.module';
 import { DbService } from './services/db.service';
 import { PhotoTakePageModule } from './photo-take/photo-take.module';
 import { UserPhotoTakePageModule } from './user-photo-take/user-photo-take.module';
@@ -67,7 +66,6 @@ firebase.initializeApp(environment.firebase);
     CustomerAddPageModule,
     AppointmentAddPageModule,
     AppointmentEditPageModule,
-    AppointmentCalendarEditPageModule,
     AppointmentCalendarEditNewPageModule,
     SlotsInDayPageModule,
     UserPhotoTakePageModule,
