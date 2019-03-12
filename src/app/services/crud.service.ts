@@ -270,10 +270,6 @@ export class CrudService {
     return this.afs.doc('CALENDARS/' + YYYYMM).valueChanges()
   }
 
-<<<<<<< HEAD
-  calendarMonthGetPromise(YYYYMM: string) {
-    return firebase.firestore().doc('CALENDARS/' + YYYYMM).get();
-=======
   calendarDayGet(YYYYMMDD: string) {
     let fullday=YYYYMMDD.split("-")
     console.log(fullday);
@@ -285,7 +281,6 @@ export class CrudService {
 
   calendarMonthGetPromise(YYYYMM: string){
     return firebase.firestore().doc('CALENDARS/'+ YYYYMM).get();
->>>>>>> 029553e66f2a04cc4c875624622c86446910fee5
   }
 
   calendarMonthUpdate(YYYYMM: string, data: any) {

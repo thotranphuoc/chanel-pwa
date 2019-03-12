@@ -11,7 +11,7 @@ export class LoadingService {
   async presentLoading() {
     this.loading = await this.loadingController.create({
       message: 'Vui lòng chờ ...',
-      duration: 20000
+      duration: 10000
     });
     await this.loading.present();
 

@@ -143,7 +143,7 @@ export class AppointmentEditPage implements OnInit {
         let USER = <iUser>docSnap.data();
         USERS.push(USER);
       })
-      this.BAs = USERS.filter(U => U.U_ROLE == 'BA').sort((a, b) => {
+      this.BAs = USERS.filter(U => (U.U_ROLE == 'Specialist'|| U.U_ROLE == 'BAS')).sort((a, b) => {
         if (a.U_NAME > b.U_NAME) return 1;
         if (a.U_NAME < b.U_NAME) return -1;
         return 0;

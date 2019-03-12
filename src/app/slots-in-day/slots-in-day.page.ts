@@ -20,11 +20,10 @@ export class SlotsInDayPage implements OnInit {
     console.log(this.data);
     this.selectedDay = this.data.selectedDay;
     let temp = this.selectedDay.DateId;
-    let year = temp.substr(0, 4);
-    let month = temp.substr(4, 2);
-    let date = temp.substr(6, temp.length - 6);
-    let finalDate = date.length < 2 ? '0' + date : date;
-    this.DATE = finalDate + '/' + month + '/' + year;
+    let YYYY = temp.substr(0, 4);
+    let MM = temp.substr(4, 2);
+    let DD = temp.substr(6, 2);
+    this.DATE = DD + '/' + MM + '/' + YYYY;
 
   }
 
@@ -52,6 +51,27 @@ export class SlotsInDayPage implements OnInit {
       console.log(res);
       if (typeof (res) !== 'undefined') res.dismiss();
     }).catch(err => { console.log(err) });
+  }
+
+  convertStatus(STATE: string) {
+    switch (STATE) {
+      case 'AVAILABLE':
+        return 'TRỐNG'
+      case 'BOOKED':
+        return 'ĐÃ ĐẶT'
+      case 'COMPLETED':
+        return 'HOÀN THÀNH'
+      case 'CANCELED':
+        return 'HUỶ BỎ'
+      case 'EXPIRED':
+        return 'HẾT HẠN'
+      case 'DRAFT':
+        return 'CHỜ DUYỆT'
+      case 'BLOCKED':
+        return 'KHOÁ'
+      default:
+        break;
+    }
   }
 
 }
