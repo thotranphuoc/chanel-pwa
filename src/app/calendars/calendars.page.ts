@@ -48,7 +48,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initCalendar();
-    this.loadingService.presentLoading();
+
   }
 
   ngOnDestroy() {
@@ -64,6 +64,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
     let _35Days1: iDay[] = this.calendarService.create35DaysOfMonth(this.currentYYYYMM);
     let _35Days2: iDay[] = this.calendarService.create35DaysOfMonth(this.nextYYYYMM);
     console.log(_35Days1, _35Days2);
+    this.loadingService.presentLoading();
     this.month1Subscription = this.crudService.calendarMonthGet(this.currentYYYYMM)
       .subscribe(data => {
         this.WEEKSinMONTH1 = [];
@@ -166,7 +167,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
     console.log(Day, SLOT);
     if (this.localService.USER) {
       if (SLOT.STATUS == 'BLOCKED') return;
-      if (SLOT.STATUS == 'AVAILABLE') {
+      if (SLOT.STATUS == 'AVAILABLE' || SLOT.STATUS == 'CANCELED') {
         this.modalAppointmentAdd(Day, SLOT, index);
       } else {
         this.modalAppointmentEdit(Day, SLOT, index);

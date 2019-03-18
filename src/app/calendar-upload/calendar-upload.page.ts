@@ -179,7 +179,7 @@ export class CalendarUploadPage implements OnInit {
       let _date = THANG + '/' + NGAY;
       let SLOT1 = this.getSpecialistOfSlot(item._10h30, '10:30');
       let SLOT2 = this.getSpecialistOfSlot(item._12h30, '12:30');
-      let SLOT3 = this.getSpecialistOfSlot(item._15h30, '15:30');
+      let SLOT3 = this.getSpecialistOfSlot(item._15h00, '15:00');
       let SLOT4 = this.getSpecialistOfSlot(item._17h30, '17:30');
       let _Slots: iSlot[] = [SLOT1, SLOT2, SLOT3, SLOT4];
       let _DAY: iDay = {
@@ -230,7 +230,7 @@ export class CalendarUploadPage implements OnInit {
 export interface iInput {
   _10h30: 'string',
   _12h30: 'string',
-  _15h30: 'string',
+  _15h00: 'string',
   _17h30: 'string',
   NAM: 'string',
   THANG: 'string',

@@ -149,7 +149,7 @@ export class CalendarService {
   }
 
   private createSlots(numberOfSlot: number) {
-    let timeSlots = ['10:30', '12:30', '15:30', '17:00', 'over'];
+    let timeSlots = ['10:30', '12:30', '15:00', '17:00', 'over'];
     let Slots = []
     for (let index = 0; index < numberOfSlot; index++) {
       let SLOT: iSlot = {

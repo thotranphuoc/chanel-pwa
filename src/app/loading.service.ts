@@ -6,7 +6,7 @@ import { LoadingController } from '@ionic/angular';
 })
 export class LoadingService {
   loading: any;
-  constructor(public loadingController: LoadingController) {}
+  constructor(public loadingController: LoadingController) { }
 
   async presentLoading() {
     this.loading = await this.loadingController.create({
@@ -20,9 +20,11 @@ export class LoadingService {
     console.log('Loading dismissed!');
   }
 
-  async loadingDissmiss(){
-    await this.loading.dismiss();
-    console.log('Loading dismissed!');
+  loadingDissmiss() {
+    if (typeof (this.loading) !== 'undefined') {
+      this.loading.dismiss();
+      console.log('Loading dismissed!');
+    }
   }
 
   async presentLoadingWithOptions() {

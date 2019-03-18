@@ -15,7 +15,7 @@
       <div class="new-customer" *ngIf="BOOKING">
         <ion-item>
           <ion-label color="primary" fixed>Số điện thoại:</ion-label>
-          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_PHONE"></ion-input>
+          <ion-button href="tel:{{BOOKING.B_CUSTOMER_PHONE}}" slot="end">{{BOOKING.B_CUSTOMER_PHONE}}</ion-button>
         </ion-item>
         <ion-item>
           <ion-label color="primary" fixed>VIP Code:</ion-label>
