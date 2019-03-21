@@ -97,7 +97,8 @@ export class AppointmentCalendarEditNewPage implements OnInit {
 
   // START FROM HERE
   selectSlotInList(Day: iDay, SLOT: iSlot, index: number) {
-    if(SLOT.STATUS !=='AVAILABLE') return;
+    if(!(SLOT.STATUS =='AVAILABLE' || SLOT.STATUS =='CANCELED')) return;
+    if(Day.isThePast) return;
     let _date = Day.DateId.substr(6, 2) + '/' + Day.DateId.substr(4, 2) + '/' + Day.DateId.substr(0, 4);
     let _slot = SLOT.SLOT;
     let MSG = 'Bạn chắc muốn đổi sang slot ' + _date + ' ' + _slot + ' ?';

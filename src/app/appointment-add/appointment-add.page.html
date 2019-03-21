@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Đặt hẹn</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="doCancel()">
+    <!-- <ion-buttons slot="end">
+      <ion-button color="danger" (click)="doCancel()">Huỷ
         <ion-icon color="danger" slot="end" name="close"></ion-icon>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
@@ -288,9 +288,9 @@
     </div>
     <ion-grid text-center>
       <ion-row>
-        <!-- <ion-col>
-            <ion-button color="danger" expand="block" (click)="doCancel()">Huỷ bỏ</ion-button>
-          </ion-col> -->
+        <ion-col>
+          <ion-button color="danger" expand="block" (click)="doCancel()">Quay lại</ion-button>
+        </ion-col>
         <ion-col>
           <ion-button expand="block" (click)="doAddBooking()" [disabled]="!isFullFilled()">Thêm
           </ion-button>
