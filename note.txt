@@ -3,3 +3,7 @@ npm install firebase @angular/fire --save
 
 //install package read csv on Angular 6 and 7
 npm install ngx-papaparse@3 --save
+
+// install file-save & xlsx
+npm install --save file-saver
+npm install xlsx --save
