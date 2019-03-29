@@ -3,18 +3,18 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Reports Management</ion-title>
-    <ion-buttons slot="end">
+    <ion-title>Báo Cáo</ion-title>
+    <!-- <ion-buttons slot="end">
       <ion-button>
         Select
         <ion-icon slot="end" name="funnel"></ion-icon>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-segment>
+<ion-content>
+  <!-- <ion-segment>
     <ion-segment-button checked layout="icon-start">
       <ion-label>Monthly</ion-label>
       <ion-icon name="calendar"></ion-icon>
@@ -83,5 +83,98 @@
       <ion-icon slot="end" name="md-download"></ion-icon>
     </ion-button>
   </ion-item>
+
+   -->
+
+  <!-- <ion-item>
+    Bookings Report
+    <ion-button fill="outline" slot="end" (click)="downloadBookingsReport()">
+      Download Excel
+      <ion-icon slot="end" name="md-download"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <ion-item>
+    Customers Report
+    <ion-button fill="outline" slot="end" (click)="downloadCustomersReport()">
+      Download Excel
+      <ion-icon slot="end" name="md-download"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <ion-item (click)="selectReport('Bookings')">
+    Bookings Report
+  </ion-item>
+  <ion-item (click)="selectReport('Customers')">
+    Customers Report
+  </ion-item>
+  <ion-item (click)="selectReport('History')">
+    History Report
+  </ion-item> -->
+
+  <div>
+    <ion-segment [(ngModel)]="selectedReport">
+      <ion-segment-button layout="icon-start" value="Bookings">
+        <ion-label>Overall</ion-label>
+        <ion-icon name="calendar"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button layout="icon-start" value="Customers">
+        <ion-label>Customers</ion-label>
+        <ion-icon name="people"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button layout="icon-start" value="History">
+        <ion-label>History</ion-label>
+        <ion-icon name="time"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="selectedReport">
+    <div *ngSwitchCase="'Bookings'">
+      <ion-item>
+        <ion-label>From:</ion-label>
+        <ion-datetime #From display-format="DD/MM/YYYY" (ionChange)="selectFrom(From.value)"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>To:</ion-label>
+        <ion-datetime #To display-format="DD/MM/YYYY" (ionChange)="selectTo(To.value)"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        Overall Report
+        <ion-button [disabled]="isOverallDisabled(From.value, To.value)" fill="outline" slot="end"
+          (click)="downloadBookingsReportFromTo(From.value, To.value)">
+          Download
+          <ion-icon slot="end" name="md-download"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </div>
+    <div *ngSwitchCase="'Customers'">
+      <ion-item>
+        Customers Report
+        <ion-button fill="outline" slot="end" (click)="downloadCustomersReport()">
+          Download
+          <ion-icon slot="end" name="md-download"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </div>
+    <div *ngSwitchCase="'History'">
+      <ion-searchbar type="tel" #search_phone (ionChange)="search(search_phone.value)"></ion-searchbar>
+      <ion-item *ngFor="let CUSTOMER of CUSTOMERS" (click)="getAllBookingOfCustomer(CUSTOMER)">
+        <ion-avatar slot="start">
+          <img [src]="CUSTOMER.U_AVATAR" onError="this.src='../../assets/imgs/user.jpg';">
+        </ion-avatar>
+        <ion-label>
+          <h3>{{CUSTOMER.C_NAME}}</h3>
+          <h4>{{CUSTOMER.C_VIPCODE}}</h4>
+          <p><i>{{CUSTOMER.C_PHONE}}</i></p>
+          <p>{{CUSTOMER.C_LAST_B_DATE}} {{CUSTOMER.C_LAST_B_SLOT}} </p>
+        </ion-label>
+        <ion-button slot="end">
+          <ion-icon name="time"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </div>
+    <div *ngSwitchDefault>output2</div>
+  </div>
 
 </ion-content>

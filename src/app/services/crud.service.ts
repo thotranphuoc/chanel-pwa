@@ -120,9 +120,22 @@ export class CrudService {
     return this.afs.collection('CUSTOMERS').get();
   }
 
-  customersBookingGet(C_ID: string) {
-    return this.afs.collection('BOOKINGS', ref => ref.where('B_CUSTOMER_ID', '==', C_ID)).get();
+  customersAllGet() {
+    return new Promise((resolve, reject) => {
+      firebase.firestore().collection('CUSTOMERS').get()
+        .then((qSnap) => {
+          let CUSTOMERS: iCustomer[] = [];
+          qSnap.forEach(docSnap => {
+            let CUSTOMER = <iCustomer>docSnap.data();
+            CUSTOMERS.push(CUSTOMER);
+          })
+          resolve({ CUSTOMERS: CUSTOMERS })
+        })
+        .catch(err => reject(err))
+    })
   }
+
+
 
   namePhoneIDUpdate() {
     this.afs.doc('NamePhoneID')
@@ -239,6 +252,10 @@ export class CrudService {
     // })
   }
 
+  bookingsOfCustomerGet(CUSTOMER_ID: string) {
+    return this.afs.collection('BOOKINGS', ref => ref.where('B_CUSTOMER_ID', '==', CUSTOMER_ID)).get();
+  }
+
   bookingUpdate(BOOKING: iBooking) {
     return new Promise((resolve, reject) => {
       let index = BOOKING.B_DAY.Slots.map(slot => slot.SLOT).indexOf(BOOKING.B_SLOT);
@@ -258,6 +275,8 @@ export class CrudService {
         .catch((err) => reject(err));
     })
   }
+
+
 
   calendarMonthCreate(YYYYMM: string, data: any) {
     // this.afs.doc('CALENDARS/' + YYYYMM).get().toPromise().then(res=>{
@@ -407,6 +426,43 @@ export class CrudService {
         })
     })
 
+  }
+
+  bookingsAllGet() {
+    return new Promise((resolve, reject) => {
+      firebase.firestore().collection('BOOKINGS').get()
+        .then(qSnap => {
+          let BOOKINGS = [];
+          qSnap.forEach(qDoc => {
+            let BOOKING = <iBooking>qDoc.data();
+            BOOKINGS.push(BOOKING);
+          })
+          resolve({ BOOKINGS: BOOKINGS });
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  }
+
+  bookingsFromToGet(FROM: string, TO: string) {
+    return new Promise((resolve, reject) => {
+      firebase.firestore().collection('BOOKINGS')
+        .where('B_DATE', '<=', TO)
+        .where('B_DATE', '>=', FROM)
+        .get()
+        .then(qSnap => {
+          let BOOKINGS = [];
+          qSnap.forEach(qDoc => {
+            let BOOKING = <iBooking>qDoc.data();
+            BOOKINGS.push(BOOKING);
+          })
+          resolve({ BOOKINGS: BOOKINGS });
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
   }
 }
 

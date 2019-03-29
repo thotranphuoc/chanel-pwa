@@ -27,7 +27,7 @@ export class BookingHistoryPage implements OnInit {
   }
 
   getBookingCustomers() {
-    this.crudService.customersBookingGet(this.CUSTOMER.C_ID).subscribe(qSnap => {
+    this.crudService.bookingsOfCustomerGet(this.CUSTOMER.C_ID).subscribe(qSnap => {
       console.log(qSnap);
       this.BOOKINGS = [];
       qSnap.forEach(doc => {
