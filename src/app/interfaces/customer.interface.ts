@@ -23,3 +23,14 @@ export interface iCustomer {
     C_NOTE: string,
     C_isNewCustomer: boolean;
 }
+
+// C_BOOKINGS: {
+//     BOOKING_ID1: {
+//         ID: 'dsd',
+//         STATE: 'COMPLETED'
+//     },
+//     BOOKING_ID2: {
+//         ID: 'dsd',
+//         STATE: 'CANCELED'
+//     },
+// }

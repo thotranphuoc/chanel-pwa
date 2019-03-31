@@ -115,15 +115,15 @@
   <div>
     <ion-segment [(ngModel)]="selectedReport">
       <ion-segment-button layout="icon-start" value="Bookings">
-        <ion-label>Overall</ion-label>
+        <ion-label>Tổng hợp</ion-label>
         <ion-icon name="calendar"></ion-icon>
       </ion-segment-button>
       <ion-segment-button layout="icon-start" value="Customers">
-        <ion-label>Customers</ion-label>
+        <ion-label>K/H</ion-label>
         <ion-icon name="people"></ion-icon>
       </ion-segment-button>
       <ion-segment-button layout="icon-start" value="History">
-        <ion-label>History</ion-label>
+        <ion-label>Lịch sử</ion-label>
         <ion-icon name="time"></ion-icon>
       </ion-segment-button>
     </ion-segment>
@@ -132,15 +132,15 @@
   <div [ngSwitch]="selectedReport">
     <div *ngSwitchCase="'Bookings'">
       <ion-item>
-        <ion-label>From:</ion-label>
+        <ion-label>Từ ngày:</ion-label>
         <ion-datetime #From display-format="DD/MM/YYYY" (ionChange)="selectFrom(From.value)"></ion-datetime>
       </ion-item>
       <ion-item>
-        <ion-label>To:</ion-label>
+        <ion-label>Đến ngày:</ion-label>
         <ion-datetime #To display-format="DD/MM/YYYY" (ionChange)="selectTo(To.value)"></ion-datetime>
       </ion-item>
       <ion-item>
-        Overall Report
+        Báo cáo Tổng hợp
         <ion-button [disabled]="isOverallDisabled(From.value, To.value)" fill="outline" slot="end"
           (click)="downloadBookingsReportFromTo(From.value, To.value)">
           Download
@@ -150,7 +150,7 @@
     </div>
     <div *ngSwitchCase="'Customers'">
       <ion-item>
-        Customers Report
+        Báo cáo Khách hàng
         <ion-button fill="outline" slot="end" (click)="downloadCustomersReport()">
           Download
           <ion-icon slot="end" name="md-download"></ion-icon>
@@ -170,7 +170,7 @@
           <p>{{CUSTOMER.C_LAST_B_DATE}} {{CUSTOMER.C_LAST_B_SLOT}} </p>
         </ion-label>
         <ion-button slot="end">
-          <ion-icon name="time"></ion-icon>
+          <ion-icon name="md-download"></ion-icon>
         </ion-button>
       </ion-item>
     </div>

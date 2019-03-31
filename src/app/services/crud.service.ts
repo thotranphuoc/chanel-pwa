@@ -86,8 +86,7 @@ export class CrudService {
       CUSTOMER.C_LASTUSE_SUBLIMAGE = this.appService.getCurrentDateFormat1();
       CUSTOMER.C_isSUBLIMAGE = true;
     }
-    let YYYYMMDD = this.appService.getCurrentDateFormat3();
-    CUSTOMER.C_BOOKINGS[YYYYMMDD] = BOOKING.B_ID;
+
     CUSTOMER.C_BOOK_STATE = BOOKING.B_STATUS;
     CUSTOMER.C_PERFUME = BOOKING.B_PERFUME
     CUSTOMER.C_MAKEUP = BOOKING.B_MAKEUP;
@@ -95,6 +94,15 @@ export class CrudService {
     CUSTOMER.C_SUBLIMAGE = BOOKING.B_SUBLIMAGE;
     CUSTOMER.C_LELIFT = BOOKING.B_LELIFT;
     CUSTOMER.C_FASHION = BOOKING.B_FASHION;
+
+    // let YYYYMMDD = this.appService.getCurrentDateFormat3(); 
+    let ID = BOOKING.B_ID;
+    CUSTOMER.C_BOOKINGS[ID] = {
+      ID: ID,
+      STATE: BOOKING.B_STATUS,
+      DATE: BOOKING.B_DATE
+    }
+    // CUSTOMER.C_BOOKINGS[YYYYMMDD] = BOOKING.B_ID;
 
     // if (BOOKING.B_SUBLIMAGE) {
     //   DATA = {
@@ -270,7 +278,7 @@ export class CrudService {
           return this.dayUpdateAfterBookingChange(BOOKING);
         })
         .then(() => {
-          resolve({ MSG: 'Đặt hẹn thành công', BOOKING: BOOKING });
+          resolve({ MSG: 'Cập nhật thành công', BOOKING: BOOKING });
         })
         .catch((err) => reject(err));
     })

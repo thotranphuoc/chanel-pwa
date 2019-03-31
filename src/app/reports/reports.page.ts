@@ -3,6 +3,7 @@ import { CrudService } from '../services/crud.service';
 import { iBooking } from '../interfaces/booking.interface';
 import { ExcelService } from '../excel.service';
 import { iCustomer } from '../interfaces/customer.interface';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-reports',
@@ -15,7 +16,8 @@ export class ReportsPage implements OnInit {
   CUSTOMERS_: iCustomer[] = [];
   constructor(
     private crudService: CrudService,
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    private appService: AppService
   ) { }
 
   ngOnInit() {
@@ -59,20 +61,20 @@ export class ReportsPage implements OnInit {
     let _BOOKINGS = [];
     BOOKINGS.forEach(B => {
       let _BOOKING = {};
-      _BOOKING['State'] = B.B_STATUS;
-      _BOOKING['Date'] = B.B_DATE;
+      _BOOKING['Trạng thái'] = this.convertState(B.B_STATUS);
+      _BOOKING['Ngày'] = B.B_DATE;
       _BOOKING['Slot'] = B.B_SLOT;
       _BOOKING['VIPCODE'] = B.B_CUSTOMER_VIPCODE;
-      _BOOKING['Customers'] = B.B_CUSTOMER_NAME;
+      _BOOKING['Khách hàng'] = B.B_CUSTOMER_NAME;
       _BOOKING['Specialist'] = B.B_SPECIALIST_NAME;
       _BOOKING['BA book'] = B.B_BA_BOOK.U_FULLNAME;
       _BOOKING['BA Sale'] = B.B_BA_SELL_NAME;
-      _BOOKING['Total'] = B.B_TOTAL ? B.B_TOTAL : '0';
-      _BOOKING['SCCU'] = B.B_CSCU;
-      _BOOKING['Sublimage'] = B.B_SUBLIMAGE;
-      _BOOKING['Le Lift'] = B.B_LELIFT;
-      _BOOKING['Fashion'] = B.B_FASHION;
-      _BOOKING['New Customer'] = B.B_isNewCustomer;
+      _BOOKING['Tổng'] = B.B_TOTAL ? B.B_TOTAL : '0';
+      _BOOKING['SCCU'] = B.B_CSCU ? 'Yes' : 'No';
+      _BOOKING['Sublimage'] = B.B_SUBLIMAGE ? 'Yes' : 'No';
+      _BOOKING['Le Lift'] = B.B_LELIFT ? 'Yes' : 'No';
+      _BOOKING['Fashion'] = B.B_FASHION ? 'Yes' : 'No';
+      _BOOKING['KH mới'] = B.B_isNewCustomer ? 'Yes' : 'No';
       _BOOKINGS.push(_BOOKING);
     })
     console.log(_BOOKINGS);
@@ -83,21 +85,58 @@ export class ReportsPage implements OnInit {
     let _CUSTOMERS = [];
     this.CUSTOMERS.forEach(C => {
       let _CUSTOMER = {};
-      _CUSTOMER['Name'] = C.C_NAME;
+      _CUSTOMER['Tên'] = C.C_NAME;
       _CUSTOMER['VIPCODE'] = C.C_VIPCODE;
-      _CUSTOMER['Phone'] = C.C_PHONE;
-      _CUSTOMER['Sublimage'] = C.C_SUBLIMAGE;
-      _CUSTOMER['Le Lift'] = C.C_LELIFT;
-      _CUSTOMER['Makeup'] = C.C_MAKEUP;
-      _CUSTOMER['Perfume'] = C.C_PERFUME;
-      _CUSTOMER['Fashtion'] = C.C_FASHION;
-      _CUSTOMER['Booked'] = '0';
-      _CUSTOMER['Canceled'] = '0';
-      _CUSTOMER['Used'] = '0';
+      _CUSTOMER['SĐT'] = C.C_PHONE;
+      _CUSTOMER['Sublimage'] = C.C_SUBLIMAGE ? 'Yes' : 'No';
+      _CUSTOMER['Le Lift'] = C.C_LELIFT ? 'Yes' : 'No';
+      _CUSTOMER['Makeup'] = C.C_MAKEUP ? 'Yes' : 'No';
+      _CUSTOMER['Perfume'] = C.C_PERFUME ? 'Yes' : 'No';
+      _CUSTOMER['Fashtion'] = C.C_FASHION ? 'Yes' : 'No';
+      _CUSTOMER['Đã đặt'] = this.countBookingsOfCustomer(C.C_BOOKINGS, null);
+      _CUSTOMER['Huỷ bỏ'] = this.countBookingsOfCustomer(C.C_BOOKINGS, "CANCELED");
+      _CUSTOMER['Đã sử dụng'] = this.countBookingsOfCustomer(C.C_BOOKINGS, "COMPLETED");
       _CUSTOMERS.push(_CUSTOMER);
     })
     console.log(_CUSTOMERS);
     this.excelService.exportFromArrayOfObject2Excel(_CUSTOMERS, 'CUSTOMERS_');
+  }
+
+  countBookingsOfCustomer(BOOKINGS: Object, STATE: string) {
+    let ARR = this.appService.convertObj2Array(BOOKINGS);
+    // console.log(ARR);
+    if (STATE) {
+      let ARR_ = ARR.filter(item => item.STATE == STATE);
+      return ARR_.length;
+    } else {
+      return ARR.length;
+    }
+  }
+
+  convertTrueFalse2YesNo(BOOL: boolean) {
+    if (BOOL) return 'Yes';
+    return 'No';
+  }
+
+  convertState(STATE: string) {
+    switch (STATE) {
+      case 'AVAILABLE':
+        return 'TRỐNG'
+      case 'BOOKED':
+        return 'ĐÃ ĐẶT'
+      case 'COMPLETED':
+        return 'HOÀN THÀNH'
+      case 'CANCELED':
+        return 'HUỶ BỎ'
+      case 'EXPIRED':
+        return 'HẾT HẠN'
+      case 'DRAFT':
+        return 'CHỜ DUYỆT'
+      case 'BLOCKED':
+        return 'KHOÁ'
+      default:
+        return 'N/A'
+    }
   }
 
 

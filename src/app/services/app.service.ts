@@ -139,4 +139,23 @@ export class AppService {
     return DATE1.substr(0, 4) + DATE1.substr(5, 2) + DATE1.substr(8, 2);
   }
 
+  convertObj2Array(OBJ: Object) {
+    let KEYS = Object.keys(OBJ);
+    let ARR = [];
+    KEYS.forEach(KEY => {
+      let ITEM = OBJ[KEY];
+      ITEM['KEY'] = KEY;
+      ARR.push(ITEM);
+    })
+    return ARR;
+  }
+
+  convertArr2Obj(Arr: any[]) {
+    let OBJ = {};
+    Arr.forEach(item => {
+      OBJ[item.KEY] = item;
+    })
+    console.log(OBJ);
+    return OBJ;
+  }
 }
