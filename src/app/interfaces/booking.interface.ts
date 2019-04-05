@@ -2,6 +2,7 @@ import { iUser } from '../interfaces/user.interface';
 import { iCustomer } from '../interfaces/customer.interface';
 import { iFacialCabin } from './facialcabin.interface';
 import { iDay } from './day.interface';
+import { iEvent } from './event.interface';
 
 export interface iBooking {
     B_ID: string,
@@ -50,5 +51,7 @@ export interface iBooking {
     B_SVC_CANCEL: number,
     B_MEMOS: string,
     B_TILL: string,
-    B_OTHER: any
+    B_OTHER: any,
+    B_CANCELED_BY_USER: iUser,
+    B_EVENTS: iEvent[]
 }

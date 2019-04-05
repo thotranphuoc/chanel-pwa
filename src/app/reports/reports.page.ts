@@ -4,6 +4,7 @@ import { iBooking } from '../interfaces/booking.interface';
 import { ExcelService } from '../excel.service';
 import { iCustomer } from '../interfaces/customer.interface';
 import { AppService } from '../services/app.service';
+import { LoadingService } from '../loading.service';
 
 @Component({
   selector: 'app-reports',
@@ -17,7 +18,8 @@ export class ReportsPage implements OnInit {
   constructor(
     private crudService: CrudService,
     private excelService: ExcelService,
-    private appService: AppService
+    private appService: AppService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -38,23 +40,31 @@ export class ReportsPage implements OnInit {
   }
 
   downloadBookingsReport() {
+    this.loadingService.presentLoading();
     let BOOKINGS: iBooking[] = [];
     this.crudService.bookingsAllGet().then((res: any) => {
       console.log(res);
       BOOKINGS = res.BOOKINGS;
       this.generateThenDownloadBookingsReport(BOOKINGS, 'BOOKINGS_');
     })
-      .catch(err => { console.log(err) })
+      .catch(err => {
+        console.log(err)
+        this.loadingService.loadingDissmiss();
+      })
   }
 
   downloadBookingsReportFromTo(FROM: string, TO: string) {
+    this.loadingService.presentLoading();
     let BOOKINGS: iBooking[] = [];
     this.crudService.bookingsFromToGet(FROM, TO).then((res: any) => {
       console.log(res);
       BOOKINGS = res.BOOKINGS;
       this.generateThenDownloadBookingsReport(BOOKINGS, 'BOOKINGS_' + FROM + '_' + TO + '_');
     })
-      .catch(err => { console.log(err) })
+      .catch(err => {
+        console.log(err)
+        this.loadingService.loadingDissmiss();
+      })
   }
 
   generateThenDownloadBookingsReport(BOOKINGS: iBooking[], NAME: string) {
@@ -64,6 +74,7 @@ export class ReportsPage implements OnInit {
       _BOOKING['Trạng thái'] = this.convertState(B.B_STATUS);
       _BOOKING['Ngày'] = B.B_DATE;
       _BOOKING['Slot'] = B.B_SLOT;
+      _BOOKING['SĐT'] = B.B_CUSTOMER_PHONE;
       _BOOKING['VIPCODE'] = B.B_CUSTOMER_VIPCODE;
       _BOOKING['Khách hàng'] = B.B_CUSTOMER_NAME;
       _BOOKING['Specialist'] = B.B_SPECIALIST_NAME;
@@ -74,14 +85,18 @@ export class ReportsPage implements OnInit {
       _BOOKING['Sublimage'] = B.B_SUBLIMAGE ? 'Yes' : 'No';
       _BOOKING['Le Lift'] = B.B_LELIFT ? 'Yes' : 'No';
       _BOOKING['Fashion'] = B.B_FASHION ? 'Yes' : 'No';
+      _BOOKING['MakeUp'] = B.B_FASHION ? 'Yes' : 'No';
+      _BOOKING['Nước hoa'] = B.B_FASHION ? 'Yes' : 'No';
       _BOOKING['KH mới'] = B.B_isNewCustomer ? 'Yes' : 'No';
       _BOOKINGS.push(_BOOKING);
     })
     console.log(_BOOKINGS);
     this.excelService.exportFromArrayOfObject2Excel(_BOOKINGS, NAME);
+    this.loadingService.loadingDissmiss();
   }
 
   downloadCustomersReport() {
+    // this.loadingService.presentLoading();
     let _CUSTOMERS = [];
     this.CUSTOMERS.forEach(C => {
       let _CUSTOMER = {};
@@ -99,7 +114,9 @@ export class ReportsPage implements OnInit {
       _CUSTOMERS.push(_CUSTOMER);
     })
     console.log(_CUSTOMERS);
+    // this.loadingService.loadingDissmiss();
     this.excelService.exportFromArrayOfObject2Excel(_CUSTOMERS, 'CUSTOMERS_');
+
   }
 
   countBookingsOfCustomer(BOOKINGS: Object, STATE: string) {
@@ -173,6 +190,7 @@ export class ReportsPage implements OnInit {
   }
 
   getAllBookingOfCustomer(CUSTOMER: iCustomer) {
+    this.loadingService.presentLoading();
     console.log(CUSTOMER);
     this.crudService.bookingsOfCustomerGet(CUSTOMER.C_ID)
       .subscribe(qSnap => {

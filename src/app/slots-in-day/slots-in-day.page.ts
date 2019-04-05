@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavParams, ModalController } from '@ionic/angular';
 import { iDay } from '../interfaces/day.interface';
 import { iSlot } from '../interfaces/slot.interface';
+import { CrudService } from '../services/crud.service';
+import { iBooking } from '../interfaces/booking.interface';
 
 @Component({
   selector: 'app-slots-in-day',
@@ -11,14 +13,18 @@ import { iSlot } from '../interfaces/slot.interface';
 export class SlotsInDayPage implements OnInit {
   data: any;
   selectedDay: iDay;
+  SLOTS: iSlot[] = [];
+  BOOKINGS: iBooking[] = [];
   DATE: string;
   constructor(
     private modalCtrl: ModalController,
-    private navPar: NavParams
+    private navPar: NavParams,
+    private crudService: CrudService
   ) {
     this.data = this.navPar.data;
     console.log(this.data);
     this.selectedDay = this.data.selectedDay;
+    this.SLOTS = this.selectedDay.Slots;
     let temp = this.selectedDay.DateId;
     let YYYY = temp.substr(0, 4);
     let MM = temp.substr(4, 2);
@@ -28,6 +34,26 @@ export class SlotsInDayPage implements OnInit {
   }
 
   ngOnInit() {
+    this.BOOKINGS = [];
+    this.SLOTS.forEach(SLOT => {
+      if (SLOT.BOOK_ID) {
+        this.crudService.bookingGet(SLOT.BOOK_ID).subscribe((res) => {
+          let BOOKING = <iBooking>res.data();
+          this.BOOKINGS.push(BOOKING);
+          SLOT['CUSTOMER'] = {
+            TEL: BOOKING.B_CUSTOMER_PHONE,
+            NAME: BOOKING.B_CUSTOMER_NAME
+          }
+        })
+      } else {
+        SLOT['CUSTOMER'] = {
+          TEL: '',
+          NAME: ''
+        }
+      }
+
+    })
+    console.log(this.SLOTS);
   }
 
   selectSlot(selectedDay: iDay, slot: iSlot, index: number) {

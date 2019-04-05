@@ -169,7 +169,8 @@ export class LocalService {
     B_OTHER: {},
     B_DAY: this.DAY_DAFAULT,
     B_MEMOS: '',
-    B_TILL: ''
-
+    B_TILL: '',
+    B_CANCELED_BY_USER: null,
+    B_EVENTS: []
   }
 }

@@ -152,7 +152,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
   async modalAppointmentEdit(selectedDay: iDay, slot: iSlot, index: number) {
     const modal = await this.modalController.create({
       component: AppointmentEditPage,
-      componentProps: { selectedDay: selectedDay, Slot: slot, index: index }
+      componentProps: { selectedDay: selectedDay, Slot: slot, index: index, isOnCalendar: true }
     });
     await modal.present();
     const data = await modal.onDidDismiss();

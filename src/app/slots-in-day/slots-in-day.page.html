@@ -10,12 +10,20 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <div *ngIf="selectedDay">
-    <ion-grid>
+    <!-- <ion-grid>
       <ion-row *ngFor="let slot of selectedDay.Slots; let i = index" (click)="selectSlot(selectedDay,slot, i)">
         <ion-col size="4" [ngClass]="slot.STATUS">{{slot.SLOT}}</ion-col>
         <ion-col>{{convertStatus(slot.STATUS)}}</ion-col>
+      </ion-row>
+    </ion-grid> -->
+    <ion-grid *ngIf="SLOTS.length>0" style="font-size: 10px">
+      <ion-row *ngFor="let slot of selectedDay.Slots; let i = index" (click)="selectSlot(selectedDay,slot, i)">
+        <ion-col size="2" [ngClass]="slot.STATUS">{{slot.SLOT}}</ion-col>
+        <ion-col size="3">{{convertStatus(slot.STATUS)}}</ion-col>
+        <ion-col size="4">{{SLOTS[i].CUSTOMER?.NAME}}</ion-col>
+        <ion-col size="3">{{SLOTS[i].CUSTOMER?.TEL}}</ion-col>
       </ion-row>
     </ion-grid>
   </div>

@@ -21,6 +21,7 @@ export class LoadingService {
   }
 
   loadingDissmiss() {
+    console.log(this.loading);
     if (typeof (this.loading) !== 'undefined') {
       this.loading.dismiss();
       console.log('Loading dismissed!');

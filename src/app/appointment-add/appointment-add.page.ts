@@ -82,6 +82,11 @@ export class AppointmentAddPage implements OnInit {
     this.BOOKING.B_SLOT = this.Slot ? this.Slot.SLOT : '10:30'
     this.BOOKING.B_DATE = this.formatDate(this.Day.DateId);
 
+    // update Specialist
+    this.BOOKING.B_SPECIALIST_ID = this.Slot.SPE_ID;
+    this.BOOKING.B_SPECIALIST_NAME = this.Slot.SPE_NAME
+    this.getSpecialistInfo(this.Slot.SPE_ID);
+
     this.CUSTOMER = Object.assign({}, this.localService.CUSTOMER_DEFAULT);
     console.log(this.BOOKING);
   }
@@ -192,7 +197,7 @@ export class AppointmentAddPage implements OnInit {
       !this.BOOKING.B_LELIFT &&
       !this.BOOKING.B_FASHION) {
       MSG = 'Bạn vui lòng chọn phân nhóm Khách hàng. <br/>'
-      this.appService.alertShow('Chú ý',null,MSG);
+      this.appService.alertShow('Chú ý', null, MSG);
       return;
     }
     MSG += '<br/>Bạn có chắc tiếp tục không?'
@@ -281,6 +286,7 @@ export class AppointmentAddPage implements OnInit {
     this.BOOKING.B_BA_BOOK_NAME = currentUser.U_NAME;
     this.BOOKING.B_BA_BOOK = currentUser;
 
+
     // Update Slot;
     this.BOOKING.B_DAY = this.Day;
     console.log(this.BOOKING);
@@ -290,6 +296,15 @@ export class AppointmentAddPage implements OnInit {
     } else {
       this.createBookingWithExistingCustomer();
     }
+  }
+
+  getSpecialistInfo(ID: string) {
+    this.crudService.userGet(ID).subscribe(res => {
+      let USER = <iUser>res.data();
+      console.log(USER);
+      this.BOOKING.B_SPECIALIST_NAME = USER.U_FULLNAME;
+      this.BOOKING.B_SPECIALIST = USER;
+    })
   }
 
   createBookingWithExistingCustomer() {

@@ -50,6 +50,11 @@
           <ion-label color="primary">BA book lịch:</ion-label>
           <ion-input disabled="true" type="text" placeholder="" [(ngModel)]="BOOKING.B_BA_BOOK.U_FULLNAME"></ion-input>
         </ion-item>
+        <ion-item lines="none" *ngIf="BOOKING.B_CANCELED_BY_USER">
+          <ion-label color="primary">Huỷ bởi:</ion-label>
+          <ion-input disabled="true" type="text" placeholder="" [(ngModel)]="BOOKING.B_CANCELED_BY_USER.U_FULLNAME">
+          </ion-input>
+        </ion-item>
         <!-- <ion-item>
           <ion-label color="primary">Specialist:</ion-label>
           <ion-input disabled="true" type="text" placeholder="" [(ngModel)]="BOOKING.B_SPECIALIST.U_FULLNAME"></ion-input>
@@ -101,7 +106,26 @@
           <ion-button [disabled]="isDisabled()" slot="end" (click)="setBookingStatus()">{{BOOKING.B_STATUS_VI}}
           </ion-button>
         </ion-item>
-
+        <ion-item>
+          <ion-label color="primary" fixed>Lịch sử thay đổi:</ion-label>
+          <ion-button slot="end" (click)="viewEvent()">
+            <span *ngIf="!isEventViewed">Xem</span>
+            <span *ngIf="isEventViewed">Thu gọn</span>
+          </ion-button>
+        </ion-item>
+        <ion-grid *ngIf="isEventViewed" style="font-size: 10px">
+          <ion-row *ngFor="let item of BOOKING.B_EVENTS">
+            <ion-col>
+              {{item.E_ACTION_VI}}
+            </ion-col>
+            <ion-col>
+              {{item.E_BY_FNAME}}
+            </ion-col>
+            <ion-col>
+              {{item.E_TIME}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
         <div *ngIf="BOOKING.B_STATUS =='COMPLETED'">
           <ion-item>
             <ion-label color="primary" fixed>Tổng tiền:</ion-label>
