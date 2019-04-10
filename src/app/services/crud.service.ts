@@ -247,6 +247,7 @@ export class CrudService {
         })
         .then(() => {
           resolve({ MSG: 'Đặt hẹn thành công', BOOKING: BOOKING });
+          this.sendNotification2Manager(BOOKING);
         })
         .catch((err) => reject(err));
     })
@@ -279,6 +280,7 @@ export class CrudService {
         })
         .then(() => {
           resolve({ MSG: 'Cập nhật thành công', BOOKING: BOOKING });
+          this.sendNotification2Manager(BOOKING)
         })
         .catch((err) => reject(err));
     })
@@ -471,6 +473,38 @@ export class CrudService {
           reject(err);
         })
     })
+  }
+
+  tokensGet() {
+    return this.afs.collection('TOKENS').get();
+  }
+
+  tokenUpdate4User(UID: string, TOKEN: string) {
+    let DATA = {
+      TOKEN: TOKEN,
+      UID: UID
+    }
+    return this.afs.doc('TOKENS/' + UID).set(DATA);
+  }
+
+  Msg2SendAdd(MESSAGE: any) {
+    this.afs.collection('MESSAGES2SEND').add(MESSAGE);
+  }
+
+  sendNotification2Manager(BOOKING: iBooking) {
+    // just create MESSAGES2SEND/doc
+    if (BOOKING.B_STATUS == 'DRAFT') {
+      this.tokensGet().subscribe(qSnap => {
+        qSnap.forEach(doc => {
+          let TOKEN = doc.data();
+          let MSG2SEND = {
+            msg: 'Có booking cần duyệt. Khách: ' + BOOKING.B_CUSTOMER_NAME,
+            token: TOKEN.TOKEN
+          }
+          this.Msg2SendAdd(MSG2SEND);
+        })
+      })
+    }
   }
 }
 

@@ -4,6 +4,8 @@ import { iCustomer } from '../interfaces/customer.interface';
 import { iBooking } from '../interfaces/booking.interface';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import { FcmService } from '../services/fcm.service';
+import { docChanges } from '@angular/fire/firestore';
 @Component({
   selector: 'app-test',
   templateUrl: './test.page.html',
@@ -20,13 +22,17 @@ export class TestPage implements OnInit {
     { date: '7', nums: [1, 2, 3, 4, 5, 4, 6, 4] },
     { date: '8', nums: [1, 2, 3,] }
   ]
-  constructor(private crudService: CrudService) { }
+  constructor(
+    private crudService: CrudService,
+    private fcmService: FcmService
+  ) { }
 
   ngOnInit() {
     // this.splitTest();
     // this.updateCustomersWithC_BOOKINGS();
     // this.updateCustomerHistoryBooking();
     // this.updateCustomerWithHistory();
+    // this.sendNotification2Managers();
   }
 
   updateCustomersWithC_BOOKINGS() {
@@ -139,4 +145,15 @@ export class TestPage implements OnInit {
     return newArray;
   }
 
+
+  // sendNotification2Managers(){
+  //   this.crudService.tokensGet().subscribe(qSnap=>{
+  //     qSnap.forEach(doc=>{
+  //       let TOKEN = doc.data();
+  //       console.log(TOKEN);
+  //       this.fcmService.messagePush('Có booking cần duyệt', TOKEN.TOKEN);
+  //     })
+  //   })
+  //   // this.fcmService.messagePush();
+  // }
 }

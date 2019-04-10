@@ -38,6 +38,7 @@ import { ImageService } from './services/image.service';
 import { PapaParseModule } from 'ngx-papaparse';
 import { AppointmentCalendarEditNewPageModule } from './appointment-calendar-edit-new/appointment-calendar-edit-new.module';
 import { SearchPageModule } from './search/search.module';
+import { HttpModule } from '@angular/http';
 firebase.initializeApp(environment.firebase);
 
 @NgModule({
@@ -54,6 +55,7 @@ firebase.initializeApp(environment.firebase);
     AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebase),
     HttpClientModule,
+    HttpModule,
     BrowserAnimationsModule,
     CommonModule,
     FormsModule,

@@ -14,6 +14,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { CrudService } from './crud.service';
 import { iUser } from '../interfaces/user.interface';
 import { Router } from '@angular/router';
+import { FcmService } from './fcm.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -32,7 +33,8 @@ export class AuthService {
     private httpClient: HttpClient,
     private localService: LocalService,
     private afa: AngularFireAuth,
-    private crudService: CrudService
+    private crudService: CrudService,
+    private fcmService: FcmService
   ) {
     // this.isUserSigned();
   }
@@ -47,6 +49,9 @@ export class AuthService {
           let USER = <iUser>user.data();
           this.localService.USER = USER;
           this.userChange.next(USER);
+          if (USER.U_ROLE == 'Manager') {
+            this.fcmService.initializePushNoti();
+          }
         })
       } else {
         console.log('user not login');

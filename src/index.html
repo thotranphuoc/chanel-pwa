@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Facial Cabin 1.0</title>
+  <title>Facial Cabin 1.1
+  </title>
 
   <base href="/" />
 
@@ -30,6 +31,20 @@
   <!-- add to homescreen for ios -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  <!-- <script>
+    if ('serviceWorker' in navigator) {
+      console.log('your browser supports service worker');
+      navigator.serviceWorker.register('service-worker.js', { scope: './' })
+        .then((registration) => {
+          console.log('service worker installed');
+          console.log('Scope:', registration.scope);
+        })
+        .catch(err => console.error('Error', err));
+    } else {
+      console.log('your browser does not support service worker');
+    }
+  </script> -->
 </head>
 
 <body>

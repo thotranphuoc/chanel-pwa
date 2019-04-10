@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
 import { iUser } from './interfaces/user.interface';
+import { FcmService } from './services/fcm.service';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +29,7 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public authService: AuthService,
+    private fcmService: FcmService
   ) {
     this.initializeApp();
   }
@@ -48,6 +50,12 @@ export class AppComponent implements OnInit {
       console.log(this.USER);
       this.loadSideMenu();
     })
+    this.getFcmToken();
+  }
+
+  getFcmToken() {
+    this.fcmService.tokenCurrentGet();
+    this.fcmService.permissionRequest();
   }
 
   loadSideMenu() {
@@ -68,7 +76,7 @@ export class AppComponent implements OnInit {
         { title: 'Báo cáo', url: '/reports', icon: 'stats' },
         { title: 'Nhân viên', url: '/users', icon: 'contacts' },
         { title: 'Lịch làm việc', url: '/slot-assign', icon: 'calendar' },
-        { title: 'Quản lý booking', url: '/appointments-manage', icon: 'md-briefcase'},
+        { title: 'Quản lý booking', url: '/appointments-manage', icon: 'md-briefcase' },
         { title: 'Đăng xuất', url: '/account', icon: 'unlock' }
       ];
       return;

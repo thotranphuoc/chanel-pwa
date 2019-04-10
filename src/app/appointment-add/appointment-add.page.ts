@@ -322,8 +322,8 @@ export class AppointmentAddPage implements OnInit {
       //   return this.crudService.customerUpdate(this.CUSTOMER);
       // })
       .then(() => {
-        this.doDismiss(newBooking);
         this.loadingService.loadingDissmiss();
+        this.doDismiss(newBooking);
       })
       .catch((err) => {
         console.log(err);
@@ -342,8 +342,9 @@ export class AppointmentAddPage implements OnInit {
         console.log(newBooking);
         this.resetData();
         // this.doUpdateCalendarsForDay(newBooking);
-        this.doDismiss(newBooking);
+
         this.loadingService.loadingDissmiss();
+        this.doDismiss(newBooking);
       })
       // .then(() => {
       //   this.doDismiss(newBooking);
@@ -392,11 +393,6 @@ export class AppointmentAddPage implements OnInit {
       if (typeof (res) !== 'undefined') res.dismiss({ BOOKING: this.BOOKING, isCancel: false, data: data });
     }).catch(err => { console.log(err) });
   }
-
-  // changeNewCustomer() {
-  //   this.BOOKING.B_1stTIME = this.BOOKING.B_isNewCustomer;
-  // }
-
 
   searchPhone(phone: string) {
     this.searchPhoneStr = phone;
@@ -463,5 +459,7 @@ export class AppointmentAddPage implements OnInit {
     this.CUSTOMER = this.localService.CUSTOMER_DEFAULT;
     this.BOOKING = this.localService.BOOKING_DEFAULT;
   }
+
+
 
 }
