@@ -81,6 +81,8 @@ export class ReportsPage implements OnInit {
       _BOOKING['BA book'] = B.B_BA_BOOK.U_FULLNAME;
       _BOOKING['BA Sale'] = B.B_BA_SELL_NAME;
       _BOOKING['Tổng'] = B.B_TOTAL ? B.B_TOTAL : '0';
+      _BOOKING['Till'] = B.B_TILL ? B.B_TILL : '0';
+      _BOOKING['Sale Memo'] = B.B_MEMOS ? B.B_MEMOS : '0';
       _BOOKING['SCCU'] = B.B_CSCU ? 'Yes' : 'No';
       _BOOKING['Sublimage'] = B.B_SUBLIMAGE ? 'Yes' : 'No';
       _BOOKING['Le Lift'] = B.B_LELIFT ? 'Yes' : 'No';
@@ -106,8 +108,8 @@ export class ReportsPage implements OnInit {
       _CUSTOMER['Sublimage'] = C.C_SUBLIMAGE ? 'Yes' : 'No';
       _CUSTOMER['Le Lift'] = C.C_LELIFT ? 'Yes' : 'No';
       _CUSTOMER['Makeup'] = C.C_MAKEUP ? 'Yes' : 'No';
-      _CUSTOMER['Perfume'] = C.C_PERFUME ? 'Yes' : 'No';
-      _CUSTOMER['Fashtion'] = C.C_FASHION ? 'Yes' : 'No';
+      _CUSTOMER['Nước hoa'] = C.C_PERFUME ? 'Yes' : 'No';
+      _CUSTOMER['Fashion'] = C.C_FASHION ? 'Yes' : 'No';
       _CUSTOMER['Đã đặt'] = this.countBookingsOfCustomer(C.C_BOOKINGS, null);
       _CUSTOMER['Huỷ bỏ'] = this.countBookingsOfCustomer(C.C_BOOKINGS, "CANCELED");
       _CUSTOMER['Đã sử dụng'] = this.countBookingsOfCustomer(C.C_BOOKINGS, "COMPLETED");

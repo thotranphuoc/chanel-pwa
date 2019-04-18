@@ -31,8 +31,8 @@ export class AppointmentEditPage implements OnInit {
   BAs: iUser[] = [];
   selectedBA: iUser;
   RIGHTS = {
-    Admin: [{ VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
-    Manager: [{ VI: 'CHỜ DUYỆT', EN: 'DRAFT' }, { VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
+    Admin: [{ VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
+    Manager: [{ VI: 'CHỜ DUYỆT', EN: 'DRAFT' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
     Specialist: [{ VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }],
     BA: [{ VI: 'HUỶ BỎ', EN: 'CANCELED' }],
     BAS: [{ VI: 'HUỶ BỎ', EN: 'CANCELED' }],
@@ -103,6 +103,7 @@ export class AppointmentEditPage implements OnInit {
       this.BOOKING.B_SPECIALIST_ID = this.USER.U_ID;
       this.BOOKING.B_SPECIALIST_NAME = this.USER.U_FULLNAME;
     }
+    // update User who cancel booking
     if (this.BOOKING.B_STATUS == 'CANCELED' && this.isStateChanged) {
       this.BOOKING.B_CANCELED_BY_USER = this.USER;
     }
