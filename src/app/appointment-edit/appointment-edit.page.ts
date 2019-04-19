@@ -61,8 +61,8 @@ export class AppointmentEditPage implements OnInit {
   }
 
   ngOnDestroy() {
-    this.sub1.unsubscribe();
-    this.sub2.unsubscribe();
+    if (typeof (this.sub1) !== 'undefined') this.sub1.unsubscribe();
+    if (typeof (this.sub2) !== 'undefined') this.sub2.unsubscribe();
   }
 
   ngOnInit() {
@@ -273,10 +273,18 @@ export class AppointmentEditPage implements OnInit {
     await alert.present();
   }
 
-  isDisabled() {
+  isDisabled2UpdateBooking() {
     if (!this.BOOKING) return false;
     if (this.USER.U_ROLE !== 'Manager' && this.BOOKING.B_STATUS == 'DRAFT') return true;
     if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Specialist' && this.BOOKING.B_STATUS == 'COMPLETED') return true;
+    return false;
+  }
+
+  isDisabled2ChangeState() {
+    if (!this.BOOKING) return false;
+    if (this.USER.U_ROLE !== 'Manager' && this.BOOKING.B_STATUS == 'DRAFT') return true;
+    if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Specialist' && this.BOOKING.B_STATUS == 'COMPLETED') return true;
+    if (this.BOOKING.B_STATUS == 'CANCELED') return true;
     return false;
   }
 

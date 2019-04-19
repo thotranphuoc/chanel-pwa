@@ -328,6 +328,56 @@ export class CrudService {
   }
 
   dayUpdateAfterBookingChange(BOOKING: iBooking) {
+    return new Promise((resolve, reject) => {
+      this.slotsOfDateGet(BOOKING.B_DAY.DateId)
+        .then((res: any) => {
+          let Day: iDay = res.DAY;
+          let index = Day.Slots.map(Slot => Slot.SLOT).indexOf(BOOKING.B_SLOT);
+          Day.Slots[index].STATUS = BOOKING.B_STATUS;
+          Day.Slots[index].BOOK_ID = BOOKING.B_ID;
+          console.log(Day);
+          return this.dayUpdate(Day);
+        })
+        .then((res) => {
+          resolve();
+        })
+        .catch(err => reject())
+    })
+  }
+
+  slotsOfDateGet(DateStr: string) {
+    return new Promise((resolve, reject) => {
+      firebase.firestore().doc('CALENDARS/' + DateStr.substr(0, 6)).get().then(docSnap => {
+        let MONTH = docSnap.data();
+        let DAY: iDay = MONTH[DateStr];
+        resolve({ DAY: DAY });
+      })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  }
+
+  slotOfDateUpdate(DateStr: string, Slot: iSlot) {
+    return new Promise((resolve, reject) => {
+      this.slotsOfDateGet(DateStr)
+        .then((res: any) => {
+          let DAY: iDay = res.DAY;
+          let SLOTS = DAY.Slots;
+          let index = SLOTS.map(SLOT => SLOT.SLOT).indexOf(Slot.SLOT);
+          DAY[index] = Slot;
+          return this.dayUpdate(DAY)
+        })
+        .then(() => {
+          resolve()
+        })
+        .catch(err => { reject(err) })
+    })
+  }
+
+
+  dayUpdateAfterBookingChangex(BOOKING: iBooking) {
+    console.log(BOOKING);
     let Day = BOOKING.B_DAY;
     let index = Day.Slots.map(Slot => Slot.SLOT).indexOf(BOOKING.B_SLOT);
     Day.Slots[index].STATUS = BOOKING.B_STATUS;

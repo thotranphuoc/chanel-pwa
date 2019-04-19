@@ -103,7 +103,8 @@
         <div style="height: 5px"></div>
         <ion-item>
           <ion-label color="primary" fixed>Trạng thái:</ion-label>
-          <ion-button [disabled]="isDisabled()" slot="end" (click)="setBookingStatus()">{{BOOKING.B_STATUS_VI}}
+          <ion-button [disabled]="isDisabled2ChangeState()" slot="end" (click)="setBookingStatus()">
+            {{BOOKING.B_STATUS_VI}}
           </ion-button>
         </ion-item>
         <ion-item>
@@ -160,7 +161,8 @@
         <ion-button color="danger" expand="block" (click)="doCancel()">Quay lại</ion-button>
       </ion-col>
       <ion-col>
-        <ion-button [disabled]="isDisabled()" color="secondary" expand="block" (click)="updateBooking()">Cập nhật
+        <ion-button [disabled]="isDisabled2UpdateBooking()" color="secondary" expand="block" (click)="updateBooking()">
+          Cập nhật
         </ion-button>
       </ion-col>
     </ion-row>

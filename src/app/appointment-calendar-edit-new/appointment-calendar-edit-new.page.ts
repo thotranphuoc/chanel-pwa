@@ -25,9 +25,9 @@ export class AppointmentCalendarEditNewPage implements OnInit {
   month2Subscription: Subscription;
   BOOKING: iBooking;
   data: any;
-  Day: iDay;
-  Slot: iSlot;
-  index: number;
+  OLD_Day: iDay;
+  OLD_SLOT: iSlot;
+  OLD_index: number;
   USER: iUser;
   TODAY: string;
   currentYYYYMM: string;
@@ -42,12 +42,12 @@ export class AppointmentCalendarEditNewPage implements OnInit {
     private localService: LocalService,
     private navPar: NavParams,
     private loadingService: LoadingService
-  ) { 
+  ) {
     this.data = this.navPar.data;
     console.log(this.data);
-    this.Slot = this.data.Slot;
-    this.Day = this.data.selectedDay;
-    this.index = this.data.index;
+    this.OLD_SLOT = this.data.Slot;
+    this.OLD_Day = this.data.selectedDay;
+    this.OLD_index = this.data.index;
     this.BOOKING = this.data.BOOKING;
     this.USER = this.localService.USER;
   }
@@ -97,8 +97,8 @@ export class AppointmentCalendarEditNewPage implements OnInit {
 
   // START FROM HERE
   selectSlotInList(Day: iDay, SLOT: iSlot, index: number) {
-    if(!(SLOT.STATUS =='AVAILABLE' || SLOT.STATUS =='CANCELED')) return;
-    if(Day.isThePast) return;
+    if (!(SLOT.STATUS == 'AVAILABLE' || SLOT.STATUS == 'CANCELED')) return;
+    if (Day.isThePast) return;
     let _date = Day.DateId.substr(6, 2) + '/' + Day.DateId.substr(4, 2) + '/' + Day.DateId.substr(0, 4);
     let _slot = SLOT.SLOT;
     let MSG = 'Bạn chắc muốn đổi sang slot ' + _date + ' ' + _slot + ' ?';
@@ -130,33 +130,89 @@ export class AppointmentCalendarEditNewPage implements OnInit {
     await alert.present();
   }
 
-  doChangeSlot(DAY: iDay, SLOT: iSlot, index: number) {
+  doChangeSlot(NEW_DAY: iDay, NEW_SLOT: iSlot, NEW_index: number) {
     this.loadingService.presentLoading();
     let PROS = [];
-    SLOT.STATUS = this.Slot.STATUS;
-    SLOT.BOOK_ID = this.Slot.BOOK_ID;
-    DAY.Slots[index] = SLOT;
+    NEW_SLOT.STATUS = this.OLD_SLOT.STATUS;
+    NEW_SLOT.BOOK_ID = this.OLD_SLOT.BOOK_ID;
+    NEW_DAY.Slots[NEW_index] = NEW_SLOT;
 
-    this.selectedDay = DAY;
-    this.selectedSlot = SLOT;
-    this.selectedIndex = index;
+    this.selectedDay = NEW_DAY;
+    this.selectedSlot = NEW_SLOT;
+    this.selectedIndex = NEW_index;
 
-    let oldDay = Object.assign({},this.Day);
-    oldDay.Slots[this.index].BOOK_ID = '';
-    oldDay.Slots[this.index].STATUS = 'AVAILABLE';
+    let oldDay = Object.assign({}, this.OLD_Day);
+    oldDay.Slots[this.OLD_index].BOOK_ID = '';
+    oldDay.Slots[this.OLD_index].STATUS = 'AVAILABLE';
 
-    let Year = DAY.DateId.substr(0, 4)
-    let Month = DAY.DateId.substr(4, 2)
-    let date = DAY.DateId.substr(6, DAY.DateId.length - 6);
+    let Year = NEW_DAY.DateId.substr(0, 4)
+    let Month = NEW_DAY.DateId.substr(4, 2)
+    let date = NEW_DAY.DateId.substr(6, NEW_DAY.DateId.length - 6);
     let finalDate = date.length > 1 ? date : '0' + date;
     this.BOOKING.B_DAY = this.selectedDay;
     this.BOOKING.B_DATE = Year + '-' + Month + '-' + finalDate;
-    this.BOOKING.B_SLOT = SLOT.SLOT;
+    this.BOOKING.B_SLOT = NEW_SLOT.SLOT;
     console.log(this.BOOKING, this.selectedDay, oldDay)
-    if (DAY.DateId == oldDay.DateId) {
+
+
+    if (NEW_DAY.DateId == oldDay.DateId) {
+
+
       console.log('Same day');
-      DAY.Slots[this.index].STATUS = 'AVAILABLE';
-      DAY.Slots[this.index].BOOK_ID = '';
+      NEW_DAY.Slots[this.OLD_index].STATUS = 'AVAILABLE';
+      NEW_DAY.Slots[this.OLD_index].BOOK_ID = '';
+      let p1 = this.crudService.dayUpdate(NEW_DAY);
+      let p3 = this.crudService.bookingUpdate(this.BOOKING);
+      PROS.push(p1);
+      PROS.push(p3);
+    } else {
+      // let p1 = this.crudService.dayUpdate(DAY);
+      let p2 = this.crudService.dayUpdate(oldDay);
+      let p3 = this.crudService.bookingUpdate(this.BOOKING);
+      // PROS.push(p1);
+      PROS.push(p2);
+      PROS.push(p3);
+    }
+    Promise.all(PROS)
+      .then((res) => {
+        console.log(res);
+        this.doCancel();
+        console.log();
+        this.loadingService.loadingDissmiss();
+      }).catch(err => {
+        console.log(err);
+        this.doCancel();
+        this.loadingService.loadingDissmiss();
+      })
+  }
+
+  doChangeSlotx(NEW_DAY: iDay, NEW_SLOT: iSlot, NEW_index: number) {
+    this.loadingService.presentLoading();
+    let PROS = [];
+    NEW_SLOT.STATUS = this.OLD_SLOT.STATUS;
+    NEW_SLOT.BOOK_ID = this.OLD_SLOT.BOOK_ID;
+    NEW_DAY.Slots[NEW_index] = NEW_SLOT;
+
+    this.selectedDay = NEW_DAY;
+    this.selectedSlot = NEW_SLOT;
+    this.selectedIndex = NEW_index;
+
+    let oldDay = Object.assign({}, this.OLD_Day);
+    oldDay.Slots[this.OLD_index].BOOK_ID = '';
+    oldDay.Slots[this.OLD_index].STATUS = 'AVAILABLE';
+
+    let Year = NEW_DAY.DateId.substr(0, 4)
+    let Month = NEW_DAY.DateId.substr(4, 2)
+    let date = NEW_DAY.DateId.substr(6, NEW_DAY.DateId.length - 6);
+    let finalDate = date.length > 1 ? date : '0' + date;
+    this.BOOKING.B_DAY = this.selectedDay;
+    this.BOOKING.B_DATE = Year + '-' + Month + '-' + finalDate;
+    this.BOOKING.B_SLOT = NEW_SLOT.SLOT;
+    console.log(this.BOOKING, this.selectedDay, oldDay)
+    if (NEW_DAY.DateId == oldDay.DateId) {
+      console.log('Same day');
+      NEW_DAY.Slots[this.OLD_index].STATUS = 'AVAILABLE';
+      NEW_DAY.Slots[this.OLD_index].BOOK_ID = '';
       // let p1 = this.crudService.dayUpdate(DAY);
       let p3 = this.crudService.bookingUpdate(this.BOOKING);
       // PROS.push(p1);
