@@ -9,6 +9,7 @@ import { AlertController, ActionSheetController, NavController } from '@ionic/an
 import { Papa } from 'ngx-papaparse';
 import { LocalService } from '../services/local.service';
 import { LoadingService } from '../loading.service';
+import { DbService } from '../services/db.service';
 @Component({
   selector: 'app-slot-assign',
   templateUrl: './slot-assign.page.html',
@@ -48,6 +49,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     private localService: LocalService,
     private papa: Papa,
     private loadingService: LoadingService,
+    private dbService: DbService
   ) {
     this.COLOR_SPE[''] = 'Gray';
     this.COLOR_SPE['BLOCKED'] = 'Black';
@@ -183,7 +185,13 @@ export class SlotAssignPage implements OnInit, OnDestroy {
       console.log('update/delete slot in list')
       this.alertActionDeleteOrUpdateslot(Day, SLOT, i);
     } else {
-      this.updateSlotInList(Day, SLOT, i);
+      console.log(SLOT);
+      if(SLOT.BOOK_ID.length > 1 && (this.selectedSpecialist.U_ID === 'BLOCKED' || this.selectedSpecialist.U_ID === ''))
+      {
+        this.alertShowCheckAssign('Thông báo!', 'Slot đã có được book không thể thay đổi');
+      }
+      else
+        this.updateSlotInList(Day, SLOT, i);
     }
   }
 
@@ -201,7 +209,19 @@ export class SlotAssignPage implements OnInit, OnDestroy {
         SLOT.STATUS = 'BLOCKED';
       }
       Day.Slots[i] = SLOT;
+
       console.log(Day, SLOT, this.selectedSpecialist);
+
+      this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME,this.USER.U_ROLE,'Slot Assign - SPE Name ' + SLOT.STATUS + ' - day ' + Day.DateId + ' - Slot ' + SLOT.SLOT )
+          .then((res) => { 
+            console.log('Update log');
+            console.log(res);
+            //return this.updateScoreAndLevel()
+          })
+          .catch(err => {
+            console.log(err);
+          })
+
       this.crudService.dayUpdate(Day)
         .then((res) => console.log(res))
         .catch(err => console.log(err));
@@ -210,9 +230,35 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     }
   }
 
+  async alertShowCheckAssign(HEADER: string, MSG: string) {
+    const alert = await this.alertCtrl.create({
+      header: HEADER,
+      message: MSG,
+      buttons: [
+        {
+          text: 'Huỷ bỏ',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Chấp nhận',
+          handler: () => {
+            console.log('Confirm Okay');
+            return;
+            //this.navCtrl.navigateForward('/account');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   monthNotExistAlertConfirm() {
     if (this.USER.U_ROLE == 'Manager') {
-      this.monthNotExistAlertConfirmManager();
+      this.monthNotExistAlertConfirmManager();      
     } else {
       this.monthNotExistAlertConfirmSpecialist();
     }
@@ -269,6 +315,16 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     this.calendarService.calendarForMonthCreate(Number(this.YYYY), Number(this.MM))
       .then((res) => {
         console.log(res);
+        this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME,this.USER.U_ROLE,'Create New Month Calender ' + this.MM + '/' + this.YYYY)
+        .then((res) => {
+          console.log('Update log');
+          console.log(res);
+          //return this.updateScoreAndLevel()
+        })
+        .catch(err => {
+          console.log(err);
+        })
+        
         this.getCalendarsOfMonth();
         this.loadingService.loadingDissmiss()
       })
@@ -506,7 +562,8 @@ export class SlotAssignPage implements OnInit, OnDestroy {
         DateId: _DateId,
         Slots: _Slots,
         date: _date,
-        isThePast: false
+        isThePast: false,
+        isDraff:false,
       };
       Obj[_DateId] = _DAY;
       DAYS.push(_DAY);

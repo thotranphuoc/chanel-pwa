@@ -13,6 +13,7 @@ import { AppointmentCalendarEditNewPage } from '../appointment-calendar-edit-new
 import { LoadingService } from '../loading.service';
 import { SearchPage } from '../search/search.page';
 import { iEvent } from '../interfaces/event.interface';
+import { DbService } from '../services/db.service';
 @Component({
   selector: 'app-appointment-edit',
   templateUrl: './appointment-edit.page.html',
@@ -30,6 +31,7 @@ export class AppointmentEditPage implements OnInit {
   sub2: Subscription;
   BAs: iUser[] = [];
   selectedBA: iUser;
+  isPast:any= false;
   RIGHTS = {
     Admin: [{ VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
     Manager: [{ VI: 'CHỜ DUYỆT', EN: 'DRAFT' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
@@ -49,7 +51,8 @@ export class AppointmentEditPage implements OnInit {
     private localService: LocalService,
     public modalController: ModalController,
     private setGetService: SetgetService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private dbService: DbService,
   ) {
     this.data = this.navPar.data;
     console.log(this.data);
@@ -71,10 +74,10 @@ export class AppointmentEditPage implements OnInit {
       this.sub1 = this.crudService.bookingGet(this.Slot.BOOK_ID)
         .subscribe(docSnap => {
           console.log(docSnap);
-          let BOOKING = <iBooking>docSnap.data();
-          console.log(BOOKING);
-          this.BOOKING = BOOKING;
-          this._BOOKING = Object.assign({}, BOOKING);
+          let BOOKINGS = <iBooking>docSnap.data();
+          console.log(BOOKINGS);
+          this.BOOKING = BOOKINGS;
+          this._BOOKING = Object.assign({}, BOOKINGS);
           this.selectedBA = this.BOOKING.B_BA_SELL;
         })
     } else {
@@ -102,11 +105,35 @@ export class AppointmentEditPage implements OnInit {
       this.BOOKING.B_SPECIALIST = this.USER;
       this.BOOKING.B_SPECIALIST_ID = this.USER.U_ID;
       this.BOOKING.B_SPECIALIST_NAME = this.USER.U_FULLNAME;
+
+      this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME,this.USER.U_ROLE,'Update status COMPLETED for Customer ' + this.BOOKING.B_CUSTOMER_NAME + ' day ' + this.Day.date + ' slot ' + this.BOOKING.B_SLOT)
+          .then((res) => {
+            console.log('Update log');
+            console.log(res);
+            //return this.updateScoreAndLevel()
+          })
+          .catch(err => {
+            console.log(err);
+          })
+
     }
     // update User who cancel booking
     if (this.BOOKING.B_STATUS == 'CANCELED' && this.isStateChanged) {
       this.BOOKING.B_CANCELED_BY_USER = this.USER;
+
+      this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME,this.USER.U_ROLE,'Update status CANCELED for Customer ' + this.BOOKING.B_CUSTOMER_NAME + ' day ' + this.Day.date + ' slot ' + this.BOOKING.B_SLOT)
+          .then((res) => {
+            console.log('Update log');
+            console.log(res);
+            //return this.updateScoreAndLevel()
+          })
+          .catch(err => {
+            console.log(err);
+          })
     }
+    if (this.BOOKING.B_STATUS == 'DRAFT' && this.isStateChanged) {
+        this.BOOKING.B_DAY.isDraff=true;
+      }
     let EVENT: iEvent = {
       E_ACTION_EN: this.BOOKING.B_STATUS,
       E_ACTION_VI: this.BOOKING.B_STATUS_VI,
@@ -123,6 +150,16 @@ export class AppointmentEditPage implements OnInit {
     this.crudService.bookingUpdate(this.BOOKING)
       .then(res => {
         console.log(res);
+
+    //  this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME,this.USER.U_ROLE,'Update for Customer ' + this.BOOKING.B_CUSTOMER_NAME + ' day ' + this.Day.date + ' slot ' + this.BOOKING.B_SLOT)
+    // .then((res) => {
+    //   console.log('Update log');
+    //   console.log(res);
+    //   //return this.updateScoreAndLevel()
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    // })
         this.doDismiss(null);
         this.loadingService.loadingDissmiss();
       })
@@ -274,11 +311,39 @@ export class AppointmentEditPage implements OnInit {
   }
 
   isDisabled2UpdateBooking() {
+    console.log(this.isPast);
+    
     if (!this.BOOKING) return false;
     if (this.USER.U_ROLE !== 'Manager' && this.BOOKING.B_STATUS == 'DRAFT') return true;
     if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Specialist' && this.BOOKING.B_STATUS == 'COMPLETED') return true;
+    if (this.isCheckPastday())
+    {
+      if (this.USER.U_ROLE === 'Manager' || this.USER.U_ROLE === 'Admin')
+        return false
+      else
+        return true;
+    } 
     return false;
   }
+
+  isCheckPastday() {
+    let TODAY = this.getTodayString();
+    //console.log(Number(TODAY) > Number(this.BOOKING.B_DAY.DateId));
+    return (Number(TODAY) > Number(this.BOOKING.B_DAY.DateId));
+  }
+
+  getTodayString() {
+    let date_to_parse = new Date();
+    let year = date_to_parse.getFullYear().toString();
+    let month = (date_to_parse.getMonth() + 1).toString();
+    let finalMonth = month.length > 2 ? month : '0' + month
+    let day = date_to_parse.getDate().toString();
+    let finalDay = day.length < 2 ? '0' + day : day;
+    let TODAY = year + finalMonth + finalDay;
+    //console.log(TODAY);
+    return TODAY;
+  }
+
 
   isDisabled2ChangeState() {
     if (!this.BOOKING) return false;

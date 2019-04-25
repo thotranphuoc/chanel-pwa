@@ -65,7 +65,7 @@
                 <ion-button expand="block" color="danger" (click)="doCancel()">Quay lại</ion-button>
               </ion-col>
               <ion-col>
-                <ion-button expand="block" (click)="updateCustomer()">Cập nhật</ion-button>
+                <ion-button [disabled]="isAdmin()" expand="block" (click)="updateCustomer()">Cập nhật</ion-button>
               </ion-col>
             </ion-row>
             <ion-row>

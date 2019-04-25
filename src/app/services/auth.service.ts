@@ -15,6 +15,7 @@ import { CrudService } from './crud.service';
 import { iUser } from '../interfaces/user.interface';
 import { Router } from '@angular/router';
 import { FcmService } from './fcm.service';
+import { DbService } from './db.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -34,7 +35,8 @@ export class AuthService {
     private localService: LocalService,
     private afa: AngularFireAuth,
     private crudService: CrudService,
-    private fcmService: FcmService
+    private fcmService: FcmService,
+    private dbService: DbService
   ) {
     // this.isUserSigned();
   }
@@ -52,6 +54,16 @@ export class AuthService {
           if (USER.U_ROLE == 'Manager') {
             this.fcmService.initializePushNoti();
           }
+
+          this.dbService.logAdd(USER.U_ID, USER.U_FULLNAME,USER.U_ROLE,'Login')
+          .then((res) => {
+            console.log('Update log');
+            console.log(res);
+            //return this.updateScoreAndLevel()
+          })
+          .catch(err => {
+            console.log(err);
+          })
         })
       } else {
         console.log('user not login');

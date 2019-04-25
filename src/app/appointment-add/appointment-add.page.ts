@@ -12,6 +12,7 @@ import { iSlot } from '../interfaces/slot.interface';
 import { AppService } from '../services/app.service';
 import { CalendarService } from '../services/calendar.service';
 import { LoadingService } from '../loading.service';
+import { DbService } from '../services/db.service';
 @Component({
   selector: 'app-appointment-add',
   templateUrl: './appointment-add.page.html',
@@ -43,6 +44,7 @@ export class AppointmentAddPage implements OnInit {
     private appService: AppService,
     private calendarService: CalendarService,
     private loadingService: LoadingService,
+    private dbService: DbService
   ) {
     this.data = this.navPar.data;
     console.log(this.data);
@@ -60,7 +62,8 @@ export class AppointmentAddPage implements OnInit {
         DateId: year + _month + _day,
         Slots: [],
         date: _month + '/' + _day,
-        isThePast: false
+        isThePast: false,
+        isDraff:false
       }
     }
     else {
@@ -296,6 +299,18 @@ export class AppointmentAddPage implements OnInit {
     } else {
       this.createBookingWithExistingCustomer();
     }
+    
+    this.dbService.logAdd(currentUser.U_ID, currentUser.U_FULLNAME,currentUser.U_ROLE,'Booking for Customer ' + this.CUSTOMER.C_NAME + ' day ' + this.Day.DateId + ' slot ' + this.BOOKING.B_SLOT)
+    .then((res) => {
+      console.log('Update log');
+      console.log(res);
+      //return this.updateScoreAndLevel()
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
+
   }
 
   getSpecialistInfo(ID: string) {

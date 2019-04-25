@@ -9,6 +9,7 @@ import { LocalService } from '../services/local.service';
 import { iBooking } from '../interfaces/booking.interface';
 import { iUser } from '../interfaces/user.interface';
 import { LoadingService } from '../loading.service';
+import { DbService } from '../services/db.service';
 
 @Component({
   selector: 'app-appointment-calendar-edit-new',
@@ -41,7 +42,8 @@ export class AppointmentCalendarEditNewPage implements OnInit {
     private crudService: CrudService,
     private localService: LocalService,
     private navPar: NavParams,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private dbService: DbService
   ) {
     this.data = this.navPar.data;
     console.log(this.data);
@@ -50,6 +52,9 @@ export class AppointmentCalendarEditNewPage implements OnInit {
     this.OLD_index = this.data.index;
     this.BOOKING = this.data.BOOKING;
     this.USER = this.localService.USER;
+    console.log('thay doi slot');
+    console.log(this.USER);
+    
   }
 
   ngOnInit() {
@@ -156,8 +161,6 @@ export class AppointmentCalendarEditNewPage implements OnInit {
 
 
     if (NEW_DAY.DateId == oldDay.DateId) {
-
-
       console.log('Same day');
       NEW_DAY.Slots[this.OLD_index].STATUS = 'AVAILABLE';
       NEW_DAY.Slots[this.OLD_index].BOOK_ID = '';
@@ -177,6 +180,18 @@ export class AppointmentCalendarEditNewPage implements OnInit {
       .then((res) => {
         console.log(res);
         this.doCancel();
+        
+        this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME,this.USER.U_ROLE,'Update booking change slots from ' + this.OLD_Day.DateId + ' at ' + this.OLD_SLOT.SLOT + ' to ' + this.BOOKING.B_DAY.DateId + ' slot ' + this.BOOKING.B_SLOT)
+        .then((res) => {
+          console.log('Update log');
+          console.log(res);
+          //return this.updateScoreAndLevel()
+        })
+        .catch(err => {
+          console.log(err);
+        })
+
+
         console.log();
         this.loadingService.loadingDissmiss();
       }).catch(err => {

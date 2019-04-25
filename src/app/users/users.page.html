@@ -9,12 +9,18 @@
         Thêm
         <ion-icon slot="end" name="md-add"></ion-icon>
       </ion-button>
+      
     </ion-buttons>
   </ion-toolbar>
 
 </ion-header>
 
 <ion-content padding>
+  <div style="text-align: center; margin: 0 auto"><ion-button fill="outline" slot="end" (click)="downloadUsersReport()">
+      Xuất danh sách nhân viên
+      <ion-icon slot="end" name="md-download"></ion-icon>
+    </ion-button></div>
+    
   <ion-item *ngFor="let USER of USERS" (click)="go2UserEdit(USER)">
     <ion-avatar slot="start">
       <img [src]="USER.U_AVATAR" onError="this.src='../../assets/imgs/user.jpg';">

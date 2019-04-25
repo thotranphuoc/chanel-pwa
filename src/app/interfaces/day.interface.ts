@@ -5,5 +5,6 @@ export interface iDay {
     DateId: string,
     Slots: iSlot[],
     date: string,
-    isThePast: boolean
+    isThePast: boolean,
+    isDraff:boolean,
 }

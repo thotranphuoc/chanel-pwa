@@ -74,6 +74,12 @@ export class CalendarsPage implements OnInit, OnDestroy {
           newdays.forEach(day => {
             let n = day.Slots.filter(slot => slot.STATUS !== 'AVAILABLE').length;
             day['n'] = n;
+
+            let isDraft= day.Slots.filter(slot => slot.STATUS === 'DRAFT').length;
+            console.log(day['isThePast']);
+            
+            day['isdraft']=(isDraft>=1);
+            
           });
           console.log(newdays);
           this.DaysInM1 = this.calendarService.addAdditionalProsIntoDaysInMonth(newdays);
@@ -96,6 +102,8 @@ export class CalendarsPage implements OnInit, OnDestroy {
           newdays.forEach(day => {
             let n = day.Slots.filter(slot => slot.STATUS !== 'AVAILABLE').length;
             day['n'] = n;
+            let isDraft= day.Slots.filter(slot => slot.STATUS === 'DRAFT').length;    
+            day['isdraft']=(isDraft>=1);
           });
           console.log(newdays);
           this.DaysInM2 = this.calendarService.addAdditionalProsIntoDaysInMonth(newdays);
@@ -160,20 +168,29 @@ export class CalendarsPage implements OnInit, OnDestroy {
   }
 
   selectSlotInList(Day: iDay, SLOT: iSlot, index: number) {
+    console.log(SLOT.SPE_ID);
     this.openAppointmentModal(Day, SLOT, index);
   }
 
   openAppointmentModal(Day: iDay, SLOT: iSlot, index: number) {
-    console.log(Day, SLOT);
+    console.log(Day, SLOT, index);
+    //console.log(SLOT[index].SPE_ID);
     if (this.localService.USER) {
       if (SLOT.STATUS == 'BLOCKED') return;
       if (SLOT.STATUS == 'AVAILABLE' || SLOT.STATUS == 'CANCELED') {
-        this.modalAppointmentAdd(Day, SLOT, index);
+        
+        //check assign for specialist
+        if(SLOT.SPE_ID=="")
+        {
+          //console.log(SLOT[index].SPE_ID);
+          this.alertShowCheckAssign('Thông báo!', 'Chưa tạo được booking. Vui lòng liên hệ người quản lý.');
+        }else
+          this.modalAppointmentAdd(Day, SLOT, index);
       } else {
         this.modalAppointmentEdit(Day, SLOT, index);
       }
     } else {
-      this.alertConfirmationShow('Confirm!', 'Vui lòng đăng nhập để tiếp tục...');
+      this.alertConfirmationShow('Thông báo!', 'Vui lòng đăng nhập để tiếp tục...');
     }
 
   }
@@ -183,7 +200,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
     if (this.localService.USER) {
       this.slotsInDayModal(Day);
     } else {
-      this.alertConfirmationShow('Confirm!', 'Vui lòng đăng nhập để tiếp tục...');
+      this.alertConfirmationShow('Thông báo!', 'Vui lòng đăng nhập để tiếp tục...');
     }
   }
 
@@ -226,6 +243,34 @@ export class CalendarsPage implements OnInit, OnDestroy {
 
     await alert.present();
   }
+
+
+  async alertShowCheckAssign(HEADER: string, MSG: string) {
+    const alert = await this.alertController.create({
+      header: HEADER,
+      message: MSG,
+      buttons: [
+        {
+          text: 'Huỷ bỏ',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Chấp nhận',
+          handler: () => {
+            console.log('Confirm Okay');
+            return;
+            //this.navCtrl.navigateForward('/account');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 
 
 

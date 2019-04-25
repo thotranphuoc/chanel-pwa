@@ -12,12 +12,18 @@ export const environment = {
     // storageBucket: "chanel-pwa.appspot.com",
     // messagingSenderId: "1043672550483"
 
-    apiKey: "AIzaSyBjJYl8VkFCUp3dmkUqylFOef_oXwPmMvk",
+    /*apiKey: "AIzaSyBjJYl8VkFCUp3dmkUqylFOef_oXwPmMvk",
     authDomain: "chanel-vn.firebaseapp.com",
     databaseURL: "https://chanel-vn.firebaseio.com",
     projectId: "chanel-vn",
     storageBucket: "chanel-vn.appspot.com",
-    messagingSenderId: "1494080253"
+    messagingSenderId: "1494080253"*/
+    apiKey: "AIzaSyA8nT2Ge5MYQkDl9_ikwTspzNRDUja_QuI",
+    authDomain: "chanel-test-ec.firebaseapp.com",
+    databaseURL: "https://chanel-test-ec.firebaseapp.com",
+    projectId: "chanel-test-ec",
+    storageBucket: "chanel-test-ec.appspot.com",
+    messagingSenderId: "883496668681"
   }
 };
 

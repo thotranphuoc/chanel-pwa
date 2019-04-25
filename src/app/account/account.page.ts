@@ -39,10 +39,21 @@ export class AccountPage implements OnInit, OnDestroy {
     this.userSubcription = this.authService.userChange.subscribe(user => {
       this.USER = user;
       console.log(this.USER);
+      
+      this.dbService.logAdd(this.USER.U_ID, this.USER.U_NAME,this.USER.U_ROLE,'Login')
+        .then((res) => {
+          console.log('Update log');
+          console.log(res);
+          //return this.updateScoreAndLevel()
+        })
+        .catch(err => {
+          console.log(err);
+        })
     });
 
     console.log('ngOnInit', this.USER, this.authService.isAuthenticated);
-    this.USER = this.localService.USER;
+    //this.USER = this.localService.USER
+    this.localService.USER = this.USER ;
   }
 
   ngOnDestroy() {
@@ -54,6 +65,7 @@ export class AccountPage implements OnInit, OnDestroy {
     console.log(email, passwd);
     this.authService.signInWithAfAuth(email, passwd)
       .then(() => {
+        
         this.navCtrl.goBack();
       })
       .catch(err => {

@@ -5,6 +5,7 @@ import { iUser } from '../interfaces/user.interface';
 import { LocalService } from '../services/local.service';
 import { AppService } from '../services/app.service';
 import { NavController } from '@ionic/angular';
+import { DbService } from '../services/db.service';
 
 @Component({
   selector: 'app-user-new-add',
@@ -13,16 +14,19 @@ import { NavController } from '@ionic/angular';
 })
 export class UserNewAddPage implements OnInit {
   USER: iUser;
+  USER_: iUser;
   constructor(
     private navCtrl: NavController,
     private authService: AuthService,
     private crudService: CrudService,
     private localService: LocalService,
-    private appService: AppService
+    private appService: AppService,
+    private dbService: DbService
   ) { }
 
   ngOnInit() {
     this.USER = this.localService.USER_DEFAULT;
+    this.USER_=this.localService.USER;
   }
 
   createAccount4User(fullname: string, nickname: string, email: string, passwd: string, role: string) {
@@ -38,6 +42,16 @@ export class UserNewAddPage implements OnInit {
       })
       .then((res) => {
         console.log(res);
+
+        this.dbService.logAdd(this.USER_.U_ID, this.USER_.U_FULLNAME,this.USER_.U_ROLE,'Add new User ' + this.USER.U_FULLNAME + ' - Role ' + this.USER.U_ROLE)
+          .then((res) => {
+            console.log('Update log');
+            console.log(res);
+            //return this.updateScoreAndLevel()
+          })
+          .catch(err => {
+            console.log(err);
+          })
         this.navCtrl.goBack();
         this.appService.alertConfirmationShow('Thành công', 'Tạo Thành công')
       })

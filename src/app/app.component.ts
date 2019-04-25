@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
     { title: 'Báo cáo', url: '/reports', icon: 'stats' },
     { title: 'Nhân viên', url: '/users', icon: 'contacts' },
     { title: 'Lịch làm việc', url: '/slot-assign', icon: 'calendar' },
+    { title: 'Lịch sử hoạt động', url: '/log-activity', icon: 'list' },
     { title: 'Đăng nhập', url: '/account', icon: 'lock' },
     { title: 'Đăng xuất', url: '/account', icon: 'unlock' }
   ];
@@ -77,6 +78,7 @@ export class AppComponent implements OnInit {
         { title: 'Nhân viên', url: '/users', icon: 'contacts' },
         { title: 'Lịch làm việc', url: '/slot-assign', icon: 'calendar' },
         { title: 'Quản lý booking', url: '/appointments-manage', icon: 'md-briefcase' },
+        { title: 'Lịch sử hoạt động', url: '/log-activity', icon: 'list' },
         { title: 'Đăng xuất', url: '/account', icon: 'unlock' }
       ];
       return;

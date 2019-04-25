@@ -6,6 +6,7 @@ import { SetgetService } from '../services/setget.service';
 import { AppService } from '../services/app.service';
 import { DbService } from '../services/db.service';
 import { UserPhotoTakePage } from '../user-photo-take/user-photo-take.page';
+import { LocalService } from '../services/local.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -13,6 +14,7 @@ import { UserPhotoTakePage } from '../user-photo-take/user-photo-take.page';
   styleUrls: ['./user-edit.page.scss'],
 })
 export class UserEditPage implements OnInit {
+  USER_: iUser;
   USER: iUser;
   base64Images: string[] = [];
   hasNewAvatar: boolean = false;
@@ -22,10 +24,12 @@ export class UserEditPage implements OnInit {
     private setGetService: SetgetService,
     private appService: AppService,
     private modalCtrl: ModalController,
-    private dbService: DbService
+    private dbService: DbService,
+    private localService: LocalService
   ) { }
 
   ngOnInit() {
+    this.USER_=this.localService.USER;
     this.USER = this.setGetService.getPar();
     console.log(this.USER);
     if (typeof (this.USER) == 'undefined') {
@@ -38,6 +42,16 @@ export class UserEditPage implements OnInit {
     this.crudService.userUpdate(this.USER)
       .then((res) => {
         console.log(res);
+
+        this.dbService.logAdd(this.USER_.U_ID, this.USER_.U_FULLNAME,this.USER_.U_ROLE,'Update User ' + this.USER.U_FULLNAME + ' - Role ' + this.USER.U_ROLE)
+          .then((res) => {
+            console.log('Update log');
+            console.log(res);
+            //return this.updateScoreAndLevel()
+          })
+          .catch(err => {
+            console.log(err);
+          })
         this.appService.alertShow('Thành công', null, 'Cập nhật thành công');
         this.navCtrl.goBack();
       })

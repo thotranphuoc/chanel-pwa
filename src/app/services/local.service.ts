@@ -103,7 +103,8 @@ export class LocalService {
     DateId: '',
     Slots: [],
     date: '=',
-    isThePast: false
+    isThePast: false,
+    isDraff:false
   }
 
   SLOT: iSlot = null;

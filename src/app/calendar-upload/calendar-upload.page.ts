@@ -187,7 +187,8 @@ export class CalendarUploadPage implements OnInit {
         DateId: _DateId,
         Slots: _Slots,
         date: _date,
-        isThePast: false
+        isThePast: false,
+        isDraff:false
       };
       Obj[_DateId] = _DAY;
       DAYS.push(_DAY);

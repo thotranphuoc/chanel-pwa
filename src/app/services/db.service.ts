@@ -8,6 +8,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
+import { HttpClient } from '@angular/common/http';
 
 // import { iShop } from '../interfaces/shop.interface';
 
@@ -16,9 +17,20 @@ export class DbService {
     constructor(
         // private db: AngularFireDatabase,
         // private afAuth: AngularFireAuth
+        private httpClient: HttpClient
     ) {
     }
 
+    logAdd(ID_USER: string, NAME: string,ROLE: string,ACTIVITY: string ){
+        let url='http://chanel.enablecode.vn/service/service.php?action=InsertLogActivity&ID_USER='+ID_USER+'&NAME=' +NAME+ '&ROLE='+ ROLE +'&ACTIVITY='+ACTIVITY;
+        return this.httpClient.get(url).toPromise(); 
+    }
+
+    getHistory()
+    {
+        let url='http://chanel.enablecode.vn/service/service.php?action=GetLogActivity';
+        return this.httpClient.get(url); 
+    }
     // checkIfUserIsAdminOfApp(USER_ID: string) {
     //     return new Promise((resolve, reject) => {
     //         this.getOneItemReturnPromise('AdminsOfApp/' + USER_ID).then((res) => {

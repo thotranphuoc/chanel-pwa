@@ -48,6 +48,7 @@ const routes: Routes = [
   { path: 'bookings-view', loadChildren: './bookings-view/bookings-view.module#BookingsViewPageModule' },
   { path: 'appointment-calendar-edit-new', loadChildren: './appointment-calendar-edit-new/appointment-calendar-edit-new.module#AppointmentCalendarEditNewPageModule' },
   { path: 'search', loadChildren: './search/search.module#SearchPageModule' },
+  { path: 'log-activity', loadChildren: './log-activity/log-activity.module#LogActivityPageModule' },
 
 ];
 

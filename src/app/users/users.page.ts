@@ -4,6 +4,7 @@ import { NavController } from '@ionic/angular';
 import { CrudService } from '../services/crud.service';
 import { SetgetService } from '../services/setget.service';
 import { LocalService } from '../services/local.service';
+import { ExcelService } from '../excel.service';
 
 @Component({
   selector: 'app-users',
@@ -18,6 +19,7 @@ export class UsersPage implements OnInit {
     private crudService: CrudService,
     private setGetService: SetgetService,
     private localService: LocalService,
+    private excelService: ExcelService,
   ) { }
 
   ngOnInit() {
@@ -57,6 +59,33 @@ export class UsersPage implements OnInit {
 
   go2UserNewAdd() {
     this.navCtrl.navigateForward('/user-new-add');
+  }
+
+  isAdmin()
+  {
+    if(this.USER.U_ROLE !== 'Admin') return true;
+    return false;
+  }
+
+  downloadUsersReport() {
+    // this.loadingService.presentLoading();
+    let _USERS = [];
+    this.USERS.forEach(U => {
+      let _USER = {};
+      _USER['ID'] = U.U_ID;
+      _USER['Email'] = U.U_EMAIL;
+      _USER['Họ và tên'] = U.U_FULLNAME;
+      _USER['SĐT'] = U.U_PHONE;
+      _USER['Giới tính'] = U.U_GENDER;
+      _USER['Quyền'] = U.U_ROLE;
+      _USER['Địa chỉ'] = U.U_ADDRESS;
+      _USER['Ngày sinh'] = U.U_DoB;
+      _USERS.push(_USER);
+    })
+    console.log(_USERS);
+    // this.loadingService.loadingDissmiss();
+    this.excelService.exportFromArrayOfObject2Excel(_USERS, 'USERS_');
+
   }
 
 }

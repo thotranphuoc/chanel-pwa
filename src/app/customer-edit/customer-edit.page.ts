@@ -7,6 +7,7 @@ import { SetgetService } from '../services/setget.service';
 import { AppService } from '../services/app.service';
 import { NavController } from '@ionic/angular';
 import { iUser } from '../interfaces/user.interface';
+import { DbService } from '../services/db.service';
 
 @Component({
   selector: 'app-customer-edit',
@@ -22,7 +23,8 @@ export class CustomerEditPage implements OnInit {
     private localService: LocalService,
     private crudService: CrudService,
     private setGetService: SetgetService,
-    private appService: AppService
+    private appService: AppService,
+    private dbService: DbService
   ) { }
 
   ngOnInit() {
@@ -59,6 +61,16 @@ export class CustomerEditPage implements OnInit {
     this.crudService.customerUpdate(this.CUSTOMER)
       .then((res) => {
         console.log(res);
+        this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME,this.USER.U_ROLE,'Update Customer ' + this.CUSTOMER.C_NAME + ' - ID ' + this.CUSTOMER.C_ID)
+          .then((res) => {
+            console.log('Update log');
+            console.log(res);
+            //return this.updateScoreAndLevel()
+          })
+          .catch(err => {
+            console.log(err);
+          })
+
         this.appService.alertShow('Thành công', null, 'Cập nhật khách hàng thành công');
         this.navCtrl.goBack();
       })
@@ -76,5 +88,17 @@ export class CustomerEditPage implements OnInit {
   doShowHistory(CUSTOMER:iCustomer){
     this.setGetService.setPar(CUSTOMER);
     this.navCtrl.navigateForward('/booking-history');
+  }
+
+  isAdmin(){
+    //console.log("Chay ktra admin");
+    //console.log(this.USER.U_ROLE);
+    if (this.USER.U_ROLE !== 'Admin')
+    {
+      //console.log("ktra admin");
+      return true;
+    }
+      
+    return false;
   }
 }

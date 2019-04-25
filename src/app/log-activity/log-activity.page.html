@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Danh sách các hoạt động</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div class="main">
+    <div class="content">
+        <div class="search">
+            <ion-searchbar #search_history (ionChange)="search(search_history.value)" placeholder="Nhập hoạt động để tìm kiếm"></ion-searchbar>
+        </div>
+      <ion-grid>
+          <ion-row style="font-weight: bold">
+              <ion-col size="2">
+                STT
+              </ion-col>
+              <ion-col size="3">
+                 Tên
+              </ion-col>
+              <ion-col size="4">
+                  Hoạt động
+              </ion-col>
+              <ion-col size="3">
+                  Thời gian
+              </ion-col>
+            </ion-row>
+        <ion-row class="list_law_share_row" *ngFor="let HISTORY of HISTORYS; let id = index">
+          <ion-col size="2">
+            {{id + 1}}
+          </ion-col>
+          <ion-col size="3">
+              {{HISTORY.NAME}}
+          </ion-col>
+          <ion-col size="4">
+              {{HISTORY.ACTIVITY}}
+          </ion-col>
+          <ion-col size="3">
+              {{HISTORY.TIME}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>
