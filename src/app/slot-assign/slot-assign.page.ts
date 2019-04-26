@@ -190,7 +190,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
       
       if(this.checkBooking(Day,SLOT,i) && (this.selectedSpecialist.U_ID === 'BLOCKED' || this.selectedSpecialist.U_ID === ''))
       {
-        
+
         this.alertShowCheckAssign('Thông báo!', 'Slot đã có được book không thể thay đổi');
       }
       else
@@ -214,7 +214,8 @@ export class SlotAssignPage implements OnInit, OnDestroy {
 
     console.log(SLOT, i); 
 
-    if(SLOT.BOOK_ID.length > 1) return true;
+    if(SLOT.BOOK_ID.length > 1) 
+      return true;
     return false;
   }
 
