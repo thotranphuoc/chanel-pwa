@@ -301,6 +301,10 @@ export class CrudService {
     return this.afs.doc('CALENDARS/' + YYYYMM).valueChanges()
   }
 
+  calendarSlotGet(YYYYMMDD: string) {
+    return firebase.firestore().doc('CALENDARS/' + YYYYMMDD.substr(0, 6)).get();
+  }
+
   calendarDayGet(YYYYMMDD: string) {
     let fullday = YYYYMMDD.split("-")
     console.log(fullday);

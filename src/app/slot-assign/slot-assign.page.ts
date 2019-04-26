@@ -10,6 +10,7 @@ import { Papa } from 'ngx-papaparse';
 import { LocalService } from '../services/local.service';
 import { LoadingService } from '../loading.service';
 import { DbService } from '../services/db.service';
+import { DAYS_OF_WEEK } from 'calendar-utils';
 @Component({
   selector: 'app-slot-assign',
   templateUrl: './slot-assign.page.html',
@@ -187,7 +188,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     } else {
       console.log(SLOT);
       
-      if(this.checkBooking(SLOT) && (this.selectedSpecialist.U_ID === 'BLOCKED' || this.selectedSpecialist.U_ID === ''))
+      if(this.checkBooking(Day,SLOT,i) && (this.selectedSpecialist.U_ID === 'BLOCKED' || this.selectedSpecialist.U_ID === ''))
       {
         this.alertShowCheckAssign('Thông báo!', 'Slot đã có được book không thể thay đổi');
       }
@@ -196,8 +197,17 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     }
   }
 //check booking before update
-  checkBooking(SLOT: iSlot)
+  checkBooking(Day: iDay, SLOT: iSlot, i: number)
   {
+
+    this.crudService.calendarSlotGet(Day.DateId)
+    .then(res => {
+      let MONTHOBJ = res.data();
+      console.log(MONTHOBJ); 
+     })
+    .catch((err) => {
+      console.log(err);
+    })
 
     if(SLOT.BOOK_ID.length > 1) return true;
     return false;
