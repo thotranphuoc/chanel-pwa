@@ -187,35 +187,33 @@ export class SlotAssignPage implements OnInit, OnDestroy {
       this.alertActionDeleteOrUpdateslot(Day, SLOT, i);
     } else {
       console.log(SLOT);
-      
-      if(this.checkBooking(Day,SLOT,i) && (this.selectedSpecialist.U_ID === 'BLOCKED' || this.selectedSpecialist.U_ID === ''))
-      {
-        
-        this.alertShowCheckAssign('Thông báo!', 'Slot đã có được book không thể thay đổi');
-      }
-      else
-        this.updateSlotInList(Day, SLOT, i);
+      this.checkBooking(Day, SLOT, i);
     }
   }
-//check booking before update
-  checkBooking(Day: iDay, SLOT: iSlot, i: number)
-  {
+  //check booking before update
+  checkBooking(Day: iDay, SLOT: iSlot, i: number) {
 
     this.crudService.calendarSlotGet(Day.DateId)
-    .then(res => {
-      let MONTHOBJ = res.data();
-      console.log(MONTHOBJ[Day.DateId], i); 
-      Day = MONTHOBJ[Day.DateId];
-      SLOT=Day.Slots[i];
-     })
-    .catch((err) => {
-      console.log(err);
-    })
+      .then(res => {
+        let MONTHOBJ = res.data();
+        console.log(MONTHOBJ[Day.DateId], i);
+        Day = MONTHOBJ[Day.DateId];
+        SLOT = Day.Slots[i];
 
-    console.log(SLOT, i); 
+        if (SLOT.BOOK_ID.length > 1 && (this.selectedSpecialist.U_ID === 'BLOCKED' || this.selectedSpecialist.U_ID === '')) {
+          this.alertShowCheckAssign('Thông báo!', 'Slot đã có được book không thể thay đổi');
+        }
+        else
+          this.updateSlotInList(Day, SLOT, i);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
 
-    if(SLOT.BOOK_ID.length > 1) return true;
-    return false;
+    // console.log(SLOT, i);
+
+    // if (SLOT.BOOK_ID.length > 1) return true;
+    // return false;
   }
 
   updateSlotInList(Day: iDay, SLOT: iSlot, i: number) {
@@ -235,15 +233,15 @@ export class SlotAssignPage implements OnInit, OnDestroy {
 
       console.log(Day, SLOT, this.selectedSpecialist);
 
-      this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME,this.USER.U_ROLE,'Slot Assign - SPE Name ' + SLOT.STATUS + ' - day ' + Day.DateId + ' - Slot ' + SLOT.SLOT )
-          .then((res) => { 
-            console.log('Update log');
-            console.log(res);
-            //return this.updateScoreAndLevel()
-          })
-          .catch(err => {
-            console.log(err);
-          })
+      this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME, this.USER.U_ROLE, 'Slot Assign - SPE Name ' + SLOT.STATUS + ' - day ' + Day.DateId + ' - Slot ' + SLOT.SLOT)
+        .then((res) => {
+          console.log('Update log');
+          console.log(res);
+          //return this.updateScoreAndLevel()
+        })
+        .catch(err => {
+          console.log(err);
+        })
 
       this.crudService.dayUpdate(Day)
         .then((res) => console.log(res))
@@ -281,7 +279,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
 
   monthNotExistAlertConfirm() {
     if (this.USER.U_ROLE == 'Manager') {
-      this.monthNotExistAlertConfirmManager();      
+      this.monthNotExistAlertConfirmManager();
     } else {
       this.monthNotExistAlertConfirmSpecialist();
     }
@@ -338,16 +336,16 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     this.calendarService.calendarForMonthCreate(Number(this.YYYY), Number(this.MM))
       .then((res) => {
         console.log(res);
-        this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME,this.USER.U_ROLE,'Create New Month Calender ' + this.MM + '/' + this.YYYY)
-        .then((res) => {
-          console.log('Update log');
-          console.log(res);
-          //return this.updateScoreAndLevel()
-        })
-        .catch(err => {
-          console.log(err);
-        })
-        
+        this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME, this.USER.U_ROLE, 'Create New Month Calender ' + this.MM + '/' + this.YYYY)
+          .then((res) => {
+            console.log('Update log');
+            console.log(res);
+            //return this.updateScoreAndLevel()
+          })
+          .catch(err => {
+            console.log(err);
+          })
+
         this.getCalendarsOfMonth();
         this.loadingService.loadingDissmiss()
       })
@@ -586,7 +584,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
         Slots: _Slots,
         date: _date,
         isThePast: false,
-        isDraff:false,
+        isDraff: false,
       };
       Obj[_DateId] = _DAY;
       DAYS.push(_DAY);
