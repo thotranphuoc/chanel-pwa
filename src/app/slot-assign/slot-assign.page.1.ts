@@ -9,6 +9,8 @@ import { AlertController, ActionSheetController, NavController } from '@ionic/an
 import { Papa } from 'ngx-papaparse';
 import { LocalService } from '../services/local.service';
 import { LoadingService } from '../loading.service';
+import { DbService } from '../services/db.service';
+import { DAYS_OF_WEEK } from 'calendar-utils';
 @Component({
   selector: 'app-slot-assign',
   templateUrl: './slot-assign.page.html',
@@ -48,6 +50,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     private localService: LocalService,
     private papa: Papa,
     private loadingService: LoadingService,
+    private dbService: DbService
   ) {
     this.COLOR_SPE[''] = 'Gray';
     this.COLOR_SPE['BLOCKED'] = 'Black';
@@ -183,27 +186,34 @@ export class SlotAssignPage implements OnInit, OnDestroy {
       console.log('update/delete slot in list')
       this.alertActionDeleteOrUpdateslot(Day, SLOT, i);
     } else {
-      // this.updateSlotInList(Day, SLOT, i);
-      this.checkingSlotExistingB4Update(Day, SLOT, i);
+      console.log(SLOT);
+      this.checkBooking(Day, SLOT, i);
     }
   }
+  //check booking before update
+  checkBooking(Day: iDay, SLOT: iSlot, i: number) {
 
-  checkingSlotExistingB4Update(Day: iDay, SLOT: iSlot, i: number) {
     this.crudService.calendarSlotGet(Day.DateId)
-      .then(docSnap => {
-        let MONTHOBJ = docSnap.data();
+      .then(res => {
+        let MONTHOBJ = res.data();
         console.log(MONTHOBJ[Day.DateId], i);
-        let _Day = MONTHOBJ[Day.DateId];
-        let _SLOT = _Day.Slots[i];
-        if (_SLOT.BOOK_ID.length > 1 && (this.selectedSpecialist.U_ID === 'BLOCKED' || this.selectedSpecialist.U_ID === '')) {
-          this.appService.alertShow('Thông báo!', '', 'Slot đã có được book không thể thay đổi');
-        } else {
-          this.updateSlotInList(Day, SLOT, i);
+        Day = MONTHOBJ[Day.DateId];
+        SLOT = Day.Slots[i];
+
+        if (SLOT.BOOK_ID.length > 1 && (this.selectedSpecialist.U_ID === 'BLOCKED' || this.selectedSpecialist.U_ID === '')) {
+          this.alertShowCheckAssign('Thông báo!', 'Slot đã có được book không thể thay đổi');
         }
+        else
+          this.updateSlotInList(Day, SLOT, i);
       })
       .catch((err) => {
         console.log(err);
       })
+
+    // console.log(SLOT, i);
+
+    // if (SLOT.BOOK_ID.length > 1) return true;
+    // return false;
   }
 
   updateSlotInList(Day: iDay, SLOT: iSlot, i: number) {
@@ -214,20 +224,57 @@ export class SlotAssignPage implements OnInit, OnDestroy {
       if (this.selectedSpecialist.U_ID !== 'BLOCKED') {
         SLOT.SPE_ID = this.selectedSpecialist.U_ID ? this.selectedSpecialist.U_ID : '';
         SLOT.SPE_NAME = this.selectedSpecialist.U_NAME ? this.selectedSpecialist.U_NAME : '';
-        SLOT.STATUS = 'AVAILABLE';
       } else {
         SLOT.SPE_ID = this.selectedSpecialist.U_ID;
         SLOT.SPE_NAME = this.selectedSpecialist.U_NAME;
         SLOT.STATUS = 'BLOCKED';
       }
       Day.Slots[i] = SLOT;
+
       console.log(Day, SLOT, this.selectedSpecialist);
+
+      this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME, this.USER.U_ROLE, 'Slot Assign - SPE Name ' + SLOT.STATUS + ' - day ' + Day.DateId + ' - Slot ' + SLOT.SLOT)
+        .then((res) => {
+          console.log('Update log');
+          console.log(res);
+          //return this.updateScoreAndLevel()
+        })
+        .catch(err => {
+          console.log(err);
+        })
+
       this.crudService.dayUpdate(Day)
         .then((res) => console.log(res))
         .catch(err => console.log(err));
     } else {
       this.appService.alertConfirmationShow(null, 'Vui lòng chọn Specialist');
     }
+  }
+
+  async alertShowCheckAssign(HEADER: string, MSG: string) {
+    const alert = await this.alertCtrl.create({
+      header: HEADER,
+      message: MSG,
+      buttons: [
+        {
+          text: 'Huỷ bỏ',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Chấp nhận',
+          handler: () => {
+            console.log('Confirm Okay');
+            return;
+            //this.navCtrl.navigateForward('/account');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   monthNotExistAlertConfirm() {
@@ -289,6 +336,16 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     this.calendarService.calendarForMonthCreate(Number(this.YYYY), Number(this.MM))
       .then((res) => {
         console.log(res);
+        this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME, this.USER.U_ROLE, 'Create New Month Calender ' + this.MM + '/' + this.YYYY)
+          .then((res) => {
+            console.log('Update log');
+            console.log(res);
+            //return this.updateScoreAndLevel()
+          })
+          .catch(err => {
+            console.log(err);
+          })
+
         this.getCalendarsOfMonth();
         this.loadingService.loadingDissmiss()
       })
@@ -527,7 +584,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
         Slots: _Slots,
         date: _date,
         isThePast: false,
-        isDraff: false
+        isDraff: false,
       };
       Obj[_DateId] = _DAY;
       DAYS.push(_DAY);
