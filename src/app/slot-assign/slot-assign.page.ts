@@ -190,6 +190,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
       
       if(this.checkBooking(Day,SLOT,i) && (this.selectedSpecialist.U_ID === 'BLOCKED' || this.selectedSpecialist.U_ID === ''))
       {
+        
         this.alertShowCheckAssign('Thông báo!', 'Slot đã có được book không thể thay đổi');
       }
       else
@@ -203,11 +204,15 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     this.crudService.calendarSlotGet(Day.DateId)
     .then(res => {
       let MONTHOBJ = res.data();
-      console.log(MONTHOBJ); 
+      console.log(MONTHOBJ[Day.DateId], i); 
+      Day = MONTHOBJ[Day.DateId];
+      SLOT=Day.Slots[i];
      })
     .catch((err) => {
       console.log(err);
     })
+
+    console.log(SLOT, i); 
 
     if(SLOT.BOOK_ID.length > 1) return true;
     return false;
