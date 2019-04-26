@@ -19,11 +19,11 @@
         </ion-item>
         <ion-item>
           <ion-label color="primary" fixed>VIP Code:</ion-label>
-          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_VIPCODE"></ion-input>
+          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_VIPCODE" [disabled]="isDisabled2UpdateBooking()"></ion-input>
         </ion-item>
         <ion-item lines="none">
           <ion-label color="primary" fixed>Tên:</ion-label>
-          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_NAME"></ion-input>
+          <ion-input type="text" placeholder="" [(ngModel)]="BOOKING.B_CUSTOMER_NAME" [disabled]="isDisabled2UpdateBooking()"></ion-input>
         </ion-item>
 
         <div style="height: 5px"></div>
@@ -42,7 +42,7 @@
 
         <ion-item lines="none">
           <ion-label color="primary" fixed>Ghi chú:</ion-label>
-          <ion-input type="text" placeholder="Ghi chú" [(ngModel)]="BOOKING.B_NOTE"></ion-input>
+          <ion-input type="text" placeholder="Ghi chú" [(ngModel)]="BOOKING.B_NOTE" [disabled]="isDisabled2UpdateBooking()"></ion-input>
         </ion-item>
         <div style="height: 5px"></div>
         <h3>NHÂN VIÊN:</h3>

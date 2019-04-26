@@ -350,12 +350,26 @@ export class AppointmentEditPage implements OnInit {
     if (this.USER.U_ROLE !== 'Manager' && this.BOOKING.B_STATUS == 'DRAFT') return true;
     if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Specialist' && this.BOOKING.B_STATUS == 'COMPLETED') return true;
     if (this.BOOKING.B_STATUS == 'CANCELED') return true;
+    if (this.isCheckPastday())
+    {
+      if (this.USER.U_ROLE === 'Manager' || this.USER.U_ROLE === 'Admin')
+        return false
+      else
+        return true;
+    } 
     return false;
   }
 
   isChangeSlotDisabled() {
     if (!this.BOOKING) return false;
     if (this.BOOKING.B_STATUS == 'COMPLETED' || this.BOOKING.B_STATUS == 'EXPIRED') return true;
+    if (this.isCheckPastday())
+    {
+      if (this.USER.U_ROLE === 'Manager' || this.USER.U_ROLE === 'Admin')
+        return false
+      else
+        return true;
+    } 
     return false;
   }
 

@@ -25,23 +25,23 @@
         </div>
     <ion-item>
       <ion-label color="primary">Nickname:</ion-label>
-      <ion-input [(ngModel)]="USER.U_NAME" name="U_NAME"></ion-input>
+      <ion-input [(ngModel)]="USER.U_NAME" name="U_NAME" [disabled]="isDisabled2Update()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary">Họ và Tên:</ion-label>
-      <ion-input [(ngModel)]="USER.U_FULLNAME" name="U_FULLNAME"></ion-input>
+      <ion-input [(ngModel)]="USER.U_FULLNAME" name="U_FULLNAME" [disabled]="isDisabled2Update()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary">Email:</ion-label>
-      <ion-input [(ngModel)]="USER.U_EMAIL" name="U_EMAIL"></ion-input>
+      <ion-input [(ngModel)]="USER.U_EMAIL" name="U_EMAIL" [disabled]="isDisabled2Update()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary">Ngày sinh:</ion-label>
-      <ion-input [(ngModel)]="USER.U_DoB" name="U_DoB" type='date'></ion-input>
+      <ion-input [(ngModel)]="USER.U_DoB" name="U_DoB" type='date' [disabled]="isDisabled2Update()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary">Giới tính</ion-label>
-      <ion-select [(ngModel)]="USER.U_GENDER" name="U_GENDER">
+      <ion-select [(ngModel)]="USER.U_GENDER" name="U_GENDER" [disabled]="isDisabled2Update()">
         <ion-select-option value="Male">Nam</ion-select-option>
         <ion-select-option value="Female">Nữ</ion-select-option>
         <ion-select-option value="Other">Khác</ion-select-option>
@@ -49,19 +49,19 @@
     </ion-item>
     <ion-item>
       <ion-label color="primary">Số điện thoại:</ion-label>
-      <ion-input [(ngModel)]="USER.U_PHONE" name="U_PHONE"></ion-input>
+      <ion-input [(ngModel)]="USER.U_PHONE" name="U_PHONE" [disabled]="isDisabled2Update()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary">Địa chỉ:</ion-label>
-      <ion-input [(ngModel)]="USER.U_ADDRESS" name="U_ADDRESS"></ion-input>
+      <ion-input [(ngModel)]="USER.U_ADDRESS" name="U_ADDRESS" [disabled]="isDisabled2Update()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary">Quyền:</ion-label>
-      <ion-input [(ngModel)]="USER.U_ROLE" name="U_ROLE"></ion-input>
+      <ion-input [(ngModel)]="USER.U_ROLE" name="U_ROLE" [disabled]="isDisabled2Update()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary">Trạng thái:</ion-label>
-      <ion-input [(ngModel)]="USER.U_STATE" name="U_STATE"></ion-input>
+      <ion-input [(ngModel)]="USER.U_STATE" name="U_STATE" [disabled]="isDisabled2Update()"></ion-input>
     </ion-item>
     <ion-grid>
       <ion-row>
@@ -69,7 +69,7 @@
           <ion-button expand="block" color="danger" (click)="logout()">Đăng xuất</ion-button>
         </ion-col>
         <ion-col>
-          <ion-button expand="block" color="secondary" (click)="update()">Cập nhật</ion-button>
+          <ion-button expand="block" [disabled]="isDisabled2Update()" color="secondary" (click)="update()">Cập nhật</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

@@ -150,4 +150,9 @@ export class AccountPage implements OnInit, OnDestroy {
       })
   }
 
+  isDisabled2Update() {
+    if (this.USER.U_ROLE !== 'Admin') return true;
+    return false;
+  }
+
 }

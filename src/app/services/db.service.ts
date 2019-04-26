@@ -22,13 +22,13 @@ export class DbService {
     }
 
     logAdd(ID_USER: string, NAME: string,ROLE: string,ACTIVITY: string ){
-        let url='http://chanel.enablecode.vn/service/service.php?action=InsertLogActivity&ID_USER='+ID_USER+'&NAME=' +NAME+ '&ROLE='+ ROLE +'&ACTIVITY='+ACTIVITY;
+        let url='https://quynhnga.com.vn/webservice/service/service.php?action=InsertLogActivity&ID_USER='+ID_USER+'&NAME=' +NAME+ '&ROLE='+ ROLE +'&ACTIVITY='+ACTIVITY;
         return this.httpClient.get(url).toPromise(); 
     }
 
     getHistory()
     {
-        let url='http://chanel.enablecode.vn/service/service.php?action=GetLogActivity';
+        let url='https://quynhnga.com.vn/webservice/service/service.php?action=GetLogActivity';
         return this.httpClient.get(url); 
     }
     // checkIfUserIsAdminOfApp(USER_ID: string) {

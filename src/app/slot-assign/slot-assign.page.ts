@@ -186,13 +186,21 @@ export class SlotAssignPage implements OnInit, OnDestroy {
       this.alertActionDeleteOrUpdateslot(Day, SLOT, i);
     } else {
       console.log(SLOT);
-      if(SLOT.BOOK_ID.length > 1 && (this.selectedSpecialist.U_ID === 'BLOCKED' || this.selectedSpecialist.U_ID === ''))
+      
+      if(this.checkBooking(SLOT) && (this.selectedSpecialist.U_ID === 'BLOCKED' || this.selectedSpecialist.U_ID === ''))
       {
         this.alertShowCheckAssign('Thông báo!', 'Slot đã có được book không thể thay đổi');
       }
       else
         this.updateSlotInList(Day, SLOT, i);
     }
+  }
+//check booking before update
+  checkBooking(SLOT: iSlot)
+  {
+
+    if(SLOT.BOOK_ID.length > 1) return true;
+    return false;
   }
 
   updateSlotInList(Day: iDay, SLOT: iSlot, i: number) {
