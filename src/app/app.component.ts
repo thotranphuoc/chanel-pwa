@@ -113,7 +113,7 @@ export class AppComponent implements OnInit {
 
   isFABA() {
     if (!this.USER) return false;
-    if (this.USER.U_ROLE == 'BA' || this.USER.U_ROLE == 'BAS') return true;
+    if (this.USER.U_ROLE == 'FA' || this.USER.U_ROLE == 'BA' || this.USER.U_ROLE == 'BAS') return true;
     return false;
   }
 }

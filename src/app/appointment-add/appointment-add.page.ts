@@ -313,6 +313,8 @@ export class AppointmentAddPage implements OnInit {
 
   }
 
+  
+
   getSpecialistInfo(ID: string) {
     this.crudService.userGet(ID).subscribe(res => {
       let USER = <iUser>res.data();

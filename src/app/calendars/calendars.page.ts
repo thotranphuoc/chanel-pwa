@@ -170,6 +170,32 @@ export class CalendarsPage implements OnInit, OnDestroy {
   selectSlotInList(Day: iDay, SLOT: iSlot, index: number) {
     console.log(SLOT.SPE_ID);
     this.openAppointmentModal(Day, SLOT, index);
+    //this.checkingSlotExistingB4Booking(Day, SLOT, index);
+  }
+
+
+  checkingSlotExistingB4Booking(Day: iDay, SLOT: iSlot, i: number) {
+    this.crudService.calendarSlotGet(Day.DateId)
+      .then(docSnap => {
+        let MONTHOBJ = docSnap.data();
+        console.log(MONTHOBJ[Day.DateId], i);
+        let _Day = MONTHOBJ[Day.DateId];
+        let _SLOT = _Day.Slots[i];
+        if (_SLOT.BOOK_ID.length > 1) {
+          this.appService.alertShow('Thông báo!', '', 'Slot đã được book xin vui lòng chọn slot khác');
+        } else {
+          //check last day before show popup add
+          if(Day.isThePast)
+          {
+            this.appService.alertShow('Thông báo!', '', 'Ngày đã qua xin vui lòng chọn slot của ngày khác!');
+          }
+          else
+            this.modalAppointmentAdd(Day, SLOT, i);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   openAppointmentModal(Day: iDay, SLOT: iSlot, index: number) {
@@ -185,7 +211,8 @@ export class CalendarsPage implements OnInit, OnDestroy {
           //console.log(SLOT[index].SPE_ID);
           this.alertShowCheckAssign('Thông báo!', 'Chưa tạo được booking. Vui lòng liên hệ người quản lý.');
         }else
-          this.modalAppointmentAdd(Day, SLOT, index);
+          this.checkingSlotExistingB4Booking(Day, SLOT, index);
+          //this.modalAppointmentAdd(Day, SLOT, index);
       } else {
         this.modalAppointmentEdit(Day, SLOT, index);
       }
@@ -270,8 +297,5 @@ export class CalendarsPage implements OnInit, OnDestroy {
 
     await alert.present();
   }
-
-
-
 
 }
