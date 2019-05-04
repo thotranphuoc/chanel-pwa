@@ -70,6 +70,8 @@ export class AppointmentEditPage implements OnInit {
 
   ngOnInit() {
     console.log('ngOnInit');
+
+    
     if (this.data.isOnCalendar) {
       this.sub1 = this.crudService.bookingGet(this.Slot.BOOK_ID)
         .subscribe(docSnap => {
@@ -88,6 +90,7 @@ export class AppointmentEditPage implements OnInit {
       this.selectedBA = this.BOOKING.B_BA_SELL;
     }
     this.getBAs();
+    
   }
 
   updateBooking() {
@@ -280,7 +283,12 @@ export class AppointmentEditPage implements OnInit {
         label: STATE.VI,
         value: STATE,
       }
-      INPUTS.push(INP);
+      if(this.isCheckOpenChangeStatus() && INP['label']=='HOÀN THÀNH')
+      {
+
+      }
+      else
+       INPUTS.push(INP);
     })
     const alert = await this.alertCtrl.create({
       header: 'TRẠNG THÁI',
@@ -332,6 +340,37 @@ export class AppointmentEditPage implements OnInit {
     return (Number(TODAY) > Number(this.BOOKING.B_DAY.DateId));
   }
 
+  isCheckOpenChangeStatus() {
+    let isOpenStatus=true;
+    let TODAY = this.getTodayString();
+    if(TODAY===this.BOOKING.B_DAY.DateId)
+    {
+      console.log(TODAY===this.BOOKING.B_DAY.DateId);
+      let date_to_parse = new Date();
+      if(date_to_parse.getHours() < 24 && date_to_parse.getHours()== Number.parseInt(this.Slot.SLOT.substr(0,2)))
+       {
+        console.log(date_to_parse.getHours() < 24, date_to_parse.getHours()== Number.parseInt(this.Slot.SLOT.substr(0,2)));
+          if(date_to_parse.getMinutes()<60 && date_to_parse.getMinutes()>= Number.parseInt(this.Slot.SLOT.substr(3,2)))
+          {
+            console.log("thoa đk");
+            isOpenStatus=false;
+          }
+       } 
+       else if(date_to_parse.getHours() < 24 && date_to_parse.getHours()> Number.parseInt(this.Slot.SLOT.substr(0,2)))
+       {
+        console.log(date_to_parse.getHours() < 24, date_to_parse.getHours()>= Number.parseInt(this.Slot.SLOT.substr(0,2)));
+          console.log("thoa đk");
+          isOpenStatus=false;
+       } 
+      
+
+      //console.log('Thời gian hiện tại:',hour);
+    }
+    console.log(TODAY, this.BOOKING.B_DAY.DateId,Number.parseInt(this.Slot.SLOT.substr(0,2)), Number.parseInt(this.Slot.SLOT.substr(3,2)));
+    console.log(Number(TODAY), Number(this.BOOKING.B_DAY.DateId));
+    return isOpenStatus;
+  }
+
   getTodayString() {
     let date_to_parse = new Date();
     let year = date_to_parse.getFullYear().toString();
@@ -357,6 +396,8 @@ export class AppointmentEditPage implements OnInit {
       else
         return true;
     } 
+    //kiểm tra từ giờ booking đến 12pm thì sẽ cho chuyển trạng thái ko thì ko dc chuyển
+    //if(this.isCheckOpenChangeStatus()) return true;
     return false;
   }
 

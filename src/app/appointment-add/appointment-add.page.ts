@@ -13,6 +13,7 @@ import { AppService } from '../services/app.service';
 import { CalendarService } from '../services/calendar.service';
 import { LoadingService } from '../loading.service';
 import { DbService } from '../services/db.service';
+import { count } from 'rxjs/operators';
 @Component({
   selector: 'app-appointment-add',
   templateUrl: './appointment-add.page.html',
@@ -175,7 +176,7 @@ export class AppointmentAddPage implements OnInit {
     this.BOOKING.B_STATUS_VI = 'ĐÃ ĐẶT';
     this.CUSTOMER.C_BOOK_STATE = 'BOOKED';
     // Khách sub book lần 2 trong tháng
-    if (this.isBooking2TimesInMonth(this.CUSTOMER, this.BOOKING) && this.CUSTOMER.C_isSUBLIMAGE) {
+    if (this.isBooking2TimesInMonth(this.CUSTOMER, this.BOOKING,this.BOOKING.B_SUBLIMAGE) && this.CUSTOMER.C_isSUBLIMAGE) {
       this.BOOKING.B_STATUS = 'DRAFT';
       this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
       this.CUSTOMER.C_BOOK_STATE = 'DRAFT';
@@ -423,6 +424,8 @@ export class AppointmentAddPage implements OnInit {
         console.log(qSnap);
         qSnap.forEach(docSnap => {
           let CUSTOMER = <iCustomer>docSnap.data();
+          // let BOOKS = this.appService.convertObj2Array(CUSTOMER.C_BOOKINGS);
+          // CUSTOMER.C_BOOKINGS=BOOKS;
           console.log(CUSTOMER)
           this.SEARCHED_CUSTOMERS.push(CUSTOMER);
         })
@@ -445,7 +448,8 @@ export class AppointmentAddPage implements OnInit {
     this.BOOKING.B_SUBLIMAGE = typeof (this.CUSTOMER.C_SUBLIMAGE) == 'undefined' ? false : this.CUSTOMER.C_SUBLIMAGE;
     this.BOOKING.B_LELIFT = typeof (this.CUSTOMER.C_LELIFT) == 'undefined' ? false : this.CUSTOMER.C_LELIFT;
     this.BOOKING.B_FASHION = typeof (this.CUSTOMER.C_FASHION) == 'undefined' ? false : this.CUSTOMER.C_FASHION;
-    if (this.isBooking2TimesInMonth(this.CUSTOMER, this.BOOKING)) {
+    //console.log(this.isBooking2TimesInMonth(this.CUSTOMER, this.BOOKING));
+    if (this.isBooking2TimesInMonth(this.CUSTOMER, this.BOOKING, this.BOOKING.B_SUBLIMAGE)) {
       let dateStr = this.calendarService.convertDate(this.CUSTOMER.C_LAST_B_DATE)
       this.appService.alertShow('Chú ý', null, 'KH đã đặt lịch hẹn ngày ' + dateStr);
     }
@@ -458,14 +462,35 @@ export class AppointmentAddPage implements OnInit {
     return lastBookYYYYMM !== bookingYYYYMM
   }
 
-  isBooking2TimesInMonth(CUSTOMER: iCustomer, BOOKING: iBooking) {
-    let lastBookYYYYMM = CUSTOMER.C_LAST_B_DATE.substr(0, 7)
-    let bookingYYYYMM = BOOKING.B_DATE.substr(0, 7)
-    return lastBookYYYYMM == bookingYYYYMM
+  isBooking2TimesInMonth(CUSTOMER: iCustomer, BOOKING: iBooking, SUBLIMAGE:Boolean) {
+    let BOOKS = this.appService.convertObj2Array(CUSTOMER.C_BOOKINGS);
+    let _2timesinMonth = false;
+
+    BOOKS.forEach(BOOK => {
+      if(!SUBLIMAGE)
+      {
+        this.CUSTOMER.C_LAST_B_DATE=BOOK['DATE'];
+        _2timesinMonth = true;
+      }
+      else{
+        let lastBookYYYYMM = BOOK['DATE'].substr(0, 7)
+        let bookingYYYYMM = BOOKING.B_DATE.substr(0, 7)
+        console.log(lastBookYYYYMM, bookingYYYYMM);
+        if(lastBookYYYYMM == bookingYYYYMM)
+        {
+          this.CUSTOMER.C_LAST_B_DATE=BOOK['DATE'];
+          _2timesinMonth = true;
+        }
+      }
+    });
+    // let lastBookYYYYMM = CUSTOMER.C_LAST_B_DATE.substr(0, 7)
+    // let bookingYYYYMM = BOOKING.B_DATE.substr(0, 7)
+    // return lastBookYYYYMM == bookingYYYYMM
+    return _2timesinMonth;
   }
 
   isSublimageCustomerAndBook2TimesInMonth(CUSTOMER: iCustomer, BOOKING: iBooking) {
-    if (this.isBooking2TimesInMonth(CUSTOMER, BOOKING) && CUSTOMER.C_isSUBLIMAGE) {
+    if (this.isBooking2TimesInMonth(CUSTOMER, BOOKING,this.BOOKING.B_SUBLIMAGE) && CUSTOMER.C_isSUBLIMAGE) {
       return true;
     }
   }
