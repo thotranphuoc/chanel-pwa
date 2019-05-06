@@ -93,12 +93,12 @@ export class CustomerEditPage implements OnInit {
   isAdmin(){
     //console.log("Chay ktra admin");
     //console.log(this.USER.U_ROLE);
-    if (this.USER.U_ROLE !== 'Admin')
+    if (this.USER.U_ROLE === 'Admin' || this.USER.U_ROLE === 'Manager')
     {
       //console.log("ktra admin");
-      return true;
+      return false;
     }
       
-    return false;
+    return true;
   }
 }

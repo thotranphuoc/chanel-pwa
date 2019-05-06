@@ -283,11 +283,6 @@ export class AppointmentEditPage implements OnInit {
         label: STATE.VI,
         value: STATE,
       }
-      if(this.isCheckOpenChangeStatus() && INP['label']=='HOÀN THÀNH')
-      {
-
-      }
-      else
        INPUTS.push(INP);
     })
     const alert = await this.alertCtrl.create({
@@ -306,9 +301,22 @@ export class AppointmentEditPage implements OnInit {
           handler: (data: any) => {
             console.log(data);
             if (this._BOOKING.B_STATUS !== data.EN) {
-              this.isStateChanged = true
-              this.BOOKING.B_STATUS = data.EN;
-              this.BOOKING.B_STATUS_VI = data.VI;
+
+              if(this.isCheckOpenChangeStatus() && data.VI=='HOÀN THÀNH')
+              {
+                this.appService.alertShow('Thông báo', null, 'Bạn chỉ có thể cập nhật Hoàn thành trong khoản thời gian từ thời gian hẹn đến hết 24h trong ngày đặt hẹn!');
+              }
+              else if(!this.isCheckChangeStatusSpecialist() && data.VI=='HOÀN THÀNH')
+              {
+                console.log('chạy vào thông báo ktra specialist');
+                this.appService.alertShow('Thông báo', null, 'Chỉ có specialist được phân công slot này mới có thể hoàn thành slot này! Xin vui lòng kiểm tra lại!');
+              }
+              else
+              {
+                this.isStateChanged = true
+                this.BOOKING.B_STATUS = data.EN;
+                this.BOOKING.B_STATUS_VI = data.VI;
+              }
             }
           }
         }
@@ -339,7 +347,15 @@ export class AppointmentEditPage implements OnInit {
     //console.log(Number(TODAY) > Number(this.BOOKING.B_DAY.DateId));
     return (Number(TODAY) > Number(this.BOOKING.B_DAY.DateId));
   }
-
+  isCheckChangeStatusSpecialist()
+  {
+    let isOpenStatus=false;
+    console.log(this.USER.U_ID);
+    console.log(this.Slot.SPE_ID);
+    if(this.USER.U_ID == this.Slot.SPE_ID)
+      isOpenStatus=true;
+    return isOpenStatus;
+  }
   isCheckOpenChangeStatus() {
     let isOpenStatus=true;
     let TODAY = this.getTodayString();
