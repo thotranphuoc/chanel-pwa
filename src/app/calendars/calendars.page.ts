@@ -12,6 +12,7 @@ import { LocalService } from '../services/local.service';
 import { AppService } from '../services/app.service';
 import { SlotsInDayPage } from '../slots-in-day/slots-in-day.page';
 import { LoadingService } from '../loading.service';
+import { iUser } from '../interfaces/user.interface';
 
 @Component({
   selector: 'app-calendars',
@@ -32,6 +33,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
   TODAY: string;
   currentYYYYMM: string;
   nextYYYYMM: string;
+  //USER:iUser;
   STATES = [{ VI: 'TRỐNG', EN: 'Available' }, { VI: 'ĐÃ ĐẶT', EN: 'Booked' }, { VI: 'HOÀN THÀNH', EN: 'Completed' }, { VI: 'HUỶ BỎ', EN: 'Canceled' }, { VI: 'HẾT HẠN', EN: 'Expired' }, { VI: 'CHỜ DUYỆT', EN: 'Draft' }, { VI: 'KHOÁ', EN: 'Blocked' }];
   StateOfDay = ['Chưa có Booking', 'Đã có booking', 'Đầy booking'];
   constructor(
@@ -44,11 +46,13 @@ export class CalendarsPage implements OnInit, OnDestroy {
     private localService: LocalService,
     private appService: AppService,
     private loadingService: LoadingService
-  ) { }
+  ) { 
+    
+  }
 
   ngOnInit() {
     this.initCalendar();
-
+    //this.USER=this.localService.USER;
   }
 
   ngOnDestroy() {
@@ -74,12 +78,20 @@ export class CalendarsPage implements OnInit, OnDestroy {
           newdays.forEach(day => {
             let n = day.Slots.filter(slot => slot.STATUS !== 'AVAILABLE').length;
             day['n'] = n;
-
+            let isblock=false;
+            if(n>=4)
+            {
+              let block_ = day.Slots.filter(slot => slot.STATUS === 'BLOCKED').length;
+              if(block_ >= 4)
+                isblock=true;
+            }
             let isDraft= day.Slots.filter(slot => slot.STATUS === 'DRAFT').length;
             console.log(day['isThePast']);
             
             day['isdraft']=(isDraft>=1);
-            
+            day['isblock']=isblock;
+            let isCanceled= day.Slots.filter(slot => slot.STATUS === 'CANCELED').length;
+            day['isCancel']=isCanceled;
           });
           console.log(newdays);
           this.DaysInM1 = this.calendarService.addAdditionalProsIntoDaysInMonth(newdays);
@@ -102,8 +114,19 @@ export class CalendarsPage implements OnInit, OnDestroy {
           newdays.forEach(day => {
             let n = day.Slots.filter(slot => slot.STATUS !== 'AVAILABLE').length;
             day['n'] = n;
-            let isDraft= day.Slots.filter(slot => slot.STATUS === 'DRAFT').length;    
+            let isblock=false;
+            if(n>=4)
+            {
+              let block_ = day.Slots.filter(slot => slot.STATUS === 'BLOCK').length;
+              if(block_ >= 4)
+                isblock=true;
+            }
+            let isDraft= day.Slots.filter(slot => slot.STATUS === 'DRAFT').length;
+            console.log(day['isThePast']);
             day['isdraft']=(isDraft>=1);
+            day['isblock']=isblock;
+            let isCanceled= day.Slots.filter(slot => slot.STATUS === 'CANCELED').length;
+            day['isCancel']=isCanceled;
           });
           console.log(newdays);
           this.DaysInM2 = this.calendarService.addAdditionalProsIntoDaysInMonth(newdays);
@@ -211,7 +234,15 @@ export class CalendarsPage implements OnInit, OnDestroy {
           //console.log(SLOT[index].SPE_ID);
           this.alertShowCheckAssign('Thông báo!', 'Chưa tạo được booking. Vui lòng liên hệ người quản lý.');
         }else
-          this.checkingSlotExistingB4Booking(Day, SLOT, index);
+        {
+          if(SLOT.STATUS == 'CANCELED' && (this.localService.USER.U_ROLE === "Admin" || this.localService.USER.U_ROLE === "Manager"))
+          { 
+            this.modalAppointmentEdit(Day, SLOT, index);
+          }
+          else
+            this.checkingSlotExistingB4Booking(Day, SLOT, index);
+        }
+        
           //this.modalAppointmentAdd(Day, SLOT, index);
       } else {
         this.modalAppointmentEdit(Day, SLOT, index);

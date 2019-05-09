@@ -7,7 +7,9 @@ import { SetgetService } from '../services/setget.service';
 import { AppService } from '../services/app.service';
 import { NavController } from '@ionic/angular';
 import { iUser } from '../interfaces/user.interface';
+import { iBooking } from '../interfaces/booking.interface';
 import { DbService } from '../services/db.service';
+import { log } from 'util';
 
 @Component({
   selector: 'app-customer-edit',
@@ -69,6 +71,24 @@ export class CustomerEditPage implements OnInit {
           })
           .catch(err => {
             console.log(err);
+          })
+
+          this.crudService.bookingsOfCustomerGet(this.CUSTOMER.C_ID)
+          .subscribe(qSnap => {
+            let BOOKINGS = [];
+            qSnap.forEach(qDocSnap => {
+              let BOOKING = <iBooking>qDocSnap.data();
+              BOOKING.B_CUSTOMER_NAME=this.CUSTOMER.C_NAME;
+              BOOKING.B_CUSTOMER_PHONE= this.CUSTOMER.C_PHONE;
+              BOOKING.B_CUSTOMER_VIPCODE=this.CUSTOMER.C_VIPCODE;
+              BOOKING.B_CUSTOMER.C_NAME=this.CUSTOMER.C_NAME;
+              BOOKING.B_CUSTOMER.C_PHONE= this.CUSTOMER.C_PHONE;
+              BOOKING.B_CUSTOMER.C_VIPCODE=this.CUSTOMER.C_VIPCODE;
+              //gọi hàm update booking
+              console.log('log kq update',this.crudService.bookUpdate(BOOKING));
+              BOOKINGS.push(BOOKING);
+            })
+            console.log(BOOKINGS);
           })
 
         this.appService.alertShow('Thành công', null, 'Cập nhật khách hàng thành công');

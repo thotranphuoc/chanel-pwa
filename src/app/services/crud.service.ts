@@ -48,6 +48,8 @@ export class CrudService {
   }
 
 
+  
+
 
 
   customerCreate(customer: iCustomer) {
@@ -265,11 +267,40 @@ export class CrudService {
     return this.afs.collection('BOOKINGS', ref => ref.where('B_CUSTOMER_ID', '==', CUSTOMER_ID)).get();
   }
 
+  //Update 1 booking
+  bookUpdate(Book: iBooking) {
+    return this.afs.doc(`BOOKINGS/${Book.B_ID}`).update(Book);
+  }
+
   bookingUpdate(BOOKING: iBooking) {
     return new Promise((resolve, reject) => {
       let index = BOOKING.B_DAY.Slots.map(slot => slot.SLOT).indexOf(BOOKING.B_SLOT);
       BOOKING.B_DAY.Slots[index].STATUS = BOOKING.B_STATUS;
-      this.afs.doc('BOOKINGS/' + BOOKING.B_ID).update(BOOKING)
+      if(BOOKING.B_STATUS==='AVAILABLE')
+      {
+        this.afs.doc('BOOKINGS/' + BOOKING.B_ID).delete()
+        .then(() => {
+          // update last booking and isSublimage for customer
+          //return this.customerUpdateAfterBookingChange(BOOKING);
+          return this.afs.doc('CUSTOMERS/' + BOOKING.B_CUSTOMER_ID + '/C_BOOKINGS/'+BOOKING.B_ID).delete();
+        })
+        .then(() => {
+          // update calendars after booking change
+          //return this.dayUpdateAfterBookingChange(BOOKING);
+          BOOKING.B_DAY.Slots[index].BOOK_ID='';
+          BOOKING.B_DAY.Slots[index].STATUS = 'AVAILABLE';
+          console.log(BOOKING.B_DAY.Slots[index]);
+          return this.afs.doc('CALENDARS/' + BOOKING.B_DAY.DateId.substr(0,6) + '/'+ BOOKING.B_DAY.DateId + '/Slots/').update(BOOKING.B_DAY.Slots);
+        })
+        .then(() => {
+          resolve({ MSG: 'Cập nhật thành công', BOOKING: BOOKING });
+          this.sendNotification2Manager(BOOKING)
+        })
+        .catch((err) => reject(err));
+      }
+      else
+      {
+        this.afs.doc('BOOKINGS/' + BOOKING.B_ID).update(BOOKING)
         .then(() => {
           // update last booking and isSublimage for customer
           return this.customerUpdateAfterBookingChange(BOOKING);
@@ -283,6 +314,7 @@ export class CrudService {
           this.sendNotification2Manager(BOOKING)
         })
         .catch((err) => reject(err));
+      }
     })
   }
 

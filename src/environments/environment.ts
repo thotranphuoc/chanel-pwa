@@ -18,7 +18,6 @@ export const environment = {
     // projectId: "chanel-vn",
     // storageBucket: "chanel-vn.appspot.com",
     // messagingSenderId: "1494080253"
-
     apiKey: "AIzaSyA8nT2Ge5MYQkDl9_ikwTspzNRDUja_QuI",
     authDomain: "chanel-test-ec.firebaseapp.com",
     databaseURL: "https://chanel-test-ec.firebaseapp.com",

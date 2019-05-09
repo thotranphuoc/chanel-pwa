@@ -64,7 +64,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
     if (!this.USER) {
       this.navCtrl.navigateRoot('/home');
     } else {
-      if (this.USER.U_ROLE !== 'Specialist' && this.USER.U_ROLE !== 'Manager') {
+      if (this.USER.U_ROLE !== 'Specialist' && this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Admin') {
         this.navCtrl.navigateRoot('/home');
       }
     }
@@ -214,7 +214,7 @@ export class SlotAssignPage implements OnInit, OnDestroy {
       if (this.selectedSpecialist.U_ID !== 'BLOCKED') {
         SLOT.SPE_ID = this.selectedSpecialist.U_ID ? this.selectedSpecialist.U_ID : '';
         SLOT.SPE_NAME = this.selectedSpecialist.U_NAME ? this.selectedSpecialist.U_NAME : '';
-        SLOT.STATUS = 'AVAILABLE';
+        //SLOT.STATUS = 'AVAILABLE';
       } else {
         SLOT.SPE_ID = this.selectedSpecialist.U_ID;
         SLOT.SPE_NAME = this.selectedSpecialist.U_NAME;

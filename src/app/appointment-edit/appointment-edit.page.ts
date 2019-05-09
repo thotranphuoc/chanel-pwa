@@ -33,8 +33,8 @@ export class AppointmentEditPage implements OnInit {
   selectedBA: iUser;
   isPast:any= false;
   RIGHTS = {
-    Admin: [{ VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
-    Manager: [{ VI: 'CHỜ DUYỆT', EN: 'DRAFT' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
+    Admin: [{ VI: 'DUYỆT', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
+    Manager: [{ VI: 'KHÔNG DUYỆT', EN: 'AVAILABLE' },{ VI: 'CHỜ DUYỆT', EN: 'DRAFT' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
     Specialist: [{ VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }],
     BA: [{ VI: 'HUỶ BỎ', EN: 'CANCELED' }],
     BAS: [{ VI: 'HUỶ BỎ', EN: 'CANCELED' }],
@@ -58,6 +58,7 @@ export class AppointmentEditPage implements OnInit {
     console.log(this.data);
     if (this.data.isOnCalendar) {
       this.Slot = this.data.Slot;
+      this.index = this.data.index;
       this.Day = this.data.selectedDay;
     }
     this.USER = this.localService.USER;
@@ -94,7 +95,7 @@ export class AppointmentEditPage implements OnInit {
   }
 
   updateBooking() {
-    if (this.BOOKING.B_STATUS == 'COMPLETED' && !(this.USER.U_ROLE == 'Specialist' || this.USER.U_ROLE == 'Manager')) {
+    if (this.BOOKING.B_STATUS == 'COMPLETED' && !(this.USER.U_ROLE == 'Specialist' || this.USER.U_ROLE == 'Manager' || this.USER.U_ROLE == 'Admin')) {
       this.appService.alertConfirmationShow('Opps', 'Bạn không có quyền close Booking');
       return;
     }
@@ -137,6 +138,16 @@ export class AppointmentEditPage implements OnInit {
     if (this.BOOKING.B_STATUS == 'DRAFT' && this.isStateChanged) {
         this.BOOKING.B_DAY.isDraff=true;
       }
+
+    if (this.BOOKING.B_STATUS == 'AVAILABLE' && this.isStateChanged) {
+        /*this.BOOKING.B_DAY.Slots[this.index].BOOK_ID='';
+        this.BOOKING.B_DAY.Slots[this.index].STATUS = 'AVAILABLE';
+        this.BOOKING.B_CUSTOMER_NAME='';
+        this.BOOKING.B_CUSTOMER.C_ID='';
+        this.BOOKING.B_CUSTOMER.C_NAME='';
+        this.BOOKING.B_CUSTOMER.C_PHONE='';*/
+    }
+
     let EVENT: iEvent = {
       E_ACTION_EN: this.BOOKING.B_STATUS,
       E_ACTION_VI: this.BOOKING.B_STATUS_VI,
@@ -330,8 +341,8 @@ export class AppointmentEditPage implements OnInit {
     console.log(this.isPast);
     
     if (!this.BOOKING) return false;
-    if (this.USER.U_ROLE !== 'Manager' && this.BOOKING.B_STATUS == 'DRAFT') return true;
-    if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Specialist' && this.BOOKING.B_STATUS == 'COMPLETED') return true;
+    if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Admin' && this.BOOKING.B_STATUS == 'DRAFT') return true;
+    if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Admin' && this.USER.U_ROLE !== 'Specialist' && this.BOOKING.B_STATUS == 'COMPLETED') return true;
     if (this.isCheckPastday())
     {
       if (this.USER.U_ROLE === 'Manager' || this.USER.U_ROLE === 'Admin')
@@ -352,7 +363,7 @@ export class AppointmentEditPage implements OnInit {
     let isOpenStatus=false;
     console.log(this.USER.U_ID);
     console.log(this.Slot.SPE_ID);
-    if(this.USER.U_ID == this.Slot.SPE_ID)
+    if(this.USER.U_ID == this.Slot.SPE_ID || this.USER.U_ROLE === 'Manager' || this.USER.U_ROLE === 'Admin')
       isOpenStatus=true;
     return isOpenStatus;
   }
@@ -402,9 +413,9 @@ export class AppointmentEditPage implements OnInit {
 
   isDisabled2ChangeState() {
     if (!this.BOOKING) return false;
-    if (this.USER.U_ROLE !== 'Manager' && this.BOOKING.B_STATUS == 'DRAFT') return true;
-    if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Specialist' && this.BOOKING.B_STATUS == 'COMPLETED') return true;
-    if (this.BOOKING.B_STATUS == 'CANCELED') return true;
+    if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Admin' && this.BOOKING.B_STATUS == 'DRAFT') return true;
+    if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Admin' && this.USER.U_ROLE !== 'Specialist' && this.BOOKING.B_STATUS == 'COMPLETED') return true;
+    if (this.USER.U_ROLE !== 'Manager' && this.USER.U_ROLE !== 'Admin' && this.BOOKING.B_STATUS == 'CANCELED') return true;
     if (this.isCheckPastday())
     {
       if (this.USER.U_ROLE === 'Manager' || this.USER.U_ROLE === 'Admin')

@@ -220,10 +220,12 @@
             <!-- <div *ngIf="Day?.n==4 && Day?.Date" class="badge-red">{{Day?.n}}</div>
             <div *ngIf="Day?.n==3 && Day?.Date" class="badge-orange">{{Day?.n}}</div>
             <div *ngIf="Day?.n<3 && Day?.Date" class="badge-green">{{Day?.n}}</div> -->
-            <div *ngIf="!Day?.isdraft && Day?.n>=4 && Day?.Date" class="badge-red" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
-            <div *ngIf="!Day?.isdraft && Day?.n<4 && Day?.n>0 && Day?.Date" class="badge-green" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
-            <div *ngIf="!Day?.isdraft && Day?.n<1 && Day?.Date" class="badge-transperant" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
-            <div *ngIf="Day?.isdraft && Day?.Date" class="badge-draft" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
+            <div *ngIf="!Day?.isCancel && !Day?.isdraft && Day?.n>=4 && Day?.Date && !Day?.isblock " class="badge-red" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
+            <div *ngIf="!Day?.isCancel && !Day?.isdraft && Day?.n>=4 && Day?.Date && Day?.isblock " class="badge-black" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
+            <div *ngIf="!Day?.isCancel && !Day?.isdraft && Day?.n<4 && Day?.n>0 && Day?.Date" class="badge-green" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
+            <div *ngIf="!Day?.isCancel && !Day?.isdraft && Day?.n<1 && Day?.Date" class="badge-transperant" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
+            <div *ngIf="!Day?.isCancel && Day?.isdraft && Day?.Date" class="badge-draft" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
+            <div *ngIf="Day?.isCancel && Day?.Date" class="badge-cancel" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
           </ion-col>
         </ion-row>
         <ion-row *ngIf="WEEKSinMONTH1.length<1">
@@ -249,10 +251,12 @@
               'border-radius': '50%', 'padding': '0', 'width':'35px', 'height':'35px', 'padding-top': '6px', 'margin': '0 auto'}">
                 {{Day?.Date}}</p>
             </h4>
-            <div *ngIf="!Day?.isdraft && Day?.n>=4 && Day?.Date" class="badge-red" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
-            <div *ngIf="!Day?.isdraft && Day?.n<4 && Day?.n>0 && Day?.Date" class="badge-green" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
-            <div *ngIf="!Day?.isdraft && Day?.n<1 && Day?.Date" class="badge-transperant" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
-            <div *ngIf="Day?.isdraft && Day?.Date" class="badge-draft" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
+            <div *ngIf="!Day?.isCancel && !Day?.isdraft && Day?.n>=4 && Day?.Date && !Day?.isblock " class="badge-red" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
+            <div *ngIf="!Day?.isCancel && !Day?.isdraft && Day?.n>=4 && Day?.Date && Day?.isblock " class="badge-black" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
+            <div *ngIf="!Day?.isCancel && !Day?.isdraft && Day?.n<4 && Day?.n>0 && Day?.Date" class="badge-green" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
+            <div *ngIf="!Day?.isCancel && !Day?.isdraft && Day?.n<1 && Day?.Date" class="badge-transperant" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
+            <div *ngIf="!Day?.isCancel && Day?.isdraft && Day?.Date" class="badge-draft" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
+            <div *ngIf="Day?.isCancel && Day?.Date" class="badge-cancel" [ngStyle]="{'opacity': Day.isThePast ? '0.3' : '1'}">{{Day?.n}}</div>
           </ion-col>
         </ion-row>
         <ion-row *ngIf="WEEKSinMONTH2.length<1">

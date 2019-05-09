@@ -72,6 +72,8 @@ export class AppointmentAddPage implements OnInit {
       this.index = this.data.index;
     }
 
+    this.USER = this.localService.USER;
+
     // this.FACIALCABIN = this.localService.FACIALCABIN_DEFAULT;
     // this.CUSTOMER = this.localService.CUSTOMER_DEFAULT;
     // this.USER = this.localService.USER_DEFAULT;
@@ -177,18 +179,36 @@ export class AppointmentAddPage implements OnInit {
     this.CUSTOMER.C_BOOK_STATE = 'BOOKED';
     // Khách sub book lần 2 trong tháng
     if (this.isBooking2TimesInMonth(this.CUSTOMER, this.BOOKING,this.BOOKING.B_SUBLIMAGE) && this.CUSTOMER.C_isSUBLIMAGE) {
-      this.BOOKING.B_STATUS = 'DRAFT';
-      this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
-      this.CUSTOMER.C_BOOK_STATE = 'DRAFT';
+      if(this.USER.U_ROLE === 'Manager' || this.USER.U_ROLE === 'Admin')
+      {
+        this.BOOKING.B_STATUS = 'BOOKED';
+        this.BOOKING.B_STATUS_VI = 'ĐÃ ĐẶT';
+        this.CUSTOMER.C_BOOK_STATE = 'BOOKED';
+      }
+      else
+      {
+        this.BOOKING.B_STATUS = 'DRAFT';
+        this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
+        this.CUSTOMER.C_BOOK_STATE = 'DRAFT';
+      }
       let NAME = '<strong>' + this.CUSTOMER.C_NAME + '</strong>'
       MSG += 'Khách ' + NAME + ' Sublimage book lần 2 trong tháng. <br/>'
     }
 
     // Khách thường book lần thứ 2
     if (!this.CUSTOMER.C_isSUBLIMAGE && this.CUSTOMER.C_PHONE.length > 0) {
-      this.BOOKING.B_STATUS = 'DRAFT';
-      this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
-      this.CUSTOMER.C_BOOK_STATE = 'DRAFT';
+      if(this.USER.U_ROLE === 'Manager' || this.USER.U_ROLE === 'Admin')
+      {
+        this.BOOKING.B_STATUS = 'BOOKED';
+        this.BOOKING.B_STATUS_VI = 'ĐÃ ĐẶT';
+        this.CUSTOMER.C_BOOK_STATE = 'BOOKED';
+      }
+      else
+      {
+        this.BOOKING.B_STATUS = 'DRAFT';
+        this.BOOKING.B_STATUS_VI = 'CHỜ DUYỆT';
+        this.CUSTOMER.C_BOOK_STATE = 'DRAFT';
+      }
       let NAME = '<strong>' + this.CUSTOMER.C_NAME + '</strong>'
       MSG += 'Khách ' + NAME + ' book lần 2. <br/>'
     }
@@ -294,13 +314,6 @@ export class AppointmentAddPage implements OnInit {
     // Update Slot;
     this.BOOKING.B_DAY = this.Day;
     console.log(this.BOOKING);
-
-    if (this.isFirstTimeUsedApp) {
-      this.createBookingWithNotExistingCustomer();
-    } else {
-      this.createBookingWithExistingCustomer();
-    }
-    
     this.dbService.logAdd(currentUser.U_ID, currentUser.U_FULLNAME,currentUser.U_ROLE,'Booking for Customer ' + this.CUSTOMER.C_NAME + ' day ' + this.Day.DateId + ' slot ' + this.BOOKING.B_SLOT)
     .then((res) => {
       console.log('Update log');
@@ -311,10 +324,13 @@ export class AppointmentAddPage implements OnInit {
       console.log(err);
     })
 
-
-  }
-
+    if (this.isFirstTimeUsedApp) {
+      this.createBookingWithNotExistingCustomer();
+    } else {
+      this.createBookingWithExistingCustomer();
+    }
   
+  }
 
   getSpecialistInfo(ID: string) {
     this.crudService.userGet(ID).subscribe(res => {
