@@ -69,6 +69,10 @@
             </ion-select>
           </ion-item>
           <ion-item>
+            <ion-label color="primary" fixed>Cửa hàng:</ion-label>
+            <ion-input type="text" placeholder="Cửa hàng" [(ngModel)]="USER.U_LOCATION"></ion-input>
+          </ion-item>
+          <ion-item>
             <ion-label color="primary">Trạng thái:</ion-label>
             <ion-select [(ngModel)]="USER.U_STATE">
               <ion-select-option value="Active">Active</ion-select-option>

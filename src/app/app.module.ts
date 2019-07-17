@@ -39,6 +39,8 @@ import { PapaParseModule } from 'ngx-papaparse';
 import { AppointmentCalendarEditNewPageModule } from './appointment-calendar-edit-new/appointment-calendar-edit-new.module';
 import { SearchPageModule } from './search/search.module';
 import { HttpModule } from '@angular/http';
+import { ReportShowHistoryPage } from './report-show-history/report-show-history.page';
+import { ReportShowHistoryPageModule } from './report-show-history/report-show-history.module';
 firebase.initializeApp(environment.firebase);
 
 @NgModule({
@@ -71,7 +73,8 @@ firebase.initializeApp(environment.firebase);
     AppointmentCalendarEditNewPageModule,
     SlotsInDayPageModule,
     UserPhotoTakePageModule,
-    SearchPageModule
+    SearchPageModule,
+    ReportShowHistoryPageModule
   ],
   providers: [
     StatusBar,

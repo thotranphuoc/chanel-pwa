@@ -53,5 +53,8 @@ export interface iBooking {
     B_TILL: string,
     B_OTHER: any,
     B_CANCELED_BY_USER: iUser,
-    B_EVENTS: iEvent[]
+    B_EVENTS: iEvent[],
+    
+
+
 }

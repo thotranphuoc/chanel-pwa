@@ -26,6 +26,10 @@ export class CrudService {
 
   }
 
+  ionViewWillEnter() {
+    this.customersAllGet();
+   }
+
   getUSERS() {
     this.USER = this.afs.collection('USERS').valueChanges();
     return this.USER;
@@ -130,13 +134,17 @@ export class CrudService {
     return this.afs.collection('CUSTOMERS').get();
   }
 
-  customersAllGet() {
+  customersAllGet1() {
     return new Promise((resolve, reject) => {
       firebase.firestore().collection('CUSTOMERS').get()
         .then((qSnap) => {
           let CUSTOMERS: iCustomer[] = [];
           qSnap.forEach(docSnap => {
             let CUSTOMER = <iCustomer>docSnap.data();
+              // CUSTOMER['Book'] = this.countBookingsOfCustomerID(CUSTOMER.C_ID, null);
+              // CUSTOMER['Cancel'] = this.countBookingsOfCustomerID(CUSTOMER.C_ID, "CANCELED");
+              // CUSTOMER['Complete'] = this.countBookingsOfCustomerID(CUSTOMER.C_ID, "COMPLETED");
+            console.log(CUSTOMER);
             CUSTOMERS.push(CUSTOMER);
           })
           resolve({ CUSTOMERS: CUSTOMERS })
@@ -145,7 +153,46 @@ export class CrudService {
     })
   }
 
+  customersAllGet() {
+    return new Promise((resolve, reject) => {
+      firebase.firestore().collection('CUSTOMERS').get()
+        .then((qSnap) => {
+          let CUSTOMERS: iCustomer[] = [];
+          qSnap.forEach(docSnap => {
+            let CUSTOMER = <iCustomer>docSnap.data();
+              // CUSTOMER['Book'] = this.countBookingsOfCustomerID(CUSTOMER.C_ID, null);
+              // CUSTOMER['Cancel'] = this.countBookingsOfCustomerID(CUSTOMER.C_ID, "CANCELED");
+              // CUSTOMER['Complete'] = this.countBookingsOfCustomerID(CUSTOMER.C_ID, "COMPLETED");
+            //console.log(CUSTOMER);
+            CUSTOMERS.push(CUSTOMER);
+          })
+          resolve({ CUSTOMERS: CUSTOMERS })
+        })
+        .catch(err => reject(err))
+    })
+  }
 
+countBookingsOfCustomerID(C_ID: string, STATE: string) {
+    let num=0;
+    this.bookingsOfCustomerGet(C_ID)
+    .subscribe(qSnap => {
+      qSnap.forEach(qDocSnap => {
+        let BOOKING = <iBooking>qDocSnap.data();
+        if (STATE){
+          if(BOOKING.B_STATUS === STATE)
+            num++;
+        }
+        else
+        {
+          num++;
+        }
+      })
+      console.log(num);
+      return num;
+    })
+    console.log(num);
+    
+  }
 
   namePhoneIDUpdate() {
     this.afs.doc('NamePhoneID')
@@ -267,6 +314,10 @@ export class CrudService {
     return this.afs.collection('BOOKINGS', ref => ref.where('B_CUSTOMER_ID', '==', CUSTOMER_ID)).get();
   }
 
+  bookingsOfUserGet(USER_ID: string) {
+    return this.afs.collection('BOOKINGS', ref => ref.where('B_BA_BOOK_ID', '==', USER_ID)).get();
+  }
+
   //Update 1 booking
   bookUpdate(Book: iBooking) {
     return this.afs.doc(`BOOKINGS/${Book.B_ID}`).update(Book);
@@ -276,9 +327,12 @@ export class CrudService {
     return new Promise((resolve, reject) => {
       let index = BOOKING.B_DAY.Slots.map(slot => slot.SLOT).indexOf(BOOKING.B_SLOT);
       BOOKING.B_DAY.Slots[index].STATUS = BOOKING.B_STATUS;
+      let DaySelect: iDay = BOOKING.B_DAY;
+      console.log(DaySelect);
       if(BOOKING.B_STATUS==='AVAILABLE')
       {
         this.afs.doc('BOOKINGS/' + BOOKING.B_ID).delete()
+
         .then(() => {
           // update last booking and isSublimage for customer
           //return this.customerUpdateAfterBookingChange(BOOKING);
@@ -287,10 +341,15 @@ export class CrudService {
         .then(() => {
           // update calendars after booking change
           //return this.dayUpdateAfterBookingChange(BOOKING);
+          //console.log(index);
+          //console.log(BOOKING.B_DAY.Slots[index]);
           BOOKING.B_DAY.Slots[index].BOOK_ID='';
           BOOKING.B_DAY.Slots[index].STATUS = 'AVAILABLE';
-          console.log(BOOKING.B_DAY.Slots[index]);
-          return this.afs.doc('CALENDARS/' + BOOKING.B_DAY.DateId.substr(0,6) + '/'+ BOOKING.B_DAY.DateId + '/Slots/').update(BOOKING.B_DAY.Slots);
+          //console.log(BOOKING.B_DAY.Slots[index]);
+          console.log(BOOKING.B_DAY);
+          //return true;
+          return this.dayUpdateAfterBookingChangeEmpty(BOOKING);
+          //return this.dayUpdateSlot(BOOKING.B_DAY,BOOKING.B_DAY.Slots[index], index);
         })
         .then(() => {
           resolve({ MSG: 'Cập nhật thành công', BOOKING: BOOKING });
@@ -362,6 +421,14 @@ export class CrudService {
     console.log(day2Update);
     return this.afs.collection('CALENDARS').doc(monthstr).update(day2Update);
   }
+  dayUpdateSlot(Day: iDay,SLOT:iSlot, index:number) {
+    let DateId = Day.DateId
+    let monthstr = Day.DateId.substr(0, 6);
+    let day2Update = {};
+    day2Update[DateId].Slots[index]=SLOT;
+    console.log(day2Update);
+    return this.afs.collection('CALENDARS').doc(monthstr).update(day2Update);
+  }
 
   dayUpdateAfterBookingChange(BOOKING: iBooking) {
     return new Promise((resolve, reject) => {
@@ -371,6 +438,24 @@ export class CrudService {
           let index = Day.Slots.map(Slot => Slot.SLOT).indexOf(BOOKING.B_SLOT);
           Day.Slots[index].STATUS = BOOKING.B_STATUS;
           Day.Slots[index].BOOK_ID = BOOKING.B_ID;
+          console.log(Day);
+          return this.dayUpdate(Day);
+        })
+        .then((res) => {
+          resolve();
+        })
+        .catch(err => reject())
+    })
+  }
+
+  dayUpdateAfterBookingChangeEmpty(BOOKING: iBooking) {
+    return new Promise((resolve, reject) => {
+      this.slotsOfDateGet(BOOKING.B_DAY.DateId)
+        .then((res: any) => {
+          let Day: iDay = res.DAY;
+          let index = Day.Slots.map(Slot => Slot.SLOT).indexOf(BOOKING.B_SLOT);
+          Day.Slots[index].STATUS = BOOKING.B_STATUS;
+          Day.Slots[index].BOOK_ID = '';
           console.log(Day);
           return this.dayUpdate(Day);
         })

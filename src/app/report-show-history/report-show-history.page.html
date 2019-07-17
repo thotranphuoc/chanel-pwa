@@ -1,0 +1,174 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Danh sách đặt hẹn</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <!--
+<ion-item *ngFor="let CUSTOMER of CUSTOMERS" (click)="showAllBookingOfCustomer(CUSTOMER)">
+      <ion-avatar slot="start">
+        <img [src]="CUSTOMER.U_AVATAR" onError="this.src='../../assets/imgs/user.jpg';">
+      </ion-avatar>
+      <ion-label>
+        <h3>{{CUSTOMER.C_NAME}}</h3>
+        <h4>{{CUSTOMER.C_VIPCODE}}</h4>
+        <p><i>{{CUSTOMER.C_PHONE}}</i></p>
+        <p>{{CUSTOMER.C_LAST_B_DATE}} {{CUSTOMER.C_LAST_B_SLOT}} </p>
+      </ion-label>
+      <ion-button slot="end">
+        <ion-icon name="md-eye"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+  -->
+  <div class="content_div" style="width: 100%; overflow: scroll;">
+      <ion-grid style="width: 2048px;overflow:auto;">
+        <ion-row style="font-weight: bold;">
+          <ion-col>
+              STT
+          </ion-col>
+          <ion-col>
+              Khách hàng
+          </ion-col>
+          <ion-col>
+              VIPCODE
+          </ion-col>
+          <ion-col>
+              SĐT
+          </ion-col>
+          <ion-col>
+              Sublimage
+          </ion-col>
+          <ion-col>
+              Le Lift
+          </ion-col>
+          <ion-col>
+              MakeUp
+          </ion-col>
+          <ion-col>
+              Nước hoa
+          </ion-col>
+          <ion-col>
+              Fashion
+          </ion-col>
+          <ion-col>
+              Ngày
+          </ion-col>
+          <ion-col>
+              Slot
+          </ion-col>
+          <ion-col>
+              Specialist
+          </ion-col>
+          <ion-col>
+              BA book
+          </ion-col>
+          <ion-col>
+              BA Sale
+          </ion-col>
+          <ion-col>
+              Location
+          </ion-col>
+          <ion-col>
+              Tổng
+          </ion-col>
+          <ion-col>
+              Till
+          </ion-col>
+          <ion-col>
+              Sale Memo
+          </ion-col>
+          <ion-col>
+              SCCU
+          </ion-col>
+          <ion-col>
+              KH mới
+          </ion-col>
+          <ion-col>
+              Trạng thái
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngFor="let BOOKING of BOOKINGS; let i = index" (click)="exportFile(BOOKINGS)">
+            <ion-col>
+                {{(i + 1)}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_CUSTOMER_NAME}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_CUSTOMER_VIPCODE}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_CUSTOMER_PHONE}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_SUBLIMAGE ? '1' : '0'}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_LELIFT ? '1' : '0'}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_LELIFT ? '1' : '0'}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_LELIFT ? '1' : '0'}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_LELIFT ? '1' : '0'}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_DATE}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_SLOT}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_SPECIALIST_NAME}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_BA_BOOK_NAME}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_BA_SELL_NAME}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_BA_BOOK.U_LOCATION}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_TOTAL}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_TILL}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_MEMOS}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_CSCU ? '1' : '0'}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_isNewCustomer ? '1' : '0'}}
+            </ion-col>
+            <ion-col>
+                {{BOOKING.B_STATUS_VI}}
+            </ion-col>
+          </ion-row>
+
+      </ion-grid>
+    </div>
+
+    <div class="button_div">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" color="danger" (click)="doCancel()">Quay lại</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" (click)="exportFile(BOOKINGS)">Xuất file</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+</ion-content>

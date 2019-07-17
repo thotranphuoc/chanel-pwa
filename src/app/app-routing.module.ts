@@ -49,6 +49,7 @@ const routes: Routes = [
   { path: 'appointment-calendar-edit-new', loadChildren: './appointment-calendar-edit-new/appointment-calendar-edit-new.module#AppointmentCalendarEditNewPageModule' },
   { path: 'search', loadChildren: './search/search.module#SearchPageModule' },
   { path: 'log-activity', loadChildren: './log-activity/log-activity.module#LogActivityPageModule' },
+  { path: 'report-show-history', loadChildren: './report-show-history/report-show-history.module#ReportShowHistoryPageModule' },
 
 ];
 

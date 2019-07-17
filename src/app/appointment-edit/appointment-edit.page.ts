@@ -33,8 +33,8 @@ export class AppointmentEditPage implements OnInit {
   selectedBA: iUser;
   isPast:any= false;
   RIGHTS = {
-    Admin: [{ VI: 'DUYỆT', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
-    Manager: [{ VI: 'KHÔNG DUYỆT', EN: 'AVAILABLE' },{ VI: 'CHỜ DUYỆT', EN: 'DRAFT' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
+    Admin: [{ VI: 'TRỐNG', EN: 'AVAILABLE' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
+    Manager: [{ VI: 'TRỐNG', EN: 'AVAILABLE' },{ VI: 'CHỜ DUYỆT', EN: 'DRAFT' }, { VI: 'ĐÃ ĐẶT', EN: 'BOOKED' }, { VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }, { VI: 'HẾT HẠN', EN: 'EXPIRED' }],
     Specialist: [{ VI: 'HOÀN THÀNH', EN: 'COMPLETED' }, { VI: 'HUỶ BỎ', EN: 'CANCELED' }],
     BA: [{ VI: 'HUỶ BỎ', EN: 'CANCELED' }],
     BAS: [{ VI: 'HUỶ BỎ', EN: 'CANCELED' }],
@@ -136,6 +136,15 @@ export class AppointmentEditPage implements OnInit {
           })
     }
     if (this.BOOKING.B_STATUS == 'DRAFT' && this.isStateChanged) {
+      this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME,this.USER.U_ROLE,'Update status DRAFT for Customer ' + this.BOOKING.B_CUSTOMER_NAME + ' day ' + this.Day.date + ' slot ' + this.BOOKING.B_SLOT)
+          .then((res) => {
+            console.log('Update log');
+            console.log(res);
+            //return this.updateScoreAndLevel()
+          })
+          .catch(err => {
+            console.log(err);
+          })
         this.BOOKING.B_DAY.isDraff=true;
       }
 
@@ -146,6 +155,16 @@ export class AppointmentEditPage implements OnInit {
         this.BOOKING.B_CUSTOMER.C_ID='';
         this.BOOKING.B_CUSTOMER.C_NAME='';
         this.BOOKING.B_CUSTOMER.C_PHONE='';*/
+
+        this.dbService.logAdd(this.USER.U_ID, this.USER.U_FULLNAME,this.USER.U_ROLE,'Update status Empty for Customer ' + this.BOOKING.B_CUSTOMER_NAME + ' day ' + this.Day.date + ' slot ' + this.BOOKING.B_SLOT)
+          .then((res) => {
+            console.log('Update log');
+            console.log(res);
+            //return this.updateScoreAndLevel()
+          })
+          .catch(err => {
+            console.log(err);
+          })
     }
 
     let EVENT: iEvent = {
@@ -294,6 +313,12 @@ export class AppointmentEditPage implements OnInit {
         label: STATE.VI,
         value: STATE,
       }
+
+      // if(this.BOOKING.B_STATUS === 'CANCELED' && (this.USER.U_ROLE == 'Admin' || this.USER.U_ROLE == 'Manager'))
+      // {
+          
+      // }
+
        INPUTS.push(INP);
     })
     const alert = await this.alertCtrl.create({
@@ -315,7 +340,7 @@ export class AppointmentEditPage implements OnInit {
 
               if(this.isCheckOpenChangeStatus() && data.VI=='HOÀN THÀNH')
               {
-                this.appService.alertShow('Thông báo', null, 'Bạn chỉ có thể cập nhật Hoàn thành trong khoản thời gian từ thời gian hẹn đến hết 24h trong ngày đặt hẹn!');
+                this.appService.alertShow('Thông báo', null, 'Bạn chỉ có thể cập nhật Hoàn thành từ thời gian hẹn đến hết 24h cùng ngày!');
               }
               else if(!this.isCheckChangeStatusSpecialist() && data.VI=='HOÀN THÀNH')
               {
@@ -368,6 +393,90 @@ export class AppointmentEditPage implements OnInit {
     return isOpenStatus;
   }
   isCheckOpenChangeStatus() {
+    let isOpenStatus=true;
+    let TODAY = this.getTodayString();
+    let TOMORROW = Number(TODAY) === (Number(this.BOOKING.B_DAY.DateId) + 1)
+    let TOMORROW_=(Number(this.BOOKING.B_DAY.DateId) + 1)
+    console.log('line 400: ',TOMORROW_, Number(this.BOOKING.B_DAY.DateId));
+
+    /*if(TODAY===this.BOOKING.B_DAY.DateId)
+    {
+      console.log(TODAY===this.BOOKING.B_DAY.DateId);
+      let date_to_parse = new Date();
+      if(date_to_parse.getHours() < 24 && date_to_parse.getHours()== Number.parseInt(this.Slot.SLOT.substr(0,2)))
+       {
+        console.log(date_to_parse.getHours() < 24, date_to_parse.getHours()== Number.parseInt(this.Slot.SLOT.substr(0,2)));
+          if(date_to_parse.getMinutes()<60 && date_to_parse.getMinutes()>= Number.parseInt(this.Slot.SLOT.substr(3,2)))
+          {
+            console.log("thoa đk");
+            isOpenStatus=false;
+          }
+       } 
+       else if(date_to_parse.getHours() < 24 && date_to_parse.getHours()> Number.parseInt(this.Slot.SLOT.substr(0,2)))
+       {
+        console.log(date_to_parse.getHours() < 24, date_to_parse.getHours()>= Number.parseInt(this.Slot.SLOT.substr(0,2)));
+          console.log("thoa đk");
+          isOpenStatus=false;
+       } 
+
+      //console.log('Thời gian hiện tại:',hour);
+    }
+    else*/ 
+
+    //if(Number(TODAY) === (Number(this.BOOKING.B_DAY.DateId) + 1) && (this.USER.U_ROLE === 'Specialist' || this.USER.U_ROLE === 'Admin'))
+
+    if((this.USER.U_ROLE === 'Admin') || (this.USER.U_ROLE === 'Manager'))
+    {
+      isOpenStatus=false;
+    }
+    else if(Number(TODAY) == (Number(this.BOOKING.B_DAY.DateId) + 1) && (this.USER.U_ROLE === 'Specialist'))
+    {
+      console.log(TODAY===this.BOOKING.B_DAY.DateId);
+      let date_to_parse = new Date();
+      if(date_to_parse.getHours()== Number.parseInt(this.Slot.SLOT.substr(0,2)))
+       {
+        console.log(date_to_parse.getHours() < 24, date_to_parse.getHours()== Number.parseInt(this.Slot.SLOT.substr(0,2)));
+          if(date_to_parse.getMinutes()<= Number.parseInt(this.Slot.SLOT.substr(3,2)))
+          {
+            console.log("thoa đk");
+            isOpenStatus=false;
+          }
+       } 
+       else if(date_to_parse.getHours()<= Number.parseInt(this.Slot.SLOT.substr(0,2)))
+       {
+        console.log(date_to_parse.getHours() < 24, date_to_parse.getHours()<= Number.parseInt(this.Slot.SLOT.substr(0,2)));
+          console.log("thoa đk");
+          isOpenStatus=false;
+       } 
+      //console.log('Thời gian hiện tại:',hour);
+    }
+    else if((TODAY===this.BOOKING.B_DAY.DateId) && (this.USER.U_ROLE === 'Specialist'))
+    {
+      console.log(TODAY===this.BOOKING.B_DAY.DateId);
+      let date_to_parse = new Date();
+      if(date_to_parse.getHours() < 24 && date_to_parse.getHours()== Number.parseInt(this.Slot.SLOT.substr(0,2)))
+       {
+        console.log(date_to_parse.getHours() < 24, date_to_parse.getHours()== Number.parseInt(this.Slot.SLOT.substr(0,2)));
+          if(date_to_parse.getMinutes()<60 && date_to_parse.getMinutes()>= Number.parseInt(this.Slot.SLOT.substr(3,2)))
+          {
+            console.log("thoa đk");
+            isOpenStatus=false;
+          }
+       } 
+       else if(date_to_parse.getHours() < 24 && date_to_parse.getHours()> Number.parseInt(this.Slot.SLOT.substr(0,2)))
+       {
+        console.log(date_to_parse.getHours() < 24, date_to_parse.getHours()>= Number.parseInt(this.Slot.SLOT.substr(0,2)));
+          console.log("thoa đk");
+          isOpenStatus=false;
+       } 
+      //console.log('Thời gian hiện tại:',hour);
+    }
+    console.log(TODAY, this.BOOKING.B_DAY.DateId,Number.parseInt(this.Slot.SLOT.substr(0,2)), Number.parseInt(this.Slot.SLOT.substr(3,2)));
+    console.log(Number(TODAY), Number(this.BOOKING.B_DAY.DateId));
+    return isOpenStatus;
+  }
+
+  isCheckOpenChangeStatus_old() {
     let isOpenStatus=true;
     let TODAY = this.getTodayString();
     if(TODAY===this.BOOKING.B_DAY.DateId)

@@ -7,7 +7,7 @@ import { AppService } from '../services/app.service';
 import { DbService } from '../services/db.service';
 import { UserPhotoTakePage } from '../user-photo-take/user-photo-take.page';
 import { LocalService } from '../services/local.service';
-
+import { iBooking } from '../interfaces/booking.interface';
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.page.html',
@@ -51,6 +51,20 @@ export class UserEditPage implements OnInit {
           })
           .catch(err => {
             console.log(err);
+          })
+
+          this.crudService.bookingsOfUserGet(this.USER.U_ID)
+          .subscribe(qSnap => {
+            let BOOKINGS = [];
+            qSnap.forEach(qDocSnap => {
+              let BOOKING = <iBooking>qDocSnap.data();
+              BOOKING.B_BA_BOOK_NAME=this.USER.U_NAME;
+              BOOKING.B_BA_BOOK=this.USER;
+              //gọi hàm update booking
+              console.log('log kq update',this.crudService.bookUpdate(BOOKING));
+              BOOKINGS.push(BOOKING);
+            })
+            console.log(BOOKINGS);
           })
         this.appService.alertShow('Thành công', null, 'Cập nhật thành công');
         this.navCtrl.goBack();

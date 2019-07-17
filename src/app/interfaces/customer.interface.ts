@@ -21,7 +21,10 @@ export interface iCustomer {
     C_FASHION: boolean,
     C_FASHIONS: string,
     C_NOTE: string,
-    C_isNewCustomer: boolean;
+    C_isNewCustomer: boolean,
+    C_SUMBOOK?:number,
+    C_CANCELED?:number,
+    C_COMPLETED?:number
 }
 
 // C_BOOKINGS: {

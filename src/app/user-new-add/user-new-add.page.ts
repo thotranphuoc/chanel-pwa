@@ -29,7 +29,7 @@ export class UserNewAddPage implements OnInit {
     this.USER_=this.localService.USER;
   }
 
-  createAccount4User(fullname: string, nickname: string, email: string, passwd: string, role: string) {
+  createAccount4User(fullname: string, nickname: string, email: string, passwd: string, role: string, location: string) {
     console.log(email, passwd, role);
     this.authService.accountCreate(email, passwd)
       .then((res) => {
@@ -38,6 +38,7 @@ export class UserNewAddPage implements OnInit {
         this.USER.U_ROLE = role;
         this.USER.U_NAME = nickname;
         this.USER.U_FULLNAME = fullname;
+        this.USER.U_LOCATION = location;
         return this.crudService.userCreate(this.USER)
       })
       .then((res) => {

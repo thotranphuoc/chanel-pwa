@@ -10,4 +10,5 @@ export interface iUser {
     U_ID: string,
     U_AVATAR: string,
     U_STATE: string,
+    U_LOCATION: string,
 }

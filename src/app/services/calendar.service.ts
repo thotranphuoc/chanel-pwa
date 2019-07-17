@@ -78,7 +78,7 @@ export class CalendarService {
   create35DaysOfMonth(YYYYMM: string) {
     let Year = Number(YYYYMM.substr(0, 4));
     let Month = Number(YYYYMM.substr(4, 2));
-    let Days = new Array(35);
+    let Days = new Array(42);
     let weekday = this.getWeekday(Year, Month, 1);
     let days = this.getNumOfDaysInMonth(Month, Year);
     let _Month = Month < 10 ? '0' + Month.toString() : Month.toString();

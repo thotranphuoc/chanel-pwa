@@ -67,7 +67,7 @@ export class CalendarsPage implements OnInit, OnDestroy {
     this.nextYYYYMM = this.calendarService.getNextMonth(this.currentYYYYMM);
     let _35Days1: iDay[] = this.calendarService.create35DaysOfMonth(this.currentYYYYMM);
     let _35Days2: iDay[] = this.calendarService.create35DaysOfMonth(this.nextYYYYMM);
-    console.log(_35Days1, _35Days2);
+    //console.log('so ngay: ',_35Days1, _35Days2);
     this.loadingService.presentLoading();
     this.month1Subscription = this.crudService.calendarMonthGet(this.currentYYYYMM)
       .subscribe(data => {
@@ -93,14 +93,15 @@ export class CalendarsPage implements OnInit, OnDestroy {
             let isCanceled= day.Slots.filter(slot => slot.STATUS === 'CANCELED').length;
             day['isCancel']=isCanceled;
           });
-          console.log(newdays);
+          //console.log('New day: ',newdays);
           this.DaysInM1 = this.calendarService.addAdditionalProsIntoDaysInMonth(newdays);
           let W1 = newdays.slice(0, 7);
           let W2 = newdays.slice(7, 14);
           let W3 = newdays.slice(14, 21);
           let W4 = newdays.slice(21, 28);
           let W5 = newdays.slice(28, 35);
-          this.WEEKSinMONTH1.push(W1, W2, W3, W4, W5);
+          let W6 = newdays.slice(35, 42);
+          this.WEEKSinMONTH1.push(W1, W2, W3, W4, W5, W6);
         }
         this.loadingService.loadingDissmiss();
       });
@@ -135,7 +136,8 @@ export class CalendarsPage implements OnInit, OnDestroy {
           let W3 = newdays.slice(14, 21);
           let W4 = newdays.slice(21, 28);
           let W5 = newdays.slice(28, 35);
-          this.WEEKSinMONTH2.push(W1, W2, W3, W4, W5);
+          let W6 = newdays.slice(35, 42);
+          this.WEEKSinMONTH2.push(W1, W2, W3, W4, W5, W6);
         }
         this.loadingService.loadingDissmiss();
       });

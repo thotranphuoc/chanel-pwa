@@ -159,7 +159,7 @@
     </div>
     <div *ngSwitchCase="'History'">
       <ion-searchbar type="tel" #search_phone (ionChange)="search(search_phone.value)"></ion-searchbar>
-      <ion-item *ngFor="let CUSTOMER of CUSTOMERS" (click)="getAllBookingOfCustomer(CUSTOMER)">
+      <ion-item *ngFor="let CUSTOMER of CUSTOMERSVIEW" (click)="showAllBookingOfCustomer(CUSTOMER)">
         <ion-avatar slot="start">
           <img [src]="CUSTOMER.U_AVATAR" onError="this.src='../../assets/imgs/user.jpg';">
         </ion-avatar>
@@ -170,9 +170,13 @@
           <p>{{CUSTOMER.C_LAST_B_DATE}} {{CUSTOMER.C_LAST_B_SLOT}} </p>
         </ion-label>
         <ion-button slot="end">
-          <ion-icon name="md-download"></ion-icon>
+          <ion-icon name="md-eye"></ion-icon>
         </ion-button>
       </ion-item>
+
+      <div *ngIf="CUSTOMERSVIEW.length > 0" style="float:right; margin-right: 10px;"><ion-button slot="end" (click)="showAllBookingOfCustomers(CUSTOMERSVIEW)">
+          Xem tất cả
+        </ion-button></div>
     </div>
     <div *ngSwitchDefault>output2</div>
   </div>
