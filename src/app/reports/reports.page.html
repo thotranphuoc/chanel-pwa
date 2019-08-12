@@ -126,6 +126,11 @@
         <ion-label>Lịch sử</ion-label>
         <ion-icon name="time"></ion-icon>
       </ion-segment-button>
+
+      <ion-segment-button layout="icon-start" value="Reports">
+        <ion-label>Thống kê</ion-label>
+        <ion-icon name="pie"></ion-icon>
+      </ion-segment-button>
     </ion-segment>
   </div>
 
@@ -178,7 +183,103 @@
           Xem tất cả
         </ion-button></div>
     </div>
-    <div *ngSwitchDefault>output2</div>
+    <div *ngSwitchCase="'Reports'">
+        <!--
+        <ion-button fill="outline" slot="end"
+          (click)="downloadSpecialistReports()">
+          Specialist Report
+          <ion-icon slot="end" name="md-download"></ion-icon>
+        </ion-button>
+
+        <ion-button fill="outline" slot="end"
+          (click)="downloadBAReports()">
+          BA Report
+          <ion-icon slot="end" name="md-download"></ion-icon> 
+        </ion-button>
+        -->
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              SLOT:{{SLOTS}}
+            </ion-col>
+            <ion-col>
+              TRỐNG:{{AVAILIBLE}}
+            </ion-col>
+            <ion-col>
+              BOOK:{{BOOKED}}
+            </ion-col>
+            <ion-col>
+              HUỶ:{{CANCELED}}
+            </ion-col>
+            <ion-col>
+              KHÁC:{{OTHER}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              Họ và tên
+            </ion-col>
+            <ion-col>
+              Chức vụ
+            </ion-col>
+            <ion-col>
+              Trống
+            </ion-col>
+            <ion-col>
+              Đã đặt
+            </ion-col>
+            <ion-col>
+              Đã huỷ
+            </ion-col>
+            <ion-col>
+              Khác
+            </ion-col>
+          </ion-row>
+          <ion-row *ngFor="let SPECIALIST of SPECIALISTS; let i = index">
+            <ion-col>
+              {{SPECIALIST.U_FULLNAME}}
+            </ion-col>
+            <ion-col>
+              {{SPECIALIST.U_ROLE}}
+            </ion-col>
+            <ion-col>
+              {{SPECIALIST.Availible}}
+            </ion-col>
+            <ion-col>
+              {{SPECIALIST.Booked}}
+            </ion-col>
+            <ion-col>
+              {{SPECIALIST.Canceled}}
+            </ion-col>
+            <ion-col>
+              {{SPECIALIST.Other}}
+            </ion-col>
+          </ion-row>
+          <ion-row *ngFor="let SPECIALIST of BAS; let i = index">
+            <ion-col>
+              {{SPECIALIST.U_FULLNAME}}
+            </ion-col>
+            <ion-col>
+              {{SPECIALIST.U_ROLE}}
+            </ion-col>
+            <ion-col>
+              -
+            </ion-col>
+            <ion-col>
+              {{SPECIALIST.Booked}}
+            </ion-col>
+            <ion-col>
+              {{SPECIALIST.Canceled}}
+            </ion-col>
+            <ion-col>
+              {{SPECIALIST.Other}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>        
+    </div>
   </div>
 
 </ion-content>

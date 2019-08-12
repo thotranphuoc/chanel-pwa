@@ -51,6 +51,25 @@ export class CrudService {
     return this.afs.collection('USERS').get();
   }
 
+  usersGetALL() {
+    return new Promise((resolve, reject) => {
+      firebase.firestore().collection('USERS').get()
+        .then((qSnap) => {
+          let USERS: iUser[] = [];
+          qSnap.forEach(docSnap => {
+            let USER = <iUser>docSnap.data();
+              // CUSTOMER['Book'] = this.countBookingsOfCustomerID(CUSTOMER.C_ID, null);
+              // CUSTOMER['Cancel'] = this.countBookingsOfCustomerID(CUSTOMER.C_ID, "CANCELED");
+              // CUSTOMER['Complete'] = this.countBookingsOfCustomerID(CUSTOMER.C_ID, "COMPLETED");
+            if(USER.U_ROLE=="Specialist" || USER.U_ROLE=="BA" || USER.U_ROLE=="Admin" || USER.U_ROLE=="Manager")
+              USERS.push(USER);
+          })
+          resolve({ USERS: USERS })
+        })
+        .catch(err => reject(err))
+    })
+  }
+
 
   
 
@@ -436,6 +455,10 @@ countBookingsOfCustomerID(C_ID: string, STATE: string) {
         .then((res: any) => {
           let Day: iDay = res.DAY;
           let index = Day.Slots.map(Slot => Slot.SLOT).indexOf(BOOKING.B_SLOT);
+          if(BOOKING.B_BA_BOOK.U_ROLE ==='BA' || BOOKING.B_BA_BOOK.U_ROLE ==='Admin' || BOOKING.B_BA_BOOK.U_ROLE ==='Manager')
+          {
+            Day.Slots[index].BAS_ID=BOOKING.B_BA_BOOK.U_ID; 
+          }
           Day.Slots[index].STATUS = BOOKING.B_STATUS;
           Day.Slots[index].BOOK_ID = BOOKING.B_ID;
           console.log(Day);

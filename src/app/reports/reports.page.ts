@@ -8,7 +8,13 @@ import { LoadingService } from '../loading.service';
 import { log } from 'util';
 import { ModalController } from '@ionic/angular';
 import { ReportShowHistoryPage} from '../report-show-history/report-show-history.page';
-
+import { iUser } from '../interfaces/user.interface';
+import { iUserReport } from '../interfaces/reportuser.interface';
+import { CalendarService } from '../services/calendar.service';
+import { iDay } from '../interfaces/day.interface';
+import { Subscription } from 'rxjs';
+import { isThisHour } from 'date-fns';
+import { iSlot } from '../interfaces/slot.interface';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.page.html',
@@ -19,16 +25,30 @@ export class ReportsPage implements OnInit {
   CUSTOMERS: iCustomer[] = [];
   CUSTOMERS_: iCustomer[] = [];
   CUSTOMERSVIEW: iCustomer[] = [];
+  USERS: iUser[]=[];
+  SPECIALISTS: iUserReport[]=[];
+  BAS: iUserReport[]=[];
+  TODAY: string;
+  currentYYYYMM: string;
+  monthSubscription: Subscription;
+  SLOTS:number=0;
+  AVAILIBLE:number=0;
+  BOOKED:Number=0;
+  CANCELED:Number=0;
+  OTHER:Number=0;
   constructor(
     public modalController: ModalController,
     private crudService: CrudService,
     private excelService: ExcelService,
     private appService: AppService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private calendarService: CalendarService
   ) { }
 
   ngOnInit() {
+    this.getUsers();
     this.getCustomers();
+    
   }
 
   ionViewWillEnter() {
@@ -44,6 +64,131 @@ export class ReportsPage implements OnInit {
       .catch(err => {
         console.log(err);
       })
+  }
+
+  getUsers() {
+    this.crudService.usersGetALL().then((res: any) => {
+          this.USERS = res;
+        console.log('User', this.USERS);
+
+        this.getCalendar();
+        })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  checkBA(slot:iSlot){
+
+    return true;
+  }
+
+
+  getCalendar(){
+     this.TODAY = this.calendarService.getTodayString();
+     this.currentYYYYMM = this.TODAY.substr(0, 6);
+     let _35Days1: iDay[] = this.calendarService.create35DaysOfMonth(this.currentYYYYMM);
+
+     this.loadingService.presentLoading();
+    this.monthSubscription = this.crudService.calendarMonthGet(this.currentYYYYMM)
+      .subscribe(data => {
+        console.log('calendar',data)
+        if (typeof (data) !== 'undefined') {
+          
+          let newdays = _35Days1.map(day => data[day.DateId]);
+          let total_availible=0;
+          let total_slot=0;
+
+          for(let i:number =0; i<this.USERS['USERS'].length; i++)
+          {
+            let SPECIALIST:iUserReport=this.USERS['USERS'][i];
+            SPECIALIST.USER=this.USERS['USERS'][i];
+            SPECIALIST.Availible=0;
+            SPECIALIST.Booked=0;
+            SPECIALIST.Other=0;
+            SPECIALIST.Canceled=0;
+
+            let BA:iUserReport=this.USERS['USERS'][i];
+            BA.USER=this.USERS['USERS'][i];
+            BA.Availible=0;
+            BA.Booked=0;
+            BA.Other=0;
+            BA.Canceled=0;
+            // if(this.USERS['USERS'][i].U_ROLE=="Specialist")
+            // {
+            //   this.SPECIALISTS.push(SPECIALIST);
+            // }
+
+            newdays.forEach(day => {
+              
+
+              //console.log('chay = ',day);
+              let n = day.Slots.filter(slot => slot.STATUS !== 'AVAILABLE').length;
+              day['n'] = n;
+              let isblock=false;     
+              if(n>=4)
+              {
+                let block_ = day.Slots.filter(slot => slot.STATUS === 'BLOCKED').length;
+                if(block_ >= 4)
+                  isblock=true;
+              }
+              let isDraft= day.Slots.filter(slot => slot.STATUS === 'DRAFT').length;
+              
+              day['isdraft']=(isDraft>=1);
+              day['isblock']=isblock;
+              let isCanceled= day.Slots.filter(slot => slot.STATUS === 'CANCELED').length;
+              day['isCancel']=isCanceled;
+            
+            let isAvailable= day.Slots.filter(slot => slot.STATUS === 'AVAILABLE' && slot.SPE_ID === this.USERS['USERS'][i].U_ID).length;
+            SPECIALIST.Availible=SPECIALIST.Availible+isAvailable;
+            let isBook= day.Slots.filter(slot => slot.STATUS === 'BOOKED' && slot.BAS_ID === '' &&  slot.SPE_ID === this.USERS['USERS'][i].U_ID).length;
+            SPECIALIST.Booked=SPECIALIST.Booked+isBook;
+            let isCancle= day.Slots.filter(slot => slot.STATUS === 'CANCELED' && slot.BAS_ID === '' &&  slot.SPE_ID === this.USERS['USERS'][i].U_ID).length;
+            SPECIALIST.Canceled=SPECIALIST.Canceled+isCancle;
+
+            let isAvailableBA= day.Slots.filter(slot => slot.STATUS === 'AVAILABLE' && slot.BAS_ID === this.USERS['USERS'][i].U_ID).length;
+            BA.Availible=BA.Availible+isAvailableBA;
+            let isBookBA= day.Slots.filter(slot => slot.STATUS === 'BOOKED' && slot.BAS_ID === this.USERS['USERS'][i].U_ID).length;
+            BA.Booked=BA.Booked+isBookBA;
+            let isCancleBA= day.Slots.filter(slot => slot.STATUS === 'CANCELED' &&  slot.BAS_ID === this.USERS['USERS'][i].U_ID).length;
+            BA.Canceled=BA.Canceled+isCancleBA;
+
+            let isOther= day.Slots.filter(slot => slot.STATUS != 'AVAILABLE' && slot.STATUS != 'BOOKED' && slot.STATUS != 'CANCELED' && slot.BAS_ID === '' && slot.SPE_ID === this.USERS['USERS'][i].U_ID).length;
+            SPECIALIST.Other=SPECIALIST.Other+isOther;
+
+            let isOtherBA= day.Slots.filter(slot => slot.STATUS != 'AVAILABLE' && slot.STATUS != 'BOOKED' && slot.STATUS != 'CANCELED' && slot.BAS_ID === this.USERS['USERS'][i].U_ID).length;
+            BA.Other=BA.Other+isOtherBA;
+            
+            //day['isAvailable']=isAvailable;
+            //this.USERS['USERS'][i]['Available']=isAvailable;
+            //console.log('THIS USER Specialist', this.USERS['USERS'][i].U_ROLE);
+            this.AVAILIBLE=this.AVAILIBLE+isAvailable;
+            this.BOOKED=this.BOOKED+isBook + isBookBA;
+            this.OTHER=this.OTHER + isOther + isOtherBA;
+            this.CANCELED=this.CANCELED + isCancle + isCancleBA;
+
+            this.SLOTS=this.SLOTS + (isAvailable + isBook + isBookBA + isOther + isOtherBA + isCancle + isCancleBA);
+          });
+
+          if(this.USERS['USERS'][i].U_ROLE=="Specialist")
+            {
+              //console.log('THIS USER Specialist');
+              this.SPECIALISTS.push(SPECIALIST);
+              //console.log('this.SPECIALISTS',this.SPECIALISTS);
+            }
+            if(this.USERS['USERS'][i].U_ROLE=="BA" || this.USERS['USERS'][i].U_ROLE=="Admin" || this.USERS['USERS'][i].U_ROLE=="Manager")
+            {
+              this.BAS.push(BA);
+            }
+
+
+
+          }
+        }
+        console.log('this.SPECIALISTS',this.SPECIALISTS);
+        console.log('this.BA',this.BAS);
+        this.loadingService.loadingDissmiss();
+      });
   }
 
   downloadBookingsReport() {
@@ -192,6 +337,62 @@ export class ReportsPage implements OnInit {
     }
   }
 
+
+  ////////////
+  downloadSpecialistReports() {
+    let indexCustomer=0;
+    let _SPECIALISTS = [];
+    
+    //console.log('dong 120: ',this.CUSTOMERS);
+    setTimeout(() => {
+      this.SPECIALISTS.forEach(C => {
+        let _SPECIALIST = {};
+        _SPECIALIST['Họ và tên'] = C.USER.U_FULLNAME;
+        _SPECIALIST['SĐT'] = C.USER.U_PHONE;
+        _SPECIALIST['EMAIL'] = C.USER.U_EMAIL;
+        _SPECIALIST['Quyền'] = C.USER.U_ROLE;
+        _SPECIALIST['Trống'] = C.Availible;
+        _SPECIALIST['Đã book'] = C.Booked;
+        indexCustomer++;
+        _SPECIALISTS.push(_SPECIALIST);
+      })
+    }, 1000);
+    
+    setTimeout(() => {
+      this.excelService.exportFromArrayOfObject2Excel(_SPECIALISTS, 'SPECIALIST_');
+    }, 1500);
+
+    //console.log('Customer',_CUSTOMERS);
+  }
+
+
+  downloadBAReports() {
+    let indexCustomer=0;
+    let _SPECIALISTS = [];
+    
+    //console.log('dong 120: ',this.CUSTOMERS);
+    setTimeout(() => {
+      this.BAS.forEach(C => {
+        let _SPECIALIST = {};
+        _SPECIALIST['Họ và tên'] = C.USER.U_FULLNAME;
+        _SPECIALIST['SĐT'] = C.USER.U_PHONE;
+        _SPECIALIST['EMAIL'] = C.USER.U_EMAIL;
+        _SPECIALIST['Quyền'] = C.USER.U_ROLE;
+        _SPECIALIST['Trống'] = C.Availible;
+        _SPECIALIST['Đã book'] = C.Booked;
+        indexCustomer++;
+        _SPECIALISTS.push(_SPECIALIST);
+      })
+    }, 1000);
+    
+    setTimeout(() => {
+      this.excelService.exportFromArrayOfObject2Excel(_SPECIALISTS, 'BA_');
+    }, 1500);
+
+    //console.log('Customer',_CUSTOMERS);
+  }
+  //////////
+
   convertTrueFalse2YesNo(BOOL: boolean) {
     if (BOOL) return 'Yes';
     return 'No';
@@ -260,10 +461,7 @@ export class ReportsPage implements OnInit {
         })
         console.log(BOOKINGS);
         //this.generateThenDownloadBookingsReport(BOOKINGS, CUSTOMER.C_NAME);
-
         console.log('hien thi popup list booking');
-
-        
       })
   }
   async showAllBookingOfCustomers(CUSTOMERS_ALL: iCustomer[]) {
@@ -280,9 +478,7 @@ export class ReportsPage implements OnInit {
         })
         //console.log(BOOKINGS);
         //this.generateThenDownloadBookingsReport(BOOKINGS, CUSTOMER.C_NAME);
-
         //console.log('hien thi popup list booking');
-        
       })
     }
     this.showHistoryBooking(BOOKINGS);
@@ -301,12 +497,9 @@ export class ReportsPage implements OnInit {
         })
         //console.log(BOOKINGS);
         //this.generateThenDownloadBookingsReport(BOOKINGS, CUSTOMER.C_NAME);
-
         //console.log('hien thi popup list booking');
         this.showHistoryBooking(BOOKINGS);
-      })
-      
-    
+      }) 
   }
 
   async showHistoryBooking(BOOKINGS:any) {
@@ -319,7 +512,5 @@ export class ReportsPage implements OnInit {
     const data = await modal.onDidDismiss();
     console.log(data);
   }
-
-
 
 }
