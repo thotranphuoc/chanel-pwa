@@ -15,6 +15,7 @@ import { iDay } from '../interfaces/day.interface';
 import { Subscription } from 'rxjs';
 import { isThisHour } from 'date-fns';
 import { iSlot } from '../interfaces/slot.interface';
+import { timeout } from 'rxjs/operators';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.page.html',
@@ -26,6 +27,7 @@ export class ReportsPage implements OnInit {
   CUSTOMERS_: iCustomer[] = [];
   CUSTOMERSVIEW: iCustomer[] = [];
   USERS: iUser[]=[];
+  USERS_: iUser[]=[];
   SPECIALISTS: iUserReport[]=[];
   BAS: iUserReport[]=[];
   TODAY: string;
@@ -36,6 +38,9 @@ export class ReportsPage implements OnInit {
   BOOKED:Number=0;
   CANCELED:Number=0;
   OTHER:Number=0;
+  LOCATION:string='';
+  MONTHOPTION:string='';
+  
   constructor(
     public modalController: ModalController,
     private crudService: CrudService,
@@ -66,12 +71,44 @@ export class ReportsPage implements OnInit {
       })
   }
 
+  StoreChange(ev) {
+    console.log('pt user: ',this.USERS_['USERS'].length);
+    this.UpdateUser(this.USERS_, ev);
+    }
+
+
+  UpdateUser(USERS, ev)
+  {
+    console.log('pt user: ',USERS['USERS'].length);
+    for(let i=0; i< USERS['USERS'].length; i++)
+    {
+      console.log(i);
+      console.log('trc',USERS['USERS'][i].U_LOCATION);
+      if(USERS['USERS'][i].U_LOCATION != ev)
+        {
+          console.log('i =' + i,'If',USERS['USERS'][i]);
+          let removed_elements = USERS['USERS'].splice(i, 1);
+          console.log('removed ',removed_elements);
+          --i;
+          //this.USERS['USERS'].splice(i, 1);
+          //delete[this.USERS['USERS'].indexOf(i)];
+        }
+    }
+
+    this.USERS=USERS;
+    console.log(ev);
+    console.log('USER after change',this.USERS);
+    this.LOCATION=ev;
+    console.log(this.MONTHOPTION);
+    this.getCalendar(this.TODAY, this.MONTHOPTION);
+  }
+
   getUsers() {
     this.crudService.usersGetALL().then((res: any) => {
           this.USERS = res;
+          this.USERS_=res;
         console.log('User', this.USERS);
-
-        this.getCalendar();
+        this.getCalendar(null, null);
         })
       .catch(err => {
         console.log(err);
@@ -79,13 +116,20 @@ export class ReportsPage implements OnInit {
   }
 
   checkBA(slot:iSlot){
-
     return true;
   }
 
 
-  getCalendar(){
-     this.TODAY = this.calendarService.getTodayString();
+  getCalendar(Choose_day:string, Choose_location:string){
+    this.SLOTS=0;
+    this.AVAILIBLE=0;
+    this.BOOKED=0;
+    this.CANCELED=0;
+    this.OTHER=0;
+    this.SPECIALISTS=[];
+    this.BAS=[];
+    if(Choose_day == null)
+    {this.TODAY = this.calendarService.getTodayString();}
      this.currentYYYYMM = this.TODAY.substr(0, 6);
      let _35Days1: iDay[] = this.calendarService.create35DaysOfMonth(this.currentYYYYMM);
 
@@ -180,9 +224,6 @@ export class ReportsPage implements OnInit {
             {
               this.BAS.push(BA);
             }
-
-
-
           }
         }
         console.log('this.SPECIALISTS',this.SPECIALISTS);
@@ -190,6 +231,114 @@ export class ReportsPage implements OnInit {
         this.loadingService.loadingDissmiss();
       });
   }
+
+
+  getCalendarMonth(currentYYYYMM:string){
+    //this.TODAY = this.calendarService.getTodayString();
+    ///this.currentYYYYMM = this.TODAY.substr(0, 6);
+    let _35Days1: iDay[] = this.calendarService.create35DaysOfMonth(currentYYYYMM);
+
+    this.loadingService.presentLoading();
+   this.monthSubscription = this.crudService.calendarMonthGet(currentYYYYMM)
+     .subscribe(data => {
+       console.log('calendar',data)
+       if (typeof (data) !== 'undefined') {
+         
+         let newdays = _35Days1.map(day => data[day.DateId]);
+         let total_availible=0;
+         let total_slot=0;
+
+         for(let i:number =0; i<this.USERS['USERS'].length; i++)
+         {
+           let SPECIALIST:iUserReport=this.USERS['USERS'][i];
+           SPECIALIST.USER=this.USERS['USERS'][i];
+           SPECIALIST.Availible=0;
+           SPECIALIST.Booked=0;
+           SPECIALIST.Other=0;
+           SPECIALIST.Canceled=0;
+
+           let BA:iUserReport=this.USERS['USERS'][i];
+           BA.USER=this.USERS['USERS'][i];
+           BA.Availible=0;
+           BA.Booked=0;
+           BA.Other=0;
+           BA.Canceled=0;
+           // if(this.USERS['USERS'][i].U_ROLE=="Specialist")
+           // {
+           //   this.SPECIALISTS.push(SPECIALIST);
+           // }
+
+           newdays.forEach(day => {
+             
+
+             //console.log('chay = ',day);
+             let n = day.Slots.filter(slot => slot.STATUS !== 'AVAILABLE').length;
+             day['n'] = n;
+             let isblock=false;     
+             if(n>=4)
+             {
+               let block_ = day.Slots.filter(slot => slot.STATUS === 'BLOCKED').length;
+               if(block_ >= 4)
+                 isblock=true;
+             }
+             let isDraft= day.Slots.filter(slot => slot.STATUS === 'DRAFT').length;
+             
+             day['isdraft']=(isDraft>=1);
+             day['isblock']=isblock;
+             let isCanceled= day.Slots.filter(slot => slot.STATUS === 'CANCELED').length;
+             day['isCancel']=isCanceled;
+           
+           let isAvailable= day.Slots.filter(slot => slot.STATUS === 'AVAILABLE' && slot.SPE_ID === this.USERS['USERS'][i].U_ID).length;
+           SPECIALIST.Availible=SPECIALIST.Availible+isAvailable;
+           let isBook= day.Slots.filter(slot => slot.STATUS === 'BOOKED' && slot.BAS_ID === '' &&  slot.SPE_ID === this.USERS['USERS'][i].U_ID).length;
+           SPECIALIST.Booked=SPECIALIST.Booked+isBook;
+           let isCancle= day.Slots.filter(slot => slot.STATUS === 'CANCELED' && slot.BAS_ID === '' &&  slot.SPE_ID === this.USERS['USERS'][i].U_ID).length;
+           SPECIALIST.Canceled=SPECIALIST.Canceled+isCancle;
+
+           let isAvailableBA= day.Slots.filter(slot => slot.STATUS === 'AVAILABLE' && slot.BAS_ID === this.USERS['USERS'][i].U_ID).length;
+           BA.Availible=BA.Availible+isAvailableBA;
+           let isBookBA= day.Slots.filter(slot => slot.STATUS === 'BOOKED' && slot.BAS_ID === this.USERS['USERS'][i].U_ID).length;
+           BA.Booked=BA.Booked+isBookBA;
+           let isCancleBA= day.Slots.filter(slot => slot.STATUS === 'CANCELED' &&  slot.BAS_ID === this.USERS['USERS'][i].U_ID).length;
+           BA.Canceled=BA.Canceled+isCancleBA;
+
+           let isOther= day.Slots.filter(slot => slot.STATUS != 'AVAILABLE' && slot.STATUS != 'BOOKED' && slot.STATUS != 'CANCELED' && slot.BAS_ID === '' && slot.SPE_ID === this.USERS['USERS'][i].U_ID).length;
+           SPECIALIST.Other=SPECIALIST.Other+isOther;
+
+           let isOtherBA= day.Slots.filter(slot => slot.STATUS != 'AVAILABLE' && slot.STATUS != 'BOOKED' && slot.STATUS != 'CANCELED' && slot.BAS_ID === this.USERS['USERS'][i].U_ID).length;
+           BA.Other=BA.Other+isOtherBA;
+           
+           //day['isAvailable']=isAvailable;
+           //this.USERS['USERS'][i]['Available']=isAvailable;
+           //console.log('THIS USER Specialist', this.USERS['USERS'][i].U_ROLE);
+           this.AVAILIBLE=this.AVAILIBLE+isAvailable;
+           this.BOOKED=this.BOOKED+isBook + isBookBA;
+           this.OTHER=this.OTHER + isOther + isOtherBA;
+           this.CANCELED=this.CANCELED + isCancle + isCancleBA;
+
+           this.SLOTS=this.SLOTS + (isAvailable + isBook + isBookBA + isOther + isOtherBA + isCancle + isCancleBA);
+         });
+
+         if(this.USERS['USERS'][i].U_ROLE=="Specialist")
+           {
+             //console.log('THIS USER Specialist');
+             this.SPECIALISTS.push(SPECIALIST);
+             //console.log('this.SPECIALISTS',this.SPECIALISTS);
+           }
+           if(this.USERS['USERS'][i].U_ROLE=="BA" || this.USERS['USERS'][i].U_ROLE=="Admin" || this.USERS['USERS'][i].U_ROLE=="Manager")
+           {
+             this.BAS.push(BA);
+           }
+
+
+
+         }
+       }
+       console.log('this.SPECIALISTS',this.SPECIALISTS);
+       console.log('this.BA',this.BAS);
+       this.loadingService.loadingDissmiss();
+     });
+ }
 
   downloadBookingsReport() {
     this.loadingService.presentLoading();
@@ -265,7 +414,7 @@ export class ReportsPage implements OnInit {
     setTimeout(() => {
       this.CUSTOMERS.forEach(C => {
         let _CUSTOMER = {};
-        _CUSTOMER['Tên'] = C.C_NAME;
+        _CUSTOMER['Tên'] = C.C_NAME;                        
         _CUSTOMER['VIPCODE'] = C.C_VIPCODE;
         _CUSTOMER['SĐT'] = C.C_PHONE;
         _CUSTOMER['Sublimage'] = C.C_SUBLIMAGE ? '1' : '0';
@@ -429,6 +578,17 @@ export class ReportsPage implements OnInit {
   }
   selectTo(D) {
     console.log(D)
+  }
+
+  selectChooseMonth(D)
+  {
+    console.log(D)
+    let y=D.substr(0, 4);
+    let m=D.substr(5, 6);
+    this.TODAY=y + m + '01';
+    console.log(this.TODAY);
+    console.log('loc: ',this.LOCATION);
+    this.getCalendar(this.TODAY, this.MONTHOPTION);
   }
 
   isOverallDisabled(From, To) {

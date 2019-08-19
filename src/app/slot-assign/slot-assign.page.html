@@ -148,7 +148,9 @@
             <div *ngIf="SLOT" class="SLOT" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
               <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
                 <div>
-                  <h4>{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE !=='Specialist'">{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE =='Specialist' && SLOT.SPE_NAME==USER.U_NAME">{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE =='Specialist' && SLOT.SPE_NAME !=USER.U_NAME"></h4>
                 </div>
                 <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
@@ -169,7 +171,9 @@
             <div *ngIf="SLOT" class="SLOT" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
               <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
                 <div>
-                  <h4>{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE !=='Specialist'">{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE =='Specialist' && SLOT.SPE_NAME==USER.U_NAME">{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE =='Specialist' && SLOT.SPE_NAME !=USER.U_NAME"></h4>
                 </div>
                 <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
@@ -190,7 +194,9 @@
             <div *ngIf="SLOT" class="SLOT" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
               <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
                 <div>
-                  <h4>{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE !=='Specialist'">{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE =='Specialist' && SLOT.SPE_NAME==USER.U_NAME">{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE =='Specialist' && SLOT.SPE_NAME !=USER.U_NAME"></h4>
                 </div>
                 <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
@@ -220,7 +226,9 @@
             <div *ngIf="SLOT" class="SLOT" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
               <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
                 <div>
-                  <h4>{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE !=='Specialist'">{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE =='Specialist' && SLOT.SPE_NAME==USER.U_NAME">{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE =='Specialist' && SLOT.SPE_NAME !=USER.U_NAME"></h4>
                 </div>
                 <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
@@ -238,7 +246,8 @@
             <div *ngIf="SLOT" class="{{SLOT}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
               <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
                 <div>
-                  <h4>{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE !=='Specialist'">{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE =='Specialist' && SLOT.SPE_NAME==USER.U_NAME">{{SLOT.SPE_NAME}}</h4>
                 </div>
                 <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>
@@ -259,7 +268,9 @@
             <div *ngIf="SLOT" class="{{SLOT}}" [ngStyle]="{'background': COLOR_SPE[SLOT.SPE_ID]}">
               <div *ngIf="SLOT.SPE_NAME" style="text-align: center; width: 100%;">
                 <div>
-                  <h4>{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE !=='Specialist'">{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE =='Specialist' && SLOT.SPE_NAME==USER.U_NAME">{{SLOT.SPE_NAME}}</h4>
+                  <h4 *ngIf="USER?.U_ROLE =='Specialist' && SLOT.SPE_NAME !=USER.U_NAME"></h4>
                 </div>
                 <div class="SLOT_SLOT">{{SLOT.SLOT}}</div>
               </div>

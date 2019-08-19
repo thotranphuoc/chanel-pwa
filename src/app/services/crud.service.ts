@@ -51,7 +51,7 @@ export class CrudService {
     return this.afs.collection('USERS').get();
   }
 
-  usersGetALL() {
+  usersGetALL(Loc:string = null) {
     return new Promise((resolve, reject) => {
       firebase.firestore().collection('USERS').get()
         .then((qSnap) => {
@@ -62,7 +62,11 @@ export class CrudService {
               // CUSTOMER['Cancel'] = this.countBookingsOfCustomerID(CUSTOMER.C_ID, "CANCELED");
               // CUSTOMER['Complete'] = this.countBookingsOfCustomerID(CUSTOMER.C_ID, "COMPLETED");
             if(USER.U_ROLE=="Specialist" || USER.U_ROLE=="BA" || USER.U_ROLE=="Admin" || USER.U_ROLE=="Manager")
+            {
+              
               USERS.push(USER);
+            }  
+            
           })
           resolve({ USERS: USERS })
         })

@@ -207,6 +207,29 @@ export class CalendarService {
     return TODAY;
   }
 
+  getToMonthString(Choose_Month:string) {
+    let date_to_parse = new Date();
+    console.log(date_to_parse);
+    if(Choose_Month.length>0)
+    {
+      console.log(Choose_Month);
+      //date_to_parse = new Date();
+    }
+    else
+    { 
+      date_to_parse = new Date();
+    }
+      
+    let year = date_to_parse.getFullYear().toString();
+    let month = (date_to_parse.getMonth() + 1).toString();
+    let finalMonth = month.length > 2 ? month : '0' + month
+    let day = date_to_parse.getDate().toString();
+    let finalDay = day.length < 2 ? '0' + day : day;
+    let TODAY = year + finalMonth + finalDay;
+    console.log(TODAY);
+    return TODAY;
+  }
+
   getNextMonth(current: string) {
     let yearStr = current.substr(0, 4);
     let year = Number(yearStr);

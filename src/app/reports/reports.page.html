@@ -184,6 +184,21 @@
         </ion-button></div>
     </div>
     <div *ngSwitchCase="'Reports'">
+        <ion-item>
+            <ion-label>Chọn cửa hàng</ion-label>
+            <ion-select [(ngModel)]="LOCATION" #choose_store (ionChange)="StoreChange(choose_store.value)">
+              <ion-select-option value="Rex">Rex</ion-select-option>
+              <ion-select-option value="Trang Tien">Trang Tien</ion-select-option>
+              <ion-select-option value="Lotte">Lotte</ion-select-option>
+              <ion-select-option value="Saigon Centre">Saigon Centre</ion-select-option>
+              <ion-select-option value="Diamond">Diamond</ion-select-option>
+              <ion-select-option value="Office">Office</ion-select-option>
+            </ion-select>
+          </ion-item>
+        <ion-item>
+            <ion-label>Chọn tháng:</ion-label>
+            <ion-datetime #Choose_Month display-format="MM/YYYY" [(ngModel)]="MONTHOPTION" (ionChange)="selectChooseMonth(Choose_Month.value)"></ion-datetime>
+        </ion-item>
         <!--
         <ion-button fill="outline" slot="end"
           (click)="downloadSpecialistReports()">
